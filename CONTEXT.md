@@ -4,6 +4,21 @@
 
 ---
 
+## Session Start Checklist
+
+**Always confirm current branch is `draft` before making any changes:**
+
+```bash
+git branch --show-current
+```
+
+If not on `draft`, switch with:
+```bash
+git checkout draft
+```
+
+---
+
 ## Who You Are
 
 - **GitHub username:** AvonS  
@@ -29,7 +44,7 @@
 - Inspired by Dan Shapiro's Five Levels framework (January 2026)
 - Covers: Five Levels + DDD + BMAD + Attractor
 - Dan Shapiro is fully credited — document is framed as an interpretation/extension
-- PDF version: `agentic-engineering/agentic-engineering.pdf`
+- PDF version: `agentic-engineering/agentic-engineering-journey.pdf`
 
 ### 3. Shared Assets — `assets/`
 ```
@@ -55,15 +70,99 @@ avons.github.io/          ← GitHub repo: avons.github.io
 │   ├── landing.css
 │   └── components.js
 └── agentic-engineering/
-    ├── index.html        ← the guide (renamed from agentic-engineering-journey-v1_1.html)
-    └── agentic-engineering.pdf
-
-avons.github.io/agentic-engineering-journey/   ← second repo (guide only, for GitHub stars/discovery)
+    ├── index.html        ← the guide
+    └── agentic-engineering-journey.pdf
 ```
 
 **GitHub Pages:** Enabled on `main` branch, root `/`  
 **Working branch:** `draft` — merge to `main` to publish  
 **Latest tag:** `v1.0` on draft branch
+
+---
+
+## How to Add a New Article
+
+### Step 1: Create Article Folder & HTML File
+1. Create a new folder in the repo root: `mkdir new-article-name`
+2. Inside it, create `index.html` with this structure:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/article.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Article Title</title>
+<script src="../assets/components.js" defer></script>
+</head>
+<body>
+<site-header-article></site-header-article>
+<div class="article-wrap">
+
+<!-- ══ TITLE BLOCK ══════════════════════════════════════════════════════ -->
+<div class="doc-title-block">
+  <p class="doc-eyebrow">Category Label</p>
+  <h1 class="doc-main-title">Your Article Title</h1>
+  <p class="doc-subtitle">Subtitle or tagline</p>
+  <p class="doc-tagline">One-line description</p>
+  <div class="doc-meta">
+    <span>v1.0</span>
+    <span>·</span>
+    <span>Month Year</span>
+    <span>·</span>
+    <a href="https://avons.github.io" target="_blank">avons.github.io</a>
+  </div>
+</div>
+
+<!-- ══ YOUR CONTENT HERE ═══════════════════════════════════════════════ -->
+<h1>Introduction</h1>
+<p>Your article content...</p>
+
+<!-- Section banner example -->
+<div class="section-banner banner-navy">PART TWO: Your Section Title</div>
+<h1>Section Title</h1>
+
+<!-- Callout examples -->
+<div class="callout callout-insight"><strong>Insight:</strong> Important insight here.</div>
+<div class="callout callout-warn"><strong>Watch out:</strong> Warning about something.</div>
+<div class="callout callout-quote">Quoted text or bullet list</div>
+
+</div>
+<site-footer></site-footer>
+</body>
+</html>
+```
+
+### Step 2: Use Global Theme & Styles
+- **Theme:** Black & white editorial design (see Colour Scheme above)
+- **Fonts:** Lora (body), DM Serif Display (headings), JetBrains Mono (UI)
+- **Components:** Use `<site-header-article>` and `<site-footer>` for consistent header/footer
+- **Stylesheets:** Always include `../assets/style.css` (global) and `../assets/article.css` (article-specific)
+- **Classes:** Use the provided article structure classes (doc-title-block, section-banner, callout types, etc.)
+
+### Step 3: Add to Home Page
+1. Open `index.html` (root)
+2. Find the "Published" section
+3. Add a new `<a class="article-card">` block (copy from existing one)
+4. Update href to your new folder: `href="new-article-name/"`
+5. Fill in title, subtitle, description, date, etc.
+
+### Step 4: Test & Publish
+1. Run local server: `python3 -m http.server 8000` (from repo root)
+2. Open `http://localhost:8000/new-article-name/` to test
+3. Commit changes: `git add . && git commit -m "Add new article: Title"`
+4. Push to draft branch: `git push origin draft`
+5. When ready, merge to main for live publish
+
+### Tips
+- Article paths are relative to the article folder (e.g., `../assets/` for styles)
+- Use the callout classes: `callout-insight`, `callout-warn`, `callout-quote`
+- For section breaks, use `<div class="section-banner banner-navy">PART TWO: Title</div>`
+- Keep content in `<div class="article-wrap">` for proper spacing
 
 ---
 
