@@ -3,9 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>avons.github.io</title>
+<title>AvonS — Agentic Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:      #0a0a0a;
+    --dark-grey:  #333333;
+    --mid-grey:   #666666;
+    --light-grey: #999999;
+    --rule:       #e0e0e0;
+    --bg:         #fafaf8;
+    --white:      #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Source Serif 4", Georgia, serif; background: var(--bg); color: var(--black); line-height: 1.6; }
+
+  .masthead { border-bottom: 3px solid var(--black); padding: 0 64px; }
+  .masthead-top { display: flex; align-items: center; justify-content: space-between; padding: 28px 0 20px; border-bottom: 1px solid var(--rule); }
+  .site-name { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--black); }
+  .logo-img { height: 102px; width: 102px; object-fit: contain; }
+  .logo-text { font-family: "Playfair Display", Georgia, serif; font-size: 2.4rem; font-weight: 400; letter-spacing: -0.02em; color: var(--black); }
+  .logo-text strong { font-weight: 700; }
+  .masthead-meta { text-align: right; }
+  .masthead-meta p { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--light-grey); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.8; }
+  .masthead-nav { display: flex; gap: 32px; padding: 14px 0; align-items: center; }
+  .masthead-nav a { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dark-grey); text-decoration: none; transition: color 0.15s; }
+  .masthead-nav a:hover { color: var(--black); }
+  .masthead-tagline { font-family: "Source Serif 4", serif; font-style: italic; font-size: 0.88rem; color: var(--mid-grey); margin-left: auto; }
+
+  .hero { padding: 56px 64px 48px; border-bottom: 1px solid var(--rule); max-width: 720px; }
+  .hero h1 { font-family: "Playfair Display", serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.12; color: var(--black); margin-bottom: 20px; letter-spacing: -0.02em; }
+  .hero h1 em { font-style: italic; font-weight: 400; }
+  .hero p { font-size: 1.05rem; line-height: 1.8; color: var(--dark-grey); font-weight: 300; }
+
+  .content-wrap { display: grid; grid-template-columns: 1fr 280px; padding: 0 64px; }
+  .main-col { padding: 48px 56px 80px 0; border-right: 1px solid var(--rule); }
+
+  .section-label { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light-grey); margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+
+  .article-card { padding: 32px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; text-decoration: none; color: inherit; transition: opacity 0.15s; }
+  .article-card:hover { opacity: 0.7; }
+  .article-card:last-child { border-bottom: none; }
+  .article-meta { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--light-grey); margin-bottom: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .article-tag { color: var(--dark-grey); font-weight: 500; }
+  .article-title { font-family: "Playfair Display", serif; font-size: 1.5rem; font-weight: 700; line-height: 1.2; color: var(--black); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .article-subtitle { font-family: "Source Serif 4", serif; font-style: italic; font-size: 0.92rem; color: var(--mid-grey); margin-bottom: 12px; }
+  .article-desc { font-size: 0.9rem; line-height: 1.7; color: var(--dark-grey); font-weight: 300; max-width: 580px; }
+  .article-arrow { font-size: 1.4rem; color: var(--rule); margin-top: 4px; flex-shrink: 0; transition: color 0.15s, transform 0.15s; }
+  .article-card:hover .article-arrow { color: var(--black); transform: translateX(4px); }
+
+  .article-card.featured .article-title { font-size: 1.9rem; }
+  .featured-marker { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; background: var(--black); color: var(--white); padding: 3px 8px; margin-bottom: 14px; }
+
+  .sidebar { padding: 48px 0 80px 40px; }
+  .sidebar-section { margin-bottom: 40px; }
+  .sidebar-label { font-family: "JetBrains Mono", monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light-grey); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .sidebar p { font-size: 0.85rem; line-height: 1.75; color: var(--mid-grey); font-weight: 300; margin-bottom: 12px; }
+  .sidebar a { color: var(--dark-grey); text-decoration: underline; text-underline-offset: 3px; font-size: 0.85rem; }
+  .sidebar a:hover { color: var(--black); }
+  .topic-list { list-style: none; }
+  .topic-list li { padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 0.85rem; color: var(--dark-grey); display: flex; justify-content: space-between; align-items: center; }
+  .topic-list li:last-child { border-bottom: none; }
+  .topic-count { font-family: "JetBrains Mono", monospace; font-size: 0.65rem; color: var(--light-grey); }
+
+  footer { border-top: 3px solid var(--black); padding: 28px 64px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer p { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--light-grey); letter-spacing: 0.04em; }
+  footer a { color: var(--mid-grey); text-decoration: none; font-family: "JetBrains Mono", monospace; font-size: 0.68rem; }
+  footer a:hover { color: var(--black); }
+  .footer-links { display: flex; gap: 24px; }
+
+  .hero, .article-card, .sidebar-section { opacity: 0; animation: fadeUp 0.5s forwards; }
+  .hero                         { animation-delay: 0.05s; }
+  .article-card:nth-child(1)    { animation-delay: 0.12s; }
+  .article-card:nth-child(2)    { animation-delay: 0.20s; }
+  .article-card:nth-child(3)    { animation-delay: 0.28s; }
+  .sidebar-section:nth-child(1) { animation-delay: 0.15s; }
+  .sidebar-section:nth-child(2) { animation-delay: 0.22s; }
+  .sidebar-section:nth-child(3) { animation-delay: 0.29s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 860px) {
+    .masthead, footer { padding: 0 24px; }
+    .hero { padding: 40px 24px 36px; }
+    .content-wrap { grid-template-columns: 1fr; padding: 0 24px; }
+    .main-col { padding: 40px 0; border-right: none; }
+    .sidebar { padding: 0 0 48px; border-top: 1px solid var(--rule); }
+    footer { padding: 24px; flex-direction: column; }
+    .masthead-meta { display: none; }
+  }
+</style>
 </head>
 <body>
-<h1>Hello World!</h1>
-</body>
-</html>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <a class="site-name" href="/">
+      <img src="assets/logo.png" alt="AvonS" class="logo-img">
+      <span class="logo-text">Avon<strong>S</strong></span>
+    </a>
+    <div class="masthead-meta">
+      <p>Agentic Engineering · Frameworks · Practice</p>
+      <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9effe8f1f0edf2fffceddef9f3fff7f2b0fdf1f3">[email&#160;protected]</a></p>
+    </div>
+  </div>
+  <nav class="masthead-nav">
+    <a href="/">All</a>
+    <a href="#agentic">Agentic Engineering</a>
+    <a href="#frameworks">Frameworks</a>
+    <a href="https://github.com/AvonS" target="_blank">GitHub</a>
+    <span class="masthead-tagline">Exploring the journey to the software Dark Factory</span>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Exploring <em>agentic engineering</em><br>and the road ahead</h1>
+  <p>A personal space for writing about how software teams work with AI — the frameworks, the patterns, the questions worth asking, and the ones nobody can answer yet.</p>
+</div>
+
+<div class="content-wrap">
+  <main class="main-col">
+    <p class="section-label">Published</p>
+
+    <a class="article-card featured" href="agentic-engineering/" id="agentic">
+      <div>
+        <div class="featured-marker">Featured Guide</div>
+        <div class="article-meta">
+          <span class="article-tag">Agentic Engineering</span>
+          <span>March 2026</span>
+          <span>Guide</span>
+        </div>
+        <div class="article-title">The Agentic Engineering Journey</div>
+        <div class="article-subtitle">From Spicy Autocomplete to the Dark Factory</div>
+        <p class="article-desc">
+          A plain-English guide to the five levels of AI-assisted development and the three frameworks —
+          DDD, BMAD, and Attractor — that help navigate each step. Inspired by Dan Shapiro's Five Levels.
+        </p>
+      </div>
+      <div class="article-arrow">&#8594;</div>
+    </a>
+
+    <!--
+      TO ADD A NEW ARTICLE — copy this block and fill in the details:
+
+      <a class="article-card" href="your-folder-name/">
+        <div>
+          <div class="article-meta">
+            <span class="article-tag">Topic</span>
+            <span>Month Year</span>
+          </div>
+          <div class="article-title">Title</div>
+          <div class="article-subtitle">Subtitle or tagline</div>
+          <p class="article-desc">Brief description of the article.</p>
+        </div>
+        <div class="article-arrow">&#8594;</div>
+      </a>
+
+      Then create a folder with the same name as href, put index.html inside it.
+    -->
+
+  </main>
+
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-label">About</p>
+      <p>Writing about agentic engineering, frameworks, and the evolving relationship between humans and autonomous software systems.</p>
+      <p><a href="https://github.com/AvonS" target="_blank">github.com/AvonS</a></p>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Topics</p>
+      <ul class="topic-list" id="frameworks">
+        <li>Agentic Engineering <span class="topic-count">1</span></li>
+        <li>DDD <span class="topic-count">1</span></li>
+        <li>BMAD <span class="topic-count">1</span></li>
+        <li>Attractor <span class="topic-count">1</span></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Downloads</p>
+      <p><a href="agentic-engineering/agentic-engineering.pdf" target="_blank">The Agentic Engineering Journey — PDF</a></p>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <p>AvonS &middot; avons.github.io &middot; 2026</p>
+  <div class="footer-links">
+    <a href="https://github.com/AvonS" target
