@@ -46,6 +46,13 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 0.85rem; line-height: 1.75;
   color: var(--mid-grey); font-weight: 300; margin-bottom: 12px;
 }
+.sidebar-section:first-child p:nth-child(2),
+.sidebar-section:first-child p:nth-child(3) {
+  font-family: 'Kalam', cursive;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--dark-grey);
+}
 .sidebar a {
   color: var(--dark-grey); text-decoration: underline;
   text-underline-offset: 3px; font-size: 0.85rem; font-weight: 400;
