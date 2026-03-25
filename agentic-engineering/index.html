@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../assets/style.css">
 <link rel="stylesheet" href="../assets/article.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Agentic Engineering Journey</title>
+<title>The Agentic Engineering Journey — Avon Software Labs</title>
 <script src="../assets/components.js" defer></script>
 </head>
 <body>
@@ -18,10 +18,10 @@
 <div class="doc-title-block">
   <p class="doc-eyebrow">A Guide to Agentic Engineering</p>
   <h1 class="doc-main-title">The Agentic Engineering Journey</h1>
-  <p class="doc-subtitle">From Solo Craftsperson to the Dark Factory</p>
+  <p class="doc-subtitle">A practical guide to creating a software Dark Factory</p>
   <p class="doc-tagline">The frameworks that turn AI chaos into autonomous engineering</p>
   <div class="doc-meta">
-    <span>v1.0</span>
+    <span>v1.1</span>
     <span>·</span>
     <span>March 2026</span>
     <span>·</span>
@@ -33,7 +33,7 @@
 <h1>Introduction</h1>
 <p>Something remarkable is happening in the world of software development. Artificial intelligence tools have moved far beyond the "helpful spellchecker" stage — they are now writing real code, making architectural decisions, running tests, and in some cases, delivering entire features without a human touching a keyboard.</p>
 <p>But here is the catch: most people are not getting nearly as much from this revolution as they could be. Not because the technology is not good enough, but because they have not changed how they think about their own role. They are still trying to drive a car that has learned to drive itself.</p>
-<p>This document is inspired by <strong>Dan Shapiro's</strong> January 2026 blog post <em><a href="https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/" target="_blank">"The Five Levels: from Spicy Autocomplete to the Dark Factory"</a></em>. Dan's framework gave us the map — this document adds the three navigational tools that make the journey actionable: <strong>Domain-Driven Design (DDD)</strong>, <strong>BMAD</strong>, and <strong>Attractor</strong>. Each one is, at its heart, a set of ideas about how to think more clearly and work more effectively as AI takes on more of the engineering workload.</p>
+<p>This document is inspired by <strong>Dan Shapiro's</strong> January 2026 blog post <em><a href="https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/" target="_blank">"The Five Levels: from Spicy Autocomplete to the Dark Factory"</a></em>. Dan's framework gave us the map — this document adds the three navigational tools that make the journey actionable: <strong><a href="../guides/ddd/">Domain-Driven Design (DDD)</a></strong>, <strong><a href="../guides/bmad/">BMAD</a></strong>, and <strong><a href="../guides/attractor/">Attractor</a></strong>. Each one is, at its heart, a set of ideas about how to think more clearly and work more effectively as AI takes on more of the engineering workload.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> We do not need to be developers to benefit from this. If we work with software teams, commission software, or are curious about where AI is taking us — this is for you.</div>
 
 <!-- ══ PART ONE ════════════════════════════════════════════════════ -->
@@ -42,72 +42,41 @@
 <h3>How the software industry is being transformed — one gear at a time</h3>
 <p>In January 2026, <strong>Dan Shapiro</strong> — CEO of Glowforge and a Wharton Research Fellow — published a framework drawing on the US government's five levels of self-driving car automation and applying it to software development. His central observation: <em>every level feels like we are done. But we are not done.</em> There is always a higher gear available — if we are willing to change how we work.</p>
 
-<div class="level-grid">
-  <div class="level-card">
-    <div class="level-badge" style="background:#555555"><span class="level-num">Level 0</span><span class="level-emoji">🚗</span></div>
-    <div class="level-body">
-      <div class="level-title">Manual Driving : "Your parents' Volvo"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Full author of every line</span><span class="lm-label">AI's role:</span><span class="lm-val">None — maybe a search tool</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Your typing speed</span></div>
-    </div>
-  </div>
-  <div class="level-card">
-    <div class="level-badge" style="background:#333333"><span class="level-num">Level 1</span><span class="level-emoji">🚦</span></div>
-    <div class="level-body">
-      <div class="level-title">Lane Assist : "AI intern for tasks"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Senior developer</span><span class="lm-label">AI's role:</span><span class="lm-val">Executes discrete tasks</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Rate at which you assign tasks</span></div>
-    </div>
-  </div>
-  <div class="level-card">
-    <div class="level-badge" style="background:#1a1a1a"><span class="level-num">Level 2</span><span class="level-emoji">🛣️</span></div>
-    <div class="level-body">
-      <div class="level-title">Highway Autopilot : "Paired with a colleague"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Senior developer + pair programmer</span><span class="lm-label">AI's role:</span><span class="lm-val">Fluent collaborator</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Rate at which you give context</span></div>
-    </div>
-  </div>
-  <div class="level-card">
-    <div class="level-badge" style="background:#444444"><span class="level-num">Level 3</span><span class="level-emoji">🚕</span></div>
-    <div class="level-body">
-      <div class="level-title">Waymo with a Safety Driver : "We are now a manager"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Engineering manager</span><span class="lm-label">AI's role:</span><span class="lm-val">Senior developer</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Quality of specs you hand over</span></div>
-    </div>
-  </div>
-  <div class="level-card">
-    <div class="level-badge" style="background:#222222"><span class="level-num">Level 4</span><span class="level-emoji">🤖</span></div>
-    <div class="level-body">
-      <div class="level-title">Robotaxi : "We are a PM now"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Spec author and planner</span><span class="lm-label">AI's role:</span><span class="lm-val">Full development team</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Completeness of your specification</span></div>
-    </div>
-  </div>
-  <div class="level-card">
-    <div class="level-badge" style="background:#0a0a0a"><span class="level-num">Level 5</span><span class="level-emoji">🏭</span></div>
-    <div class="level-body">
-      <div class="level-title">The Dark Factory : "Specs in, software out"</div>
-      <div class="level-meta"><span class="lm-label">Our role:</span><span class="lm-val">Domain expert only</span><span class="lm-label">AI's role:</span><span class="lm-val">Entire software lifecycle</span><span class="lm-label">Bottleneck:</span><span class="lm-val">Organisational trust</span></div>
-    </div>
-  </div>
+<div class="tbl-wrap">
+<table>
+  <thead><tr><th>Level</th><th>Driving (Car Analogy)</th><th>Programming Equivalent</th></tr></thead>
+  <tbody>
+    <tr><td><strong>0</strong></td><td>🚗 <strong>Your parents' Volvo</strong> — Manual driving. Every input is yours.</td><td>AI does autocomplete/search. Human writes and approves every line.<br><em>Bottleneck: Typing speed</em></td></tr>
+    <tr><td><strong>1</strong></td><td>🚦 <strong>Lane Assist + Cruise Control</strong> — Driver sets cruise speed, rest all manual.</td><td>AI helps with specific tasks (boilerplate, unit tests). Human directs what to do.<br><em>Bottleneck: Rate of task assignment</em></td></tr>
+    <tr><td><strong>2</strong></td><td>🛣️ <strong>Highway Autopilot</strong> — Hands on wheel, AI handles lane and speed.</td><td>AI generates most of the code as an interactive pair programmer. Human reviews and approves.<br><em>Bottleneck: Context provided</em></td></tr>
+    <tr><td><strong>3</strong></td><td>🚕 <strong>Waymo with Safety Driver</strong> — Eyes off, but ready to take over.</td><td>AI acts as senior developer doing the building. Human manages and reviews.<br><em>Bottleneck: Human review speed</em></td></tr>
+    <tr><td><strong>4</strong></td><td>🤖 <strong>Robotaxi</strong> — No driver. You set destination, car figures it out.</td><td>AI runs the full dev team of agents. Human writes specs and checks results.<br><em>Bottleneck: Spec quality</em></td></tr>
+    <tr><td><strong>5</strong></td><td>🏭 <strong>Dark Factory</strong> — No humans needed. Runs 24/7 in darkness.</td><td>AI runs end-to-end. Human provides domain expertise only.<br><em>Bottleneck: Organizational trust</em></td></tr>
+  </tbody>
+</table>
 </div>
 
-<h2>Level 0 — Solo Craftsperson: We Write Everything</h2>
-<p>At this level, every line of code that exists is one we typed yourself. We might occasionally copy a snippet from ChatGPT or let our editor auto-complete a variable name — but fundamentally, we are the sole author. In a world where AI can generate entire features in minutes, writing everything manually is like insisting on hand-drawing maps when GPS exists. It is not wrong, but it is increasingly costly.</p>
+<h2>Level 0 — Manual: We write everything, little help of autocomplete</h2>
+<p>At this level, every line of code that exists is one we typed ourselves. We might occasionally copy a snippet from ChatGPT or let our editor auto-complete a variable name — but fundamentally, we are the sole author. In a world where AI can generate entire features in minutes, writing everything manually is like insisting on hand-drawing maps when GPS exists. It is not wrong, but it is increasingly costly.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The invisible cost here is opportunity cost. Every hour spent on boilerplate code, routine tests, or repetitive fixes is an hour not spent on the creative and strategic work only we can do.</div>
 
-<h2>Level 1 — AI as Assistant: Starting to Delegate</h2>
+<h2>Level 1 — AI coding intern: Helps with specific tasks handed over to it</h2>
 <p>Here, we start handing off the boring stuff. "Write me a unit test for this function." "Add comments to this code." "Convert this JSON to CSV." The AI is fast, it does not complain, and it frees us up for more interesting work. Tools like GitHub Copilot or a chat interface with Claude or ChatGPT live here.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The limitation is that we are still fundamentally a developer doing developer work — just faster. The AI is a tool we pick up and put down. We have not yet changed the nature of our role.</div>
 
-<h2>Level 2 — ADAS Level 2: True Partnership</h2>
+<h2>Level 2 — Jr Developer: As an interactive pair programmer, AI generates most of the code</h2>
 <p>This is where most ambitious developers are living right now, and it genuinely feels incredible. We are not just assigning tasks — we are having a conversation. We describe what we want, the AI drafts it, we refine it together, it notices problems we missed, we challenge its assumptions. It is the closest thing to having an expert collaborator available 24 hours a day. Tools like Cursor, Claude in your IDE, or similar AI-native editors make this feel natural.</p>
 <div class="callout callout-warn"><strong>Watch out:</strong> The danger is that Level 2 feels so good that people stop here permanently. Productivity is up, morale is high, and the work is satisfying. But we are still the rate-limiting factor. If we are not at the keyboard, nothing happens.</div>
 
-<h2>Level 3 — ADAS Level 3: We Become Directors</h2>
-<p>At Level 3, we stop writing code and start reviewing it — at scale. Our AI agents are running multiple tasks simultaneously. We spend our days looking at diffs (the record of what changed), approving or rejecting suggestions, and redirecting when things go off track. For many people, this feels like a step backwards. We traded the pleasure of building for the cognitive exhaustion of managing.</p>
+<h2>Level 3 — Manager: AI acts as senior developer, human manages and reviews</h2>
+<p>At Level 3, we stop writing code and start reviewing it — at scale. Our AI agents are running multiple tasks simultaneously. We spend our days looking at diffs (the record of what changed), approving or rejecting suggestions, and redirecting when things go off track. For many people, this feels like a step backwards. we traded the pleasure of building for the cognitive exhaustion of managing.</p>
 <div class="callout callout-warn"><strong>Watch out:</strong> The hidden truth of Level 3 is that almost everyone gets stuck here — not because of the tools, but because of habits and process. To go further, we need something to change about how we communicate requirements and expectations. That is where the frameworks we discuss later come in.</div>
 
-<h2>Level 4 — ADAS Level 4: We Write the Brief, Not the Code</h2>
+<h2>Level 4 — PM: AI runs the full dev team of agents, human writes specs and checks results</h2>
 <p>At Level 4, we write a spec — a clear description of what we want built. We debate it with the AI, refine the plan, set constraints and schedules. Then we step away. Hours later, we come back and check whether the tests passed. This is not hypothetical: a growing number of practitioners, including Dan Shapiro himself, are operating at this level today.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The mental shift required to reach Level 4 is significant. We stop thinking like a developer and start thinking like a product owner. Our most valuable skill becomes the ability to describe, with precision and without ambiguity, what we want and why.</div>
 
-<h2>Level 5 — The Dark Factory: Autonomous Software Production</h2>
+<h2>Level 5 — Dark Factory: AI runs end-to-end, human provides domain expertise only</h2>
 <p>Level 5 is named after the Fanuc Dark Factory — a real manufacturing plant in Japan staffed entirely by robots, running in darkness because humans are neither needed nor present. In software terms, a small team (sometimes as few as two or three people) authors specifications, and an autonomous pipeline takes those specs and produces tested, deployable software — without ongoing human involvement.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> This is not science fiction. It exists today, at small scale, in a handful of pioneering teams. The technology is ready. What most organisations lack is the accumulated discipline — the shared language, the structured documentation habits, the trust — to make it work reliably.</div>
 
@@ -387,7 +356,7 @@ Not sure what to do next? Just run <code>/bmad-help</code> at any point — it i
       <a class="fb-btn ghost" href="https://github.com/AvonS/avons.github.io/discussions" target="_blank">💬 Start a Discussion</a>
     </div>
     <p class="fb-email">
-      Prefer email? Reach out at <a href="/cdn-cgi/l/email-protection#7514031a1b0619141706351218141c195b161a18"><span class="__cf_email__" data-cfemail="9effe8f1f0edf2fffceddef9f3fff7f2b0fdf1f3">[email&#160;protected]</span></a> &nbsp;·&nbsp;
+      Prefer email? Reach out atavonslabs@gmail.com &nbsp;·&nbsp;
       Follow <a href="https://github.com/avonS" target="_blank">github.com/avonS</a> for future updates and related work in agentic engineering.
     </p>
   </div>

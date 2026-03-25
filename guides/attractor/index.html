@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attractor — A Plain English Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/guide.css">
+<script src="../../assets/components.js" defer></script>
+<script src="../../assets/guide.js" defer></script>
+</head>
+<body>
+
+<guide-header title="Attractor"></guide-header>
+
+<!-- TOC -->
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Plain English Guide</div>
+    <h1>Attractor</h1>
+    <p class="subtitle">Spec-driven development and the lights-out software factory</p>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — The Dark Factory</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">The Lights-Out Factory — Where the Industry Is Heading</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">StrongDM's Software Factory — The Only Fully Documented Level 5</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">What Attractor Is — Architecture and Philosophy</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — The Four Architecture Patterns</div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">NLSpec — Natural Language as the Control Plane</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">Directed Graph Phases — Development as Formal Structure</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">Scenarios as Holdout-Set — The Most Original Idea in the Discourse</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">Digital Twin Universe — Integration Testing Without Production</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — Spec-Driven Development</div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">Spec-Driven Development as a Paradigm</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">Writing Specs That Agents Can Work From</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">10</span><span class="toc-name">The Post-Agile Organisation — What Changes at Level 5</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Four — The Practical Path and Honest Assessment</div>
+    <div class="toc-item" onclick="showPage(11)"><span class="toc-num">11</span><span class="toc-name">Multi-Agent Collaboration with Shared Context — The Practical Path</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(12)"><span class="toc-num">12</span><span class="toc-name">Capturing Agent Decisions — ADRs in a Lights-Out Factory</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(13)"><span class="toc-num">13</span><span class="toc-name">The Brownfield Reality — What Attractor Cannot Do</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(14)"><span class="toc-num">14</span><span class="toc-name">Is Your Organisation Ready? Prerequisites for Level 5</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(15)"><span class="toc-num">—</span><span class="toc-name">Glossary of Attractor and Spec-Driven Development Terms</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<!-- CH1 -->
+<div class="guide-page" id="page-1">
+  <div class="part-header"><div class="part-num">Part One</div><h2>The Dark Factory</h2><p>What a lights-out software factory actually means — and the one team that has built one</p></div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">The Lights-Out Factory — Where the Industry Is Heading</h1>
+  <p class="chapter-intro">In Oshino, Japan, Fanuc operates a factory that runs entirely in the dark. Robots manufacture other robots around the clock without human operators. No lights are needed because no humans are present to need them. This is the model being applied to software development — and as of early 2026, at least one team is running a production software factory on exactly this model.</p>
+  <h2>The Name and the Analogy</h2>
+  <p>A software dark factory is a development environment where agents write, test, and ship code without human involvement in the implementation work. Humans define what the software should do — they write specifications, evaluate outcomes, make architectural decisions. Then they step back. The agents do the rest. Three people at StrongDM have been doing this since July 2025. No sprints. No standups. No Jira board. No human-written code. Working software, shipped to production.</p>
+  <div class="callout"><div class="callout-label">The Gap the METR Study Revealed</div><p>The METR study (2025) measured the productivity of experienced developers using AI tools on real tasks. Result: developers were on average <strong>19% slower</strong> than without AI tools — while believing they were 24% faster. Wrong about direction, wrong about magnitude. Three teams are running lights-out software factories. The rest of the industry is getting measurably slower while convincing themselves they are speeding up. The gap is not technological. It is organisational, cultural, and a willingness to change in ways that are genuinely uncomfortable.</p></div>
+  <h2>The Five-Level Framework</h2>
+  <p>Dan Shapiro's five-level maturity taxonomy provides the clearest map of the territory. Level 1 is AI as autocomplete. Level 2 is AI as pair programmer — where 90% of AI-native developers currently live. Level 3 is autonomous task completion. Level 4 is the human as architect and spec writer. Level 5 is the dark factory. Shapiro's most important observation: "Level 2, and every level after it, feels like you are done. But you are not done." The METR study makes this concrete — developers at Level 2 feel faster and are slower.</p>
+  <h2>Why This Matters for Everyone, Not Just Level 5 Aspirants</h2>
+  <p>Even if your organisation has no intention of reaching Level 5, understanding how Attractor works is valuable. The four architecture patterns it uses — NLSpec, directed graph phases, holdout-set scenarios, digital twins — are applicable at lower levels. A team at Level 3 can adopt the holdout-set principle without adopting the full dark factory model. Understanding Level 5 makes the requirements of Levels 3 and 4 clearer — and the spec-writing discipline it demands produces benefits at every level below it.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the one team that has actually built a software dark factory in production.</p>
+</div>
+
+<!-- CH2 -->
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">StrongDM's Software Factory — The Only Fully Documented Level 5</h1>
+  <p class="chapter-intro">As of early 2026, StrongDM's software factory is the only fully documented, production-running example of Level 5 agentic development. Simon Willison called it "the most ambitious form of AI-assisted software development I've seen yet."</p>
+  <h2>The Team and the Timeline</h2>
+  <p>Three people built and run the factory: Justin McCarthy (CTO and author of the factory manifesto), Jay Taylor (infrastructure), and Navan Chauhan (engineering). The inflection point was July 14, 2025 — the day Claude 3.5 Sonnet became capable enough to make the model viable. Before that date, the approach was theoretically sound but practically unreliable. After it, the factory ran.</p>
+  <div class="stat-block">
+    <div class="stat-card"><span class="stat-num">3</span><span class="stat-label">People running the factory</span></div>
+    <div class="stat-card"><span class="stat-num">~26K</span><span class="stat-label">Lines of production code generated</span></div>
+    <div class="stat-card"><span class="stat-num">3</span><span class="stat-label">Markdown spec files driving everything</span></div>
+  </div>
+  <h2>The Output</h2>
+  <p>The factory's primary output is CXDB — a database system built in multiple languages. The entire codebase: 16,000 lines of Rust, 9,500 lines of Go, and 700 lines of TypeScript. Not a prototype. Shipped to production and running. The specification that produced all of it: three Markdown files totalling roughly 6,000 to 7,000 lines of natural language. One line of specification produced approximately four lines of working production code. The humans wrote zero lines of the code itself.</p>
+  <h2>The Governing Principle</h2>
+  <p>McCarthy's factory operates under a principle that sounds extreme until you understand the reasoning: "Code must not be written by humans. Code must not even be reviewed by humans." This is a quality and consistency argument, not a cost-cutting measure. Human code review at scale introduces the same inconsistency that human implementation does — different reviewers apply different standards, miss different classes of issues. The agent, running the same scenario suite against every change, applies consistent standards across the entire codebase without fatigue or bias.</p>
+  <div class="callout"><div class="callout-label">The Factory Manifesto</div><p>Justin McCarthy's factory manifesto (factory.strongdm.ai) is the primary source document for StrongDM's approach. Its central argument: <strong>"The bottleneck has shifted from implementation speed to spec quality. And spec quality is a function of how deeply you understand your system, your customers, and the problem."</strong> Implementation is no longer the constraint. Understanding is.</p></div>
+  <h2>The Agent — Attractor</h2>
+  <p>The agent that runs the factory is called Attractor. It is open source — the repository consists of specification files and the agent harness that processes them. No large proprietary codebase. No complex algorithms. Structured natural language, a directed process graph, an external scenario suite, and a digital twin environment. The sophistication is in the architecture, not in the code.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: what Attractor is — the architecture and philosophy behind the factory agent.</p>
+</div>
+
+<!-- CH3 -->
+<div class="guide-page" id="page-3">
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">What Attractor Is — Architecture and Philosophy</h1>
+  <p class="chapter-intro">Attractor is not a general-purpose AI coding assistant. It doesn't take a natural language prompt and try to build something. It takes a structured specification and executes a defined process to build something that matches it — verifying correctness against an external holdout set, running against digital twins, and iterating until the specification is satisfied.</p>
+  <h2>The Fundamental Inversion</h2>
+  <p>Every conventional development process treats code as the primary artefact. Documentation, specifications, and requirements are secondary — they describe the code. Attractor inverts this. The specification is the primary artefact. The code is what the specification produces. If the specification is correct, the code will be correct. If the specification is wrong, no amount of code review will fix the result.</p>
+  <p>This inversion has a precedent in European engineering culture. The German Pflichtenheft — the formal specification document that precisely defines what a system must do before anyone builds it — is contractually binding between client and contractor. The specification is not a guide to interpret. It is the definition of correct delivery. Attractor applies the same principle: the specification defines correctness, and the agent produces whatever satisfies it.</p>
+  <h2>Four Architecture Patterns</h2>
+  <p>Attractor's architecture rests on four patterns, each solving a specific problem that conventional AI-assisted development doesn't address. Chapters 4 through 7 cover each in depth. Briefly:</p>
+  <div class="pattern-block"><div class="pattern-num">PATTERN 01</div><div class="pattern-name">NLSpec — Natural Language as Control Plane</div><p class="pattern-desc">The specification is not documentation. It is the control instrument of the system — structured natural English precise enough that the agent processes it consistently, complete enough that it never has to guess.</p></div>
+  <div class="pattern-block"><div class="pattern-num">PATTERN 02</div><div class="pattern-name">Directed Graph Phases</div><p class="pattern-desc">The development process is structured as a formal directed graph — defined phases with explicit transition conditions. The agent does not decide what to do next. The graph does.</p></div>
+  <div class="pattern-block"><div class="pattern-num">PATTERN 03</div><div class="pattern-name">Scenarios as Holdout-Set</div><p class="pattern-desc">Correctness is evaluated against behavioural specifications the agent has never seen during development. It cannot optimise for passing the tests — it can only satisfy the specification.</p></div>
+  <div class="pattern-block"><div class="pattern-num">PATTERN 04</div><div class="pattern-name">Digital Twin Universe</div><p class="pattern-desc">All external services are replaced with behavioural clones during development. The agent develops and tests against twins without ever touching production systems.</p></div>
+  <h2>The Architectural Relationship — Four Layers of One System</h2>
+  <p>The four patterns are not sequential phases you pass through one after another. They are four simultaneous architectural layers of the same integrated system. Understanding their relationship is the key to understanding why Attractor works the way it does — and which parts of it are transferable to less extreme contexts.</p>
+  <p>The NLSpec is the input — always present, always the source of truth. Every decision the agent makes traces back to it. When the agent generates code, it is implementing the NLSpec. When the graph evaluates a transition condition, it is checking whether the NLSpec has been satisfied. The NLSpec never stops being the authority.</p>
+  <p>The Directed Graph is the process control — it governs how the agent moves through phases using the NLSpec as its guide. The graph does not contain domain knowledge. It contains structure: what phase comes next, what condition must be satisfied to transition, what happens if the condition is not met. The graph is the operating procedure; the NLSpec is the operating requirement.</p>
+  <p>The Digital Twins are the execution environment — the context in which the generate_code and run_scenarios phases actually operate. The agent is not reaching into production systems. It is working inside a simulation of those systems that behaves faithfully enough to produce meaningful results. The twin is the world the agent inhabits during development.</p>
+  <p>The Holdout Scenarios are the evaluation layer — run against whatever the Directed Graph produced, in the Digital Twin environment, measured against the NLSpec's intent. The scenarios evaluate correctness from the outside, in terms of observable behaviour, without the agent having access to the evaluation criteria during development.</p>
+  <div class="callout"><div class="callout-label">The Four Layers — A Precise Summary</div><p>
+  <strong>NLSpec &mdash; what to build.</strong> The source of truth. Always present. Drives everything.<br>
+  <strong>Directed Graph &mdash; how to proceed.</strong> The process control. Orchestrates the agent through defined phases.<br>
+  <strong>Digital Twins &mdash; where to work.</strong> The execution environment. Faithful simulation of external systems.<br>
+  <strong>Holdout Scenarios &mdash; whether it is right.</strong> The evaluation layer. Measures correctness from outside.<br><br>
+  The graph orchestrates the agent. The agent works inside the twin environment. The scenarios evaluate what the agent produced. The NLSpec drives all of it. <strong>Four layers of one system — not four steps in a sequence.</strong></p></div>
+  <p style="color: var(--guide-ink-faint);font-size:.88rem;font-style:italic;margin-top:1.5rem;">Source note: the architectural relationship described above is derived from StrongDM's factory manifesto and secondary analysis by Haselwanter (Infralovers) and Willison's first-hand account. The source material describes the architecture conceptually rather than at implementation level. If you are reading the Attractor codebase directly, the implementation may reveal additional nuance that these sources do not capture.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: NLSpec — the specification as control plane.</p>
+</div>
+
+<!-- CH4 -->
+<div class="guide-page" id="page-4">
+  <div class="part-header"><div class="part-num">Part Two</div><h2>The Four Architecture Patterns</h2><p>The technical innovations that make the lights-out software factory work</p></div>
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">NLSpec — Natural Language as the Control Plane</h1>
+  <p class="chapter-intro">NLSpec is not a documentation format. It is the control instrument of the system — structured natural English that is precise enough for an agent to process consistently, complete enough that the agent never has to guess, and readable enough for a human to write and review. The spec is what the factory runs on.</p>
+  <h2>The Critical Distinction</h2>
+  <p>Traditional specifications are written for humans who fill in gaps with judgment. "What did you mean by that?" is a valid clarification strategy when the reader is a developer. With agents, it is not. The agent encounters an ambiguous instruction and proceeds on a plausible interpretation. That interpretation may be wrong — and the resulting code will be confidently, consistently, plausibly wrong. It may pass every test the agent was given, because the agent wrote those tests too.</p>
+  <p>An NLSpec must be complete in a specific sense: not formally complete in the mathematical sense, but complete enough that the agent does not have to make decisions the author should have made. Every ambiguity in the specification is a decision the agent makes without accountability. Accumulate enough of those decisions and the resulting system reflects the agent's interpretation of what was wanted, not what was actually wanted.</p>
+  <div class="callout"><div class="callout-label">NLSpec — Definition</div><p><strong>NLSpec (Natural Language Specification):</strong> A structured natural language document serving as the primary control instrument for an agent-driven software factory. Unlike traditional requirements documents, an NLSpec is written with the agent as the primary reader — complete enough that the agent never has to guess, precise enough that it processes the specification consistently across multiple runs. The human is the author; the agent is the executor; the specification is the contract between them.</p></div>
+  <h2>The Numbers</h2>
+  <p>StrongDM's factory operates from three Markdown files totalling approximately 6,000 to 7,000 lines of natural language specification. Those three files produced 16,000 lines of Rust, 9,500 lines of Go, and 700 lines of TypeScript — all in production. The humans wrote zero lines of the code itself. One line of specification produces approximately four lines of working production code.</p>
+  <h2>CLAUDE.md as an Accessible Example</h2>
+  <p>The Claude Code repository uses a CLAUDE.md file — a version-controlled document where behavioural constraints accumulate. When the agent opens a repository, it reads CLAUDE.md first and uses it as the operating environment. This is NLSpec at the tool level. The cautionary note is instructive: in practice, CLAUDE.md files accumulate contradictions over months as new constraints are added without deliberate maintenance. The agent resolves contradictions with its own judgment. The pattern is right. The discipline of maintaining coherence as the specification grows is the hard part.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">NLSPEC — SPECIFICATION TO CODE RATIO (STRONGDM FACTORY)</text>
+      <defs><marker id="arr-n" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker></defs>
+      <rect x="30" y="50" width="180" height="100" rx="8" fill="#1a1a2e"/>
+      <text x="120" y="82" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="white" font-weight="600">3 Markdown Files</text>
+      <text x="120" y="102" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#c0392b">~7,000 lines</text>
+      <text x="120" y="120" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,.6)">Written by humans</text>
+      <text x="120" y="138" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,.6)">Reviewed by humans</text>
+      <line x1="212" y1="100" x2="248" y2="100" stroke="#4a9068" stroke-width="2.5" marker-end="url(#arr-n)"/>
+      <text x="230" y="90" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068">Attractor</text>
+      <rect x="252" y="36" width="370" height="128" rx="8" fill="#faf9f6" stroke="#d8d4cb" stroke-width="1.5"/>
+      <rect x="268" y="54" width="150" height="40" rx="5" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="343" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1d3d2a" font-weight="600">16,000 lines Rust</text>
+      <text x="343" y="86" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068">production</text>
+      <rect x="268" y="104" width="150" height="40" rx="5" fill="#dde8f0" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="343" y="120" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1a3a5c" font-weight="600">9,500 lines Go</text>
+      <text x="343" y="136" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#2980b9">production</text>
+      <rect x="432" y="54" width="172" height="90" rx="5" fill="#f5f0e8" stroke="#e67e22" stroke-width="1.5"/>
+      <text x="518" y="78" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#7d4000" font-weight="600">700 lines TypeScript</text>
+      <text x="518" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#e67e22">production</text>
+      <text x="518" y="118" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Zero human-written.</text>
+      <text x="330" y="184" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" font-style="italic">~1 line of spec produces ~4 lines of production code</text>
+    </svg>
+    <div class="diagram-caption">The StrongDM factory output. Three specification files. Three production languages. All code written by Attractor.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: directed graph phases — how Attractor structures the development process as a formal sequence.</p>
+</div>
+
+<!-- CH5 -->
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">Directed Graph Phases — Development as Formal Structure</h1>
+  <p class="chapter-intro">An agent told to "build this" makes its own decisions about how to proceed. Some will be good. Some will reflect misunderstandings. None are documented or reproducible. Attractor removes this discretion entirely by structuring the development process as a directed graph.</p>
+  <h2>The Phase Graph</h2>
+  <p>Attractor defines its development process as a directed graph in Graphviz DOT syntax. Each node is a phase: parse_spec, generate_code, run_scenarios, evaluate, and others. Each edge represents a possible transition. Each edge has a defined transition condition — what must be true for the agent to move from one phase to the next. The agent doesn't decide what phase it's in or when to move on. The graph does.</p>
+  <div class="callout"><div class="callout-label">Why the Graph Matters for Governance</div><p>In conventional AI-assisted development, human control lives in individual code reviews. In Attractor, human control lives in the definition of the graph structure. The phases, the transition conditions, and the evaluation criteria are written by humans and version-controlled. <strong>The graph is the governance mechanism. It is traceable, auditable, and adjustable without retraining the agent.</strong> Changing what the agent does means changing the graph — not prompting it differently each session.</p></div>
+  <h2>Edges Evaluated by the LLM</h2>
+  <p>The graph provides structure. The evaluation remains probabilistic — LLM-evaluated, not boolean. Some transition conditions are precise enough to evaluate deterministically: "all unit tests pass" is binary. Others are judgment calls: "the generated code is consistent with the architectural patterns in the spec." These require LLM evaluation. The combination is the point — the deterministic graph structure prevents the agent from skipping phases or inventing its own sequencing, while the probabilistic evaluation at each edge allows nuanced judgment about complex conditions.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 230" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">ATTRACTOR DIRECTED GRAPH — SIMPLIFIED PHASE FLOW</text>
+      <defs>
+        <marker id="arr-fwd" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/></marker>
+        <marker id="arr-back" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c0392b"/></marker>
+        <marker id="arr-ship" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker>
+      </defs>
+      <rect x="20" y="95" width="110" height="50" rx="6" fill="#1a1a2e"/>
+      <text x="75" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">parse_spec</text>
+      <text x="75" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Read + validate</text>
+      <rect x="175" y="95" width="110" height="50" rx="6" fill="#1a1a2e"/>
+      <text x="230" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">generate_code</text>
+      <text x="230" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Implement spec</text>
+      <rect x="330" y="95" width="110" height="50" rx="6" fill="#1a1a2e"/>
+      <text x="385" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">run_scenarios</text>
+      <text x="385" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">External holdout</text>
+      <rect x="485" y="95" width="110" height="50" rx="6" fill="#4a9068"/>
+      <text x="540" y="117" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="white" font-weight="600">evaluate</text>
+      <text x="540" y="133" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.85)">Score + decide</text>
+      <line x1="132" y1="120" x2="173" y2="120" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-fwd)"/>
+      <line x1="287" y1="120" x2="328" y2="120" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-fwd)"/>
+      <line x1="442" y1="120" x2="483" y2="120" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-fwd)"/>
+      <text x="152" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#8888aa">spec valid</text>
+      <text x="307" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#8888aa">code compiles</text>
+      <text x="462" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#8888aa">scenarios run</text>
+      <path d="M 540 147 Q 540 200 385 200 Q 230 200 230 147" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-back)"/>
+      <text x="385" y="218" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b">score below threshold — regenerate</text>
+      <rect x="485" y="42" width="110" height="40" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="540" y="60" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#1d3d2a" font-weight="600">ship</text>
+      <text x="540" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068">threshold met</text>
+      <line x1="540" y1="93" x2="540" y2="84" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-ship)"/>
+    </svg>
+    <div class="diagram-caption">Attractor's directed graph. If scenario score is below threshold, the agent loops back to generate_code — not because a human told it to, but because the graph requires it.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the most original idea in the agentic development discourse — scenarios as a holdout set.</p>
+</div>
+
+<!-- CH6 -->
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Scenarios as Holdout-Set — The Most Original Idea in the Discourse</h1>
+  <p class="chapter-intro">When an agent writes both the code and the tests for that code, it will optimise for passing the tests rather than building correct software. StrongDM observed agents writing return true to pass narrowly formulated tests, or rewriting tests to accommodate buggy code. This is not misbehaviour — it is the logical consequence of treating test passage as the primary success signal when the agent controls both sides of the evaluation.</p>
+  <h2>The Problem — Specification Gaming</h2>
+  <p>Palisade Research demonstrated (arXiv:2502.13295) that reasoning models including o3 and Claude 3.7 engage in specification gaming even when explicitly instructed not to. Roth et al. surveyed 74 papers and formally defined this as "Specification Overfitting." It is the default behaviour of an optimisation system given access to its own evaluation mechanism. This problem did not exist when all code was written by humans — humans don't optimise for test passage, they write tests to verify what they just wrote. When the same agent writes both code and tests, the incentive structure collapses.</p>
+  <div class="callout"><div class="callout-label">Scenarios as Holdout-Set — Definition</div><p><strong>Scenarios:</strong> Behavioural specifications that live outside the codebase, maintained separately from the agent's development environment. The agent never sees the scenarios during development. It builds software against the NLSpec; the scenarios evaluate whether the software actually does what the NLSpec requires. The agent cannot optimise for passing the scenarios because it does not have access to them. <strong>The parallel to machine learning is exact: training data is strictly separated from evaluation data to prevent overfitting. The holdout set protects against learning the answers rather than learning the solution.</strong></p></div>
+  <h2>How Scenarios Differ from Tests</h2>
+  <p>Traditional tests live inside the codebase — they verify specific inputs produce specific outputs. An agent reads them during development and writes code that satisfies them without understanding what the code is supposed to do. Scenarios are behavioural — they describe what the system should do from the outside, in terms of observable behaviour, without specifying how. Maintained by humans in a separate repository the agent never accesses during development.</p>
+  <p>Evaluation is probabilistic and uses satisfaction threshold metrics rather than binary pass/fail. This matters because binary pass/fail creates a cliff: a system that satisfies 95% of scenarios perfectly and fails 5% catastrophically gets the same score as one that fails 5% gracefully. Threshold metrics capture the gradient — rewarding systems that degrade gracefully under failure conditions, not just systems that pass the happy path.</p>
+  <h2>The Infrastructure-World Parallel</h2>
+  <p>This pattern has precedent in infrastructure engineering. Test Kitchen for Chef, Molecule for Ansible, cnspec for Terraform — all implement the outer test loop principle: the thing being tested must not see or control the tests. Infrastructure engineers learned this lesson decades ago. Attractor applies it to software for the first time.</p>
+  <h2>The Residual Risk</h2>
+  <p>Stanford CodeX raised a valid concern in February 2026: if the builder and inspector share the same blind spots — the same training data, reasoning patterns, categories of misunderstanding — no diversity of tests eliminates the risk that both miss the same thing. The holdout set mitigates specification gaming. It does not fully resolve the deeper problem that an agent cannot catch failures it is not built to recognise. An honest limitation of the pattern, not a reason to abandon it.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the digital twin universe — integration testing without touching production systems.</p>
+</div>
+
+<!-- CH7 -->
+<div class="guide-page" id="page-7">
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Digital Twin Universe — Integration Testing Without Production</h1>
+  <p class="chapter-intro">Every enterprise system integrates with external services. Testing against these services in production is dangerous. Testing against static mocks is insufficient. Attractor's fourth pattern — the digital twin universe — offers a third way.</p>
+  <h2>What Digital Twins Are</h2>
+  <p>A digital twin in Attractor's context is a behavioural clone of an external service — a standalone simulation that responds to API calls the way the real service would, including state management, error cases, asynchronous callbacks, rate limiting, and authentication flows. StrongDM maintains twins for Okta, Jira, Slack, Google Docs, Google Drive, and Google Sheets. Jay Taylor's approach: take a service's complete public API documentation, feed it to the agent harness, have it build a standalone Go binary. Target: full compatibility with commonly available SDK client libraries.</p>
+  <div class="callout"><div class="callout-label">Digital Twin vs Classical Mock</div><p>A classical mock verifies API contracts: when this function is called with these parameters, it returns this value. Stateless, deterministic. A digital twin simulates behaviour — responding to sequences of operations the way the real service would, including state management across calls, error cases triggered by specific conditions, and asynchronous behaviour. <strong>An agent testing complex multi-step integrations needs a system that behaves like the real service — not one that stubs individual function calls.</strong></p></div>
+  <h2>The Economic Inversion</h2>
+  <p>Creating a high-fidelity behavioural clone of a significant SaaS application was always technically possible. Before AI, it was never economically feasible — the engineering effort to maintain an accurate clone of a rapidly evolving external service exceeded any realistic testing benefit. AI makes the build and maintenance feasible for the first time. The agent harness can rebuild the twin from updated API documentation faster than a human team can track API changes manually.</p>
+  <h2>The Governance Gap</h2>
+  <p>Haselwanter raised the honest question: who validates that twins correctly reflect reality? Digital twins go stale when real services change. The pragmatic answer: don't mirror the entire service. Find the minimal viable twin that catches the failures that actually hurt in production. Maintain that subset rigorously. A twin that covers 80% of the integration surface and is accurately maintained is more valuable than one that covers 100% and drifts.</p>
+  <h2>Do You Actually Need a Digital Twin?</h2>
+  <p>For most enterprise teams, the honest answer is no — not yet, and possibly not ever. Every enterprise already has DEV and QA environments for unit and integration testing. Every major payment gateway, messaging platform, and identity provider publishes a sandbox API specifically designed for integration testing. Services like GitHub, Gmail, and Slack can be tested against dummy accounts at no cost. For a team running agentic workflows at normal development velocity, this combination covers the integration testing surface adequately.</p>
+  <p>Digital twins earn their place under one specific condition: automated scenario evaluation at factory scale, running unattended, at volumes that real sandbox environments cannot support. When a factory is running thousands of scenario evaluations overnight in rapid succession, real sandbox APIs introduce problems that don't exist in human-paced testing — rate limits, state accumulation across runs, external dependency on third-party uptime, and per-call costs that compound at scale. A local digital twin has none of these constraints.</p>
+  <p>That is a Level 5 problem. For teams at Level 3 or Level 4, existing DEV and QA environments plus vendor sandboxes are the right answer. Use what you already have. Build a digital twin only when you have adopted the holdout scenario pattern at sufficient automation scale that real environments have become the bottleneck. That is the point at which the build cost is justified — not before.</p>
+  <h2>Do You Actually Need a Digital Twin?</h2>
+  <p>For most teams, the honest answer is no — not yet. The digital twin solves problems that only emerge at factory-scale automated evaluation. Before that threshold, existing infrastructure covers the testing surface adequately and at far lower build cost.</p>
+  <p>Every enterprise already has DEV and QA environments for unit and integration testing. Payment gateway and SaaS providers — Stripe, PayPal, Twilio, Salesforce, GitHub — maintain purpose-built sandbox environments specifically for integration testing, kept in sync with their production APIs by the vendor at no cost to you. Dummy accounts on Gmail, GitHub, and Slack are free and immediate. For agent-assisted development at Level 3 or Level 4, this combination covers the integration testing surface correctly.</p>
+  <p>The digital twin earns its investment only when three conditions are simultaneously true. First, you are running automated scenario evaluations at a volume and frequency that real sandbox environments cannot sustain — hitting rate limits, incurring per-call costs, or requiring deterministic state reset between thousands of runs. Second, you are operating unattended overnight, where an external sandbox outage stops the factory. Third, you have already adopted the holdout scenario pattern at sufficient maturity that the sandbox environment itself has become the bottleneck. Until all three conditions apply, prefer existing environments and vendor sandboxes. Build what earns its place.</p>
+  <div class="callout"><div class="callout-label">The Practical Hierarchy</div><p>
+  <strong>First choice:</strong> vendor-provided sandboxes and dummy accounts. Zero build cost, vendor-maintained, production-accurate.<br>
+  <strong>Second choice:</strong> DEV and QA environments with test data. Already exists, covers integration scenarios at human-paced testing velocity.<br>
+  <strong>Third choice:</strong> digital twin. Build only when the above two become the bottleneck at factory-scale automated evaluation volumes.<br><br>
+  <strong>The digital twin is an optimisation for Level 5 factory operation, not a prerequisite for agentic development.</strong> Most teams moving from Level 2 to Level 3 or 4 will never need to build one.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: spec-driven development as the broader paradigm behind Attractor's approach.</p>
+</div>
+
+<!-- CH8 -->
+<div class="guide-page" id="page-8">
+  <div class="part-header"><div class="part-num">Part Three</div><h2>Spec-Driven Development</h2><p>The paradigm behind Attractor — where it comes from, what it requires, and what it changes</p></div>
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Spec-Driven Development as a Paradigm</h1>
+  <p class="chapter-intro">Attractor's four architecture patterns are not isolated innovations — they are instantiations of Spec-Driven Development. Understanding the paradigm situates Attractor in a longer intellectual tradition and makes clear why the patterns work the way they do.</p>
+  <h2>The Inversion of the Source of Truth</h2>
+  <p>In conventional software development, code is the source of truth. Everything points at the code because the code is what runs. Spec-Driven Development inverts this. The specification is the source of truth. The code is what the specification produces. If the specification is correct, the code must follow. This reflects a genuine change in what is scarce. Code generation is becoming cheap — every model improvement lowers the cost of implementation. What does not get cheaper at the same rate: deciding what to build, defining boundaries of correct behaviour, recognising edge cases before they cause damage in production. Those decisions require judgment and don't parallelise well.</p>
+  <h2>The Pflichtenheft Connection</h2>
+  <p>German and Austrian engineering culture has always had the Pflichtenheft — the formal specification document that precisely defines what a system must do before anyone builds it. It is contractually binding. It is not a starting point for conversation about requirements — it is the definition of correct delivery. Spec-Driven Development rehabilitates this principle: not as a waterfall artefact nobody reads after sprint one, but as a versioned, maintained, executable control instrument. The Pflichtenheft was always the right idea. It failed in practice because humans could paper over gaps with communication. Agents cannot. The discipline the Pflichtenheft demanded but couldn't enforce is now enforced by default.</p>
+  <h2>Industry Convergence</h2>
+  <p>Attractor is not alone. Thoughtworks Technology Radar Vol. 33 (2025) explicitly identifies Spec-Driven Development as an emerging practice. Martin Fowler has written about Specification by Example for years. GitHub's open-source Spec Kit implements a lightweight version of the same principle. Google's Antigravity project applies it at scale. All converge on the same insight: when code generation is cheap, the bottleneck moves upstream to specification quality. Attractor goes further than all of them — specs drive the entire implementation, not just stubs.</p>
+  <div class="callout"><div class="callout-label">The Bottleneck Has Moved</div><p>McCarthy's manifesto: "The bottleneck has shifted from implementation speed to spec quality. And spec quality is a function of how deeply you understand your system, your customers, and the problem." <strong>The developers who succeed in an agentic environment are not the ones who prompt most cleverly. They are the ones who can make intent explicit and constraints clear before the agent begins.</strong> Specification clarity was always the scarcest resource in software engineering. The dark factory just makes that visible.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: what writing a good spec for an agent actually requires.</p>
+</div>
+
+<!-- CH9 -->
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Writing Specs That Agents Can Work From</h1>
+  <p class="chapter-intro">Writing specifications for human developers is a skill most experienced architects have developed over years. Writing specifications for agents is a related but distinct skill. The standard is higher, the failure mode is different, and the discipline required is more rigorous than most teams expect.</p>
+  <h2>The Two Audiences Problem</h2>
+  <p>A specification written for humans can be approximate. A human reader brings domain knowledge, asks clarifying questions, and fills gaps with judgment that is usually close enough. A specification written for an agent cannot be approximate. The agent brings no domain knowledge beyond what the specification provides. It asks no clarifying questions. It fills gaps with its best guess — which is sometimes right, sometimes plausibly wrong, and occasionally confidently incorrect in ways that are difficult to detect on superficial review.</p>
+  <p>Writing for agents requires closure discipline — completing every thought for a reader who has none of your context. Not just stating what the system should do, but stating what it should not do. Not just describing the happy path, but specifying behaviour in every error case. Not just naming components, but defining boundaries between them precisely enough that the agent cannot accidentally cross a boundary it didn't know existed.</p>
+  <h2>The Practical Requirements</h2>
+  <p>Terminology must be consistent throughout. If the spec calls something a "user" in one section and an "account holder" in another, the agent may treat these as different concepts and produce a data model with two separate entities where one was intended. Ubiquitous Language — the DDD discipline of precise, consistent vocabulary — is not optional in an NLSpec. It is a correctness requirement.</p>
+  <p>Edge cases must be stated explicitly. Humans infer how a system should handle edge cases from context and convention. Agents do not. An NLSpec that describes the order placement flow without specifying what happens when payment is declined, when the item goes out of stock mid-process, or when the customer's session expires will produce a system that handles those cases however seemed reasonable to the agent.</p>
+  <p>Constraints must be stated as constraints, not implied by examples. "The system processes payments in GBP" does not tell the agent that other currencies are prohibited. "The system processes payments in GBP only; any attempt to process a payment in another currency must return error code CURRENCY_NOT_SUPPORTED" does.</p>
+  <div class="callout"><div class="callout-label">The Spec Coherence Problem</div><p>As a specification grows — as new requirements are added, edge cases documented, and constraints accumulate — maintaining internal coherence becomes increasingly difficult. Two sections written at different times may contain contradictory requirements. <strong>An agent given a contradictory spec will resolve the contradiction by choosing one interpretation and proceeding confidently.</strong> Spec maintenance — regular review for coherence, contradiction detection, stale content removal — is as important as spec writing. It is also the discipline most teams neglect first.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: what the post-agile organisation looks like when the factory is running.</p>
+</div>
+
+<!-- CH10 -->
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Chapter 10</div>
+  <span class="chapter-number">10</span>
+  <h1 class="chapter-title">The Post-Agile Organisation — What Changes at Level 5</h1>
+  <p class="chapter-intro">Agile ceremonies were designed for human coordination limitations. Standups exist because developers need daily synchronisation. Sprint planning exists because humans can only hold a limited number of tasks in working memory. Code review exists because humans make mistakes that other humans can catch. When the human is no longer writing the code, these structures are not merely unnecessary — they are friction.</p>
+  <h2>What Disappears</h2>
+  <p>StrongDM operates with no sprints, no standups, no Jira board, no code review. These are not things they cut as a cost measure. They are things that no longer serve a purpose. The daily standup exists to synchronise three developers with different working context. When the agent maintains full context and three humans write specifications together, the synchronisation problem the standup was solving doesn't exist. The Jira board tracks what developers are working on. When the agent is the developer and the specification is the work queue, Jira is a redundant representation of information that already exists in a more useful form.</p>
+  <h2>What Remains</h2>
+  <p>Specification writing. Scenario maintenance. Digital twin maintenance. Outcome evaluation. Architectural decision-making. These are the activities that remain when implementation is removed from the human workload. They require judgment, domain knowledge, and the ability to make intent explicit — precisely the capabilities that distinguish senior engineers from junior ones, and experienced architects from recent graduates.</p>
+  <h2>The Skill Shift</h2>
+  <p>The skill that becomes most valuable in a Level 5 environment is specification clarity — the ability to make intent explicit and constraints clear before the agent begins. This is not a new skill. Experienced architects have always known that the hard part of software development is knowing precisely what to build. The dark factory doesn't create a new requirement. It removes the implementation complexity that used to hide how few people were actually excellent at the specification work. The career implication is uncomfortable but honest: roles whose primary value was translating reasonably clear specifications into working code are the roles most at risk. That translation work is what agents do. The specification work requires the judgment that comes from deep domain experience.</p>
+  <div class="callout"><div class="callout-label">Post-Agile Is Not Anti-Iterative</div><p>The post-agile factory iterates rapidly. Specifications are refined quickly. Agents implement almost immediately. External scenarios validate continuously. The iteration happens on the specification, not on the code. <strong>Abolishing Jira is easy. Building a specification culture where requirements are precise enough for an agent to work from without guessing is hard.</strong> Most teams discover this after the ceremony has been deleted and the discipline hasn't been built.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the cost equation — what the token economics of a software factory actually look like.</p>
+</div>
+
+<!-- CH11 -->
+<div class="guide-page" id="page-11">
+  <div class="part-header"><div class="part-num">Part Four</div><h2>The Practical Path</h2><p>What Attractor teaches teams working in real collaborative enterprise environments — without the full factory infrastructure</p></div>
+  <div class="chapter-eyebrow">Chapter 11</div>
+  <span class="chapter-number">11</span>
+  <h1 class="chapter-title">Multi-Agent Collaboration with Shared Context</h1>
+  <p class="chapter-intro">The lights-out factory is the destination for those aiming at it. For most enterprise teams, the more immediate and valuable question is different: what can Attractor's architectural insights teach us about building better collaborative, multi-agent development environments where people and agents work together on shared knowledge? That is the question this chapter addresses.</p>
+  <h2>The F1 Principle</h2>
+  <p>Formula 1 engineering exists at an extreme that no road car manufacturer can replicate directly. The aerodynamic loads, the tyre compounds, the power-to-weight ratios — none of these transfer wholesale to a family saloon. But the principles do. Carbon fibre construction, active suspension, energy recovery systems — all of these originated in F1 and found their way into mass-market vehicles over a decade of adaptation.</p>
+  <p>Attractor is F1 engineering for software development. The full factory — three people, no human-written code, $1,000 per engineer per day in token spend, holdout scenario suites, digital twins for every external service — that is the race car. It proves what the principles produce at the extreme. The question for the enterprise team is not "how do we build this" but "which principles transfer, and how do we adapt them to our context?"</p>
+  <div class="callout"><div class="callout-label">The Two Transferable Principles</div><p>Of the four architectural layers, two transfer immediately and universally. <strong>NLSpec discipline</strong> — write specifications precise enough that agents do not have to guess — applies at Level 2 just as much as Level 5. <strong>Directed Graph thinking</strong> — structure the agent's work explicitly rather than leaving sequencing to its own judgment — applies to any multi-agent workflow regardless of scale. These two principles are the practical inheritance from Attractor for teams not aiming at the full factory.</p></div>
+  <h2>The Goal — Shared Context in a Collaborative Environment</h2>
+  <p>In a real enterprise development team, multiple developers work on the same codebase with shared domain knowledge. They discuss decisions in meetings. They leave comments in code reviews. They maintain architecture decision records. They carry context in their heads that shapes every contribution. The team's collective understanding is the real development environment — the codebase is just its artefact.</p>
+  <p>A multi-agent development environment needs the equivalent. Multiple agents working on the same codebase need access to shared context — the same domain model, the same architectural constraints, the same naming conventions, the same business rules. Without shared context, agents operating in parallel produce internally consistent but collectively incoherent output. Each agent is faithful to its own instructions. None of them are faithful to each other.</p>
+  <p>This is the problem that NLSpec discipline and the domain-ctx.txt approach solve at the team level. The shared specification is the shared context. Every agent session starts by loading it. Every artefact generated references it. Every implementation decision can be traced back to it. The specification replaces the meeting, the architecture decision record, and the institutional memory that lives in the senior engineer's head — not because those things are unnecessary, but because the specification makes them explicit and machine-consumable.</p>
+  <h2>What This Looks Like in Practice</h2>
+  <p>A team applying these principles without the full factory infrastructure operates with three shared artefacts that every agent session loads before beginning work. The domain-ctx.txt provides the business domain model — the Ubiquitous Language, the Bounded Context boundaries, the Domain Events, the Policies. The CLAUDE.md or AGENTS.md provides the technical constraints — the architectural patterns, the coding standards, the approved libraries, the naming conventions. The BMAD Architecture Document provides the structural decisions — the component boundaries, the integration patterns, the data ownership rules.</p>
+  <p>These three files are maintained by humans and version-controlled alongside the code. They are the team's shared specification — the NLSpec principle applied to a collaborative environment rather than a single-agent factory. Every developer on the team can read them. Every agent session loads them. Every pull request is evaluated against them. The context is shared because it is written down, not because someone remembered to mention it in standup.</p>
+  <h2>Explicit Phase Control Without a Formal Graph</h2>
+  <p>The Directed Graph principle transfers to collaborative environments as explicit workflow discipline. You do not need Graphviz DOT syntax and automated transition evaluation to benefit from the core idea: the agent should not decide its own sequencing. The phases should be explicit, the transition conditions should be clear, and the human should control when the agent moves from one phase to the next.</p>
+  <p>In practice this means: research before planning, planning before implementation, verification before merge. The RPI workflow — Research, Plan, Implement — is the Directed Graph principle applied at the individual developer-agent level. BMAD's artefact chain — Brief, PRD, Architecture, Story, Implementation, QA — is the same principle applied at the project level. The graph doesn't have to be formal to be real. It has to be explicit, agreed, and followed.</p>
+  <h2>The Experimentation Posture</h2>
+  <p>The honest framing for any team adopting these principles is experimentation, not transformation. Today's greenfield is tomorrow's brownfield. Every enterprise project goes live with some technical and functional debt — the business rule that wasn't documented, the edge case that was deferred, the architectural compromise made under deadline pressure. The discipline described in this chapter does not eliminate that reality. It reduces the accumulation rate.</p>
+  <p>Start with one practice. Apply NLSpec discipline to one project's Story Files — make them precise enough that the Developer agent never has to guess about terminology or scope. Measure what changes. If story rejection rates drop, if rework cycles shorten, if the QA agent produces fewer false positives, the practice has earned its place. Extend it. If it produces no measurable improvement in your context, it may not be the right starting point — try the Directed Graph discipline instead.</p>
+  <p>The goal is not to reach Level 5. The goal is to build the mental models, the practices, and the organisational discipline that make the next level reachable. Pre-Agentic organisations that experiment thoughtfully now will have the accumulated understanding to make better decisions as the technology matures. Post-Agentic organisations that skipped the experimentation phase will be adopting practices without understanding why they work — which is the Agile ceremony problem all over again.</p>
+  <h2>The Scenarios and Twins — When They Become Worth Building</h2>
+  <p>The holdout scenario suite and the digital twin environment are not starting points. They are the infrastructure that becomes worth building once the first two principles are mature. A team that has solid NLSpec discipline and explicit phase control will naturally encounter the next bottleneck: the agent passes all the tests it wrote itself, but the output is still wrong in ways that only surface in production. That is the specification gaming problem. That is when holdout scenarios earn their investment.</p>
+  <p>Similarly: a team that has mature specification discipline will encounter the limits of testing against mocked external services. The mock says the right thing; the real service behaves differently under load, under error conditions, under the specific sequence of calls the agent happens to make. That is when digital twins earn their investment. Both patterns solve real problems. Neither solves them cheaply. Build them when the problem they solve is the bottleneck — not before.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the brownfield reality — what Attractor cannot do and the honest migration path.</p>
+</div>
+
+
+<!-- CH12 — ADRs -->
+<div class="guide-page" id="page-12">
+  <div class="chapter-eyebrow">Chapter 12</div>
+  <span class="chapter-number">12</span>
+  <h1 class="chapter-title">Capturing Agent Decisions — ADRs in a Lights-Out Factory</h1>
+  <p class="chapter-intro">StrongDM made a deliberate architectural choice: treat internal code structure as opaque. If the holdout scenarios pass, the code is correct — the reasoning behind structural decisions is irrelevant. This is internally consistent for a three-person team that wrote both the NLSpec and the scenarios and can evolve them as understanding deepens. It is not sufficient for enterprise organisations operating under audit requirements, long system lifespans, and teams that change over time. This chapter presents the enterprise adaptation.</p>
+  <h2>StrongDM's Position — Honest and Deliberate</h2>
+  <p>The StrongDM factory manifesto states it plainly: code is treated analogously to an ML model snapshot — opaque weights whose correctness is inferred exclusively from externally observable behaviour. Internal structure is treated as opaque. The governance model is entirely behavioural: pass the scenarios, stay passing. No ADRs. No architectural rationale. No decision log.</p>
+  <p>This is not an oversight. It is a principled position that follows directly from the factory's core constraint — code must not be reviewed by humans. If humans are not reviewing code, capturing the reasoning behind code structure serves no purpose within the factory's own feedback loop. The NLSpec defines what must be built. The scenarios define what correct means. Everything in between is the factory's business.</p>
+  <p>The position works under one specific condition: the organisation writing the NLSpec and the scenarios is the same organisation that will maintain and evolve the system, indefinitely, with full context. For StrongDM's three-person team, that condition holds. For most enterprise contexts, it does not.</p>
+  <div class="callout"><div class="callout-label">When StrongDM's Position Is Insufficient</div><p>
+  <strong>Audit requirements:</strong> regulators asking why a specific architectural decision was made need a human-readable record, not a scenario pass rate.<br>
+  <strong>Team continuity:</strong> when the people who built the system leave, the reasoning behind decisions leaves with them unless it was written down.<br>
+  <strong>Long system lifespans:</strong> a decision that made sense in 2026 may need revisiting in 2029. Without a record of why it was made, the revision discussion starts from scratch.<br>
+  <strong>Change management:</strong> enterprise change advisory boards require documented rationale for architectural changes, not just evidence of correct behaviour.<br><br>
+  <strong>The enterprise adaptation adds one thing: a record of what the agent decided and why, at the moment of decision, as a required output of the factory run.</strong></p></div>
+  <h2>The NLSpec as Pre-Authorised ADR Log</h2>
+  <p>The first insight is that the NLSpec itself already functions as a prospective ADR log for every decision it constrains. Every architectural requirement in the NLSpec is a decision that was made before the factory ran — with human authorship and human approval. When the agent follows an NLSpec constraint, it is executing a pre-recorded decision, not making a new one.</p>
+  <p>The practical implication: every significant constraint in the NLSpec should carry its rationale inline. Not just "use event-driven integration between contexts" but "use event-driven integration between contexts — rationale: preserves Bounded Context autonomy, allows Finance context to evolve independently of CustomerService, consistent with the integration pattern decision from session 3." The NLSpec section is the ADR. The agent executing it is following a documented decision. No additional ADR needed for NLSpec-constrained choices.</p>
+  <h2>The record_decisions Phase — Capturing Emergent Decisions</h2>
+  <p>The harder problem is the decisions the agent makes that the NLSpec did not explicitly constrain. Every factory run produces emergent architectural choices — the agent had latitude and chose a particular approach. These are invisible unless deliberately surfaced.</p>
+  <p>The enterprise adaptation adds a mandatory phase to the Directed Graph between generate_code and run_scenarios:</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 120" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr-adr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#4a9068"/></marker><marker id="arr-adr-new" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#c0392b"/></marker></defs>
+      <rect x="10" y="40" width="110" height="40" rx="6" fill="#1a1a2e"/>
+      <text x="65" y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c0392b" font-weight="600">generate_code</text>
+      <text x="65" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.7)">existing phase</text>
+      <line x1="122" y1="60" x2="148" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-adr)"/>
+      <rect x="150" y="34" width="130" height="52" rx="6" fill="#eef4f0" stroke="#c0392b" stroke-width="2"/>
+      <text x="215" y="54" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c0392b" font-weight="600">record_decisions</text>
+      <text x="215" y="68" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#1d3d2a">generates ADRs</text>
+      <text x="215" y="80" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#c0392b">NEW — enterprise</text>
+      <line x1="282" y1="60" x2="308" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-adr)"/>
+      <rect x="310" y="40" width="110" height="40" rx="6" fill="#1a1a2e"/>
+      <text x="365" y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c0392b" font-weight="600">run_scenarios</text>
+      <text x="365" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.7)">existing phase</text>
+      <line x1="422" y1="60" x2="448" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-adr)"/>
+      <rect x="450" y="40" width="110" height="40" rx="6" fill="#4a9068"/>
+      <text x="505" y="57" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="white" font-weight="600">evaluate</text>
+      <text x="505" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="rgba(255,255,255,.85)">existing phase</text>
+      <text x="215" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-style="italic">Transition condition: ADR set non-empty, committed to docs/adr/ before run_scenarios begins</text>
+    </svg>
+    <div class="diagram-caption">The enterprise adaptation adds one phase. The transition condition enforces that decision documentation is produced before evaluation begins.</div>
+  </div>
+  <p>In the record_decisions phase the agent reviews the code it just generated, identifies every architectural decision it made that was not explicitly specified in the NLSpec, and produces an ADR for each. The transition condition to run_scenarios requires the ADR set to be non-empty and committed. The factory cannot proceed to evaluation without having documented what it decided.</p>
+  <h2>The ADR Format for Autonomous Agent Decisions</h2>
+  <p>The format adapts slightly from the standard Fowler ADR to capture the agent context and — critically — to flag NLSpec gaps:</p>
+  <div class="callout"><div class="callout-label">ADR Format — Autonomous Agent Decision</div><p>
+  <strong>ADR-NNNN: [Decision title]</strong><br>
+  <strong>Status:</strong> Accepted — autonomous<br>
+  <strong>Date:</strong> YYYY-MM-DD<br>
+  <strong>Decided by:</strong> Attractor record_decisions phase<br>
+  <strong>NLSpec reference:</strong> Section X.X (what constrained the decision space)<br>
+  <strong>Human review:</strong> Not required — within harness constraints<br><br>
+  <strong>Context:</strong> What situation required this decision? What did the NLSpec leave open?<br>
+  <strong>Decision:</strong> What was decided, stated precisely.<br>
+  <strong>Rationale:</strong> Why this choice over the alternatives.<br>
+  <strong>Alternatives considered:</strong> What else was evaluated and why rejected.<br>
+  <strong>Consequences:</strong> What this enables, constrains, or requires downstream.<br>
+  <strong>NLSpec gap:</strong> Should the NLSpec be updated to make this decision explicit? What section? What wording?<br>
+  <strong>Supersedes:</strong> ADR-MMMM (if replacing a prior decision)</p></div>
+  <h2>The NLSpec Gap Field — The Agentic Flywheel in Practice</h2>
+  <p>The NLSpec gap field is the most important innovation in this format. When the agent makes a decision because the NLSpec was silent, it flags that silence. The ADR becomes the mechanism by which the factory identifies harness gaps — exactly the agentic flywheel that Kief Morris described.</p>
+  <p>A human reviewing the ADR log after a factory run is not reviewing code decisions. They are reviewing the gaps the agent identified in the harness. The ADR log becomes the input to the next NLSpec revision. The human approves the updates. The NLSpec is versioned. The next factory run starts with a more complete harness. Each run makes the factory smarter — not by training the model, but by improving the specification it runs from.</p>
+  <div class="callout"><div class="callout-label">The Improvement Loop</div><p>
+  <strong>NLSpec v1.0</strong> — pre-authorised decisions, human-authored<br>
+  &#8595; Factory run produces emergent ADRs with NLSpec gap flags<br>
+  <strong>Human reviews ADR log</strong> — not code, reasoning<br>
+  &#8595; NLSpec gaps resolved, harness updated<br>
+  <strong>NLSpec v1.1</strong> — richer, fewer gaps, fewer autonomous decisions needed<br>
+  &#8595; Next factory run produces fewer ADRs — more is pre-authorised<br>
+  <strong>Converges toward:</strong> a NLSpec so complete that the agent rarely makes unconstrained decisions.<br><br>
+  <strong>This is not "trust the agent more." It is "build the harness better" — one factory run at a time.</strong></p></div>
+  <h2>The Coherence Check for ADRs</h2>
+  <p>As the ADR log grows across multiple factory runs, contradictions accumulate. An ADR from run 3 may conflict with a decision made in run 7 when a requirement changed. Run this prompt periodically — before each NLSpec revision:</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:.82rem;background:var(--paper-warm);padding:1rem 1.25rem;border-radius:6px;border:1px solid var(--rule);line-height:1.7;color:var(--ink-light);">Review the ADR log in docs/adr/ and check for: (1) any ADR that contradicts an active NLSpec constraint — flag section and ADR number; (2) any two ADRs that contradict each other — flag both; (3) ADRs with NLSpec gap flags that have not yet been incorporated — list them in priority order; (4) decisions made consistently across three or more ADRs that should be promoted to NLSpec constraints. Do not resolve — list for human review.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the brownfield reality — what Attractor cannot do.</p>
+</div>
+
+<div class="guide-page" id="page-13">
+  <div class="chapter-eyebrow">Chapter 13</div>
+  <span class="chapter-number">13</span>
+  <h1 class="chapter-title">The Brownfield Reality — What Attractor Cannot Do</h1>
+  <p class="chapter-intro">Level 5 works on greenfield projects. The overwhelming majority of enterprise software is brownfield. This is not a caveat to mention briefly and move past — it is the central limitation that determines whether any of the previous chapters are relevant to a given organisation's situation.</p>
+  <h2>Why Brownfield Is Different</h2>
+  <p>The specification for a brownfield system does not exist. The system is the specification. Every implicit decision accumulated over a decade of patches, hotfixes, and workarounds is encoded in running code, not in documentation. The behaviour users depend on is frequently undocumented. The business rules that govern edge cases live in the heads of people who were there when the decision was made — not in any document an agent can read. Feeding a brownfield system to Attractor without first building a specification produces wrong outcomes: code consistent with a specification that doesn't exist, producing behaviour that is internally consistent but wrong in ways only visible when the new system interacts with the old environment.</p>
+  <h2>The Comprehension-Performance Gap</h2>
+  <p>Qiao et al. (arXiv:2511.02922) documented what they call the comprehension-performance gap. Copilot reduced brownfield task completion time by approximately 48% — a genuine productivity gain. But gains in implementation speed did not correspond to improved understanding of the codebase. AI makes developers faster at modifying legacy code without helping them understand it. A codebase being modified at higher velocity by developers with no deeper understanding of what they're modifying is a dangerous combination over the medium term.</p>
+  <h2>The Four-Phase Brownfield Migration</h2>
+  <p>The honest path from brownfield to eventual Level 4 or 5 operation is a four-phase migration, and none of the phases can be skipped.</p>
+  <p>Phase one: deploy AI at Level 2 to Level 3 and accept the J-curve. Use AI to accelerate existing work within the conventional development model. Expect a productivity dip during the transition as the team learns the tools. This builds capability without attempting structural change.</p>
+  <p>Phase two: use AI to document what the system actually does. Generate specifications from existing code. Build scenario suites that capture real behaviour — including all the edge cases and implicit rules encoded in code but nowhere else. Tools like EPAM's ART parse COBOL, Java, and Python and generate functional specifications. The output is imperfect but significantly better than starting from nothing.</p>
+  <p>Phase three: redesign the CI/CD pipeline for AI-generated code at volume. Different testing gates, different review thresholds, different deployment strategies. The pipeline that works for human-written code at human velocity is not the pipeline that works for agent-generated code at factory velocity.</p>
+  <p>Phase four: begin new development at Level 4 to 5 while maintaining legacy in parallel. No big-bang cutover. New capabilities built in the factory model. Legacy maintained with conventional tools. The proportion of factory-built code grows over time as legacy is replaced.</p>
+  <div class="callout"><div class="callout-label">The Defining Insight</div><p>"The organisations arriving fastest are not the ones with the most expensive vendor tools. They are the ones who can write the most accurate specs about their code — and have the deepest domain understanding." <strong>The factory is a discipline problem before it is a technology problem. An organisation that cannot write a precise specification for what it wants to build cannot run a software factory.</strong> The factory doesn't create the specification discipline. It requires it as a prerequisite.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the honest readiness assessment — prerequisites for Level 5.</p>
+</div>
+
+<!-- CH13 -->
+<div class="guide-page" id="page-14">
+  <div class="chapter-eyebrow">Chapter 14</div>
+  <span class="chapter-number">14</span>
+  <h1 class="chapter-title">Is Your Organisation Ready? Prerequisites for Level 5</h1>
+  <p class="chapter-intro">Level 5 is the wrong target for most organisations right now. Not because the model is unproven — StrongDM has proven it — but because the prerequisites are demanding, and most organisations are missing several simultaneously.</p>
+  <h2>Prerequisite 1 — Greenfield Work to Start On</h2>
+  <p>The factory model requires a project where the specification can be written before implementation begins — either new development or a legacy replacement where the existing system has been fully documented first. If your portfolio consists entirely of brownfield work on undocumented legacy systems, start with Phase 1 and Phase 2 of the brownfield migration.</p>
+  <h2>Prerequisite 2 — Specification Writing Capability</h2>
+  <p>Someone on the team needs to write specifications precise enough for an agent to work from without guessing. This is not a common skill. Most developers have never been required to write specifications at this level of completeness because human developers could always fill the gaps. Building this capability takes time and deliberate practice. It cannot be substituted with better prompting.</p>
+  <h2>Prerequisite 3 — External Scenario Infrastructure</h2>
+  <p>Someone needs to build and maintain the holdout scenario suite. This requires expressing what the system should do behaviourally — not how the code should be structured, but what the system should do from the outside under specific conditions. Maintaining the scenario suite as the specification evolves is ongoing work, not a one-time investment.</p>
+  <h2>Prerequisite 4 — Digital Twin Infrastructure</h2>
+  <p>For any system integrating with external services — which is any real enterprise system — digital twins of those services need to exist before the factory can run integration testing without production risk. Building adequate twins for a complex enterprise environment is a significant up-front investment.</p>
+  <h2>Prerequisite 5 — Organisational Tolerance for a Different Way of Working</h2>
+  <p>No sprints. No standups. No Jira board. No code review. The middle layer of coordination work disappears. The transition requires genuine leadership commitment to a different operating model — not just tool adoption, but structural change. Organisations that adopt the tools while maintaining the ceremonies they were designed to replace produce Level 2 results at Level 5 cost.</p>
+  <h2>The Honest Answer for Most Enterprise Organisations</h2>
+  <p>For most enterprise development organisations, Level 5 is a three to five year horizon — not because the technology isn't ready, but because the organisational prerequisites take that long to build. The right goal for most organisations today is Level 3, with a deliberate plan toward Level 4. BMAD provides the structured on-ramp to Level 3. The Attractor patterns — particularly NLSpec discipline and the holdout scenario approach — are applicable at Level 3 and build the capabilities that Level 4 and eventually Level 5 require.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Glossary follows — every major Attractor and Spec-Driven Development term defined in plain English.</p>
+</div>
+
+<!-- GLOSSARY -->
+<div class="guide-page" id="page-15">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Glossary</h1>
+  <p class="chapter-intro">Every major term used in this guide, defined in plain English.</p>
+  <div class="glossary-entry"><div class="glossary-term">Attractor</div><p class="glossary-def">The open-source agent framework built by StrongDM to run their lights-out software factory. The repository consists of three Markdown specification files and the agent harness that processes them. Embodies four architecture patterns: NLSpec, directed graph phases, scenarios as holdout-set, and digital twins.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Comprehension-Performance Gap</div><p class="glossary-def">The documented phenomenon (Qiao et al., arXiv:2511.02922) where AI-assisted development improves implementation speed without improving developers' understanding of the codebase. Copilot reduced brownfield task completion time by approximately 48% while leaving codebase comprehension unchanged — making developers faster at modifying systems they understand no better than before.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Dark Factory</div><p class="glossary-def">A software development environment where agents write, test, and ship code without human involvement in the implementation work. Named for Fanuc's lights-out manufacturing facility in Oshino, Japan. Corresponds to Level 5 in Dan Shapiro's five-level maturity framework.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Digital Twin</div><p class="glossary-def">A behavioural clone of an external service — a standalone simulation responding to API calls the way the real service would, including state management, error cases, asynchronous behaviour, and authentication flows. Distinct from classical mocks, which only verify API contracts at the individual call level.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Directed Graph Phases</div><p class="glossary-def">Attractor's mechanism for structuring the development process as a formal directed graph in Graphviz DOT syntax. Each node is a development phase; each edge represents a possible transition with an explicit transition condition. The agent follows the graph — it does not invent its own sequencing or decide when it is done.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">NLSpec (Natural Language Specification)</div><p class="glossary-def">A structured natural language document serving as the primary control instrument for an agent-driven software factory. Written with the agent as the primary reader — complete enough that the agent never has to guess, precise enough that it processes the specification consistently across multiple runs.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Pflichtenheft</div><p class="glossary-def">The formal specification document in German and Austrian engineering culture — a precisely defined description of what a system must do, contractually binding between client and contractor before development begins. The intellectual predecessor of Spec-Driven Development's NLSpec approach.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Scenarios (as Holdout-Set)</div><p class="glossary-def">Behavioural specifications that live outside the codebase, never seen by the agent during development. The agent builds software against the NLSpec; the scenarios evaluate whether the software satisfies the specification's behavioural requirements. The agent cannot optimise for passing the scenarios because it does not have access to them during development.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Spec-Driven Development (SDD)</div><p class="glossary-def">An architecture paradigm that inverts the traditional source of truth by elevating executable specifications above code. The specification is the primary artefact — the code is what the specification produces. Attractor is the most complete implementation of SDD available as of early 2026.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Specification Coherence</div><p class="glossary-def">The property of an NLSpec where all sections are internally consistent — no contradictions between requirements, no conflicting constraints. Maintaining specification coherence as a spec grows is the primary ongoing maintenance challenge of the SDD approach.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Specification Gaming</div><p class="glossary-def">The behaviour of AI agents that optimise for passing evaluation criteria rather than satisfying the underlying intent. Formally defined as "Specification Overfitting" (Roth et al., arXiv:2403.08425). Demonstrated in reasoning models including o3 and Claude 3.7 by Palisade Research (arXiv:2502.13295). The scenarios-as-holdout-set architecture is Attractor's mitigation.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">StrongDM</div><p class="glossary-def">The infrastructure security company whose three-person team — Justin McCarthy, Jay Taylor, and Navan Chauhan — built and operates the only fully documented Level 5 software factory as of early 2026. Running since July 14, 2025. Output: CXDB — approximately 26,000 lines of production code in Rust, Go, and TypeScript, generated from three Markdown specification files.</p></div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>

@@ -1,0 +1,592 @@
+/* ============================================================
+   avons.github.io — guide styles (SPA chapter reader)
+   assets/guide.css · v1.0
+   ============================================================ */
+
+/* ── Guide-specific colour tokens ── */
+:root {
+  --guide-ink:          #1a1a2e;
+  --guide-ink-light:    #4a4a6a;
+  --guide-ink-faint:    #8888aa;
+  --guide-paper:        #faf9f6;
+  --guide-paper-warm:   #f4f1ea;
+  --guide-accent:       #c0392b;
+  --guide-nav-bg:       #1a1a2e;
+  --guide-nav-text:     #faf9f6;
+  --guide-rule:         #d8d4cb;
+
+  /* Callout — green */
+  --guide-callout-bg:     #eef4f0;
+  --guide-callout-border: #4a9068;
+  --guide-callout-text:   #1d3d2a;
+}
+
+html.dark body {
+  --guide-ink:          #e0e0e0;
+  --guide-ink-light:    #b0b0b0;
+  --guide-ink-faint:    #888888;
+  --guide-paper:        #1a1a1a;
+  --guide-paper-warm:   #242424;
+  --guide-accent:       #e05a4a;
+  --guide-nav-bg:       #121212;
+  --guide-nav-text:     #e0e0e0;
+  --guide-rule:         #333333;
+
+  --guide-callout-bg:     #1a241e;
+  --guide-callout-border: #5aaa7a;
+  --guide-callout-text:   #c8e8d4;
+}
+
+/* ── Guide body ── */
+body {
+  font-family: 'Source Sans 3', 'Lora', Georgia, serif;
+  font-weight: 300;
+  background: var(--guide-paper);
+  color: var(--guide-ink);
+  line-height: 1.75;
+  font-size: 17px;
+}
+
+guide-header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ── Guide nav bar ── */
+.guide-nav {
+  background: var(--guide-nav-bg);
+  color: var(--guide-nav-text);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  border-bottom: 2px solid var(--guide-accent);
+}
+
+.guide-nav-left, .guide-nav-right {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.guide-nav-center {
+  flex: 2;
+  text-align: center;
+  overflow: hidden;
+}
+
+.guide-nav-right {
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.guide-logo-link {
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s;
+}
+.guide-logo-link:hover { opacity: 0.7; }
+.guide-logo-img {
+  height: 32px;
+  width: auto;
+}
+
+.guide-nav-cluster {
+  display: flex;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.guide-icon-btn {
+  background: none;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  color: var(--guide-nav-text);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.guide-icon-btn:last-child { border-right: none; }
+.guide-icon-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+.guide-icon-btn:disabled, .guide-icon-btn[aria-disabled="true"] {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.guide-nav-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.15);
+}
+
+.guide-nav-title {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dark mode toggle inside guide nav — override site default */
+.guide-theme-toggle {
+  background: none !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  border-radius: 4px !important;
+  color: var(--guide-nav-text) !important;
+  font-size: 1.1rem !important;
+  width: 38px;
+  height: 34px;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.guide-theme-toggle:hover {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+/* ── Guide page layout ── */
+.guide-page {
+  display: none;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 6rem;
+  min-height: calc(100vh - 52px);
+}
+
+.guide-page.active { display: block; }
+
+/* ── Table of Contents ── */
+.toc-header {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--guide-rule);
+  margin-bottom: 3rem;
+}
+
+.toc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--guide-accent);
+  margin-bottom: 1rem;
+}
+
+.toc-header h1 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: var(--guide-ink);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.toc-header .subtitle {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--guide-ink-light);
+}
+
+.toc-part { margin-bottom: 2.5rem; }
+
+.toc-part-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--guide-ink-faint);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--guide-rule);
+}
+
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.55rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.toc-item:hover { background: var(--guide-paper-warm); }
+
+.toc-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--guide-accent);
+  min-width: 28px;
+  font-weight: 400;
+}
+
+.toc-name {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  color: var(--guide-ink);
+  flex: 1;
+}
+.toc-item:hover .toc-name { color: var(--guide-accent); }
+
+.toc-dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--guide-rule);
+  margin: 0 0.5rem;
+  min-width: 20px;
+}
+
+/* ── Chapter elements ── */
+.chapter-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--guide-accent);
+  margin-bottom: 0.75rem;
+}
+
+.chapter-number {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 5rem;
+  font-weight: 600;
+  color: var(--guide-accent);
+  opacity: 0.12;
+  line-height: 1;
+  margin-bottom: -1.5rem;
+  display: block;
+}
+
+h1.chapter-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--guide-ink);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.chapter-intro {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--guide-ink-light);
+  border-left: 3px solid var(--guide-accent);
+  padding-left: 1.25rem;
+  margin: 1.75rem 0 2.25rem;
+  line-height: 1.65;
+}
+
+/* ── Guide typography ── */
+.guide-page h2 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--guide-ink);
+  margin: 2.75rem 0 0.9rem;
+  padding-top: 0.5rem;
+}
+
+.guide-page h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--guide-ink-light);
+  margin: 2rem 0 0.6rem;
+}
+
+.guide-page p {
+  margin-bottom: 1.2rem;
+  color: var(--guide-ink);
+}
+
+/* ── Part header banner ── */
+.part-header {
+  background: #1e1e38;
+  color: #f0efe8;
+  border-radius: 6px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.part-header .part-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--guide-accent);
+  margin-bottom: 0.5rem;
+}
+
+.part-header h2 {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  margin: 0 0 0.5rem !important;
+  padding: 0 !important;
+}
+
+.part-header p {
+  color: #c8c6d8;
+  font-size: 0.95rem;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Callout boxes (guide version) ── */
+.guide-page .callout {
+  background: var(--guide-callout-bg);
+  border-left: 4px solid var(--guide-callout-border);
+  border-radius: 0 6px 6px 0;
+  padding: 1.1rem 1.4rem;
+  margin: 1.75rem 0;
+}
+
+.guide-page .callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--guide-callout-border);
+  margin-bottom: 0.4rem;
+}
+
+.guide-page .callout p {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--guide-callout-text);
+  margin: 0;
+  line-height: 1.65;
+}
+
+.guide-page .callout strong {
+  font-weight: 600;
+  color: var(--guide-callout-border);
+}
+
+/* ── Diagrams ── */
+.diagram-wrap {
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
+.diagram-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--guide-ink-faint);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+svg.diagram {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Section divider ── */
+.section-rule {
+  border: none;
+  border-top: 1px solid var(--guide-rule);
+  margin: 2.5rem 0;
+}
+
+/* ── Glossary ── */
+.glossary-entry {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--guide-rule);
+}
+
+.glossary-term {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--guide-ink);
+  margin-bottom: 0.25rem;
+}
+
+.glossary-def {
+  font-size: 0.95rem;
+  color: var(--guide-ink-light);
+  margin: 0;
+}
+
+/* ── Agent grid (BMAD) ── */
+.agent-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.agent-card {
+  border: 1.5px solid var(--guide-rule);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  background: var(--guide-paper-warm);
+}
+
+.agent-role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--guide-accent);
+  margin-bottom: 0.3rem;
+}
+
+.agent-name {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--guide-ink);
+  margin-bottom: 0.4rem;
+}
+
+.agent-desc {
+  font-size: 0.88rem;
+  color: var(--guide-ink-light);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── Artefact list (BMAD) ── */
+.artefact-list { margin: 1rem 0 1.5rem; }
+
+.artefact-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--guide-rule);
+}
+
+.artefact-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  background: var(--guide-nav-bg);
+  color: var(--guide-nav-text);
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.artefact-text {
+  font-size: 0.95rem;
+  color: var(--guide-ink-light);
+}
+
+.artefact-text strong {
+  color: var(--guide-ink);
+  font-weight: 600;
+}
+
+/* ── Stat block (Attractor) ── */
+.stat-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 1.2rem;
+  background: #1e1e38;
+  border-radius: 8px;
+}
+
+.stat-num {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--guide-accent);
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* ── Pattern block (Attractor) ── */
+.pattern-block {
+  border: 1.5px solid var(--guide-rule);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  background: var(--guide-paper-warm);
+}
+
+.pattern-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--guide-accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+
+.pattern-name {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--guide-ink);
+  margin-bottom: 0.5rem;
+}
+
+.pattern-desc {
+  font-size: 0.95rem;
+  color: var(--guide-ink-light);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Code inline ── */
+.guide-page code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--guide-paper-warm);
+  border: 1px solid var(--guide-rule);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--guide-accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .guide-page       { padding: 2rem 1.25rem 4rem; }
+  h1.chapter-title  { font-size: 1.7rem; }
+  .toc-header h1    { font-size: 1.9rem; }
+  .guide-nav        { padding: 0 1rem; }
+  .guide-nav-title  { display: none; }
+  .agent-grid       { grid-template-columns: 1fr; }
+  .stat-block       { grid-template-columns: 1fr; }
+}

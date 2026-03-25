@@ -1,7 +1,32 @@
 /* ============================================================
    avons.github.io — shared web components
-   assets/components.js · v1.0
+   assets/components.js · v2.1
    ============================================================ */
+
+/* ── Dark Mode — shared logic ── */
+function toggleTheme() {
+  const isDark = document.documentElement.classList.toggle('dark');
+  localStorage.setItem('avons-theme', isDark ? 'dark' : 'light');
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    if (btn.classList.contains('guide-theme-toggle')) {
+      btn.textContent = isDark ? '☀' : '☾';
+    } else {
+      btn.textContent = isDark ? '☀ Light' : '☾ Dark';
+    }
+  });
+}
+
+/* Apply saved theme before first paint — call immediately */
+(function initTheme() {
+  if (localStorage.getItem('avons-theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+})();
+
+function themeToggleHTML() {
+  const isDark = document.documentElement.classList.contains('dark');
+  return `<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">${isDark ? '☀ Light' : '☾ Dark'}</button>`;
+}
 
 /* ── Site Footer ── */
 class SiteFooter extends HTMLElement {
@@ -43,8 +68,8 @@ class SiteHeaderHome extends HTMLElement {
       <header class="site-header">
         <div class="site-header-main">
           <a class="site-name" href="/">
-            <img src="assets/logo.png" alt="AvonS" class="logo-img">
-            <span class="logo-text">Avon<strong>S</strong></span>
+            <img src="assets/logo.png" alt="Avon Software Labs" class="logo-img">
+            <span class="logo-text">Avon <strong>Software Labs</strong></span>
           </a>
           <nav class="site-header-nav">
             <a href="/">All</a>
@@ -52,6 +77,7 @@ class SiteHeaderHome extends HTMLElement {
             <a href="/#frameworks">Frameworks</a>
             <a href="https://github.com/AvonS" target="_blank">GitHub</a>
             <span class="site-tagline">Exploring the journey to the software Dark Factory</span>
+            ${themeToggleHTML()}
           </nav>
         </div>
       </header>`;
@@ -65,8 +91,8 @@ class SiteHeaderArticle extends HTMLElement {
       <header class="site-header">
         <div class="site-header-main">
           <a class="site-name" href="/">
-            <img src="../assets/logo.png" alt="AvonS" class="logo-img">
-            <span class="logo-text">Avon<strong>S</strong></span>
+            <img src="../assets/logo.png" alt="Avon Software Labs" class="logo-img">
+            <span class="logo-text">Avon <strong>Software Labs</strong></span>
           </a>
           <nav class="site-header-nav">
             <a class="back-link" href="/">Home</a>
@@ -74,9 +100,42 @@ class SiteHeaderArticle extends HTMLElement {
             <a href="/#agentic">Agentic Engineering</a>
             <a href="https://github.com/AvonS" target="_blank">GitHub</a>
             <span class="site-tagline">Exploring the journey to the software Dark Factory</span>
+            ${themeToggleHTML()}
           </nav>
         </div>
       </header>`;
+  }
+}
+
+/* ── Guide Header (guide pages — 2 levels deep: guides/topic/) ── */
+class GuideHeader extends HTMLElement {
+  connectedCallback() {
+    const title = this.getAttribute('title') || 'Guide';
+    const isDark = document.documentElement.classList.contains('dark');
+    this.innerHTML = `
+      <nav class="guide-nav" id="guide-nav">
+        <div class="guide-nav-left">
+          <a class="guide-logo-link" href="/" title="Back to Home">
+            <img src="../../assets/logo.png" alt="Avon Software Labs" class="guide-logo-img">
+          </a>
+        </div>
+
+        <div class="guide-nav-center">
+          <span class="guide-nav-title" id="nav-title">${title}</span>
+        </div>
+
+        <div class="guide-nav-right">
+          <div class="guide-nav-cluster">
+            <button class="guide-icon-btn" id="nav-prev" onclick="navPrev(); return false;" title="Previous Chapter">←</button>
+            <button class="guide-icon-btn" onclick="showPage(0); return false;" title="Table of Contents">☰</button>
+            <button class="guide-icon-btn" id="nav-next" onclick="navNext(); return false;" title="Next Chapter">→</button>
+          </div>
+          <div class="guide-nav-divider"></div>
+          <button class="theme-toggle guide-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            ${isDark ? '☀' : '☾'}
+          </button>
+        </div>
+      </nav>`;
   }
 }
 
@@ -84,3 +143,4 @@ customElements.define('site-footer', SiteFooter);
 customElements.define('site-footer-article', SiteFooterArticle);
 customElements.define('site-header-home', SiteHeaderHome);
 customElements.define('site-header-article', SiteHeaderArticle);
+customElements.define('guide-header', GuideHeader);

@@ -62,7 +62,7 @@
   color: var(--light-grey);
 }
 .doc-meta a { color: var(--dark-grey); font-weight: 600; }
-.doc-meta a:hover { text-decoration: underline; }
+.doc-meta a:hover { opacity: 0.7; }
 
 /* ── Article typography ── */
 h1 { font-size: 1.9rem; font-weight: 800; margin: 52px 0 12px; }
@@ -132,9 +132,9 @@ p  { margin-bottom: 14px; text-align: justify; }
   line-height: 1.65;
 }
 .callout-insight {
-  background: var(--soft-bg);
-  border-left: 4px solid var(--dark-grey);
-  color: var(--dark-grey);
+  background: var(--accent-green-light);
+  border-left: 4px solid var(--accent-green);
+  color: var(--accent-green-text);
 }
 .callout-warn {
   background: var(--accent-red-light);

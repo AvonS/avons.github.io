@@ -46,11 +46,18 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 0.85rem; line-height: 1.75;
   color: var(--mid-grey); font-weight: 300; margin-bottom: 12px;
 }
-.sidebar a {
-  color: var(--dark-grey); text-decoration: underline;
-  text-underline-offset: 3px; font-size: 0.85rem; font-weight: 400;
+.sidebar-section:first-child p:nth-child(2),
+.sidebar-section:first-child p:nth-child(3) {
+  font-family: 'Kalam', cursive;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--dark-grey);
 }
-.sidebar a:hover { color: var(--black); }
+.sidebar a {
+  color: var(--dark-grey); text-decoration: none;
+  font-size: 0.85rem; font-weight: 400;
+}
+.sidebar a:hover { color: var(--black); opacity: 1; text-decoration: none; }
 
 /* ── Topic list ── */
 .topic-list { list-style: none; }
@@ -59,10 +66,20 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 0.85rem; color: var(--dark-grey);
   display: flex; justify-content: space-between; align-items: center;
 }
+.topic-list li a {
+  text-decoration: none;
+  color: var(--dark-grey);
+  font-weight: 400;
+  flex: 1;
+}
+.topic-list li a:hover {
+  color: var(--black);
+}
 .topic-list li:last-child { border-bottom: none; }
 .topic-count {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.65rem; color: var(--light-grey);
+  margin-left: 8px;
 }
 
 /* ── Article cards ── */
@@ -108,7 +125,7 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-family: "JetBrains Mono", monospace;
   font-size: 0.62rem; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
-  background: var(--black); color: var(--white);
+  background: var(--off-black); color: var(--bg);
   padding: 3px 8px; margin-bottom: 14px;
 }
 
