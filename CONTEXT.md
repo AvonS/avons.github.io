@@ -136,11 +136,17 @@ Whenever you make changes to:
 **How to bump:**
 Update the `?v=1.1` parameter in all `<link>`, `<script>`, and `<img>` tags across:
 1. `index.html` (root)
-2. `agentic-engineering/index.html`
+2. All `notes/*/index.html` files
 3. All `guides/*/index.html` files
 4. Header definitions in `assets/components.js`
 
 This ensures that returning visitors immediately see your latest design and logic updates rather than stale cached versions.
+
+### 🔍 SEO Meta Tags
+Meta tags for search engines and social media sharing (Open Graph, Twitter Cards) are automatically generated and injected into the `<head>` of `index.html`, all `notes/*/index.html`, and all `guides/*/index.html` files.
+
+**To update/re-generate meta tags:**
+Run the `add_meta_tags.py` script located in the repository root. This script extracts page titles and descriptions to create the meta tags, ensuring consistency and proper formatting.
 
 ---
 
