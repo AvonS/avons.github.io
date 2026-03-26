@@ -2,20 +2,20 @@
 
 ![Avon Software Labs Logo](assets/logo.png?v=1.1)
 
-Welcome to **Avon Software Labs**, a personal space dedicated to exploring the evolving landscape of agentic engineering. This repository hosts a collection of articles and deep-dive guides designed to help practitioners navigate the transition from traditional agile to agent-first development.
+Welcome to **Avon Software Labs**, a personal space dedicated to exploring the evolving landscape of agentic engineering. This repository hosts a collection of articles and guides designed to help practitioners navigate the transition from traditional agile to agent-first development.
 
 Our core mission is to bridge the gap between theoretical agentic development (often focused on greenfield projects) and the complex reality of enterprise brownfield environments. We emphasize building robust "harnesses" and precise context for AI agents, rather than relying on LLM "magic."
 
 ---
 
-## 📚 The Agentic Engineering Curriculum: From Domain to Factory
+## 📚 The Agentic Engineering Path: From Domain to Factory
 
-This repository features a comprehensive 7-part curriculum, structured as a roadmap to understanding and implementing agentic practices in real-world enterprise settings.
+This repository features a comprehensive 7-part guide, structured as a roadmap to understanding and implementing agentic practices in real-world enterprise settings.
 
 **The Core Journey:**
 *   **[The Agentic Engineering Journey](notes/agentic-engineering/)**: An foundational overview of Dan Shapiro's Five Levels of AI-assisted development, introducing key frameworks like DDD, BMAD, and Attractor.
 
-**Deep Dive Curriculum:**
+**Path to Transformation:**
 
 ### Stage 1: Foundations
 These guides establish the conceptual and discovery methods for achieving domain clarity—a prerequisite for effective agentic development.
@@ -39,12 +39,10 @@ These guides cover structured execution with AI agents, from managing teams to a
 
 ## ✨ Key Features
 
-*   **Comprehensive Curriculum**: A structured path covering domain modeling, agent orchestration, and enterprise integration.
+*   **Comprehensive transformation path**: A structured path covering domain modeling, agent orchestration, and enterprise integration.
 *   **SPA Guides**: Each deep-dive guide is a Single Page Application (SPA) for seamless chapter-by-chapter reading.
 *   **Global Dark Mode**: A low-strain charcoal theme, accessible via a toggle in the site header.
-*   **SEO Optimized**: All articles and guides are injected with meta tags for better search engine and social media visibility.
 *   **GitHub-Integrated Feedback**: Comment sections powered by Utterances (GitHub Issues).
-*   **SpamSpan Email Protection**: Client-side obfuscation for email addresses.
 
 ---
 
@@ -76,7 +74,7 @@ To run this project locally, clone the repository and use the provided `serve.py
 
 Your feedback is invaluable as we refine these ideas.
 
-*   **Comments**: Use the Utterances comment section at the bottom of each article.
+*   **Comments**: Use the Git repository discussion / issues to to share your feedback
 *   **Email**: Prefer email? Reach out at <span class="spamspan"><span class="u">avonslabs</span> [at] <span class="d">gmail [dot] com</span> (<span class="t">AvonSlabs</span>)</span>.
 *   **GitHub**: Follow [@AvonS](https://github.com/AvonS) for updates and related work.
 *   **Star the Repo**: If you find this resource useful, please consider [starring the repository](https://github.com/AvonS/avons.github.io) to help others discover it.
