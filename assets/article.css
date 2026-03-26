@@ -252,6 +252,37 @@ tbody td { padding: 9px 13px; border-bottom: 1px solid var(--rule); vertical-ali
   padding-top: 18px; border-top: 1px solid var(--rule);
 }
 
+/* ── Utterances Comments (styling adjustments) ── */
+.utterances {
+  max-width: 900px;
+  margin: 52px auto 0 auto;
+  padding: 0 40px; /* Match article-wrap padding */
+  border-top: 1px solid var(--rule);
+  padding-top: 40px;
+}
+.utterances-frame {
+  max-width: none !important; /* Allow iframe to take full width of its container */
+}
+
+/* ── Article Feedback Meta (email, follow links) ── */
+.article-feedback-meta {
+  max-width: 900px;
+  margin: 40px auto 0 auto;
+  padding: 0 40px;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--mid-grey);
+}
+.article-feedback-meta a {
+  color: var(--dark-grey);
+  text-decoration: underline;
+}
+.article-feedback-meta a:hover {
+  opacity: 1;
+  color: var(--black);
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .article-wrap  { padding: 0 20px 60px; }

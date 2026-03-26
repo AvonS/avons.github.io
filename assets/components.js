@@ -38,6 +38,8 @@ class SiteFooter extends HTMLElement {
           &nbsp;&nbsp;
           <a href="https://avons.github.io">avons.github.io</a>
           &nbsp;&nbsp;2026
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <a href="https://github.com/AvonS/avons.github.io" target="_blank" title="Star on GitHub">⭐ Star on GitHub</a>
         </div>
       </footer>`;
   }
@@ -56,6 +58,8 @@ class SiteFooterArticle extends HTMLElement {
           &nbsp;&nbsp;
           <a href="https://avons.github.io">avons.github.io</a>
           &nbsp;&nbsp;2026
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <a href="https://github.com/AvonS/avons.github.io" target="_blank" title="Star on GitHub">⭐ Star on GitHub</a>
         </div>
       </footer>`;
   }
@@ -139,8 +143,70 @@ class GuideHeader extends HTMLElement {
   }
 }
 
+/* ── Utterances Comments ── */
+class UtterancesComments extends HTMLElement {
+  connectedCallback() {
+    const repo = this.getAttribute('repo');
+    if (!repo) {
+      console.error('UtterancesComments: "repo" attribute is required.');
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://utteranc.es/client.js';
+    script.setAttribute('repo', repo);
+    script.setAttribute('issue-term', 'pathname'); // Map comments to pages based on URL pathname
+    script.setAttribute('label', 'comment :speech_balloon:'); // GitHub issue label
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
+
+    // Set theme based on current site theme
+    const setTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      script.setAttribute('theme', isDark ? 'github-dark' : 'github-light');
+    };
+
+    setTheme(); // Set initial theme
+
+    // Observe changes to the 'dark' class on <html>
+    const observer = new MutationObserver(() => {
+      setTheme();
+      // Workaround: Utterances doesn't re-render theme dynamically.
+      // Easiest way to force update is to remove and re-add.
+      // This might cause a flicker.
+      if (this.firstChild) {
+        this.removeChild(this.firstChild);
+      }
+      this.appendChild(script.cloneNode());
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    this.appendChild(script);
+  }
+}
+
+function decodeEmail(encoded) {
+    let email = '';
+    for (let i = 0; i < encoded.length; i++) {
+        email += String.fromCharCode(encoded.charCodeAt(i) - 1); // Shift char code back by 1
+    }
+    return email;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const emailSpans = document.querySelectorAll('span.protected-email');
+    emailSpans.forEach(span => {
+        const encoded = span.getAttribute('data-encoded-email');
+        const decoded = decodeEmail(encoded);
+        span.innerHTML = `<a href="mailto:${decoded}">${decoded}</a>`;
+        span.style.unicodeBidi = 'normal'; // Reset for decoded text
+        span.style.direction = 'ltr';      // Reset for decoded text
+    });
+});
+
 customElements.define('site-footer', SiteFooter);
 customElements.define('site-footer-article', SiteFooterArticle);
 customElements.define('site-header-home', SiteHeaderHome);
 customElements.define('site-header-article', SiteHeaderArticle);
 customElements.define('guide-header', GuideHeader);
+customElements.define('utterances-comments', UtterancesComments);

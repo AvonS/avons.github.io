@@ -30,7 +30,7 @@ avons.github.io/
 ├── index.html              ← Landing Page (Curriculum Roadmap)
 ├── notes/                  ← Articles and Field Notes
 │   ├── agentic-engineering/ ← "The Agentic Engineering Journey"
-│   └── curriculum-launch/   ← WIP Intro Blog Post
+│   └── path-to-transform/   ← Intro Blog Post for Curriculum
 ├── guides/                 ← Deep-dive SPA curriculum
 │   ├── ddd/                ← Guide 1: Domain-Driven Design
 │   ├── event-storming/     ← Guide 2: Event Storming
@@ -65,6 +65,7 @@ avons.github.io/
 | `<site-header-article>` | Article navigation (Home link) | N/A |
 | `<guide-header>` | SPA Guide navigation | `title="Guide Name"` |
 | `<site-footer>` | Shared centered footer | N/A |
+| `<utterances-comments>` | GitHub Issue-based comments | `repo="owner/repo"` (e.g., `AvonS/avons.github.io`) |
 
 ### 📖 SPA Guide System (`assets/guide.js`)
 - **Structure:** Use `<div class="guide-page" id="page-n">` for chapters.
