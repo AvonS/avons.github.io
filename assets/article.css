@@ -62,7 +62,7 @@
   color: var(--light-grey);
 }
 .doc-meta a { color: var(--dark-grey); font-weight: 600; }
-.doc-meta a:hover { text-decoration: underline; }
+.doc-meta a:hover { opacity: 0.7; }
 
 /* ── Article typography ── */
 h1 { font-size: 1.9rem; font-weight: 800; margin: 52px 0 12px; }
@@ -132,9 +132,9 @@ p  { margin-bottom: 14px; text-align: justify; }
   line-height: 1.65;
 }
 .callout-insight {
-  background: var(--soft-bg);
-  border-left: 4px solid var(--dark-grey);
-  color: var(--dark-grey);
+  background: var(--accent-green-light);
+  border-left: 4px solid var(--accent-green);
+  color: var(--accent-green-text);
 }
 .callout-warn {
   background: var(--accent-red-light);
@@ -250,6 +250,37 @@ tbody td { padding: 9px 13px; border-bottom: 1px solid var(--rule); vertical-ali
   font-size: 0.78rem; color: var(--light-grey);
   text-align: center; margin-top: 40px;
   padding-top: 18px; border-top: 1px solid var(--rule);
+}
+
+/* ── Utterances Comments (styling adjustments) ── */
+.utterances {
+  max-width: 900px;
+  margin: 52px auto 0 auto;
+  padding: 0 40px; /* Match article-wrap padding */
+  border-top: 1px solid var(--rule);
+  padding-top: 40px;
+}
+.utterances-frame {
+  max-width: none !important; /* Allow iframe to take full width of its container */
+}
+
+/* ── Article Feedback Meta (email, follow links) ── */
+.article-feedback-meta {
+  max-width: 900px;
+  margin: 40px auto 0 auto;
+  padding: 0 40px;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--mid-grey);
+}
+.article-feedback-meta a {
+  color: var(--dark-grey);
+  text-decoration: underline;
+}
+.article-feedback-meta a:hover {
+  opacity: 1;
+  color: var(--black);
 }
 
 /* ── Responsive ── */

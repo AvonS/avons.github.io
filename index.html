@@ -6,58 +6,158 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<link rel="stylesheet" href="assets/landing.css">
+<link rel="stylesheet" href="assets/style.css?v=1.1">
+<link rel="stylesheet" href="assets/landing.css?v=1.1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AvonS — Agentic Engineering</title>
-<script src="assets/components.js" defer></script>
+<title>Avon Software Labs — Agentic Engineering</title>
+<script src="assets/components.js?v=1.1" defer></script>
+
+<meta name="description" content="Avon Software Labs — Agentic Engineering">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/">
+<meta property="og:title" content="Avon Software Labs — Agentic Engineering">
+<meta property="og:description" content="Avon Software Labs — Agentic Engineering">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/">
+<meta property="twitter:title" content="Avon Software Labs — Agentic Engineering">
+<meta property="twitter:description" content="Avon Software Labs — Agentic Engineering">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
 </head>
 <body>
 
 <site-header-home></site-header-home>
 
-
-
 <div class="content-wrap">
   <main class="main-col">
-    <p class="section-label">Published</p>
-
-    <a class="article-card featured" href="agentic-engineering/" id="agentic">
+    
+    <p class="section-label">The Core Journey</p>
+    <a class="article-card featured" href="notes/agentic-engineering/?v=1.1" id="agentic">
       <div>
         <div class="featured-marker">Featured Guide</div>
         <div class="article-meta">
           <span class="article-tag">Agentic Engineering</span>
           <span>March 2026</span>
-          <span>Guide</span>
         </div>
         <div class="article-title">The Agentic Engineering Journey</div>
-        <div class="article-subtitle">From Spicy Autocomplete to the Dark Factory</div>
+        <div class="article-subtitle">From Solo Craftsperson to the Dark Factory</div>
         <p class="article-desc">
-          A plain-English guide to the five levels of AI-assisted development and the three frameworks —
-          DDD, BMAD, and Attractor — that help navigate each step. Inspired by Dan Shapiro's Five Levels.
+          A direct guide to the five levels of AI-assisted development and the three frameworks —
+          DDD, BMAD, and Attractor — that help navigate the transition.
         </p>
       </div>
       <div class="article-arrow">&#8594;</div>
     </a>
 
-    <!--
-      TO ADD A NEW ARTICLE — copy this block and fill in the details:
-
-      <a class="article-card" href="your-folder-name/">
-        <div>
-          <div class="article-meta">
-            <span class="article-tag">Topic</span>
-            <span>Month Year</span>
-          </div>
-          <div class="article-title">Title</div>
-          <div class="article-subtitle">Subtitle or tagline</div>
-          <p class="article-desc">Brief description of the article.</p>
+    <!-- New Introductory Blog Post -->
+    <p class="section-label" style="margin-top: 64px;">Latest Field Notes</p>
+    <a class="article-card" href="notes/path-to-transform/?v=1.1">
+      <div>
+        <div class="article-meta">
+          <span class="article-tag">Field Notes</span>
+          <span>March 2026</span>
         </div>
-        <div class="article-arrow">&#8594;</div>
-      </a>
+        <div class="article-title">Path to Transformation</div>
+        <div class="article-subtitle">Harnessing Agentic Engineering for the Enterprise</div>
+        <p class="article-desc">
+          A practical guide series for the enterprise agentic transition — and why brownfield projects need a different conversation.
+        </p>
+      </div>
+      <div class="article-arrow">&#8594;</div>
+    </a>
 
-      Then create a folder with the same name as href, put index.html inside it.
-    -->
+    <p class="section-label" style="margin-top: 64px;">Deep Dive Curriculum: The Path to the Dark Factory</p>
+    
+    <div class="curriculum-grid">
+      <!-- Stage 1: Foundations -->
+      <div class="curriculum-stage">
+        <div class="stage-header">Stage 1: Foundations</div>
+        
+        <a class="article-card" href="guides/ddd/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 1</span></div>
+            <div class="article-title">Domain-Driven Design</div>
+            <p class="article-desc">The conceptual foundation. Stripping away the Java-era ceremony to focus on Ubiquitous Language and Bounded Contexts.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+
+        <a class="article-card" href="guides/event-storming/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 2</span></div>
+            <div class="article-title">Event Storming</div>
+            <p class="article-desc">The discovery method. A workshop guide to mapping business reality with stakeholders using little more than sticky notes.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+
+        <a class="article-card" href="guides/flowcharts/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 3</span></div>
+            <div class="article-title">The Flowchart-First Path</div>
+            <p class="article-desc">The offline alternative. Building domain models from existing enterprise documentation and swimlane charts.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+      </div>
+
+      <!-- Stage 2: Bridging -->
+      <div class="curriculum-stage">
+        <div class="stage-header">Stage 2: Bridging</div>
+
+        <a class="article-card" href="guides/ddd-to-context/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 4</span></div>
+            <div class="article-title">Domain Context Engineering</div>
+            <p class="article-desc">The LLM-driven pipeline. Using <code>domain-ctx.txt</code> to generate BMAD artefacts with zero terminology drift.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+      </div>
+
+      <!-- Stage 3: Execution -->
+      <div class="curriculum-stage">
+        <div class="stage-header">Stage 3: Execution</div>
+
+        <a class="article-card" href="guides/bmad/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 5</span></div>
+            <div class="article-title">The BMAD Method</div>
+            <p class="article-desc">Structured execution at Levels 3 and 4. Agent roles, artefact chains, and human-in-the-loop governance.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+
+        <a class="article-card" href="guides/attractor/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 6</span></div>
+            <div class="article-title">Attractor Framework</div>
+            <p class="article-desc">The lights-out factory. Specifications and scenarios driving agents to production with ADR-based governance.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="curriculum-stage">
+        <div class="stage-header">Final Synthesis</div>
+
+        <a class="article-card" href="guides/synthesis/">
+          <div>
+            <div class="article-meta"><span class="article-tag">Guide 7</span></div>
+            <div class="article-title">From Domain to Factory</div>
+            <p class="article-desc">The argument that ties it all together. A dependency sequence for entering the era of Harness Engineering.</p>
+          </div>
+          <div class="article-arrow">&#8594;</div>
+        </a>
+      </div>
+    </div>
 
   </main>
 
@@ -65,23 +165,27 @@
     <div class="sidebar-section">
       <p class="sidebar-label">About Field Notes</p>
       <p>As you grow older, a paradox emerges — for peace of mind, you have to unlearn and let go. In a career, the opposite is true: it's continuous learning or irrelevance.</p>
-      <p>These field notes are my learning journey through the emerging trends in how we build software.</p>
+      <p>These field notes are my roadmap through the emerging trends in how we build software.</p>
       <p><a href="https://github.com/AvonS" target="_blank">github.com/AvonS</a></p>
     </div>
 
     <div class="sidebar-section">
       <p class="sidebar-label">Topics</p>
       <ul class="topic-list" id="frameworks">
-        <li>Agentic Engineering <span class="topic-count">1</span></li>
-        <li>DDD <span class="topic-count">1</span></li>
-        <li>BMAD <span class="topic-count">1</span></li>
-        <li>Attractor <span class="topic-count">1</span></li>
+        <li><a href="notes/agentic-engineering/">Agentic Engineering</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/ddd/">DDD</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/event-storming/">Event Storming</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/flowcharts/">Flowchart-First</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/ddd-to-context/">Context Engineering</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/bmad/">BMAD</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/attractor/">Attractor</a> <span class="topic-count">1</span></li>
+        <li><a href="guides/synthesis/">Synthesis</a> <span class="topic-count">1</span></li>
       </ul>
     </div>
 
     <div class="sidebar-section">
       <p class="sidebar-label">Downloads</p>
-      <p><a href="agentic-engineering/agentic-engineering-journey.pdf" target="_blank">The Agentic Engineering Journey — PDF</a></p>
+      <p><a href="notes/agentic-engineering/agentic-engineering-journey.pdf" target="_blank">The Agentic Engineering Journey — PDF</a></p>
     </div>
   </aside>
 </div>

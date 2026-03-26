@@ -52,12 +52,18 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 1.05rem;
   line-height: 1.7;
   color: var(--dark-grey);
+
+.sidebar a {
+  color: var(--dark-grey); text-decoration: none;
+  font-size: 0.85rem; font-weight: 400;
+}
+.sidebar a:hover { color: var(--black); opacity: 1; text-decoration: none; }
 }
 .sidebar a {
-  color: var(--dark-grey); text-decoration: underline;
-  text-underline-offset: 3px; font-size: 0.85rem; font-weight: 400;
+  color: var(--dark-grey); text-decoration: none;
+  font-size: 0.85rem; font-weight: 400;
 }
-.sidebar a:hover { color: var(--black); }
+.sidebar a:hover { color: var(--black); opacity: 1; text-decoration: none; }
 
 /* ── Topic list ── */
 .topic-list { list-style: none; }
@@ -66,10 +72,62 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 0.85rem; color: var(--dark-grey);
   display: flex; justify-content: space-between; align-items: center;
 }
+.topic-list li a {
+  text-decoration: none;
+  color: var(--dark-grey);
+  font-weight: 400;
+  flex: 1;
+}
+.topic-list li a:hover {
+  color: var(--black);
+}
 .topic-list li:last-child { border-bottom: none; }
 .topic-count {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.65rem; color: var(--light-grey);
+  margin-left: 8px;
+}
+
+/* ── Curriculum Grid ── */
+.curriculum-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 32px;
+}
+.curriculum-stage {
+  border-left: 2px solid var(--rule);
+  padding-left: 32px;
+  position: relative;
+}
+.curriculum-stage::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--black);
+  border-radius: 50%;
+}
+.stage-header {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+  background: var(--soft-bg);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.curriculum-stage .article-card {
+  padding: 24px 0;
+}
+.curriculum-stage .article-title {
+  font-size: 1.25rem;
 }
 
 /* ── Article cards ── */
@@ -115,7 +173,7 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-family: "JetBrains Mono", monospace;
   font-size: 0.62rem; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
-  background: var(--black); color: var(--white);
+  background: var(--off-black); color: var(--bg);
   padding: 3px 8px; margin-bottom: 14px;
 }
 

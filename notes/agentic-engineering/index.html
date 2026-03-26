@@ -4,11 +4,30 @@
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/article.css">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/article.css?v=1.1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Agentic Engineering Journey</title>
-<script src="../assets/components.js" defer></script>
+<title>The Agentic Engineering Journey — Avon Software Labs</title>
+<script src="../../assets/components.js?v=1.1" defer></script>
+
+<meta name="description" content="A practical guide to creating a software Dark Factory">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/notes/agentic-engineering/">
+<meta property="og:title" content="The Agentic Engineering Journey — Avon Software Labs">
+<meta property="og:description" content="A practical guide to creating a software Dark Factory">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/notes/agentic-engineering/">
+<meta property="twitter:title" content="The Agentic Engineering Journey — Avon Software Labs">
+<meta property="twitter:description" content="A practical guide to creating a software Dark Factory">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
 </head>
 <body>
 <site-header-article></site-header-article>
@@ -21,7 +40,7 @@
   <p class="doc-subtitle">A practical guide to creating a software Dark Factory</p>
   <p class="doc-tagline">The frameworks that turn AI chaos into autonomous engineering</p>
   <div class="doc-meta">
-    <span>v1.0</span>
+    <span>v1.1</span>
     <span>·</span>
     <span>March 2026</span>
     <span>·</span>
@@ -31,9 +50,9 @@
 
 <!-- ══ INTRODUCTION ═══════════════════════════════════════════════ -->
 <h1>Introduction</h1>
-<p>Something remarkable is happening in the world of software development. Artificial intelligence tools have moved far beyond the "helpful spellchecker" stage — they are now writing real code, making architectural decisions, running tests, and in some cases, delivering entire features without a human touching a keyboard.</p>
-<p>But here is the catch: most people are not getting nearly as much from this revolution as they could be. Not because the technology is not good enough, but because they have not changed how they think about their own role. They are still trying to drive a car that has learned to drive itself.</p>
-<p>This document is inspired by <strong>Dan Shapiro's</strong> January 2026 blog post <em><a href="https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/" target="_blank">"The Five Levels: from Spicy Autocomplete to the Dark Factory"</a></em>. Dan's framework gave us the map — this document adds the three navigational tools that make the journey actionable: <strong>Domain-Driven Design (DDD)</strong>, <strong>BMAD</strong>, and <strong>Attractor</strong>. Each one is, at its heart, a set of ideas about how to think more clearly and work more effectively as AI takes on more of the engineering workload.</p>
+<p>We are seeing a fundamental shift in how software is built. Artificial intelligence tools have moved far beyond the "helpful spellchecker" stage — they are now writing real code, making architectural decisions, running tests, and in some cases, delivering entire features without a human touching a keyboard.</p>
+<p>But there is a catch: most people are not getting nearly as much from this revolution as they could be. Not because the technology is not good enough, but because they have not changed how they think about their own role. They are still trying to drive a car that has learned to drive itself.</p>
+<p>This guide builds on <strong>Dan Shapiro's</strong> January 2026 blog post <em><a href="https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/" target="_blank">"The Five Levels: from Spicy Autocomplete to the Dark Factory"</a></em>. Dan's framework gave us the map — this document adds the three navigational tools that make the journey actionable: <strong><a href="../../guides/ddd/">Domain-Driven Design (DDD)</a></strong>, <strong><a href="../../guides/bmad/">BMAD</a></strong>, and <strong><a href="../../guides/attractor/">Attractor</a></strong>. Each one provides a practical framework about how to think more clearly and work more effectively as AI takes on more of the engineering workload.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> We do not need to be developers to benefit from this. If we work with software teams, commission software, or are curious about where AI is taking us — this is for you.</div>
 
 <!-- ══ PART ONE ════════════════════════════════════════════════════ -->
@@ -60,23 +79,27 @@
 <p>At this level, every line of code that exists is one we typed ourselves. We might occasionally copy a snippet from ChatGPT or let our editor auto-complete a variable name — but fundamentally, we are the sole author. In a world where AI can generate entire features in minutes, writing everything manually is like insisting on hand-drawing maps when GPS exists. It is not wrong, but it is increasingly costly.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The invisible cost here is opportunity cost. Every hour spent on boilerplate code, routine tests, or repetitive fixes is an hour not spent on the creative and strategic work only we can do.</div>
 
-<h2>Level 1 — AI coding intern: Helps with specific tasks handed over to it</h2>
+<<<<<<< HEAD:agentic-engineering/index.html
+<h2>Level 1 — AI Intern: Discrete task delegation</h2>
 <p>Here, we start handing off the boring stuff. "Write me a unit test for this function." "Add comments to this code." "Convert this JSON to CSV." The AI is fast, it does not complain, and it frees us up for more interesting work. Tools like GitHub Copilot or a chat interface with Claude or ChatGPT live here.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The limitation is that we are still fundamentally a developer doing developer work — just faster. The AI is a tool we pick up and put down. We have not yet changed the nature of our role.</div>
 
-<h2>Level 2 — Jr Developer: As an interactive pair programmer, AI generates most of the code</h2>
+<h2>Level 2 — Pair Programmer: Interactive collaboration</h2>
 <p>This is where most ambitious developers are living right now, and it genuinely feels incredible. We are not just assigning tasks — we are having a conversation. We describe what we want, the AI drafts it, we refine it together, it notices problems we missed, we challenge its assumptions. It is the closest thing to having an expert collaborator available 24 hours a day. Tools like Cursor, Claude in your IDE, or similar AI-native editors make this feel natural.</p>
 <div class="callout callout-warn"><strong>Watch out:</strong> The danger is that Level 2 feels so good that people stop here permanently. Productivity is up, morale is high, and the work is satisfying. But we are still the rate-limiting factor. If we are not at the keyboard, nothing happens.</div>
 
-<h2>Level 3 — Manager: AI acts as senior developer, human manages and reviews</h2>
-<p>At Level 3, we stop writing code and start reviewing it — at scale. Our AI agents are running multiple tasks simultaneously. We spend our days looking at diffs (the record of what changed), approving or rejecting suggestions, and redirecting when things go off track. For many people, this feels like a step backwards. We traded the pleasure of building for the cognitive exhaustion of managing.</p>
+<h2>Level 3 — Technical Director: Managing autonomous agents</h2>
+<p>At Level 3, we stop writing code and start reviewing it — at scale. Our AI agents are running multiple tasks simultaneously. We spend our days looking at diffs (the record of what changed), approving or rejecting suggestions, and redirecting when things go off track. For many people, this feels like a step backwards. we traded the pleasure of building for the cognitive exhaustion of managing.</p>
 <div class="callout callout-warn"><strong>Watch out:</strong> The hidden truth of Level 3 is that almost everyone gets stuck here — not because of the tools, but because of habits and process. To go further, we need something to change about how we communicate requirements and expectations. That is where the frameworks we discuss later come in.</div>
 
-<h2>Level 4 — PM: AI runs the full dev team of agents, human writes specs and checks results</h2>
+<h2>Level 4 — Product Owner: Spec-driven development</h2>
 <p>At Level 4, we write a spec — a clear description of what we want built. We debate it with the AI, refine the plan, set constraints and schedules. Then we step away. Hours later, we come back and check whether the tests passed. This is not hypothetical: a growing number of practitioners, including Dan Shapiro himself, are operating at this level today.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> The mental shift required to reach Level 4 is significant. We stop thinking like a developer and start thinking like a product owner. Our most valuable skill becomes the ability to describe, with precision and without ambiguity, what we want and why.</div>
 
-<h2>Level 5 — Dark Factory: AI runs end-to-end, human provides domain expertise only</h2>
+<h2>Level 5 — The Dark Factory: Fully autonomous production</h2>
+<p>Level 5 is named after the Fanuc Dark Factory — a real manufacturing plant in Japan staffed entirely by robots, running in darkness because humans are neither needed nor present. In software terms, a small team (sometimes as few as two or three people) authors specifications, and an autonomous pipeline takes those specs and produces tested, deployable software — without ongoing human involvement.</p>
+<div class="callout callout-insight"><strong>Insight:</strong> This is not science fiction. It exists today, at small scale, in a handful of pioneering teams. The technology is ready. What most organisations lack is the accumulated discipline — the shared language, the structured documentation habits, the trust — to make it work reliably.</div>
+
 <p>Level 5 is named after the Fanuc Dark Factory — a real manufacturing plant in Japan staffed entirely by robots, running in darkness because humans are neither needed nor present. In software terms, a small team (sometimes as few as two or three people) authors specifications, and an autonomous pipeline takes those specs and produces tested, deployable software — without ongoing human involvement.</p>
 <div class="callout callout-insight"><strong>Insight:</strong> This is not science fiction. It exists today, at small scale, in a handful of pioneering teams. The technology is ready. What most organisations lack is the accumulated discipline — the shared language, the structured documentation habits, the trust — to make it work reliably.</div>
 
@@ -102,11 +125,11 @@
 <!-- ══ PART THREE ═══════════════════════════════════════════════════ -->
 <div class="section-banner banner-navy">PART THREE: Domain-Driven Design (DDD)</div>
 <h1>Domain-Driven Design</h1>
-<h3>The art of speaking the same language as your business</h3>
+<h3>Aligning your code with your business as your business</h3>
 
 <h2>What Problem Does It Solve?</h2>
 <p>Imagine we work at a bank. The loans department talks about "customers", "accounts", and "risk profiles". The engineers who built the loans software also have "customers", "accounts", and "risk profiles" — but they mean subtly different things, modelled in slightly different ways. Over years these mismatches compound. Features take longer to build. Bugs appear at boundaries. Nobody can fully explain what the system does.</p>
-<p>DDD is the antidote. Its core proposal: the language our business uses to describe itself should be the language our code uses too — and all ambiguity should be resolved in conversation, not discovered in production.</p>
+<p>DDD provides the solution. Its core proposal: the language our business uses to describe itself should be the language our code uses too — and all ambiguity should be resolved in conversation, not discovered in production.</p>
 
 <h2>Who Created It?</h2>
 <p><strong>Eric Evans</strong>, a software consultant, formalised DDD in his 2003 book <em>Domain-Driven Design: Tackling Complexity in the Heart of Software</em>. It drew on decades of field experience with large, complex systems and remains essential reading for software architects more than twenty years later.</p>
@@ -298,7 +321,7 @@ Not sure what to do next? Just run <code>/bmad-help</code> at any point — it i
 <p>What happens beyond that is genuinely uncertain — and we explore that in the Final Thoughts below.</p>
 
 <h2>Final Thoughts</h2>
-<p>Nobody knows exactly how this plays out. Anyone who claims otherwise is guessing — and so are we. But it is hard to look at where things are heading and not wonder.</p>
+<p>The future of these roles is still being defined. We are all figuring this out in real-time. But it is hard to look at where things are heading and not wonder.</p>
 
 <p>The task-worker versions of many familiar roles — the developer writing boilerplate, the QA engineer writing test scripts, the DevOps engineer maintaining pipelines, the project manager tracking tickets — these may look very different in ten years. Or they may evolve in ways none of us can predict. What seems likely is that the boundary between "business person" and "technical person" will keep blurring. The most effective people we can imagine at Level 4 or 5 are those who understand both the domain and the systems deeply enough to bridge them.</p>
 
@@ -343,28 +366,17 @@ Not sure what to do next? Just run <code>/bmad-help</code> at any point — it i
 </table>
 </div>
 
-<!-- ══ FEEDBACK ══════════════════════════════════════════════════════ -->
-<div class="feedback-box">
-  <div class="feedback-stripe-top"></div>
-  <div class="feedback-body">
-    <h2>💬 Share Your Feedback</h2>
-    <p>This is a living document hosted at <a href="https://github.com/AvonS/avons.github.io/tree/main/agentic-engineering" target="_blank" style="color:#444444;font-weight:700;text-decoration:underline;">github.com/AvonS/avons.github.io</a>. We are actively refining these ideas and would love to hear your perspective — whether you are a developer, a product owner, a founder, or simply someone curious about where AI is taking software.</p>
-    <p>Open an issue to suggest improvements, start a discussion to share your experience at any of the five levels, or watch the repository to be notified of updates. If you find this useful, starring the repo helps others discover it.</p>
-    <div class="feedback-links">
-      <a class="fb-btn" href="https://github.com/AvonS/avons.github.io" target="_blank">⭐ Star on GitHub</a>
-      <a class="fb-btn ghost" href="https://github.com/AvonS/avons.github.io/issues/new" target="_blank">🐛 Open an Issue</a>
-      <a class="fb-btn ghost" href="https://github.com/AvonS/avons.github.io/discussions" target="_blank">💬 Start a Discussion</a>
-    </div>
-    <p class="fb-email">
-      Prefer email? Reach out at <a href="/cdn-cgi/l/email-protection#7514031a1b0619141706351218141c195b161a18"><span class="__cf_email__" data-cfemail="9effe8f1f0edf2fffceddef9f3fff7f2b0fdf1f3">[email&#160;protected]</span></a> &nbsp;·&nbsp;
-      Follow <a href="https://github.com/avonS" target="_blank">github.com/avonS</a> for future updates and related work in agentic engineering.
-    </p>
-  </div>
-  <div class="feedback-stripe-bottom"></div>
+
+<utterances-comments repo="AvonS/avons.github.io"></utterances-comments>
+
+<div class="article-feedback-meta">
+  <p>Prefer email? Reach out at <span class="spamspan"><span class="u">avonslabs</span> [at] <span class="d">gmail [dot] com</span> (<span class="t">AvonSlabs</span>)</span> &nbsp;·&nbsp;
+  Follow <a href="https://github.com/AvonS" target="_blank">github.com/AvonS</a> for future updates and related work in agentic engineering.</p>
 </div>
 
 <site-footer-article></site-footer-article>
 
 </div>
+
 </body>
 </html>

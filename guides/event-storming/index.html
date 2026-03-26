@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Storming — A Practical Workshop Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+
+<meta name="description" content="What the technique is, how it works, and why it produces results that no other workshop format does">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/guides/event-storming/">
+<meta property="og:title" content="Event Storming — A Practical Workshop Guide">
+<meta property="og:description" content="What the technique is, how it works, and why it produces results that no other workshop format does">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/guides/event-storming/">
+<meta property="twitter:title" content="Event Storming — A Practical Workshop Guide">
+<meta property="twitter:description" content="What the technique is, how it works, and why it produces results that no other workshop format does">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+
+<guide-header title="Event Storming"></guide-header>
+
+<!-- ══════════════════════════════════════════
+     PAGE 0 — TABLE OF CONTENTS
+     ══════════════════════════════════════════ -->
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Practical Workshop Guide</div>
+    <h1>Event Storming</h1>
+    <p class="subtitle">From a room full of sticky notes to a domain model your team actually owns</p>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — Understanding Event Storming</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">What Event Storming Is — and What It Isn't</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">The Language of Event Storming — Sticky Notes and What They Mean</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">The Three Variants — Big Picture, Process Level, Design Level</span><span class="toc-dots"></span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — Running a Big Picture Session</div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">Preparing the Room and the People</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">Phase 1 — Chaotic Exploration</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">Phase 2 — Enforcing the Timeline</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">Phase 3 — Hotspots, Problems and Pivotal Events</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">Phase 4 — Finding the Boundaries</span><span class="toc-dots"></span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — Process Level and Design Level</div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">Process Level Event Storming — Commands, Policies and Actors</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">10</span><span class="toc-name">Design Level Event Storming — From Process to Software Model</span><span class="toc-dots"></span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Four — Making It Work in Practice</div>
+    <div class="toc-item" onclick="showPage(11)"><span class="toc-num">11</span><span class="toc-name">Facilitation — Keeping the Session Productive</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(12)"><span class="toc-num">12</span><span class="toc-name">Remote and Hybrid Event Storming</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(13)"><span class="toc-num">13</span><span class="toc-name">Common Failure Modes</span><span class="toc-dots"></span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Five — Connecting the Dots</div>
+    <div class="toc-item" onclick="showPage(14)"><span class="toc-num">14</span><span class="toc-name">From Event Storming to DDD — How the Outputs Map</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(15)"><span class="toc-num">15</span><span class="toc-name">Where Event Storming Fits in the Project Lifecycle</span><span class="toc-dots"></span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(16)"><span class="toc-num">—</span><span class="toc-name">Glossary of Event Storming Terms</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 1
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-1">
+  <div class="part-header">
+    <div class="part-num">Part One</div>
+    <h2>Understanding Event Storming</h2>
+    <p>What the technique is, how it works, and why it produces results that no other workshop format does</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">What Event Storming Is — and What It Isn't</h1>
+
+  <p class="chapter-intro">Alberto Brandolini invented Event Storming in 2013 as a direct response to a problem he kept encountering: the people who understood the business couldn't communicate it to the people building the software, and the usual workshop formats made this worse rather than better.</p>
+
+  <h2>The Problem with Requirements Workshops</h2>
+
+  <p>The standard requirements gathering meeting follows a predictable pattern. A business analyst prepares an agenda. Stakeholders sit around a table. Someone presents slides. People discuss. A BA takes notes. Three weeks later a requirements document appears that nobody fully agrees with, and development begins on a shared misunderstanding.</p>
+
+  <p>The people who know the domain — the operations manager who has processed ten thousand orders, the customer service lead who knows every edge case because she's handled them — sit quietly while the BA translates their world into a format that loses most of the nuance. The developers get a sanitised, incomplete picture. The domain experts never see whether their knowledge was captured correctly.</p>
+
+  <p>Brandolini's insight was simple: put everyone in the same room, give them sticky notes, and let the knowledge surface directly — without a translator in the middle.</p>
+
+  <div class="callout">
+    <div class="callout-label">Event Storming — Definition</div>
+    <p><strong>Event Storming:</strong> A collaborative workshop technique invented by Alberto Brandolini for rapidly exploring complex business domains. It brings together domain experts and technical teams to build a shared understanding of what happens in a business — expressed as a timeline of Domain Events on a large wall. The output is a visual model of the domain that both sides created and therefore both sides understand.</p>
+  </div>
+
+  <h2>What Makes It Different</h2>
+
+  <p>Three things separate Event Storming from conventional requirements workshops.</p>
+
+  <p>First, it starts with what happens rather than what exists. Most requirements processes start with entities — what are the things in the system, what are their attributes? Event Storming starts with events — what happens in the business, in what order, under what conditions? This shift from nouns to verbs surfaces the dynamics of the domain in a way that entity-first approaches miss.</p>
+
+  <p>Second, it is radically inclusive. Everyone who touches the domain is in the room — domain experts, developers, architects, product owners, sometimes customers. No single person has the full picture. The operations manager knows the fulfilment process in detail but has never thought about how the pricing engine works. The developer knows the pricing code but doesn't understand the business rules behind it. The model that emerges from the combined room is more complete than anything any individual could produce.</p>
+
+  <p>Third, it is deliberately low-tech. Sticky notes on a paper roll. No slide decks, no whiteboards filled with UML, no elaborate tooling. The low-tech constraint is a feature — it makes participation equal. Everyone can write on a sticky note. Nobody needs a specialised skill to contribute.</p>
+
+  <h2>What It Produces</h2>
+
+  <p>A Big Picture Event Storming session — the strategic variant — produces a timeline of Domain Events covering an entire business process from end to end. Hotspots mark the places where things go wrong or where the team has disagreements. Pivotal events mark the major business transitions. Boundaries between business areas emerge naturally from where the language and the people change.</p>
+
+  <p>A more detailed session adds Commands (what triggers each event), Actors (who issues each command), Policies (what happens automatically in response to events), and eventually Read Models and Aggregates. At Design Level, the output is close enough to a software specification to drive development directly.</p>
+
+  <h2>What It Is Not</h2>
+
+  <p>Event Storming is not a design methodology. It doesn't tell you how to build the system — it tells you what the system needs to do and where the genuine complexity lives. It is a discovery tool, not a design tool.</p>
+
+  <p>It is not a one-time exercise. A domain understanding that took one session to surface will need revisiting as the team learns more, as the business changes, and as assumptions get challenged by implementation reality.</p>
+
+  <p>And it is not a substitute for DDD. Event Storming is the fastest way to surface the raw material — the events, the language, the boundaries — that DDD concepts then help you structure into a coherent model. The two are complementary, not competing.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the sticky note vocabulary — what each colour means and why the colour coding matters.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 2
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">The Language of Event Storming — Sticky Notes and What They Mean</h1>
+
+  <p class="chapter-intro">Event Storming has a visual vocabulary. Each type of concept gets its own sticky note colour, and the colour coding is not decoration — it is the grammar of the shared language the session builds. Get the colours right and the wall becomes readable. Ignore them and the wall becomes noise.</p>
+
+  <h2>The Colour Vocabulary</h2>
+
+  <p>Different facilitators use slightly different colour conventions, but Brandolini's original mapping has become the standard. Here it is, with the reasoning behind each choice.</p>
+
+  <div class="sticky-legend">
+    <span class="sticky orange">Domain Event</span>
+    <span class="sticky blue">Command</span>
+    <span class="sticky purple">Policy</span>
+    <span class="sticky yellow">Aggregate / Read Model</span>
+    <span class="sticky pink">Actor / User</span>
+    <span class="sticky red">Hotspot</span>
+    <span class="sticky green">Opportunity / Insight</span>
+    <span class="sticky lilac">External System</span>
+  </div>
+
+  <h2>Orange — Domain Events</h2>
+
+  <p>The most important sticky note in the session. A Domain Event is something that happened in the business that the business cares about. Written in past tense, in the language of the domain: <em>OrderPlaced, PaymentReceived, StockReserved, CustomerRegistered, ShipmentDelayed.</em></p>
+
+  <p>Orange dominates the wall for good reason — events are the skeleton of the session. Everything else attaches to them. The first instruction every participant receives is: write what happens on orange stickies, in past tense, and put them on the wall.</p>
+
+  <div class="callout">
+    <div class="callout-label">Writing Good Domain Events</div>
+    <p>Past tense. Business language, not technical language. Meaningful to the business, not just to the system. <strong>OrderConfirmed</strong> — good. <strong>OrderStatusUpdated</strong> — bad (that's a database operation, not a business fact). <strong>CustomerCreditChecked</strong> — good. <strong>CreditCheckAPICallMade</strong> — bad. If the event name would make sense in a conversation with the operations team, it's a Domain Event. If it would only make sense to a developer, rewrite it.</p>
+  </div>
+
+  <h2>Blue — Commands</h2>
+
+  <p>A Command is what triggers a Domain Event. It is an instruction — something a person or system does that causes something to happen. Written in imperative form: <em>Place Order, Confirm Payment, Reserve Stock, Register Customer.</em></p>
+
+  <p>Commands are added in Process Level sessions, not in the initial Big Picture pass. At the Big Picture level, the team focuses on events first. Commands come later, when the team starts asking "but what causes this event to happen?"</p>
+
+  <h2>Purple — Policies</h2>
+
+  <p>A Policy is an automatic reaction — something the system does when an event occurs, without human intervention. Written as a rule: <em>"Whenever OrderPlaced, reserve stock automatically."</em> or <em>"Whenever PaymentDeclined, notify customer and release reservation."</em></p>
+
+  <p>Policies are where business logic lives. They are the conditional rules that govern how the business responds to things that happen. Finding them is one of the most valuable outputs of a detailed Event Storming session — because they are often implicit, assumed by the domain experts to be obvious, and never written down anywhere.</p>
+
+  <h2>Yellow — Aggregates and Read Models</h2>
+
+  <p>In Design Level sessions, yellow stickies represent two different things depending on their orientation. Aggregates — the clusters of domain objects that enforce business rules — are written on yellow stickies placed between the Command and the Event it produces. Read Models — the views of data that an Actor needs to make a decision — are also yellow, placed before the Command that needs them.</p>
+
+  <h2>Pink — Actors</h2>
+
+  <p>An Actor is the person or role that issues a Command. Small pink stickies attached to blue Command stickies: <em>Customer, Warehouse Operative, Finance Manager, System Administrator.</em> Actors help the team see who is responsible for what and where automation could or should replace human action.</p>
+
+  <h2>Red — Hotspots</h2>
+
+  <p>The most direct sticky note in the session. A Hotspot marks a problem, a disagreement, an area of uncertainty, or a question nobody can answer in the room. Written on red stickies and placed prominently on the wall. The instruction to participants: if something is unclear, broken, contested, or unknown — put a red sticky on it and move on. Don't stop the session to resolve it.</p>
+
+  <p>By the end of the session, the density of red stickies is a heat map of risk. Clusters of red reveal the genuinely complex and contested areas. These become the priority agenda for follow-up conversations.</p>
+
+  <h2>Green — Opportunities</h2>
+
+  <p>Green stickies capture insights and opportunities that emerge during the session — process improvements, automation possibilities, things the business could do differently. They're not part of the domain model; they're the byproduct of having knowledgeable people in the same room looking at the whole picture together.</p>
+
+  <h2>Lilac — External Systems</h2>
+
+  <p>External systems — payment gateways, logistics APIs, ERP systems, third-party services — that interact with the domain but sit outside it. Lilac stickies placed where the external system triggers or receives events make the integration points visible without conflating external systems with internal domain logic.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE STICKY NOTE VOCABULARY AT A GLANCE</text>
+
+      <!-- Row 1 -->
+      <rect x="20" y="36" width="110" height="50" rx="5" fill="#f39c12"/>
+      <text x="75" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Domain Event</text>
+      <text x="75" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Past tense. Orange.</text>
+
+      <rect x="150" y="36" width="110" height="50" rx="5" fill="#2980b9"/>
+      <text x="205" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Command</text>
+      <text x="205" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Imperative. Blue.</text>
+
+      <rect x="280" y="36" width="110" height="50" rx="5" fill="#8e44ad"/>
+      <text x="335" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Policy</text>
+      <text x="335" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Auto-reaction. Purple.</text>
+
+      <rect x="410" y="36" width="110" height="50" rx="5" fill="#e91e8c"/>
+      <text x="465" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Actor</text>
+      <text x="465" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Who acts. Pink.</text>
+
+      <rect x="540" y="36" width="120" height="50" rx="5" fill="#f1c40f"/>
+      <text x="600" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#333" font-weight="600">Aggregate</text>
+      <text x="600" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#555">Handles cmd. Yellow.</text>
+
+      <!-- Row 2 -->
+      <rect x="20" y="110" width="110" height="50" rx="5" fill="#c0392b"/>
+      <text x="75" y="132" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Hotspot</text>
+      <text x="75" y="150" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Problem/risk. Red.</text>
+
+      <rect x="150" y="110" width="110" height="50" rx="5" fill="#27ae60"/>
+      <text x="205" y="132" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Opportunity</text>
+      <text x="205" y="150" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Insight. Green.</text>
+
+      <rect x="280" y="110" width="110" height="50" rx="5" fill="#9b59b6"/>
+      <text x="335" y="132" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">External System</text>
+      <text x="335" y="150" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.85)">Outside domain. Lilac.</text>
+
+      <rect x="410" y="110" width="110" height="50" rx="5" fill="#f1c40f"/>
+      <text x="465" y="132" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#333" font-weight="600">Read Model</text>
+      <text x="465" y="150" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#555">Info to decide. Yellow.</text>
+
+      <text x="340" y="185" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Colour consistency across the session makes the wall readable to everyone in the room</text>
+    </svg>
+    <div class="diagram-caption">The complete Event Storming sticky note vocabulary</div>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the three variants of Event Storming and when to use each one.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 3
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-3">
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">The Three Variants — Big Picture, Process Level, Design Level</h1>
+
+  <p class="chapter-intro">Event Storming isn't one fixed workshop format — it's a family of three related techniques at different levels of detail. Knowing which one to run, and when, is the first decision any facilitator has to make.</p>
+
+  <h2>Big Picture Event Storming</h2>
+
+  <p>The strategic variant. Covers an entire business domain — or a large slice of it — at high altitude. The goal is shared understanding across the whole landscape: what happens, in what order, where the problems are, and where the natural boundaries between business areas sit.</p>
+
+  <p>A Big Picture session typically runs a full day, sometimes two. It brings in the widest possible range of participants — domain experts from multiple departments, leadership, developers, architects. Nobody needs technical knowledge to participate. The only requirement is that participants know something about how the business works.</p>
+
+  <p>The outputs of a Big Picture session are: a timeline of Domain Events from end to end, Hotspots marking problem areas and disagreements, Pivotal Events marking major business transitions, and emerging context boundaries where the language and participants naturally shift.</p>
+
+  <div class="callout">
+    <div class="callout-label">When to Run Big Picture ES</div>
+    <p>At the start of a significant project or programme, before any design decisions are made. When joining an existing domain you don't understand. When a team has lost alignment on what the system actually does. When a business is exploring a new product or capability. Big Picture is the discovery tool — run it whenever you need to see the whole landscape before deciding where to dig.</p>
+  </div>
+
+  <h2>Process Level Event Storming</h2>
+
+  <p>The operational variant. Zooms into a specific business process identified during the Big Picture session — typically one that's complex, contested, or targeted for change. Adds Commands, Actors, and Policies to the event timeline, making explicit who does what, what triggers each event, and what happens automatically.</p>
+
+  <p>A Process Level session typically runs half a day to a full day, with a smaller group — the people who actually own and work within the specific process being explored. The outputs are a detailed process model showing the full sequence of commands, events, actors, and policies — complete with all the edge cases and exception paths that never make it into formal documentation.</p>
+
+  <div class="callout">
+    <div class="callout-label">When to Run Process Level ES</div>
+    <p>After a Big Picture session, to explore specific processes in detail. Before redesigning a complex workflow. When a team needs to understand a process deeply enough to automate it or build software to support it. Process Level is the analysis tool — run it when you need to understand a specific slice of the domain well enough to act on it.</p>
+  </div>
+
+  <h2>Design Level Event Storming</h2>
+
+  <p>The technical variant. Takes the output of a Process Level session and translates it into a software model — Aggregates, Commands, Events, Policies, Read Models, and the relationships between them. This is where the DDD tactical patterns enter the picture, directly informed by the domain understanding built in the earlier sessions.</p>
+
+  <p>A Design Level session runs two to four hours, with a small group — typically the development team plus one or two domain experts to answer questions. The outputs are close to a software specification: Aggregates with their Commands and Events, Read Models with their data requirements, integration points between Bounded Contexts, and a clear picture of what the software needs to do at the level of individual domain operations.</p>
+
+  <div class="callout">
+    <div class="callout-label">When to Run Design Level ES</div>
+    <p>Immediately before beginning development on a specific feature or bounded context. When translating a well-understood process into a software model. When the development team needs shared understanding of what they're about to build. Design Level is the specification tool — run it when you need to turn domain understanding into actionable technical direction.</p>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 260" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE THREE VARIANTS — SCOPE AND PURPOSE</text>
+
+      <!-- Big Picture -->
+      <rect x="20" y="36" width="190" height="200" rx="10" fill="#faf9f6" stroke="#c0392b" stroke-width="2.5"/>
+      <rect x="20" y="36" width="190" height="38" rx="10" fill="#c0392b"/>
+      <rect x="20" y="60" width="190" height="14" fill="#c0392b"/>
+      <text x="115" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">BIG PICTURE</text>
+      <text x="115" y="92" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Entire domain</text>
+      <text x="115" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Full day / 2 days</text>
+      <text x="115" y="136" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Wide audience</text>
+      <text x="115" y="156" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Events + Hotspots</text>
+      <text x="115" y="176" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">+ Boundaries</text>
+      <text x="115" y="210" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#c0392b" font-style="italic">Discovery</text>
+
+      <!-- Process Level -->
+      <rect x="235" y="36" width="190" height="200" rx="10" fill="#faf9f6" stroke="#e67e22" stroke-width="2.5"/>
+      <rect x="235" y="36" width="190" height="38" rx="10" fill="#e67e22"/>
+      <rect x="235" y="60" width="190" height="14" fill="#e67e22"/>
+      <text x="330" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">PROCESS LEVEL</text>
+      <text x="330" y="92" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">One process</text>
+      <text x="330" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Half day / full day</text>
+      <text x="330" y="136" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Process owners</text>
+      <text x="330" y="156" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Events + Commands</text>
+      <text x="330" y="176" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">+ Actors + Policies</text>
+      <text x="330" y="210" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#e67e22" font-style="italic">Analysis</text>
+
+      <!-- Design Level -->
+      <rect x="450" y="36" width="190" height="200" rx="10" fill="#faf9f6" stroke="#4a9068" stroke-width="2.5"/>
+      <rect x="450" y="36" width="190" height="38" rx="10" fill="#4a9068"/>
+      <rect x="450" y="60" width="190" height="14" fill="#4a9068"/>
+      <text x="545" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">DESIGN LEVEL</text>
+      <text x="545" y="92" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">One context</text>
+      <text x="545" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">2–4 hours</text>
+      <text x="545" y="136" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Dev team + experts</text>
+      <text x="545" y="156" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">+ Aggregates</text>
+      <text x="545" y="176" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">+ Read Models</text>
+      <text x="545" y="210" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a9068" font-style="italic">Specification</text>
+    </svg>
+    <div class="diagram-caption">The three variants in order of zoom level. Run them in sequence for a new domain — Big Picture first, then Process Level for priority areas, then Design Level before development begins.</div>
+  </div>
+
+  <h2>Do You Always Need All Three?</h2>
+
+  <p>No. The variants are not a mandatory sequence. For a well-understood domain where the team already has strong domain knowledge, a Design Level session might be all that's needed before starting work on a new feature. For a brand new product or a legacy system nobody fully understands, all three — in sequence — give the clearest path from confusion to clarity.</p>
+
+  <p>The rule of thumb: start at the level of detail that matches the level of uncertainty. High uncertainty about the whole domain — start Big Picture. Understood domain, unclear process — start Process Level. Understood process, ready to build — start Design Level.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: preparing the room and the people — what you need before the session starts.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 4
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-4">
+  <div class="part-header">
+    <div class="part-num">Part Two</div>
+    <h2>Running a Big Picture Session</h2>
+    <p>Step by step through the four phases of a Big Picture Event Storming workshop at Meridian Retail</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">Preparing the Room and the People</h1>
+
+  <p class="chapter-intro">A poorly prepared Event Storming session wastes everyone's time. The preparation isn't complicated — but skipping it produces predictable failures: wrong people in the room, not enough wall space, sticky notes that fall off, participants who don't know why they're there.</p>
+
+  <h2>The Room</h2>
+
+  <p>The single most important physical requirement is wall space. An Event Storming session for a business domain of any real complexity needs at minimum six metres of continuous wall. Eight to ten metres is better. The wall is the shared workspace — events go left to right in time, and the further right you go, the more space you need for the events and everything that attaches to them.</p>
+
+  <p>The standard solution is a roll of plain paper — the kind used for packaging — taped horizontally across the wall. This creates a writable, sticky-note-friendly surface of whatever length you need. It also means the output is portable: you can roll it up, photograph it, and bring it back to the next session.</p>
+
+  <p>The room needs to be large enough for the whole group to stand at the wall simultaneously. No chairs. Event Storming is a standing workshop by design — it keeps energy up, keeps people moving to different parts of the wall, and prevents the passive lecture-room dynamic where a few people speak and everyone else listens.</p>
+
+  <h2>Materials</h2>
+
+  <p>Prepare these before anyone arrives:</p>
+
+  <div class="step-block">
+    <div class="step-num">MATERIALS</div>
+    <p>Orange sticky notes — large quantity, at least 200 for a full day session. Blue, purple, pink, red, green, lilac, and yellow stickies in smaller quantities. Thick felt-tip markers — not ballpoints. The writing must be readable from two metres away. Paper roll taped to the wall. A legend visible to everyone showing each colour and what it means.</p>
+  </div>
+
+  <p>The thick marker requirement is non-negotiable. Ballpoint pens produce writing nobody can read from a distance, which means nobody reads it, which means the wall stops being a shared reference and becomes one person's private notes. If people can't read the wall from across the room, the session has already failed.</p>
+
+  <h2>Who to Invite</h2>
+
+  <p>For a Big Picture session, the invitation list should span the entire domain. At Meridian Retail, a session covering the end-to-end order journey would include: someone from the customer-facing team who understands how orders are placed, the operations manager who runs the fulfilment process, a finance representative who understands billing and reconciliation, the warehouse manager, the customer service lead who handles problems and returns, and developers and architects who will build or maintain the systems involved.</p>
+
+  <p>The ideal group size is between eight and thirty people. Fewer than eight and you risk missing critical domain knowledge. More than thirty and facilitation becomes unmanageable.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Right People Rule</div>
+    <p>Every person in the room should either <strong>know something about the domain</strong> that others don't, or <strong>need to understand something about the domain</strong> that they currently don't. If someone fails both tests, they probably shouldn't be there. Event Storming works because of the diversity of knowledge in the room — filling it with observers or bystanders dilutes that.</p>
+  </div>
+
+  <h2>Setting Expectations</h2>
+
+  <p>Send participants a one-paragraph briefing before the session. Tell them what Event Storming is, what they'll be doing (writing on sticky notes, standing at a wall, discussing what happens in the business), and what the session will produce. Tell them explicitly that no preparation is required — they only need to show up knowing what they know.</p>
+
+  <p>At the start of the session, spend ten minutes on a brief introduction: what a Domain Event is, what orange stickies are for, and the first instruction. Don't over-explain the technique — participants learn by doing, not by listening to a methodology briefing. Get stickies on the wall within the first fifteen minutes.</p>
+
+  <h2>Time Allocation</h2>
+
+  <p>A full Big Picture session for a domain of moderate complexity runs six to eight hours. Allow for breaks — Event Storming is mentally intensive and the quality of discussion drops sharply when people are tired. A structure that works well: ninety minutes of chaotic exploration, thirty-minute break, ninety minutes of timeline enforcement and hotspot marking, lunch, ninety minutes of pivotal events and boundary finding, thirty minutes of debrief and next steps.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Phase 1 — Chaotic Exploration, the most energetic and productive part of the session.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 5
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">Phase 1 — Chaotic Exploration</h1>
+
+  <p class="chapter-intro">The first phase of a Big Picture session is intentionally unstructured. No order, no agenda, no turn-taking. Just everyone writing Domain Events on orange stickies and putting them on the wall simultaneously. The chaos is the point.</p>
+
+  <h2>The First Instruction</h2>
+
+  <p>The facilitator's opening instruction is simple: "Write everything that happens in this business on orange sticky notes, in past tense, and put them on the wall. Write one event per sticky. Don't worry about order. Don't discuss. Just write and stick."</p>
+
+  <p>Then step back and let it happen.</p>
+
+  <p>For the first few minutes, the room will feel awkward. People will look at each other, unsure whether to start. The facilitator's job is to resist the urge to fill the silence with more explanation. Write the first sticky yourself — <em>OrderPlaced</em> — and put it on the wall. Someone will follow. Then another. Within five minutes the room is alive.</p>
+
+  <h2>What Happens During Chaotic Exploration</h2>
+
+  <p>At Meridian Retail, the first fifteen minutes of a Big Picture session on the order journey produces a wall covered in orange stickies: <em>CustomerRegistered, OrderPlaced, PaymentReceived, StockChecked, PickListGenerated, OrderPicked, OrderPacked, OrderDispatched, OrderDelivered, ReturnRequested, RefundIssued, ReviewSubmitted, LoyaltyPointsAwarded, PromotionApplied, StockReplenished, SupplierInvoiceReceived.</em></p>
+
+  <p>Not in any particular order. Not in any particular location on the wall. The operations manager puts up events about the warehouse process. The finance person puts up events about billing and reconciliation. The customer service lead puts up events about complaints and returns. The developer puts up events about system integrations. All simultaneously, all from their own perspective.</p>
+
+  <p>This is the point. Nobody has the full picture. The wall is the first time everyone can see the whole picture at once.</p>
+
+  <h2>Duplicates and Contradictions</h2>
+
+  <p>Within minutes, duplicates will appear. Three different people have written variations of <em>OrderConfirmed</em>: one says <em>OrderConfirmed</em>, one says <em>OrderApproved</em>, one says <em>OrderAccepted</em>. Leave them all up. These apparent duplicates are often not duplicates at all — they represent subtly different events in different parts of the process, or different people's understanding of the same event. The conversation about whether these are the same thing or different things is valuable. Don't collapse it prematurely.</p>
+
+  <p>Contradictions will also appear. One person writes <em>StockChecked</em> before <em>PaymentReceived</em>. Another writes it after. Both might be correct — the business might check stock at two different points. Or the two people have different mental models of the same process. Either way, that contradiction is information. Mark it with a red Hotspot sticky and continue.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Facilitator's Job in Phase 1</div>
+    <p>Keep the energy up. Encourage quiet participants to write. Gently stop people who are getting into lengthy discussions — the instruction is to write, not to debate. If someone raises a question that needs discussion, write it on a red Hotspot sticky and keep moving. The goal of this phase is <strong>volume</strong> — get everything out of people's heads and onto the wall. Refinement comes later.</p>
+  </div>
+
+  <h2>When to Move On</h2>
+
+  <p>Phase 1 is complete when the rate of new stickies going on the wall slows significantly — when most people are standing back, reading the wall rather than writing. This typically takes forty-five minutes to ninety minutes. Don't cut it short — the last stickies to go up are often the most interesting, the edge cases and exceptions that people only think of after they've already externalised everything obvious.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Phase 2 — bringing order to the chaos by enforcing the timeline.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 6
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Phase 2 — Enforcing the Timeline</h1>
+
+  <p class="chapter-intro">After the chaotic explosion of Phase 1, the wall is covered in orange stickies with no discernible order. Phase 2 imposes structure: events get arranged left to right in the order they happen in the real world. This is where the first major insights emerge.</p>
+
+  <h2>Left to Right — Earlier to Later</h2>
+
+  <p>The facilitator introduces a simple rule: events that happen earlier go to the left, events that happen later go to the right. The group begins moving stickies into rough chronological order — not precise to the minute, but correct in sequence.</p>
+
+  <p>At Meridian Retail, the group quickly agrees that <em>CustomerRegistered</em> comes before <em>OrderPlaced</em>, which comes before <em>PaymentReceived</em>, which comes before <em>StockReserved</em>. This part is straightforward. But then the debate starts: does <em>StockChecked</em> come before or after <em>PaymentReceived</em>? The operations team says stock is checked at the point of order placement. The finance team says payment is taken before stock is reserved. Both turn out to be true — there's a preliminary stock check at order placement and a firm reservation after payment. These are two different events that had been collapsed into one sticky.</p>
+
+  <p>This is the kind of insight that never surfaces in a requirements workshop. It surfaces here because the timeline makes the question unavoidable.</p>
+
+  <h2>Parallel Tracks</h2>
+
+  <p>Real business processes don't happen in a single linear sequence. Multiple things happen simultaneously — while the warehouse is picking the order, the finance team is reconciling the payment, and the marketing system is triggering a post-purchase email. The wall accommodates this by allowing multiple horizontal tracks: events that happen in parallel with each other are placed above and below each other at the same horizontal position.</p>
+
+  <p>At Meridian Retail, the point of order dispatch triggers three simultaneous tracks: the logistics track (<em>ShipmentBooked, CourierCollected, OrderInTransit</em>), the customer communication track (<em>DispatchEmailSent, TrackingLinkProvided</em>), and the financial track (<em>InvoiceGenerated, RevenueRecognised</em>). These run in parallel until <em>OrderDelivered</em> brings them back together.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="18" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">PARALLEL TRACKS — MERIDIAN RETAIL ORDER DISPATCH</text>
+
+      <!-- Timeline spine -->
+      <line x1="40" y1="120" x2="640" y2="120" stroke="#d8d4cb" stroke-width="1.5"/>
+
+      <!-- OrderDispatched — pivot point -->
+      <rect x="40" y="100" width="110" height="40" rx="4" fill="#f39c12"/>
+      <text x="95" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Order</text>
+      <text x="95" y="130" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Dispatched</text>
+
+      <!-- Split arrow -->
+      <line x1="152" y1="120" x2="175" y2="55" stroke="#888" stroke-width="1.5"/>
+      <line x1="152" y1="120" x2="175" y2="120" stroke="#888" stroke-width="1.5"/>
+      <line x1="152" y1="120" x2="175" y2="185" stroke="#888" stroke-width="1.5"/>
+
+      <!-- Track 1 — Logistics -->
+      <rect x="178" y="36" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="233" y="52" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Shipment</text>
+      <text x="233" y="66" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Booked</text>
+      <rect x="310" y="36" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="365" y="52" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Courier</text>
+      <text x="365" y="66" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Collected</text>
+      <text x="233" y="26" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Logistics track</text>
+
+      <!-- Track 2 — Customer comms -->
+      <rect x="178" y="100" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="233" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Dispatch Email</text>
+      <text x="233" y="130" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Sent</text>
+      <rect x="310" y="100" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="365" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Tracking Link</text>
+      <text x="365" y="130" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Provided</text>
+      <text x="233" y="92" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Customer comms track</text>
+
+      <!-- Track 3 — Finance -->
+      <rect x="178" y="164" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="233" y="180" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Invoice</text>
+      <text x="233" y="196" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Generated</text>
+      <rect x="310" y="164" width="110" height="38" rx="4" fill="#f39c12"/>
+      <text x="365" y="180" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Revenue</text>
+      <text x="365" y="196" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Recognised</text>
+      <text x="233" y="156" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Finance track</text>
+
+      <!-- Merge -->
+      <line x1="422" y1="55" x2="510" y2="120" stroke="#888" stroke-width="1.5"/>
+      <line x1="422" y1="120" x2="510" y2="120" stroke="#888" stroke-width="1.5"/>
+      <line x1="422" y1="183" x2="510" y2="120" stroke="#888" stroke-width="1.5"/>
+
+      <!-- OrderDelivered -->
+      <rect x="512" y="100" width="110" height="40" rx="4" fill="#1a1a2e"/>
+      <text x="567" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Order</text>
+      <text x="567" y="130" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Delivered</text>
+    </svg>
+    <div class="diagram-caption">Three parallel tracks diverge at OrderDispatched and converge at OrderDelivered. Multiple things happen simultaneously in a real business process.</div>
+  </div>
+
+  <h2>Handling Disagreements</h2>
+
+  <p>Phase 2 surfaces the most productive disagreements of the session. When two people put the same event in different positions on the timeline, resist the urge to resolve it immediately by voting or by deferring to the most senior person in the room. Instead, ask: "Are these the same event, or are they different events that have been given the same name?" Often the answer reveals that two genuinely different things have been collapsed into one concept — and separating them produces a clearer model.</p>
+
+  <p>When the disagreement is genuine — the same event, contested position — put a Hotspot sticky on it and move on. The goal of Phase 2 is a rough timeline that everyone broadly agrees with, not a perfect sequence that everyone has signed off on. Perfection comes later, if it comes at all.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Phase 3 — finding the hotspots, problems, and pivotal events that shape the model.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 7
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-7">
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Phase 3 — Hotspots, Problems and Pivotal Events</h1>
+
+  <p class="chapter-intro">With the timeline roughly in order, the session shifts from building the model to interrogating it. Phase 3 is where the most valuable outputs of a Big Picture session emerge — the places where things go wrong, the major business transitions, and the edges of the domain.</p>
+
+  <h2>Walking the Wall</h2>
+
+  <p>The facilitator guides the group on a structured walk from left to right along the timeline. At each event, the question is simple: "Does anything go wrong here? Is there anything we don't understand? Does anyone disagree with this?"</p>
+
+  <p>At Meridian Retail, the walk surfaces immediately useful information. At <em>PaymentReceived</em>, the finance manager raises her hand: "What happens when payment is received but the stock check subsequently fails? We've had cases where we've taken payment and can't fulfil." Red sticky. At <em>ReturnRequested</em>, the customer service lead says: "This is a disaster. We have four different return processes depending on the product category and nobody knows which one applies." Red sticky. At <em>LoyaltyPointsAwarded</em>, a developer says: "I'm not sure this ever actually happens in real time — I think it's a batch job that runs overnight." Red sticky, and a very interesting conversation about whether the event model matches the implementation.</p>
+
+  <h2>Hotspots Are the Value</h2>
+
+  <p>The density and location of red Hotspot stickies by the end of Phase 3 is one of the most useful outputs of the entire session. It is a risk map — a visual representation of where the process is fragile, contested, or poorly understood. Areas with many Hotspots are the places that need the most design attention. Areas with no Hotspots are either genuinely well-understood or haven't been examined carefully enough.</p>
+
+  <div class="callout">
+    <div class="callout-label">Reading the Hotspot Map</div>
+    <p>A cluster of red stickies around a single event almost always indicates a boundary problem — this event means different things to different teams, or it sits at the edge of two different business processes that haven't been properly integrated. A long section of the timeline with no red stickies should prompt the facilitator to ask: "Is this section genuinely well-understood, or did we just not look hard enough?" Both answers are important.</p>
+  </div>
+
+  <h2>Pivotal Events</h2>
+
+  <p>Some Domain Events are more significant than others. They represent major transitions in the business process — points where the nature of what's happening fundamentally changes, where responsibility shifts from one team to another, or where a business commitment is made that's difficult to reverse.</p>
+
+  <p>At Meridian Retail, the pivotal events are clear once you look for them: <em>OrderConfirmed</em> (the customer has committed, the business has committed), <em>PaymentReceived</em> (financial obligation transferred), <em>OrderDispatched</em> (fulfilment is now in the hands of logistics), <em>OrderDelivered</em> (the transaction is complete). These pivotal events often align with natural context boundaries — the team and language that owns the process frequently shifts at these points.</p>
+
+  <p>Mark pivotal events with a vertical line on the wall, or with a distinct label. They become the skeleton around which the context map is built in Phase 4.</p>
+
+  <h2>Emerging Narratives</h2>
+
+  <p>By the end of Phase 3, something interesting has happened to the room. People who didn't know each other's work well have spent hours looking at the same picture together. The operations manager understands for the first time how the customer service process works. The developer understands why the overnight batch job causes the customer service team problems the next morning. The finance manager understands why the returns process produces reconciliation headaches.</p>
+
+  <p>This shared understanding is not a byproduct of Event Storming — it is one of its primary outputs. A team that has built a model together owns that model in a way that no team handed a requirements document ever does.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Phase 4 — finding the natural boundaries in the domain.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 8
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-8">
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Phase 4 — Finding the Boundaries</h1>
+
+  <p class="chapter-intro">The final phase of a Big Picture session turns observation into structure. With the timeline built and the hotspots marked, the group can now see the natural boundaries in the domain — where one area of the business ends and another begins.</p>
+
+  <h2>Boundaries Emerge, They Aren't Imposed</h2>
+
+  <p>One of Brandolini's key insights is that Bounded Context boundaries shouldn't be designed top-down by an architect with a whiteboard. They should emerge from the domain itself — from where the language changes, from where the team and responsibility shifts, from where the pivotal events mark major transitions.</p>
+
+  <p>By Phase 4 of a Big Picture session, these signals are visible on the wall. The facilitator's job is to help the group see what's already there.</p>
+
+  <h2>The Language Signal</h2>
+
+  <p>Walk the timeline and watch for where the vocabulary shifts. At Meridian Retail, the events up to <em>OrderConfirmed</em> use customer-facing language: <em>CartCreated, ProductAdded, DiscountApplied, CheckoutStarted</em>. After <em>OrderConfirmed</em>, the language shifts to operational language: <em>PickListGenerated, BinLocation, PickConfirmed, PackingSlipPrinted</em>. Different words. Different world. That shift marks a natural boundary.</p>
+
+  <p>Similarly, around <em>PaymentReceived</em>, financial language enters: <em>InvoiceGenerated, RevenueRecognised, TaxCalculated, ReconciliationEntry</em>. Different again. Another boundary.</p>
+
+  <h2>The People Signal</h2>
+
+  <p>Watch who is engaged at each part of the wall. The warehouse manager is animated during the fulfilment section and disengaged during the online checkout section — because the online checkout is not her domain. The finance team clusters around the billing and reconciliation events. These natural groupings often correspond directly to the Bounded Contexts — each context is the domain of a particular team.</p>
+
+  <h2>Drawing the Boundaries</h2>
+
+  <p>Once the language and people signals have been observed, the facilitator draws provisional boundary lines on the wall — vertical lines separating the sections. These aren't final design decisions. They're hypotheses. The group discusses each one: does this feel like a real boundary? Is there anything that crosses it that shouldn't? Is there anything currently on one side that belongs on the other?</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="18" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">EMERGING BOUNDARIES — MERIDIAN RETAIL BIG PICTURE</text>
+
+      <!-- Ordering zone -->
+      <rect x="20" y="30" width="180" height="140" rx="8" fill="rgba(41,128,185,0.08)" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="110" y="50" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#2980b9" font-weight="600">ORDERING</text>
+      <rect x="35" y="60" width="75" height="32" rx="3" fill="#f39c12"/>
+      <text x="72" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">CartCreated</text>
+      <rect x="120" y="60" width="65" height="32" rx="3" fill="#f39c12"/>
+      <text x="152" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">OrderPlaced</text>
+      <rect x="35" y="104" width="75" height="32" rx="3" fill="#1a1a2e"/>
+      <text x="72" y="122" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">OrderConfirmed</text>
+      <text x="118" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#4a4a6a" font-style="italic">← pivotal</text>
+
+      <!-- Fulfilment zone -->
+      <rect x="215" y="30" width="185" height="140" rx="8" fill="rgba(192,57,43,0.08)" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="307" y="50" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#c0392b" font-weight="600">FULFILMENT</text>
+      <rect x="228" y="60" width="75" height="32" rx="3" fill="#f39c12"/>
+      <text x="265" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">PickListGenerated</text>
+      <rect x="313" y="60" width="75" height="32" rx="3" fill="#f39c12"/>
+      <text x="350" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">OrderPicked</text>
+      <rect x="228" y="104" width="75" height="32" rx="3" fill="#1a1a2e"/>
+      <text x="265" y="122" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">OrderDispatched</text>
+      <text x="313" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#4a4a6a" font-style="italic">← pivotal</text>
+
+      <!-- Finance zone -->
+      <rect x="415" y="30" width="175" height="140" rx="8" fill="rgba(230,126,34,0.08)" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="502" y="50" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#e67e22" font-weight="600">FINANCE</text>
+      <rect x="428" y="60" width="75" height="32" rx="3" fill="#f39c12"/>
+      <text x="465" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">PaymentReceived</text>
+      <rect x="510" y="60" width="65" height="32" rx="3" fill="#f39c12"/>
+      <text x="542" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">InvoiceGenerated</text>
+      <rect x="428" y="104" width="75" height="32" rx="3" fill="#f39c12"/>
+      <text x="465" y="122" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">RevenueRecognised</text>
+
+      <text x="340" y="188" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Boundaries emerge from language shifts and pivotal events — not from architecture diagrams</text>
+    </svg>
+    <div class="diagram-caption">Three natural boundaries visible in the Meridian Retail Big Picture output. Each zone has its own vocabulary, its own team, and its own pivotal event.</div>
+  </div>
+
+  <h2>What to Do with the Boundaries</h2>
+
+  <p>The boundaries identified in Phase 4 are inputs to the DDD strategic design work — they become candidate Bounded Contexts on the Context Map. They're not final. Naming them, validating them with the teams involved, and testing them against the integration patterns described in the DDD guide turns them from observations into design decisions.</p>
+
+  <p>Before the session ends, photograph everything. The entire wall, then close-ups of each section. The hotspot clusters. The boundary lines. The pivotal events. This documentation is the output that enables the next steps — whether that's a Process Level session on a specific area, a Context Map design exercise, or the beginning of a development programme.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Process Level Event Storming — adding Commands, Actors, and Policies to one specific process.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 9
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-9">
+  <div class="part-header">
+    <div class="part-num">Part Three</div>
+    <h2>Process Level and Design Level</h2>
+    <p>Going deeper — from the whole domain to individual processes to the software model</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Process Level Event Storming — Commands, Policies and Actors</h1>
+
+  <p class="chapter-intro">A Process Level session takes one slice of the domain identified in the Big Picture session and examines it in detail. The goal is a complete model of a specific process — every trigger, every automatic reaction, every human decision point — expressed in a form that a development team can act on.</p>
+
+  <h2>Choosing the Process</h2>
+
+  <p>At Meridian Retail, the Big Picture session identified the returns and refunds process as a major Hotspot — four different return processes, significant customer service pain, unclear ownership. This makes it an obvious candidate for a Process Level session. Other candidates are processes where the Big Picture output showed the most red stickies, processes that are targeted for automation, or processes where the team has significant disagreements.</p>
+
+  <h2>Adding Commands</h2>
+
+  <p>The session starts with the Domain Events from the Big Picture, arranged in timeline order. The first addition is Commands — the instructions that trigger each event.</p>
+
+  <p>For each Domain Event on the wall, the group asks: "What caused this to happen? What instruction was issued, and by whom?" The answer goes on a blue sticky placed to the left of the event it triggers: <em>RequestReturn</em> → <em>ReturnRequested</em>. <em>ApproveReturn</em> → <em>ReturnApproved</em>. <em>IssueRefund</em> → <em>RefundIssued</em>.</p>
+
+  <p>Commands that can be rejected — where the business might decide not to fulfil the instruction — are particularly valuable to identify. If <em>RequestReturn</em> can result in either <em>ReturnApproved</em> or <em>ReturnRejected</em>, both outcomes need to be on the wall, with the decision criteria made explicit.</p>
+
+  <h2>Adding Actors</h2>
+
+  <p>For each Command, the group asks: "Who issues this instruction?" Pink stickies attached to the Command: Customer issues <em>RequestReturn</em>. Customer Service Agent issues <em>ApproveReturn</em> or <em>RejectReturn</em>. Finance System issues <em>IssueRefund</em> automatically once approval is received.</p>
+
+  <p>The Actor assignment immediately surfaces automation opportunities and ownership questions. When the Actor for a Command is a human doing something manually that could be automated, that's a green Opportunity sticky. When the Actor is unclear — nobody is sure who is responsible for issuing a particular Command — that's a red Hotspot sticky.</p>
+
+  <h2>Adding Policies</h2>
+
+  <p>Policies are the automatic reactions — the "whenever X happens, Y happens automatically" rules that encode business logic. In the returns process at Meridian Retail, policies include: "Whenever ReturnApproved and ReturnedItemReceived, issue refund automatically." "Whenever ReturnRequested and order is more than 30 days old, flag for manual review." "Whenever RefundIssued, notify customer by email."</p>
+
+  <p>Policies are the hidden logic of the business. They're almost never written down anywhere. Domain experts often assume they're obvious — and they are, to someone who has worked in the business for years. To a developer building the system, they're invisible until someone trips over their absence. The Process Level session makes them visible.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="18" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">PROCESS LEVEL — MERIDIAN RETAIL RETURN APPROVAL</text>
+
+      <!-- Actor -->
+      <rect x="20" y="80" width="80" height="36" rx="4" fill="#e91e8c"/>
+      <text x="60" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Customer</text>
+      <text x="60" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Actor</text>
+
+      <!-- Command -->
+      <rect x="115" y="80" width="100" height="36" rx="4" fill="#2980b9"/>
+      <text x="165" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Request</text>
+      <text x="165" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Return</text>
+      <line x1="102" y1="98" x2="113" y2="98" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+      <!-- Event -->
+      <rect x="228" y="80" width="100" height="36" rx="4" fill="#f39c12"/>
+      <text x="278" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Return</text>
+      <text x="278" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Requested</text>
+      <line x1="216" y1="98" x2="226" y2="98" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+      <!-- Policy -->
+      <rect x="345" y="54" width="110" height="58" rx="4" fill="#8e44ad"/>
+      <text x="400" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">When Return</text>
+      <text x="400" y="90" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Requested</text>
+      <text x="400" y="104" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.8)">check order age</text>
+      <line x1="330" y1="98" x2="343" y2="82" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+      <!-- Command 2 -->
+      <rect x="470" y="36" width="100" height="36" rx="4" fill="#2980b9"/>
+      <text x="520" y="54" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Approve</text>
+      <text x="520" y="68" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Return</text>
+
+      <!-- Command 3 -->
+      <rect x="470" y="120" width="100" height="36" rx="4" fill="#2980b9"/>
+      <text x="520" y="138" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Flag for</text>
+      <text x="520" y="152" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Manual Review</text>
+
+      <line x1="457" y1="72" x2="468" y2="58" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+      <line x1="457" y1="90" x2="468" y2="130" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+      <!-- Events -->
+      <rect x="585" y="36" width="80" height="36" rx="4" fill="#f39c12"/>
+      <text x="625" y="54" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Return</text>
+      <text x="625" y="68" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Approved</text>
+
+      <rect x="585" y="120" width="80" height="36" rx="4" fill="#c0392b"/>
+      <text x="625" y="138" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Manual</text>
+      <text x="625" y="152" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Review Flagged</text>
+
+      <line x1="572" y1="54" x2="583" y2="54" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+      <line x1="572" y1="138" x2="583" y2="138" stroke="#888" stroke-width="1.5" marker-end="url(#arr-p)"/>
+
+      <defs>
+        <marker id="arr-p" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#888"/>
+        </marker>
+      </defs>
+
+      <text x="340" y="208" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Actor → Command → Event → Policy → two possible outcomes</text>
+    </svg>
+    <div class="diagram-caption">Process Level view of the return request flow. The Policy checks order age and routes to two different outcomes — visible now, invisible before the session.</div>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Design Level — translating the process model into Aggregates and a software design.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 10
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Chapter 10</div>
+  <span class="chapter-number">10</span>
+  <h1 class="chapter-title">Design Level Event Storming — From Process to Software Model</h1>
+
+  <p class="chapter-intro">Design Level is the final step in the Event Storming journey — the point where the domain understanding built in Big Picture and Process Level sessions becomes a concrete software model. This is where the DDD tactical patterns enter the picture directly.</p>
+
+  <h2>The Starting Point</h2>
+
+  <p>A Design Level session begins with the output of a Process Level session: a timeline of Commands, Events, Policies, and Actors for a specific process. The group is now smaller — primarily developers and architects, with one or two domain experts available to answer questions.</p>
+
+  <p>The question the session answers is: "Given this process model, what Aggregates do we need, and how do they relate to each other?"</p>
+
+  <h2>Placing Aggregates</h2>
+
+  <p>For each Command-Event pair on the wall, the group asks: "What domain object receives this Command and produces this Event?" The answer — the Aggregate — goes on a yellow sticky placed between the Command and the Event.</p>
+
+  <p>At Meridian Retail, <em>RequestReturn</em> → [<strong>ReturnRequest</strong>] → <em>ReturnRequested</em>. <em>ApproveReturn</em> → [<strong>ReturnRequest</strong>] → <em>ReturnApproved</em>. The ReturnRequest Aggregate handles both Commands and maintains the state of the return. The group then discusses what data the ReturnRequest Aggregate needs to hold and what invariants it must enforce — can it approve a return that's already been rejected? Can it accept a new command after approval? These are the business rules the Aggregate will encode.</p>
+
+  <h2>Read Models</h2>
+
+  <p>For each Command, the group asks: "What information does the Actor need to make this decision?" That information — a view of the current state — goes on a yellow sticky to the left of the Command. At Meridian Retail, before a customer service agent can issue the <em>ApproveReturn</em> Command, they need to see the order history, the return reason, and the current stock levels for the returned item. That's a Read Model: <em>ReturnDecisionView</em>. It becomes a defined data requirement — the system must be able to surface this information to the Actor at the right moment.</p>
+
+  <h2>External Systems</h2>
+
+  <p>Lilac stickies mark where the process touches external systems. At Meridian Retail, the refund process triggers the payment gateway (<em>RefundIssued</em> calls the payment provider's API) and the email system (<em>CustomerNotified</em> calls the notification service). These integration points, made explicit in the Design Level output, become the integration contracts that the development team builds against.</p>
+
+  <div class="callout">
+    <div class="callout-label">What Design Level Produces</div>
+    <p>By the end of a Design Level session, the team has: a named set of Aggregates with their Commands and Events; Read Models with their data requirements; integration points with external systems; and a clear picture of the Policies that govern automatic reactions. This output is close enough to a software specification that a skilled development team can begin building immediately, with confidence that what they build will reflect the domain correctly.</p>
+  </div>
+
+  <h2>The Connection to DDD Tactical Patterns</h2>
+
+  <p>Design Level Event Storming and DDD tactical design are the same exercise approached from different directions. Event Storming approaches from the outside — what happens in the business — and works inward to the software model. DDD tactical design approaches from the inside — what patterns does the code need — and works outward to the domain. When both are done well, they meet in the middle at the same model.</p>
+
+  <p>Teams that run Design Level sessions find that the DDD concepts from the companion guide map directly onto the sticky notes on the wall. Aggregates are the yellow stickies. Commands are the blue stickies. Domain Events are the orange stickies. Policies are the purple stickies. The visual vocabulary of Event Storming and the conceptual vocabulary of DDD are two languages for the same thing.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the facilitation skills that keep a session on track — and the interventions that save it when it isn't.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 11
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-11">
+  <div class="part-header">
+    <div class="part-num">Part Four</div>
+    <h2>Making It Work in Practice</h2>
+    <p>Facilitation, remote workshops, and the failure modes that derail Event Storming sessions</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 11</div>
+  <span class="chapter-number">11</span>
+  <h1 class="chapter-title">Facilitation — Keeping the Session Productive</h1>
+
+  <p class="chapter-intro">Event Storming facilitation is a distinct skill. The techniques that work in a conventional meeting — structured agenda, turn-taking, slides — actively harm an Event Storming session. The facilitator's job is to create conditions for the group to work, then get out of the way.</p>
+
+  <h2>The Facilitator Is Not the Expert</h2>
+
+  <p>The most common facilitation mistake is the facilitator trying to guide the domain model. "Shouldn't this event come before that one?" "I think these two events might be the same thing." The facilitator is there to manage the process, not to shape the content. The domain experts in the room know more about the domain than the facilitator. Every time the facilitator steers the content, they risk overriding knowledge they don't have.</p>
+
+  <p>The facilitator's legitimate interventions are procedural: "Let's get more stickies on the wall before we start discussing." "That sounds like a great conversation for a Hotspot sticky — let's keep moving." "Can someone who hasn't spoken yet tell us what they think about this section?" These interventions keep the process moving without shaping the model.</p>
+
+  <h2>Handling the Dominator</h2>
+
+  <p>Every group has at least one person who talks more than everyone else combined. In a conventional meeting, this person controls the output. In Event Storming, the facilitator's job is to prevent this. Techniques that work: explicitly invite quiet participants by name. Physically position yourself near the dominant speaker and gently redirect with "let's hear from someone on the other side of the room." For persistent cases, split the group into smaller clusters for specific sections of the wall.</p>
+
+  <h2>Handling the Sceptic</h2>
+
+  <p>Event Storming's informality makes some participants — typically senior technical people and process-minded managers — visibly uncomfortable. "This feels unstructured." "Where's the template?" "How do we know we've covered everything?" The best response is not to defend the technique but to redirect to the output: "Let's keep going and see what the wall looks like in an hour." The sceptic who has been resistant for the first thirty minutes is often the most engaged participant by lunchtime.</p>
+
+  <h2>The Energy Curve</h2>
+
+  <p>Event Storming sessions follow a predictable energy pattern. The first thirty minutes are awkward — people aren't sure what to do. The next hour is energetic — everyone is contributing, the wall is filling up, insights are emerging. Then energy drops as people get tired and the easy stickies are exhausted. This is the moment to call a break, not to push through. After the break, the second burst is often more focused and produces the most valuable insights.</p>
+
+  <h2>Timekeeping</h2>
+
+  <p>Keep each phase to its allocated time. The chaotic exploration phase has a tendency to expand as participants find more things to add. Cut it at ninety minutes maximum, even if new stickies are still going up. The timeline enforcement phase has a tendency to get bogged down in debates about specific sequences — use Hotspot stickies to park debates and keep moving. The facilitator is the timekeeper, and time discipline is one of the most important contributions they make.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Most Important Facilitation Rule</div>
+    <p>When the group starts to debate rather than model — when people are having a long discussion instead of putting stickies on the wall — the facilitator's response is always the same: <strong>write it on a sticky and keep moving.</strong> Debates belong on Hotspot stickies. The session is for externalising knowledge, not for resolving it. Resolution happens in the follow-up work, informed by what the session surfaces.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: running Event Storming sessions when the room can't be in the same physical space.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 12
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-12">
+  <div class="chapter-eyebrow">Chapter 12</div>
+  <span class="chapter-number">12</span>
+  <h1 class="chapter-title">Remote and Hybrid Event Storming</h1>
+
+  <p class="chapter-intro">Event Storming was designed for a physical room with a physical wall. Remote and hybrid variants work — but they require deliberate adaptation. The informal energy of a physical session is harder to create online, and the facilitation demands are higher.</p>
+
+  <h2>The Tooling Question</h2>
+
+  <p>The most common tools for remote Event Storming are Miro, Mural, and FigJam — collaborative infinite-canvas tools that support sticky notes, colour coding, and real-time multi-user editing. All three work adequately. None of them replicate the spatial freedom of a physical wall.</p>
+
+  <p>The choice of tool matters less than the setup. Before the session, the facilitator should prepare: a canvas with the colour legend visible at all times, a long horizontal strip for the timeline, and named zones for each participant so people don't pile their stickies on top of each other in the first chaotic phase.</p>
+
+  <h2>What Changes in a Remote Session</h2>
+
+  <p>Physical sessions benefit from ambient awareness — you can see what everyone else is doing, you naturally gravitate toward areas of the wall where there's interesting activity, you can have a side conversation with someone standing next to you without disrupting the group. None of these happen remotely.</p>
+
+  <p>Remote facilitation therefore requires more explicit structure. The facilitator narrates what's happening more actively. Breakout rooms replace the natural small-group conversations that form around sections of a physical wall. Check-ins are more frequent — "Has everyone had a chance to look at the logistics section? Does anyone want to add anything there?"</p>
+
+  <h2>Hybrid Is the Hardest</h2>
+
+  <p>Hybrid Event Storming — some participants in a room, some remote — is significantly harder than either fully physical or fully remote. The in-room participants have an inherent advantage in the spontaneous interactions that drive Event Storming. The remote participants are always slightly behind the conversation.</p>
+
+  <p>If hybrid is unavoidable, the mitigation is to run the session primarily through the digital tool — even for the in-room participants — rather than having in-room participants use the physical wall while remote participants use the digital canvas. Equal access to the shared workspace is more important than the physical experience.</p>
+
+  <div class="callout">
+    <div class="callout-label">Remote Session Practicalities</div>
+    <p>Keep remote sessions shorter than physical ones — four to five hours maximum per day, with more frequent breaks. Send participants a short video or written guide on the tooling before the session so that learning the tool doesn't consume the first thirty minutes. Use video throughout — Event Storming depends on seeing people's reactions, not just their sticky notes. And build in explicit time at the start for people to orient themselves on the canvas before the session begins.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the failure modes that derail Event Storming efforts — and how to spot them early.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 13
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-13">
+  <div class="chapter-eyebrow">Chapter 13</div>
+  <span class="chapter-number">13</span>
+  <h1 class="chapter-title">Common Failure Modes</h1>
+
+  <p class="chapter-intro">Event Storming fails in predictable ways. Most failures are not about the technique — they're about preparation, invitation, and facilitation decisions made before the session starts.</p>
+
+  <h2>Wrong People in the Room</h2>
+
+  <p>The most common failure. A session attended entirely by developers, or entirely by business analysts, or with one domain expert and fifteen observers, produces a model of what the attendees know — not a model of the domain. Event Storming's value comes from the collision of different knowledge perspectives. Without that diversity, it's an expensive way to do something a whiteboard session could have done.</p>
+
+  <p>The test: before the session, ask whether every significant area of the domain is represented by someone who actually works in it. If the answer is no, fix the invitation list before fixing the facilitation plan.</p>
+
+  <h2>Too Much Structure Too Early</h2>
+
+  <p>Facilitators who are uncomfortable with the apparent chaos of Phase 1 sometimes introduce structure prematurely — asking participants to take turns, organising stickies as they go up, or restricting the session to one part of the domain at a time. This kills the spontaneous cross-domain insights that are the most valuable output of the chaotic phase.</p>
+
+  <p>The chaos is not a problem to manage. It's the mechanism. The model that emerges from thirty people independently externalising their knowledge simultaneously is richer than any model that could have been constructed sequentially.</p>
+
+  <h2>No Follow-Through</h2>
+
+  <p>A Big Picture session that isn't followed by concrete next steps within two weeks produces energy but not change. The wall gets photographed. The photos get filed. Nothing happens. Six months later someone proposes another workshop to "align on the domain."</p>
+
+  <p>The session must end with defined follow-up actions: which areas will be explored in Process Level sessions, who owns each Hotspot, when the Context Map design exercise will happen. The output of Event Storming is not insight — it's the foundation for decisions. If decisions don't follow, the investment was wasted.</p>
+
+  <h2>Treating It as a One-Time Exercise</h2>
+
+  <p>Domain understanding is not a deliverable. The model built in an Event Storming session reflects the group's understanding at that moment. As the team builds the software, as the business evolves, as edge cases surface that nobody anticipated, the model needs to be updated. Organisations that run a Big Picture session once and treat it as done have a model that becomes less accurate every week thereafter.</p>
+
+  <h2>The "Fake" Event Storming</h2>
+
+  <p>A facilitator who runs Event Storming but steers participants toward a model they've already designed in their head. The stickies go up, the wall fills, the session looks like Event Storming — but the output is what the facilitator already thought before the session started. Participants sense this and disengage. The knowledge in the room never makes it onto the wall.</p>
+
+  <p>The diagnostic: if the facilitator knows what the wall will look like before the session begins, something has gone wrong. A genuine Event Storming session always produces surprises.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: how the Event Storming outputs connect to the DDD concepts from the companion guide.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 14
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-14">
+  <div class="part-header">
+    <div class="part-num">Part Five</div>
+    <h2>Connecting the Dots</h2>
+    <p>How Event Storming outputs become DDD models — and where all of this fits in a real project</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 14</div>
+  <span class="chapter-number">14</span>
+  <h1 class="chapter-title">From Event Storming to DDD — How the Outputs Map</h1>
+
+  <p class="chapter-intro">Event Storming and DDD are designed to work together. The outputs of each Event Storming variant map directly to the DDD concepts covered in the companion guide. This chapter makes those connections explicit.</p>
+
+  <h2>Big Picture Outputs → Strategic DDD</h2>
+
+  <p>The Big Picture session produces the raw material for DDD's strategic patterns.</p>
+
+  <p>The <strong>language shifts</strong> on the timeline — where vocabulary changes from one area to the next — become the boundaries between <strong>Bounded Contexts</strong>. Each zone of consistent language is a candidate context with its own Ubiquitous Language.</p>
+
+  <p>The <strong>pivotal events</strong> that mark major business transitions are the natural integration points on the <strong>Context Map</strong>. The relationship pattern at each integration point — Conformist, Customer-Supplier, Anticorruption Layer, Shared Kernel — can be discussed and decided using the Context Map framework.</p>
+
+  <p>The <strong>people clusters</strong> — which domain experts engaged most strongly with which sections of the wall — map to <strong>team boundaries</strong>. Conway's Law suggests these team boundaries will eventually influence the system architecture, making the alignment between team and context even more important to get right.</p>
+
+  <p>The <strong>subdomain classification</strong> emerges from the combination of Hotspot density and business importance. Sections of the wall with many Hotspots and high business significance are candidates for Core Domain investment. Sections with few Hotspots and commodity characteristics point toward Generic Subdomain treatment.</p>
+
+  <h2>Process Level Outputs → Ubiquitous Language</h2>
+
+  <p>The Process Level session produces a precise vocabulary for a specific Bounded Context. Every Command, Event, Policy, and Actor named in the session is a candidate term in the Ubiquitous Language of that context. The naming discipline of Event Storming — past tense events, imperative commands, named actors — enforces the same precision that DDD's Ubiquitous Language requires.</p>
+
+  <p>The Policies identified in a Process Level session are particularly valuable for Ubiquitous Language development. They make business rules explicit that were previously implicit — and naming them precisely is the first step to expressing them correctly in code.</p>
+
+  <h2>Design Level Outputs → Tactical DDD</h2>
+
+  <p>The Design Level session produces a direct mapping to DDD's tactical patterns.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">EVENT STORMING → DDD MAPPING</text>
+
+      <!-- ES column -->
+      <rect x="20" y="30" width="270" height="250" rx="8" fill="#faf9f6" stroke="#f39c12" stroke-width="2"/>
+      <rect x="20" y="30" width="270" height="34" rx="8" fill="#f39c12"/>
+      <rect x="20" y="50" width="270" height="14" fill="#f39c12"/>
+      <text x="155" y="54" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">EVENT STORMING OUTPUT</text>
+
+      <rect x="40" y="76" width="90" height="28" rx="3" fill="#f39c12"/>
+      <text x="85" y="95" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Domain Event</text>
+
+      <rect x="40" y="116" width="90" height="28" rx="3" fill="#2980b9"/>
+      <text x="85" y="135" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Command</text>
+
+      <rect x="40" y="156" width="90" height="28" rx="3" fill="#8e44ad"/>
+      <text x="85" y="175" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Policy</text>
+
+      <rect x="40" y="196" width="90" height="28" rx="3" fill="#f1c40f"/>
+      <text x="85" y="215" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#333" font-weight="600">Aggregate (yellow)</text>
+
+      <rect x="40" y="236" width="90" height="28" rx="3" fill="#e91e8c"/>
+      <text x="85" y="255" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Actor (pink)</text>
+
+      <!-- Language boundary -->
+      <rect x="145" y="76" width="130" height="188" rx="4" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1"/>
+      <text x="210" y="100" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">Language shift zone</text>
+      <text x="210" y="140" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">Pivotal event</text>
+      <text x="210" y="180" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">Hotspot cluster</text>
+      <text x="210" y="220" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">People cluster</text>
+      <text x="210" y="255" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">Read Model</text>
+
+      <!-- Arrows -->
+      <line x1="292" y1="90" x2="368" y2="90" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-map)"/>
+      <line x1="292" y1="130" x2="368" y2="130" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-map)"/>
+      <line x1="292" y1="170" x2="368" y2="170" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-map)"/>
+      <line x1="292" y1="210" x2="368" y2="210" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-map)"/>
+      <line x1="292" y1="250" x2="368" y2="250" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-map)"/>
+
+      <!-- DDD column -->
+      <rect x="370" y="30" width="270" height="250" rx="8" fill="#faf9f6" stroke="#4a9068" stroke-width="2"/>
+      <rect x="370" y="30" width="270" height="34" rx="8" fill="#4a9068"/>
+      <rect x="370" y="50" width="270" height="14" fill="#4a9068"/>
+      <text x="505" y="54" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">DDD CONCEPT</text>
+
+      <text x="400" y="95" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Domain Event</text>
+      <text x="400" y="135" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Command / Intention</text>
+      <text x="400" y="175" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Domain Service / Policy</text>
+      <text x="400" y="215" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Aggregate</text>
+      <text x="400" y="255" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Actor / Role</text>
+
+      <defs>
+        <marker id="arr-map" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/>
+        </marker>
+      </defs>
+
+      <text x="330" y="292" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Each sticky note type maps directly to a DDD concept</text>
+    </svg>
+    <div class="diagram-caption">The complete mapping from Event Storming vocabulary to DDD concepts. The two approaches are two languages for the same domain model.</div>
+  </div>
+
+  <h2>The Combined Picture</h2>
+
+  <p>Run in sequence — Big Picture to establish context boundaries and language, Process Level to build precise process models within each context, Design Level to translate those models into software specifications — Event Storming and DDD together provide a complete path from business domain to working software. Neither is sufficient alone. DDD without Event Storming risks building a model that reflects the architect's assumptions rather than the business's reality. Event Storming without DDD produces a wall full of insights with no framework for turning them into a coherent model.</p>
+
+  <p>Together, they answer the question that every software project needs to answer before it begins: what is this software actually for, and does our model of the domain match how the business actually works?</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: where Event Storming fits in a project lifecycle — and when to run each variant.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 15
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-15">
+  <div class="chapter-eyebrow">Chapter 15</div>
+  <span class="chapter-number">15</span>
+  <h1 class="chapter-title">Where Event Storming Fits in the Project Lifecycle</h1>
+
+  <p class="chapter-intro">Event Storming isn't a phase in a project plan. It's a technique you reach for at specific moments — when domain uncertainty is high, when a team needs to align, or when a process needs to be understood before it can be changed. Knowing when to run it is as important as knowing how.</p>
+
+  <h2>Before a New Product or Programme</h2>
+
+  <p>The clearest case. A new product or programme has a domain that nobody on the technical team fully understands yet. The business has knowledge that's never been externalised. A Big Picture session in the first two weeks — before any architecture decisions, before any backlog creation, before any sprint planning — surfaces that knowledge and prevents the most expensive class of mistake: building the right features on the wrong model.</p>
+
+  <p>At Meridian Retail, the decision to build a new returns management system should start with a Big Picture session on the returns and refunds process, attended by the customer service team, the warehouse team, the finance team, and the development team. Not after the system has been designed — before. The session might take a day. The alternative — building on assumptions and discovering the gaps after six months of development — takes considerably longer.</p>
+
+  <h2>When Joining an Existing System</h2>
+
+  <p>A development team inheriting a legacy system faces a specific knowledge problem: the system encodes business logic accumulated over years, the people who built it may have left, and the documentation is either absent or wrong. A Big Picture session on what the system is supposed to do — run with the people who actually use it, not the people who built it — produces a model of the intended behaviour that can then be compared to the actual behaviour. The gaps between the two are the technical debt that matters.</p>
+
+  <h2>Before a Major Redesign</h2>
+
+  <p>When a significant business process is being redesigned — for efficiency, for automation, for regulatory compliance — a Process Level session on the current state ("what actually happens now") before designing the future state prevents a common failure: designing a future that solves the imagined problem rather than the real one. The Hotspot stickies from a current-state session tell you exactly where the pain is. Design the future state to address those Hotspots specifically.</p>
+
+  <h2>As an Ongoing Practice</h2>
+
+  <p>The most mature use of Event Storming is as a regular practice rather than a one-time project activity. Teams that run short, focused Process Level or Design Level sessions as part of their ongoing development process — before each significant feature, at the start of each quarter — maintain a living model of their domain that evolves with the business. The model never has a chance to drift.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">WHEN TO RUN EACH VARIANT IN A PROJECT</text>
+
+      <!-- Timeline -->
+      <line x1="40" y1="100" x2="620" y2="100" stroke="#d8d4cb" stroke-width="2"/>
+
+      <!-- Project start -->
+      <circle cx="60" cy="100" r="6" fill="#c0392b"/>
+      <text x="60" y="85" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8888aa">Project</text>
+      <text x="60" y="73" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8888aa">Start</text>
+
+      <!-- Big Picture -->
+      <rect x="75" y="70" width="120" height="60" rx="6" fill="#c0392b"/>
+      <text x="135" y="92" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Big Picture ES</text>
+      <text x="135" y="108" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Week 1–2</text>
+      <text x="135" y="120" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Full domain map</text>
+
+      <!-- Process Level -->
+      <rect x="240" y="70" width="120" height="60" rx="6" fill="#e67e22"/>
+      <text x="300" y="92" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Process Level ES</text>
+      <text x="300" y="108" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Week 3–4</text>
+      <text x="300" y="120" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Priority processes</text>
+
+      <!-- Context Map -->
+      <rect x="240" y="28" width="120" height="36" rx="6" fill="#1a1a2e"/>
+      <text x="300" y="44" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Context Map</text>
+      <text x="300" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">DDD strategic design</text>
+      <line x1="300" y1="70" x2="300" y2="64" stroke="#1a1a2e" stroke-width="1.5"/>
+
+      <!-- Design Level -->
+      <rect x="405" y="70" width="120" height="60" rx="6" fill="#4a9068"/>
+      <text x="465" y="92" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="white" font-weight="600">Design Level ES</text>
+      <text x="465" y="108" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Before each feature</text>
+      <text x="465" y="120" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Software spec</text>
+
+      <!-- Development -->
+      <rect x="540" y="80" width="75" height="40" rx="6" fill="#2980b9"/>
+      <text x="577" y="96" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="white" font-weight="600">Build</text>
+      <text x="577" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(255,255,255,0.85)">Confident</text>
+
+      <text x="330" y="185" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Design Level repeats before every significant feature throughout development</text>
+    </svg>
+    <div class="diagram-caption">The recommended sequence for a new project. Big Picture establishes the landscape. Context Map design follows. Process Level and Design Level sessions continue throughout development.</div>
+  </div>
+
+  <h2>The Relationship to Agile</h2>
+
+  <p>Event Storming is compatible with Agile development — but it sits upstream of the sprint, not inside it. The outputs of a Big Picture session inform the product roadmap. Process Level sessions inform the feature backlog. Design Level sessions happen in the sprint zero or at the start of work on each new feature area.</p>
+
+  <p>Teams that try to run Event Storming inside a sprint — as a one-day activity crammed between other ceremonies — typically get a rushed session with incomplete attendance that produces a wall nobody refers to. The sessions need time and the right people. Give them both.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">The Glossary follows — every major Event Storming term defined clearly.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 16 — GLOSSARY
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-16">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Glossary of Event Storming Terms</h1>
+  <p class="chapter-intro">Every major term used in this guide, defined plainly. Where a term connects directly to a DDD concept from the companion guide, that connection is noted.</p>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Actor</div>
+    <p class="glossary-def">The person or role that issues a Command. Represented on a small pink sticky note attached to the Command it triggers. Actors make explicit who is responsible for initiating each action in the process — and where automation could replace human action. Corresponds to the concept of a user role in the system design.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Aggregate (in Event Storming)</div>
+    <p class="glossary-def">The domain object that receives a Command and produces a Domain Event. Represented on a yellow sticky placed between the Command and the Event in Design Level sessions. Maps directly to the DDD Aggregate concept — the cluster of domain objects that enforces business rules and maintains consistency. See the DDD companion guide, Chapter 8.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Big Picture Event Storming</div>
+    <p class="glossary-def">The strategic variant of Event Storming. Covers an entire business domain at high altitude, with a wide audience of domain experts and technical participants. Produces a domain-wide event timeline, hotspot map, and emerging context boundaries. Run at the start of significant projects or when the whole domain needs to be understood.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Bounded Context (in Event Storming)</div>
+    <p class="glossary-def">The natural boundary that emerges from a Big Picture session — the zone where language, team, and business focus are consistent. Corresponds directly to the DDD Bounded Context. See the DDD companion guide, Chapter 4.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Command</div>
+    <p class="glossary-def">An instruction that triggers a Domain Event. Written in imperative form — PlaceOrder, ApproveReturn, IssueRefund. Represented on a blue sticky placed to the left of the event it produces. Commands can be rejected (the instruction might not succeed); Domain Events cannot (they record what already happened).</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Design Level Event Storming</div>
+    <p class="glossary-def">The technical variant of Event Storming. Translates a process model into a software model by adding Aggregates and Read Models to the Command-Event timeline. Run immediately before development begins on a specific feature or Bounded Context. The output is close to a software specification.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Domain Event (in Event Storming)</div>
+    <p class="glossary-def">Something that happened in the business that the business cares about. Past tense. Business language. Represented on an orange sticky note — the dominant element of every Event Storming session. Corresponds directly to the DDD Domain Event. See the DDD companion guide, Chapter 9.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Event Storming</div>
+    <p class="glossary-def">A collaborative workshop technique invented by Alberto Brandolini for rapidly exploring complex business domains. Brings domain experts and technical teams together to build a shared model of the domain expressed as a timeline of Domain Events. Available in three variants: Big Picture, Process Level, and Design Level.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">External System</div>
+    <p class="glossary-def">A system outside the domain being modelled that interacts with it — a payment gateway, a logistics API, an ERP. Represented on a lilac sticky placed where the external system triggers or receives events. Makes integration points visible without conflating external systems with internal domain logic.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Hotspot</div>
+    <p class="glossary-def">A problem, disagreement, area of uncertainty, or unanswered question identified during the session. Represented on a red sticky placed prominently on the wall. The density and location of Hotspots by the end of the session is a risk map — a visual representation of where the process is fragile, contested, or poorly understood.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Opportunity</div>
+    <p class="glossary-def">An insight or improvement possibility that emerges during the session — a process that could be automated, a step that could be eliminated, a rule that seems to contradict the business's stated goals. Represented on a green sticky. Not part of the domain model; a byproduct of knowledgeable people looking at the whole picture together.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Parallel Track</div>
+    <p class="glossary-def">A sequence of events happening simultaneously with another sequence, represented on the wall by placing events above or below each other at the same horizontal position. Real business processes involve multiple parallel tracks — the logistics track, the finance track, the customer communication track — that may diverge after a pivotal event and reconverge later.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Pivotal Event</div>
+    <p class="glossary-def">A Domain Event that marks a major business transition — where responsibility shifts, where a significant commitment is made, or where the nature of the process fundamentally changes. Pivotal events often align with Bounded Context boundaries and appear on the Context Map as key integration points.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Policy</div>
+    <p class="glossary-def">An automatic reaction — something the system does when a Domain Event occurs, without human intervention. Represented on a purple sticky. Expressed as a rule: "Whenever X, then Y." Policies are where business logic lives and where the most valuable hidden rules surface during Event Storming sessions. Corresponds loosely to Domain Services and automated business rules in DDD.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Process Level Event Storming</div>
+    <p class="glossary-def">The operational variant of Event Storming. Examines one specific business process in detail, adding Commands, Actors, and Policies to the event timeline. Run after a Big Picture session to explore priority processes before redesign or automation. Produces a complete model of the process including all edge cases and exception paths.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Read Model</div>
+    <p class="glossary-def">The information an Actor needs to make a decision before issuing a Command. Represented on a yellow sticky placed to the left of the Command that requires it. Defines the data requirements of the user interface or query layer — what the system must surface to the right person at the right moment.</p>
+  </div>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Ubiquitous Language (from Event Storming)</div>
+    <p class="glossary-def">The shared vocabulary that emerges from the naming discipline of Event Storming sessions. Every Command, Event, Policy, and Actor named during the session is a candidate term in the Ubiquitous Language of the Bounded Context being explored. See the DDD companion guide, Chapter 3.</p>
+  </div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>

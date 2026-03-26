@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The BMAD Method — A Practical Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+
+<meta name="description" content="Why unstructured AI-assisted development creates new problems faster than it solves old ones">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/guides/bmad/">
+<meta property="og:title" content="The BMAD Method — A Practical Guide">
+<meta property="og:description" content="Why unstructured AI-assisted development creates new problems faster than it solves old ones">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/guides/bmad/">
+<meta property="twitter:title" content="The BMAD Method — A Practical Guide">
+<meta property="twitter:description" content="Why unstructured AI-assisted development creates new problems faster than it solves old ones">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+
+<guide-header title="The BMAD Method"></guide-header>
+
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Practical Guide</div>
+    <h1>The BMAD Method</h1>
+    <p class="subtitle">Structured AI-driven development — from idea to working software with a full team of agents</p>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — The Problem BMAD Solves</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">The Black Box Problem — Why Unstructured AI Use Breaks Down</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">What BMAD Is — and Where It Sits in the Landscape</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — The Core Architecture</div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">The Agent Team — Roles, Responsibilities and the Orchestrator</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">The Artefact Chain — What Gets Produced and Why It Matters</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">The Planning Workflow — From Idea to Architecture</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">The Development Cycle — From Stories to Working Code</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — Running BMAD in Practice</div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">Getting Started — Installation and First Project</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">Human-in-the-Loop — Where You Stay in Control</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">Scaling BMAD — From Solo to Enterprise Teams</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">10</span><span class="toc-name">Greenfield vs Brownfield — Where BMAD Works Best</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Four — Trade-offs and Limitations</div>
+    <div class="toc-item" onclick="showPage(11)"><span class="toc-num">11</span><span class="toc-name">What BMAD Does Well, Where It Struggles, and Lighter Alternatives</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(12)"><span class="toc-num">12</span><span class="toc-name">BMAD and the Five Levels of Agentic Maturity</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(13)"><span class="toc-num">13</span><span class="toc-name">Common Failure Modes</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(14)"><span class="toc-num">—</span><span class="toc-name">Glossary of BMAD Terms</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<div class="guide-page" id="page-1">
+  <div class="part-header"><div class="part-num">Part One</div><h2>The Problem BMAD Solves</h2><p>Why unstructured AI-assisted development creates new problems faster than it solves old ones</p></div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">The Black Box Problem — Why Unstructured AI Use Breaks Down</h1>
+  <p class="chapter-intro">Every team that starts using AI coding assistants goes through the same arc. The first demos are impressive. Velocity feels like it's climbing. Then, three months in, something changes. The codebase is harder to understand than before. Nobody is quite sure what the AI actually built or why. Reviews are slower because reviewers can't tell whether the code is right or just plausible. The promised acceleration has produced something harder to govern than what came before.</p>
+  <h2>The Abstraction Without Control Problem</h2>
+  <p>Natural language prompts accelerate output. That's real. But they also hide something important: intent, decision history, and constraints. When a developer asks an AI to "build a user authentication flow," the AI makes dozens of decisions — which library, which pattern, which error handling approach, which security assumptions. Those decisions aren't visible. They're embedded in the code, undocumented, unknown to anyone who didn't watch the session.</p>
+  <p>Six months later, a new team member tries to extend the authentication system. They don't know why certain decisions were made. The AI that built it isn't available to explain. The code works, but it's a black box. Modifications break things in unexpected ways.</p>
+  <div class="callout"><div class="callout-label">The Core Risk</div><p>Unstructured AI-assisted development is fast at the front end and expensive at the back end. The cost of understanding, maintaining, and extending black-box AI-generated code compounds over time. <strong>Speed without structure is a loan, not a gain.</strong> BMAD is designed to capture the speed while paying down the structural debt in real time.</p></div>
+  <h2>The Context Loss Problem</h2>
+  <p>AI models have no memory between sessions. A developer who spent two days working with an AI on a complex feature starts the next session from scratch — re-explaining the architecture, the constraints, the decisions already made. In multi-person teams this compounds: Developer A works with the AI on the data layer, Developer B on the API layer. Each AI session carries only that developer's context. When the layers need to integrate, the gaps become visible and expensive.</p>
+  <h2>The Planning Inconsistency Problem</h2>
+  <p>Traditional agile development has a planning phase that produces shared documentation the whole team works from. AI-assisted development tends to collapse this phase. The temptation is to jump straight to implementation. The result is implementation without shared understanding — the documentation was serving a purpose, creating alignment before the work begins, and skipping it defers that cost to the point where misalignment becomes visible in running code.</p>
+  <h2>What a Structured Approach Needs to Provide</h2>
+  <p>Any framework that addresses these problems needs to do three things. Preserve context across sessions. Produce explicit artefacts that document what was decided and why. Maintain the planning disciplines — requirements, architecture, story-level specifications — that create shared understanding before implementation begins. BMAD attempts to provide all three through a multi-agent architecture that mirrors a real development team.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: what BMAD is, where it came from, and where it sits in the broader agentic development landscape.</p>
+</div>
+
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">What BMAD Is — and Where It Sits in the Landscape</h1>
+  <p class="chapter-intro">BMAD stands for Breakthrough Method for Agile AI-Driven Development. It's an open-source framework that structures AI-assisted development around a team of specialised agent personas, a defined sequence of planning artefacts, and explicit handoff points between agents — with human oversight built into every significant transition.</p>
+  <h2>Origin and Character</h2>
+  <p>BMAD was created by the community around BMad Code and has grown rapidly since its first public release. By version 6 — the current iteration at time of writing — it has accumulated over 120,000 views on its masterclass content and a significant practitioner community contributing agent definitions, workflow templates, and expansion packs for specific domains.</p>
+  <p>At its core BMAD is a set of carefully crafted text files — Markdown and YAML — that define agent personas, workflow sequences, and artefact templates. There is no proprietary runtime, no cloud service, no vendor lock-in. BMAD works with any AI coding assistant that supports custom system prompts or project context. Claude Code is the recommended tool, but it runs equally well in Cursor, VSCode, or similar environments.</p>
+  <div class="callout"><div class="callout-label">BMAD — Definition</div><p><strong>BMAD (Breakthrough Method for Agile AI-Driven Development):</strong> An open-source multi-agent framework that structures AI-assisted software development through specialised agent personas, a defined planning artefact chain, and explicit human-in-the-loop review gates. Unlike general AI coding assistants, BMAD orchestrates the entire development lifecycle — from requirements through architecture, story generation, implementation, and testing — producing versioned, auditable artefacts at each stage.</p></div>
+  <h2>The Agile Parallel — and Where It Differs</h2>
+  <p>BMAD mirrors the structure of a traditional agile team deliberately. There's an Analyst, a Product Manager, an Architect, a Scrum Master, Developers, and a QA role. The workflow follows the familiar agile sequence: requirements → architecture → stories → implementation → testing. The difference is that in BMAD these roles are AI agents rather than humans. Not instead of humans — BMAD is explicitly human-in-the-loop — but the cognitive work of requirements analysis, architectural design, story decomposition, and code generation is done by agents, with humans in the review and direction role.</p>
+  <h2>Where It Sits in the Five Levels</h2>
+  <p>Dan Shapiro's five-level maturity framework provides a useful reference point. Level 1 is AI as autocomplete. Level 2 is AI as a capable pair programmer. Level 3 is AI completing well-defined tasks autonomously. Level 4 is the human as architect and spec writer. Level 5 is the lights-out software factory. BMAD targets Level 3 to Level 4 — the range where teams are ready to delegate significant portions of the development lifecycle to agents but still need human oversight at key decision points.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 170" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">BMAD IN THE FIVE-LEVEL MATURITY FRAMEWORK</text>
+      <rect x="20" y="36" width="100" height="50" rx="5" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="70" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-weight="600">LEVEL 1</text>
+      <text x="70" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Autocomplete</text>
+      <rect x="135" y="36" width="100" height="50" rx="5" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="185" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-weight="600">LEVEL 2</text>
+      <text x="185" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Pair Programmer</text>
+      <rect x="250" y="30" width="115" height="62" rx="5" fill="#1a1a2e" stroke="#c0392b" stroke-width="2.5"/>
+      <text x="307" y="53" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="white" font-weight="600">LEVEL 3</text>
+      <text x="307" y="69" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.8)">Autonomous Tasks</text>
+      <text x="307" y="83" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b" font-weight="600">← BMAD</text>
+      <rect x="380" y="30" width="115" height="62" rx="5" fill="#1a1a2e" stroke="#c0392b" stroke-width="2.5"/>
+      <text x="437" y="53" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="white" font-weight="600">LEVEL 4</text>
+      <text x="437" y="69" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.8)">Human as Architect</text>
+      <text x="437" y="83" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b" font-weight="600">← BMAD</text>
+      <rect x="510" y="36" width="130" height="50" rx="5" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="575" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-weight="600">LEVEL 5</text>
+      <text x="575" y="74" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Dark Factory</text>
+      <line x1="250" y1="108" x2="495" y2="108" stroke="#c0392b" stroke-width="2"/>
+      <line x1="250" y1="104" x2="250" y2="112" stroke="#c0392b" stroke-width="2"/>
+      <line x1="495" y1="104" x2="495" y2="112" stroke="#c0392b" stroke-width="2"/>
+      <text x="372" y="126" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#c0392b" font-weight="600">BMAD operates here</text>
+      <text x="330" y="152" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" font-style="italic">Structured autonomy with human oversight — the productive middle ground</text>
+    </svg>
+    <div class="diagram-caption">BMAD targets Levels 3–4: substantial agent autonomy over implementation, with humans in the planning, review, and direction roles.</div>
+  </div>
+  <h2>A Note on Maturity</h2>
+  <p>BMAD is a community-developed, actively evolving framework. Version 6 introduces significant changes from earlier versions, and the project is explicit that further evolution is planned. The concepts and principles in this guide are stable. Specific file formats and commands are best verified against current documentation at the time of use.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the agent team — who the agents are, what each one does, and how the Orchestrator keeps them coordinated.</p>
+</div>
+
+<div class="guide-page" id="page-3">
+  <div class="part-header"><div class="part-num">Part Two</div><h2>The Core Architecture</h2><p>Agents, artefacts, and the workflow that connects them</p></div>
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">The Agent Team — Roles, Responsibilities and the Orchestrator</h1>
+  <p class="chapter-intro">BMAD's central idea is that a development project benefits from specialised roles — not because AI models are actually different in capability, but because giving an AI agent a specific persona, a defined scope of responsibility, and a precise set of output expectations produces better results than asking a general assistant to do everything.</p>
+  <h2>Why Specialised Agents Work Better</h2>
+  <p>When you ask a general AI assistant to "build a feature," it makes implicit decisions about requirements, architecture, implementation approach, and testing all at once. Those decisions interact with each other in ways that aren't always visible. BMAD's specialised agents enforce separation of concerns. The Analyst doesn't build code. The Architect doesn't write user stories. The Developer doesn't make product decisions. The discipline of separation keeps each output evaluable by a human reviewer who can hold the bounded scope of one agent's responsibility.</p>
+  <h2>The Core Agent Roles</h2>
+  <div class="agent-grid">
+    <div class="agent-card"><div class="agent-role">Planning</div><div class="agent-name">Analyst</div><p class="agent-desc">Takes the initial project idea and produces a structured Project Brief. Asks clarifying questions, identifies assumptions, surfaces unknowns. First agent in the planning chain.</p></div>
+    <div class="agent-card"><div class="agent-role">Planning</div><div class="agent-name">Product Manager</div><p class="agent-desc">Takes the Project Brief and produces a Product Requirements Document — functional requirements, user goals, scope boundaries, success criteria. The business specification layer.</p></div>
+    <div class="agent-card"><div class="agent-role">Planning</div><div class="agent-name">Architect</div><p class="agent-desc">Takes the PRD and produces the technical architecture — technology choices, system design, component boundaries, integration patterns, non-functional requirements.</p></div>
+    <div class="agent-card"><div class="agent-role">Delivery</div><div class="agent-name">Scrum Master</div><p class="agent-desc">Takes the PRD and Architecture and produces hyper-detailed Story Files — one per development task, each embedding full context, implementation guidance, and acceptance criteria.</p></div>
+    <div class="agent-card"><div class="agent-role">Delivery</div><div class="agent-name">Developer</div><p class="agent-desc">Takes individual Story Files and implements them. Works from the Story File as the sole context source — not from the full conversation history or project documentation.</p></div>
+    <div class="agent-card"><div class="agent-role">Delivery</div><div class="agent-name">QA</div><p class="agent-desc">Reviews implemented code against the story's acceptance criteria. Produces a structured review that the Developer can act on before the story is marked complete.</p></div>
+    <div class="agent-card"><div class="agent-role">Coordination</div><div class="agent-name">Orchestrator</div><p class="agent-desc">The conductor of the whole system. Manages dependencies between agents, evaluates artefact quality before triggering the next agent, and coordinates parallel workstreams.</p></div>
+    <div class="agent-card"><div class="agent-role">Optional</div><div class="agent-name">UX Designer</div><p class="agent-desc">For projects with significant interface work, produces UI/UX specifications — user flows, component designs, interaction patterns — that feed into the Developer's story context.</p></div>
+  </div>
+  <h2>The Orchestrator — The Most Important Role</h2>
+  <p>In a human agile team, coordination is handled implicitly through standups, shared channels, and natural communication. Agents have none of this. Each agent session is isolated. Without explicit coordination, the Architect's decisions won't necessarily align with the PM's requirements, and the Developer's implementation won't match the Architect's design. The Orchestrator reads the output of each agent before passing it to the next, checks that requirements were addressed in the design, and prevents the cascade of failures that happen when incomplete artefacts propagate downstream.</p>
+  <div class="callout"><div class="callout-label">Party Mode</div><p>BMAD includes a feature called Party Mode that brings multiple agent personas into a single session simultaneously. Instead of running agents sequentially, Party Mode allows the Analyst, PM, and Architect to discuss a problem together — the human facilitates a multi-agent conversation where each agent contributes from its own perspective. <strong>Think of it as a virtual architecture review board that you can convene in thirty seconds.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the artefact chain — what each agent produces and why the chain matters for governance.</p>
+</div>
+
+<div class="guide-page" id="page-4">
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">The Artefact Chain — What Gets Produced and Why It Matters</h1>
+  <p class="chapter-intro">BMAD's answer to the black box problem is explicit artefacts at every stage. Every agent produces a documented output that is reviewed and approved before the next agent begins. These artefacts are the governance mechanism — they make AI-assisted development auditable, extensible, and maintainable.</p>
+  <h2>The Artefact Chain</h2>
+  <div class="artefact-list">
+    <div class="artefact-item"><span class="artefact-badge">BRIEF</span><span class="artefact-text"><strong>Project Brief</strong> — the Analyst's output. Structured summary of the project idea: what problem is being solved, for whom, with what constraints, and what unknowns need resolution. The foundation of the whole chain.</span></div>
+    <div class="artefact-item"><span class="artefact-badge">PRD</span><span class="artefact-text"><strong>Product Requirements Document</strong> — the PM's output. Functional requirements, user goals, scope boundaries, success criteria. The business specification the Architect designs against.</span></div>
+    <div class="artefact-item"><span class="artefact-badge">ARCH</span><span class="artefact-text"><strong>Architecture Document</strong> — the Architect's output. Technology choices, system design, component boundaries, data models, integration patterns, non-functional requirements. The technical specification the Scrum Master decomposes into stories.</span></div>
+    <div class="artefact-item"><span class="artefact-badge">STORY</span><span class="artefact-text"><strong>Story Files</strong> — the Scrum Master's output. One file per development task. Each embeds the full context the Developer needs: architecture excerpts, acceptance criteria, implementation guidance, test requirements, and domain constraints.</span></div>
+    <div class="artefact-item"><span class="artefact-badge">CODE</span><span class="artefact-text"><strong>Implementation</strong> — the Developer's output. Working code committed to version control with the story reference attached, creating a traceable link from business requirement to working code.</span></div>
+    <div class="artefact-item"><span class="artefact-badge">QA</span><span class="artefact-text"><strong>QA Review</strong> — the QA agent's output. Structured assessment of implementation against the story's acceptance criteria. Issues categorised by severity, resolved by Developer before the story is marked complete.</span></div>
+  </div>
+  <h2>Why the Story File Is the Critical Artefact</h2>
+  <p>Every artefact in the chain matters, but the Story File solves the context loss problem directly. When a Developer agent begins implementing a story, it doesn't have access to the full conversation history that produced the Brief, PRD, and Architecture. It starts cold, as every AI session does. The Story File compensates by embedding everything the Developer agent needs — not a summary, but the actual relevant excerpts from the architecture, specific acceptance criteria, and implementation constraints. A Developer agent working from a well-written Story File can produce correct, aligned code without needing access to anything else.</p>
+  <div class="callout"><div class="callout-label">Artefacts Under Version Control</div><p>All BMAD artefacts — Brief, PRD, Architecture, Story Files — are stored in the project repository under version control alongside the code. When a developer needs to understand why a particular architectural choice was made six months later, the answer is in the repository. <strong>The artefacts are not documentation produced after the fact — they are the specification that produced the code.</strong></p></div>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE BMAD ARTEFACT CHAIN</text>
+      <defs><marker id="arr-chain" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker></defs>
+      <rect x="10" y="60" width="85" height="80" rx="6" fill="#1a1a2e"/>
+      <text x="52" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">BRIEF</text>
+      <text x="52" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Analyst</text>
+      <line x1="97" y1="100" x2="113" y2="100" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-chain)"/>
+      <rect x="115" y="60" width="85" height="80" rx="6" fill="#1a1a2e"/>
+      <text x="157" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">PRD</text>
+      <text x="157" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Product Mgr</text>
+      <line x1="202" y1="100" x2="218" y2="100" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-chain)"/>
+      <rect x="220" y="60" width="85" height="80" rx="6" fill="#1a1a2e"/>
+      <text x="262" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">ARCH</text>
+      <text x="262" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Architect</text>
+      <line x1="307" y1="100" x2="323" y2="100" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-chain)"/>
+      <rect x="325" y="60" width="85" height="80" rx="6" fill="#1a1a2e"/>
+      <text x="367" y="88" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">STORY</text>
+      <text x="367" y="104" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">FILES</text>
+      <text x="367" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">Scrum Master</text>
+      <line x1="412" y1="100" x2="428" y2="100" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-chain)"/>
+      <rect x="430" y="60" width="85" height="80" rx="6" fill="#4a9068"/>
+      <text x="472" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="white" font-weight="600">CODE</text>
+      <text x="472" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.85)">Developer</text>
+      <line x1="517" y1="100" x2="533" y2="100" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-chain)"/>
+      <rect x="535" y="60" width="115" height="80" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="592" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4a9068" font-weight="600">QA REVIEW</text>
+      <text x="592" y="110" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">QA agent</text>
+      <text x="157" y="46" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b">👤 human review</text>
+      <text x="367" y="46" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b">👤 human review</text>
+      <text x="330" y="170" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" font-style="italic">All artefacts stored in version control alongside the code</text>
+    </svg>
+    <div class="diagram-caption">The BMAD artefact chain. Human review gates sit between major phases.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the planning workflow in detail — how the Brief becomes a PRD becomes an Architecture.</p>
+</div>
+
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">The Planning Workflow — From Idea to Architecture</h1>
+  <p class="chapter-intro">The planning phase is where BMAD's value is most clearly different from unstructured AI-assisted development. Instead of jumping from idea to implementation, BMAD runs the idea through a structured sequence of agents that progressively refine it into a precise specification. By the time the first line of code is written, the what and the how are already explicit and approved.</p>
+  <h2>Step 1 — Brief Creation with the Analyst</h2>
+  <p>The process begins with a conversation between the human and the Analyst agent. The human describes the project idea — as loosely or as precisely as they have it. The Analyst asks the questions that surface what the human hasn't said yet: who is this for, what problem does it solve, what does success look like, what are the constraints, what is explicitly out of scope? The Analyst produces a Project Brief. The human reviews and approves it before the PM agent begins. Brief creation typically takes thirty to sixty minutes. Teams that skip it consistently produce requirements that answer questions the business didn't ask and miss questions it needed answered.</p>
+  <h2>Step 2 — PRD Creation with the Product Manager</h2>
+  <p>The PM agent takes the approved Brief and produces the Product Requirements Document. A well-constructed BMAD PRD is not a list of features — it's a structured argument: here are the users, here are their goals, here are the conditions under which the system succeeds, here are the things explicitly out of scope. The human reviews the PRD carefully before approving it. This is the most important review in the planning chain. Requirements that are wrong or incomplete at this stage propagate through the architecture and into the stories. Catching them here costs an edit to a Markdown document. Catching them after implementation costs a rework cycle.</p>
+  <h2>Step 3 — Architecture with the Architect</h2>
+  <p>The Architect agent takes the approved PRD and produces the Architecture Document covering technology decisions, system components, data models, integration patterns, and non-functional requirements. Without this document, every Developer agent session makes independent architectural decisions. With it, every Developer agent works from the same explicit technical specification — producing a codebase that is internally consistent not because the AI is magically aligned, but because it's working from a shared blueprint.</p>
+  <div class="callout"><div class="callout-label">The Architecture Document as Context Package</div><p>The Architecture Document in BMAD is structurally identical to the context package concept in advanced agentic development. It answers the questions an agent needs answered before it can work correctly: what patterns to use, what to name things, what constraints apply. <strong>The quality of the Architecture Document is the leading indicator of output quality.</strong> A poorly written one produces inconsistent, misaligned code — not because the Developer agent is bad, but because it was given an incomplete operating environment.</p></div>
+  <h2>Capturing Architectural Decisions — ADRs as Part of the Harness</h2>
+  <p>Every significant decision the Architect agent makes during the Architecture session should produce an Architectural Decision Record — a short, immutable document capturing the decision, the context, the alternatives considered, and the rationale. Martin Fowler defines an ADR as a document that, once accepted, should never be modified — only superseded by a new ADR with a link back. The immutability is the point. An ADR is a permanent record of what was decided and why, not a living document that gets updated as thinking changes.</p>
+  <p>In a BMAD workflow, ADR generation is straightforward because the human review gate already exists at the Architecture session. The Architect agent proposes the Architecture Document. The human reviews and approves it. ADRs are generated as part of that approval — one per significant architectural decision, committed to <code>docs/adr/</code> alongside the code. The "Decided by" field carries both the agent and the human approver, making the governance chain explicit.</p>
+  <div class="callout"><div class="callout-label">ADR Format for BMAD Sessions</div><p>
+  <strong>ADR-NNNN: [Decision title]</strong><br>
+  <strong>Status:</strong> Accepted | Superseded by ADR-MMMM<br>
+  <strong>Date:</strong> YYYY-MM-DD<br>
+  <strong>Decided by:</strong> Architect agent, BMAD session [N]<br>
+  <strong>Human approved:</strong> [Name], [Date]<br><br>
+  <strong>Context:</strong> What situation required this decision?<br>
+  <strong>Decision:</strong> What was decided, stated precisely.<br>
+  <strong>Alternatives considered:</strong> What else was evaluated and why it was rejected.<br>
+  <strong>Consequences:</strong> What this decision enables, constrains, or requires.<br>
+  <strong>Supersedes:</strong> ADR-MMMM (if replacing a prior decision)<br><br>
+  Commit to <code>docs/adr/</code>. Never edit after acceptance. Supersede with a new ADR when the decision changes.</p></div>
+  <h2>ADRs as Harness Input — Closing the Loop</h2>
+  <p>ADRs are not just a governance record — they are a harness component. Every subsequent agent session that touches the same codebase should load the ADR log as context. The Developer agent implementing a Story File should know which architectural decisions constrain its choices. The QA agent reviewing output should know which decisions were made and why, so it can flag violations rather than accepting structurally wrong code that passes functional tests.</p>
+  <p>In CLAUDE.md or AGENTS.md, add a standing instruction: "Before beginning any implementation task, read <code>docs/adr/</code> and apply all accepted ADRs as constraints. If your implementation would violate an accepted ADR, stop and raise it as a question rather than proceeding." This transforms the ADR log from a passive record into an active harness constraint — enforcing architectural consistency across every agent session without requiring a human to repeat the architectural reasoning each time.</p>
+  <p>For application support projects specifically, the ADR log is the most valuable single artefact in the harness. When the support agent is investigating a change, it loads the ADR log and immediately understands which decisions are active, which were superseded and why, and which constraints apply to the change it is about to make. The ADR log is the institutional memory that survives developer turnover, system migrations, and the passage of time.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the development cycle — from stories to working code.</p>
+</div>
+
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">The Development Cycle — From Stories to Working Code</h1>
+  <p class="chapter-intro">With the planning artefacts approved, the development cycle begins. This is where BMAD shifts from a planning framework to an execution framework — and where the design of the Story File becomes the critical quality lever.</p>
+  <h2>Story Generation with the Scrum Master</h2>
+  <p>The Scrum Master agent takes the PRD and Architecture Document and decomposes the work into Story Files — one per development task. A well-decomposed story set has clear sequencing, explicit dependency mapping, and stories sized for a single focused implementation session. Each story is a complete specification: what to build, how it should work, what it should integrate with, and how to verify correctness. The Developer agent should be able to implement the story from the Story File alone.</p>
+  <h2>The Story File Format</h2>
+  <p>A BMAD Story File is a structured Markdown document containing: a brief description of what the story builds, relevant architecture excerpts, specific acceptance criteria, implementation notes (suggested approach, libraries to use, patterns to follow, anti-patterns to avoid), test requirements, and domain context. The structured format matters. Unstructured stories produce variable results because the Developer agent has to make interpretive decisions that should have been made in the planning phase.</p>
+  <h2>Implementation with the Developer Agent</h2>
+  <p>The Developer agent takes a single Story File and implements it. The session is deliberately scoped to one story — preventing context window bloat and implementation drift from the specification. If the Story File is complete and precise, the implementation follows naturally. If it has gaps, the Developer agent fills them with its best guess — which may be plausible and wrong. Story File quality is implementation output quality.</p>
+  <h2>QA Review</h2>
+  <p>After implementation, the QA agent reviews the code against the story's acceptance criteria — asking whether the implementation does what the story said it should, not whether the code is internally elegant. Issues are categorised by severity and returned to the Developer for resolution before the story is marked complete.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 230" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE BMAD DEVELOPMENT CYCLE</text>
+      <defs>
+        <marker id="arr-dev" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/></marker>
+        <marker id="arr-green2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker>
+        <marker id="arr-red3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c0392b"/></marker>
+      </defs>
+      <rect x="20" y="90" width="130" height="60" rx="8" fill="#1a1a2e"/>
+      <text x="85" y="114" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="white" font-weight="600">Scrum Master</text>
+      <text x="85" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,.7)">Story decomposition</text>
+      <rect x="195" y="60" width="110" height="120" rx="8" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="250" y="85" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">STORY 1</text>
+      <text x="250" y="103" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">STORY 2</text>
+      <text x="250" y="121" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">STORY 3</text>
+      <text x="250" y="139" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">STORY 4</text>
+      <text x="250" y="163" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">sequenced queue</text>
+      <line x1="152" y1="120" x2="193" y2="120" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-dev)"/>
+      <rect x="350" y="90" width="130" height="60" rx="8" fill="#4a9068"/>
+      <text x="415" y="114" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="white" font-weight="600">Developer Agent</text>
+      <text x="415" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="rgba(255,255,255,.8)">one story per session</text>
+      <line x1="307" y1="120" x2="348" y2="120" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-green2)"/>
+      <rect x="525" y="90" width="115" height="60" rx="8" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="582" y="114" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="12" fill="#1d3d2a" font-weight="600">QA Agent</text>
+      <text x="582" y="132" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068">reviews output</text>
+      <line x1="482" y1="120" x2="523" y2="120" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-green2)"/>
+      <path d="M 582 152 Q 582 190 415 190 Q 415 175 415 152" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red3)"/>
+      <text x="498" y="208" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#c0392b" font-style="italic">issues returned for fix</text>
+    </svg>
+    <div class="diagram-caption">The BMAD development cycle. Scrum Master produces a sequenced story queue. Developer picks one story at a time. QA reviews each implementation before the next story begins.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: getting started — what you need to install and how to run your first BMAD project.</p>
+</div>
+
+<div class="guide-page" id="page-7">
+  <div class="part-header"><div class="part-num">Part Three</div><h2>Running BMAD in Practice</h2><p>Installation, human oversight, scaling, and where BMAD works best</p></div>
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Getting Started — Installation and First Project</h1>
+  <p class="chapter-intro">BMAD is intentionally easy to install. The framework is a set of text files — no proprietary runtime, no cloud service, no complex infrastructure. The installation takes under a minute. The learning curve is in the workflow discipline, not the tooling.</p>
+  <h2>Prerequisites</h2>
+  <p>You need an AI coding assistant that supports custom system prompts or project-level context files. Claude Code is recommended — BMAD's agent definitions are optimised for Claude's instruction-following capabilities. Cursor, VSCode with Copilot, and similar environments also work. A Git repository is required for the project — version control is not optional if you want the governance benefits.</p>
+  <h2>Installation</h2>
+  <p>BMAD installs via its CLI. Running the installer asks a small number of configuration questions — which directory to use, which coding tools you're working with — and then writes agent definition files, workflow templates, and integration utilities to the project. The whole process takes approximately thirty seconds. After installation, the BMAD agent files sit alongside the project code in the repository — readable, editable, and version-controllable. Teams that want to customise agent behaviour for their domain do so by editing these files.</p>
+  <div class="callout"><div class="callout-label">Start Small</div><p>BMAD's own documentation recommends starting with a low-risk pilot project rather than adopting the full framework on a critical deliverable. Run the complete workflow — Brief through QA — on a small, self-contained feature. Understand where the friction is and where the value is most visible before scaling. <strong>Teams that try to adopt BMAD on a high-stakes project before completing one full cycle typically find the framework adds overhead without adding confidence — because they're learning the workflow and managing delivery risk simultaneously.</strong></p></div>
+  <h2>Choosing the Right Workflow</h2>
+  <p>BMAD includes pre-built workflows for common project types: greenfield full-stack, greenfield service, brownfield feature addition, and others. Each workflow pre-configures the agent sequence and artefact templates for the project type. Choosing the right workflow saves significant configuration effort and produces better-structured artefacts because the templates are designed for the specific context.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: human-in-the-loop — where you stay in control, and what good oversight looks like.</p>
+</div>
+
+<div class="guide-page" id="page-8">
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Human-in-the-Loop — Where You Stay in Control</h1>
+  <p class="chapter-intro">BMAD is explicit that human oversight is not optional — it's built into the architecture. The review gates between agents are the mechanism through which the human guides the project. Understanding what good oversight looks like at each gate is the difference between BMAD as a productivity tool and BMAD as a rubber-stamp machine.</p>
+  <h2>The Three Critical Review Points</h2>
+  <p>Of the multiple human review points in the BMAD workflow, three are most consequential. The first is the Brief review — where the human confirms the Analyst understood the project correctly. A Brief that miscaptures scope produces a PRD that answers the wrong questions. Five minutes of careful Brief review is worth hours of downstream rework.</p>
+  <p>The second is the PRD review — the most important review in the chain. Requirements captured incorrectly propagate through the Architecture, the Stories, and into the code. The human reviewing the PRD should be asking: does this document accurately capture what we want to build? Is anything missing? Is the scope right?</p>
+  <p>The third is the Architecture review. Technical decisions made here propagate into every Story File and every line of code. The human reviewing the Architecture needs enough technical judgment to evaluate whether the chosen approach is sound for the project's constraints. This is where BMAD requires the human to bring genuine expertise — the Architect agent can generate a plausible architecture, but only a technically competent human can determine whether it's the right one.</p>
+  <div class="callout"><div class="callout-label">The Rubber Stamp Failure Mode</div><p>The most common BMAD failure is treating review gates as formalities — reading artefacts quickly and approving without genuine scrutiny. An agent that produces a plausible-but-wrong artefact that the human approves without reading has produced a wrong artefact with a human signature on it. <strong>The accountability is now yours.</strong> Review gates only add value when the human brings genuine scrutiny: reading carefully, asking whether anything is wrong, and making changes before approving.</p></div>
+  <h2>What the Human Is Not Doing</h2>
+  <p>In a well-running BMAD workflow, the human is not writing requirements documents, not designing system architecture, not decomposing stories, not writing boilerplate code, not running routine QA checks. These are agent responsibilities. The human is directing, reviewing, making judgment calls, and approving. The cognitive work has shifted from production to judgment — which is where senior experience delivers the most value.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: scaling BMAD from a solo developer to an enterprise team.</p>
+</div>
+
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Scaling BMAD — From Solo to Enterprise Teams</h1>
+  <p class="chapter-intro">BMAD was designed to scale. The same framework that a solo developer uses to build a personal project is the framework an enterprise team uses to coordinate parallel development streams. The agents and artefacts are the same — the coordination layer changes.</p>
+  <h2>Solo Developer</h2>
+  <p>The solo developer runs all agents personally — one session at a time, moving through the workflow sequentially. The overhead of switching between agent personas is real but manageable. The benefit is a structured artefact trail for a project that would otherwise have no documentation at all. For solo developers who've experienced the "what was I thinking six months ago?" problem, BMAD's artefact chain is the answer.</p>
+  <h2>Small Team — Two to Five People</h2>
+  <p>The planning phase can be shared: Analyst and PM sessions run with the full team's input before anyone begins implementation. The Architecture session involves the senior technical contributor in the review role. Story Files are distributed across team members — each developer picks up stories and runs their own Developer agent sessions. QA reviews can be done by a different team member than the one who implemented the story, preserving the review independence that gives QA its value.</p>
+  <h2>Enterprise Team</h2>
+  <p>At enterprise scale, BMAD's role boundaries map onto actual team roles. There may be a dedicated person responsible for running Analyst and PM sessions. Architect agent sessions are run by senior architects who provide domain expertise and review output with genuine technical judgment. Multiple development teams run parallel Developer agent sessions on non-dependent story queues. The Orchestrator role becomes genuinely important — with multiple parallel streams, the risk of inconsistency and conflicting implementation decisions grows. The Orchestrator monitors development streams, catches integration risks before they materialise, and ensures parallel work converges cleanly.</p>
+  <div class="callout"><div class="callout-label">Scale-Adaptive Framework</div><p>BMAD v6 introduces a Scale-Adaptive Framework — the ability to move fluidly between solo prototyping and team-scale development without rewriting the approach. Planning depth adjusts to project complexity: a small feature gets a lightweight Brief and minimal PRD; a platform component gets the full treatment. <strong>This prevents the common failure of applying enterprise-grade overhead to small tasks, which kills productivity while adding no governance value.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: greenfield vs brownfield — where BMAD works best.</p>
+</div>
+
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Chapter 10</div>
+  <span class="chapter-number">10</span>
+  <h1 class="chapter-title">Greenfield vs Brownfield — Where BMAD Works Best</h1>
+  <p class="chapter-intro">BMAD's planning artefact chain assumes that the what and the how can be specified before implementation begins. This assumption holds cleanly for new development. It gets more complicated when the context is an existing codebase with its own history, technical debt, and implicit conventions.</p>
+  <h2>Greenfield — BMAD's Natural Home</h2>
+  <p>For new projects — full-stack applications, new services, new platforms — BMAD's workflow fits naturally. The Brief, PRD, and Architecture are created from scratch, unconstrained by existing decisions. The Architect agent can choose the right approach for the requirements rather than working around legacy choices. Story Files can be written with precise, consistent context because the codebase is being built to match the specification, not the other way around. BMAD's documented results are most impressive in greenfield contexts.</p>
+  <h2>Brownfield — BMAD Adapts, But With More Effort</h2>
+  <p>Adding features to an existing codebase is harder. The Architect agent needs to understand the existing system before designing a new component correctly. Story Files need to include context about existing code the Developer agent must integrate with. BMAD handles brownfield development through brownfield workflow templates, which include a codebase exploration step before the planning phase. The Architect agent reads the existing code — using a sub-agent to explore and summarise — before producing the Architecture Document for the new feature.</p>
+  <p>The trade-off: brownfield BMAD requires more facilitator judgment than greenfield. The human reviewing the Architecture needs to know the existing codebase well enough to catch where the agent has misunderstood something, missed a constraint, or proposed an approach that conflicts with existing conventions. This is not a failure of the framework — it's the inevitable cost of adding structure to an unstructured legacy.</p>
+  <div class="callout"><div class="callout-label">The Brownfield Readiness Principle</div><p>The BMAD brownfield workflow is only as good as the existing codebase's documentation. An undocumented legacy system gives the Architect agent nothing to work from except the code itself — which it can read, but slowly and imperfectly. <strong>The single most valuable investment before running BMAD on a brownfield project is generating architecture documentation from the existing codebase.</strong> Even an imperfect document is better than making the agent discover everything from scratch every session.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: a realistic look of what BMAD does well and where it struggles.</p>
+</div>
+
+<div class="guide-page" id="page-11">
+  <div class="part-header"><div class="part-num">Part Four</div><h2>Trade-offs and Limitations</h2><p>What BMAD actually delivers, where it sits in the maturity framework, and the failure modes to avoid</p></div>
+  <div class="chapter-eyebrow">Chapter 11</div>
+  <span class="chapter-number">11</span>
+  <h1 class="chapter-title">What BMAD Does Well — and Where It Struggles</h1>
+  <p class="chapter-intro">BMAD deserves realistic assessment rather than either enthusiastic promotion or reflexive scepticism. It solves real problems well. It also has genuine limitations that practitioners need to understand before committing to it.</p>
+  <h2>What BMAD Does Well</h2>
+  <p>The artefact chain is the strongest part of the framework. Teams that complete the full Brief-PRD-Architecture-Stories sequence before writing code consistently report fewer late-stage surprises, better requirements coverage, and codebases that are easier to understand and extend. This is not an AI-specific benefit — structured planning has always produced these results. BMAD makes structured planning faster by having agents do the drafting work, removing the friction that causes teams to skip it.</p>
+  <p>The Story File approach to context management is genuinely innovative. Concentrating the relevant context for each development task into a single, structured document — rather than relying on the AI to reconstruct context from accumulated conversation history — produces more consistent implementation output. It's the right answer to the context loss problem.</p>
+  <p>The governance output is valuable for enterprise contexts. Version-controlled artefacts tracing from business requirement to working code, with human approval at each stage, satisfy audit requirements in regulated industries in a way that unstructured AI-assisted development cannot.</p>
+  <h2>Where BMAD Struggles</h2>
+  <p>The framework overhead is real and not trivial. Running a complete Brief-PRD-Architecture-Stories cycle before writing a line of code takes time. For small features or quick fixes, the overhead exceeds the benefit. BMAD is a project-scale framework, not a task-scale framework. Using it for tasks it's not designed for makes it feel bureaucratic and counterproductive.</p>
+  <p>Output quality is highly dependent on the quality of human inputs at each review gate. A team that treats review gates as formalities produces wrong artefacts with human signatures on them. The framework provides structure but can't compensate for human inattention at critical checkpoints.</p>
+  <p>BMAD is also actively evolving. Version 6 is a significant change from earlier versions. Teams that adopt BMAD need to be prepared to adapt their workflows as the framework changes — manageable, but a real maintenance consideration.</p>
+  <h2>Lighter Alternatives for Smaller Projects</h2>
+  <p>BMAD is not the right tool for every situation. For a solo developer building a single feature, a personal project, or a short-lived script, the governance overhead is real and the benefit is thin. The agentic development landscape now includes lighter specification-driven tools that apply the same NLSpec principle with far less ceremony — and for smaller scope they are the more appropriate choice.</p>
+  <p>The most established of these is GitHub's Spec Kit — an open-source toolkit with over 72,000 stars, maintained by GitHub, and supporting over 22 AI agent platforms including Claude Code, GitHub Copilot, Cursor, and Gemini CLI. Its workflow follows a four-phase cycle: Specify, Plan, Tasks, Implement — each producing a structured artefact the next phase consumes. The <em>constitution.md</em> file serves the same purpose as BMAD's project constraints — non-negotiable rules that every agent session must follow. Spec Kit also has documented brownfield walkthroughs, including one extending an existing Java runtime of 420,000 lines of code across 180 Maven modules. For teams already comfortable with their IDE and wanting to add specification discipline without changing their entire workflow, Spec Kit is the most practical starting point in 2026.</p>
+  <p>OpenSpec is a faster, more minimal alternative with a proposal-based workflow — change proposals rather than full specification cycles. Quicker to adopt, less community backing than Spec Kit at this stage. Agent OS by Builder Methods takes a different angle — focused on defining and injecting coding standards into every agent session rather than structuring the full development lifecycle. Worth watching as the approach matures.</p>
+  <p>This is an incomplete list and a fast-moving space. New tools appear regularly, existing tools evolve significantly between versions, and community adoption signals shift quickly. The practical guidance is: evaluate based on current capability and community health at the time you choose, not on reputation built six months earlier. The principle — specification before execution — is stable. The tooling around it is not.</p>
+  <p>The choice between BMAD and lighter alternatives comes down to project characteristics, not personal preference. Multiple contributors working on the same codebase over a long lifespan, regulated environments requiring audit trails, application support projects where change impact documentation is the deliverable — these favour BMAD's governance structure. A solo developer adding a feature to a personal project, a consultant building a quick proof of concept, a small team shipping a focused tool — these favour the lighter approach. The NLSpec discipline is the constant. The ceremony scales to context.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: where BMAD sits in the five levels of agentic maturity.</p>
+</div>
+
+<div class="guide-page" id="page-12">
+  <div class="chapter-eyebrow">Chapter 12</div>
+  <span class="chapter-number">12</span>
+  <h1 class="chapter-title">BMAD and the Five Levels of Agentic Maturity</h1>
+  <p class="chapter-intro">BMAD is best understood in the context of where it sits on the journey from Level 1 autocomplete to Level 5 dark factory. It's a structured on-ramp to Level 3 and 4 — not the end destination for teams aiming at full agentic autonomy, but a significant and well-supported step in the right direction.</p>
+  <h2>The Level 2 to Level 3 Gap</h2>
+  <p>Most development teams currently operate at Level 1 or Level 2. Level 2 is using AI as a capable pair programmer — handing it well-defined tasks and reviewing the output. The jump from Level 2 to Level 3 is where most teams stall. The stall happens because Level 3 requires structured context management. At Level 2, the developer holds the context and the AI executes within it. At Level 3, the AI needs to maintain and use context across longer autonomous sessions. Without explicit context infrastructure, Level 3 attempts produce inconsistent results and erode trust.</p>
+  <h2>BMAD as the Bridge</h2>
+  <p>BMAD provides the explicit context infrastructure that Level 3 requires. The Architecture Document is the persistent context Developer agents work from. Story Files are the session-level context concentrating what each agent needs. The artefact chain ensures context is built progressively and consistently rather than reconstructed from scratch in each session. For teams at Level 2 wanting to reach Level 3, BMAD provides a structured path — the workflow is defined, the templates are provided, the review gates are built in.</p>
+  <h2>BMAD vs Level 4 and Level 5</h2>
+  <p>BMAD is not designed for Level 4 or Level 5. At Level 4 — where the human writes specs and agents implement everything with minimal human involvement in implementation — BMAD's per-story human review cycle introduces overhead that Level 4 practitioners are trying to eliminate. Attractor, StrongDM's open-source approach described in the companion guide, is the more appropriate reference for teams targeting Level 4 and above. This doesn't make BMAD inferior to Attractor — it makes it a different tool for a different point on the maturity curve.</p>
+  <div class="callout"><div class="callout-label">The Realistic Enterprise Path</div><p>For most enterprise development teams, the realistic near-term path is: adopt BMAD to move from Level 2 to Level 3, stabilise there for 6–12 months, build the spec-writing discipline and review competency that Level 4 requires, then evaluate whether the organisation is ready to reduce human oversight further. <strong>Attempting to jump from Level 2 to Level 5 without building intermediate capabilities is the pattern that produces the J-curve without the recovery.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the failure modes that derail BMAD implementations.</p>
+</div>
+
+<div class="guide-page" id="page-13">
+  <div class="chapter-eyebrow">Chapter 13</div>
+  <span class="chapter-number">13</span>
+  <h1 class="chapter-title">Common Failure Modes</h1>
+  <p class="chapter-intro">BMAD fails in predictable ways. Most failures are not about the framework — they're about the discipline decisions teams make when they adopt it.</p>
+  <h2>Skipping the Planning Phase</h2>
+  <p>The most common failure. A team installs BMAD, runs one Brief session, finds it useful, then jumps straight to stories without completing the PRD and Architecture steps. Stories are written without a shared specification foundation. Each story carries the Scrum Master's interpretation of what the project needs — but without an agreed PRD and Architecture to reference, those interpretations are inconsistent. The resulting code works story by story but doesn't cohere at the system level. The discipline: complete all three planning artefacts before generating stories, every time, without exception.</p>
+  <h2>Treating Story Files as Optional Context</h2>
+  <p>Developer agents given loose story descriptions — "implement user authentication" — rather than the structured Story File format produce variable output. Some inferences will be correct. Some will be plausible and wrong. The QA review catches obvious failures, but subtle alignment issues — code that works but doesn't match the architecture's patterns — may pass QA and accumulate as technical debt.</p>
+  <h2>Not Customising for the Domain</h2>
+  <p>BMAD's default agent definitions are generic. A financial services team running BMAD with generic definitions will find the Architect agent proposes architectures without considering regulatory constraints, and the QA agent checks functionality but not compliance. The framework is designed to be customised. Teams that don't invest in domain-specific customisation get generic results.</p>
+  <h2>Expecting BMAD to Replace Domain Expertise</h2>
+  <p>BMAD structures the development process. It doesn't supply the domain knowledge that the process needs. An Architect agent without domain-specific constraints in its context makes generic architectural decisions. BMAD amplifies the expertise the human brings to the review gates — it doesn't substitute for expertise that isn't there.</p>
+  <h2>Adopting Organisation-Wide Without Piloting</h2>
+  <p>Rolling BMAD out across a large development organisation before any team has completed a full project cycle is the organisational equivalent of implementing a new manufacturing process across all factories simultaneously. When the process has problems — and it will — the problems are everywhere at once. Pilot with one team, one project, one complete cycle. Document what worked and what didn't. Adapt for the organisation's specific context. Then expand.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Glossary follows — every major BMAD term defined clearly.</p>
+</div>
+
+<div class="guide-page" id="page-14">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Glossary of BMAD Terms</h1>
+  <p class="chapter-intro">Every major term used in this guide, defined clearly.</p>
+  <div class="glossary-entry"><div class="glossary-term">Agent-as-Code</div><p class="glossary-def">BMAD's paradigm for defining agent personas as portable text files — Markdown and YAML — rather than hardcoded system configurations. Because agent definitions are files, they're version-controllable, shareable across projects, and modifiable for domain-specific customisation.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Analyst Agent</div><p class="glossary-def">The first agent in the BMAD planning chain. Takes the initial project idea and produces a structured Project Brief by asking clarifying questions and surfacing assumptions and unknowns. Does not make product decisions — extracts and structures what the human already knows.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Architect Agent</div><p class="glossary-def">The third planning agent. Takes the approved PRD and produces the Architecture Document — technology choices, system design, component boundaries, integration patterns, and non-functional requirements. The Architect's output is the technical specification all downstream agents work from.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Architecture Document</div><p class="glossary-def">The Architect agent's output artefact. The technical specification for the project. Every Story File includes relevant excerpts from the Architecture Document to ensure consistent implementation across all developer sessions.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">BMAD</div><p class="glossary-def">Breakthrough Method for Agile AI-Driven Development. An open-source multi-agent framework that structures AI-assisted software development through specialised agent personas, a defined planning artefact chain, and explicit human-in-the-loop review gates. Created by BMad Code. Currently at version 6.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Developer Agent</div><p class="glossary-def">The implementation agent in the BMAD delivery cycle. Takes a single Story File and implements it — writing code, running tests, producing working software. Works exclusively from the Story File's context; does not have access to the full conversation history or complete project documentation.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Orchestrator</div><p class="glossary-def">The coordination agent in BMAD. Manages dependencies between agents, evaluates artefact quality before triggering the next agent, and coordinates parallel development streams. The mechanism that prevents the multi-agent system from producing disconnected, inconsistent outputs.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Party Mode</div><p class="glossary-def">A BMAD feature that brings multiple agent personas into a single session simultaneously, enabling multi-agent discussion of complex problems. Useful for architectural decisions and scope discussions where multiple viewpoints add value before a commitment is made.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Product Manager Agent</div><p class="glossary-def">The second planning agent. Takes the approved Project Brief and produces the Product Requirements Document — functional requirements, user goals, scope boundaries, and success criteria. The PM agent's output is the business specification the Architect designs against.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Product Requirements Document (PRD)</div><p class="glossary-def">The Product Manager agent's output artefact. The business specification for the project. The most important artefact in the planning chain — errors here propagate through the Architecture and into the code.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Project Brief</div><p class="glossary-def">The Analyst agent's output artefact. A structured summary of the project's purpose, scope, key assumptions, constraints, and open questions. The foundation of the artefact chain — every subsequent artefact builds on the Brief.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">QA Agent</div><p class="glossary-def">The review agent in the BMAD delivery cycle. Reviews the Developer agent's implementation against the Story File's acceptance criteria. Produces a structured QA review with issues categorised by severity. The Developer resolves QA issues before the story is marked complete.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Scale-Adaptive Framework</div><p class="glossary-def">BMAD v6's approach to adjusting planning depth based on project complexity. A small feature gets a lightweight Brief and minimal PRD; a platform component gets the full treatment. The artefact chain is the same in both cases — only depth and formality vary.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Scrum Master Agent</div><p class="glossary-def">The delivery planning agent. Takes the approved PRD and Architecture Document and decomposes the work into Story Files — one per development task. The Scrum Master's decomposition determines sequencing, sizing, and context completeness of every story Developer agents implement.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Story File</div><p class="glossary-def">The atomic unit of BMAD development work. A structured Markdown document produced by the Scrum Master agent for each development task. Contains everything the Developer agent needs: architecture excerpts, acceptance criteria, implementation guidance, test requirements, and domain context. BMAD's answer to the context loss problem.</p></div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>

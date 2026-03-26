@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain-Driven Design — A Practical Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+
+<meta name="description" content="What DDD is actually solving, and why it matters before you write a single line of code">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/guides/ddd/">
+<meta property="og:title" content="Domain-Driven Design — A Practical Reference">
+<meta property="og:description" content="What DDD is actually solving, and why it matters before you write a single line of code">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/guides/ddd/">
+<meta property="twitter:title" content="Domain-Driven Design — A Practical Reference">
+<meta property="twitter:description" content="What DDD is actually solving, and why it matters before you write a single line of code">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+
+<guide-header title="Domain-Driven Design"></guide-header>
+
+<!-- ══════════════════════════════════════════
+     PAGE 0 — TABLE OF CONTENTS
+     ══════════════════════════════════════════ -->
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Practical Reference</div>
+    <h1>Domain-Driven Design</h1>
+    <p class="subtitle">Aligning software models with business domains</p>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — The Foundation</div>
+    <div class="toc-item" onclick="showPage(1)">
+      <span class="toc-num">01</span>
+      <span class="toc-name">Why Software Fails to Match the Business</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(2)">
+      <span class="toc-num">02</span>
+      <span class="toc-name">The Domain and the Model</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(3)">
+      <span class="toc-num">03</span>
+      <span class="toc-name">Ubiquitous Language — The Shared Dictionary</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — Drawing the Map</div>
+    <div class="toc-item" onclick="showPage(4)">
+      <span class="toc-num">04</span>
+      <span class="toc-name">Bounded Contexts — Territories with Their Own Rules</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(5)">
+      <span class="toc-num">05</span>
+      <span class="toc-name">The Context Map — How Territories Relate</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(6)">
+      <span class="toc-num">06</span>
+      <span class="toc-name">Subdomains — What the Business Actually Cares About</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — Inside a Bounded Context</div>
+    <div class="toc-item" onclick="showPage(7)">
+      <span class="toc-num">07</span>
+      <span class="toc-name">Entities and Value Objects</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(8)">
+      <span class="toc-num">08</span>
+      <span class="toc-name">Aggregates — The Consistency Boundary</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(9)">
+      <span class="toc-num">09</span>
+      <span class="toc-name">Domain Events — Things That Happened</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(10)">
+      <span class="toc-num">10</span>
+      <span class="toc-name">Repositories and Factories</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Four — How Contexts Talk to Each Other</div>
+    <div class="toc-item" onclick="showPage(11)">
+      <span class="toc-num">11</span>
+      <span class="toc-name">Integration Patterns Between Bounded Contexts</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(12)">
+      <span class="toc-num">12</span>
+      <span class="toc-name">Domain Services — Behaviour That Belongs to No Single Thing</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part Five — Putting It Together</div>
+    <div class="toc-item" onclick="showPage(13)">
+      <span class="toc-num">13</span>
+      <span class="toc-name">The Strategic Design Process</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(14)">
+      <span class="toc-num">14</span>
+      <span class="toc-name">Common Mistakes and How to Spot Them</span>
+      <span class="toc-dots"></span>
+    </div>
+    <div class="toc-item" onclick="showPage(15)">
+      <span class="toc-num">15</span>
+      <span class="toc-name">What Ages Well and What Doesn't</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(16)">
+      <span class="toc-num">—</span>
+      <span class="toc-name">Glossary of DDD Terms</span>
+      <span class="toc-dots"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 1
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-1">
+  <div class="part-header">
+    <div class="part-num">Part One</div>
+    <h2>The Foundation</h2>
+    <p>What DDD is actually solving, and why it matters before you write a single line of code</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">Why Software Fails to Match the Business</h1>
+
+  <p class="chapter-intro">The gap between what a business does and what its software thinks it does is one of the most expensive problems in enterprise IT. DDD starts by naming this gap clearly — because you can't fix a problem you haven't admitted exists.</p>
+
+  <h2>The Meeting Where Everyone Agrees and Nobody Understands the Same Thing</h2>
+
+  <p>Picture a project kickoff. The business team explains what they need. The IT team nods along and takes notes. Everyone leaves feeling aligned. Six months later, the software ships — and the business team spends the next three months filing change requests because the system doesn't work the way they expected.</p>
+
+  <p>This is not a failure of intent. Both sides were trying to build the right thing. The failure is linguistic. The business used words that meant one thing to them. The developers heard those words and built something that reflected a different, quieter understanding. Neither side noticed the divergence until the code was running.</p>
+
+  <p>This is the core problem DDD was designed to solve.</p>
+
+  <h2>The Same Word, Three Different Meanings</h2>
+
+  <p>Take the word "customer." Ask your sales team what a customer is, and they'll describe a prospect who signed a contract. Ask your accounts receivable team, and they'll describe an entity that owes money on an invoice. Ask your customer service team, and they'll describe a person who called with a complaint. Same word. Three different data models. Three different sets of rules about what's valid, what's required, and what triggers an action.</p>
+
+  <p>Now imagine a single database table trying to serve all three. Some fields are mandatory for sales but irrelevant to finance. Some records that exist for service purposes were never sales leads. The table grows columns to accommodate every meaning. Queries become complicated. Bugs emerge at the boundaries. Developers add conditional logic to handle the different cases. The codebase starts to feel like it's fighting itself.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why This Matters</div>
+    <p>When the same word carries different meanings in different parts of the business, and software treats it as one unified concept, you get a system that partially serves everyone and fully serves no one. DDD's answer is to stop pretending the word has one meaning, and instead make the different meanings explicit and separate.</p>
+  </div>
+
+  <h2>The Translation Tax</h2>
+
+  <p>Every time a business person describes what they need and a developer has to translate that into code, something is lost. The translation happens in someone's head, invisibly. The business person described a "booking" — the developer built a "reservation record with status flags." Close enough to ship. Not close enough to be right when edge cases appear.</p>
+
+  <p>Over time, this translation tax accumulates. The codebase diverges further from the business reality it's supposed to represent. New developers joining the team learn the code model, not the business model. When the business changes — and it always changes — the developers have to figure out what the change means in terms of the system's internal logic, not in terms of the business's own language.</p>
+
+  <p>This is how you end up with systems nobody fully understands. Not because the developers were careless. Because the connection between the business's world and the system's world was never properly built.</p>
+
+  <h2>What DDD Proposes Instead</h2>
+
+  <p>Domain-Driven Design is a set of principles and patterns for building software whose structure mirrors the structure of the business it serves. Not just at the requirements stage — at every stage, all the way into the code.</p>
+
+  <p>The core insight is simple: if the software model matches how the business actually thinks about its domain, then change becomes manageable. Business people and developers can have real conversations using shared language. New requirements map cleanly to the existing structure instead of requiring workarounds.</p>
+
+  <p>DDD doesn't promise to eliminate complexity. Some business domains are genuinely complex, and no design approach will change that. What it promises is that the complexity in your software will reflect real complexity in the business — not accidental complexity introduced by poor modelling decisions.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- Without DDD: misaligned -->
+      <rect x="20" y="20" width="280" height="100" rx="8" fill="#faf9f6" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="160" y="44" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">WITHOUT DDD</text>
+      <rect x="40" y="56" width="100" height="48" rx="5" fill="#e8d5d3" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="90" y="76" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Business</text>
+      <text x="90" y="92" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">World</text>
+      <rect x="162" y="56" width="100" height="48" rx="5" fill="#dde8f0" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="212" y="76" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Software</text>
+      <text x="212" y="92" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">World</text>
+      <!-- Gap arrow -->
+      <line x1="142" y1="80" x2="160" y2="80" stroke="#c0392b" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="151" y="73" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#c0392b">gap</text>
+      <text x="160" y="136" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Translation required at every step</text>
+
+      <!-- With DDD: aligned -->
+      <rect x="380" y="20" width="280" height="100" rx="8" fill="#faf9f6" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="520" y="44" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a9068" letter-spacing="1" font-weight="600">WITH DDD</text>
+      <rect x="400" y="56" width="100" height="48" rx="5" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="450" y="76" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Business</text>
+      <text x="450" y="92" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">World</text>
+      <rect x="522" y="56" width="100" height="48" rx="5" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="572" y="76" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Software</text>
+      <text x="572" y="92" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">World</text>
+      <!-- Bridge -->
+      <line x1="502" y1="80" x2="520" y2="80" stroke="#4a9068" stroke-width="2.5"/>
+      <polygon points="518,76 526,80 518,84" fill="#4a9068"/>
+      <text x="520" y="136" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Shared language bridges both worlds</text>
+
+      <!-- Labels at bottom -->
+      <text x="340" y="220" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#4a4a6a" font-style="italic">The fundamental shift DDD makes</text>
+    </svg>
+    <div class="diagram-caption">The business world and the software world: disconnected without DDD, bridged with it</div>
+  </div>
+
+  <h2>A Note on Scope</h2>
+
+  <p>DDD is most valuable when the business domain is genuinely complex — when there are real business rules, meaningful distinctions, and enough moving parts that getting the model wrong has real consequences. For a simple CRUD application that stores and retrieves records, DDD is likely overkill. For a system that handles insurance claims, financial trading, healthcare workflows, or supply chain logistics, it's close to essential.</p>
+
+  <p>The rest of this guide assumes you're working with real complexity. If your domain is simple, take what's useful and leave the rest. DDD is a toolkit, not a religion.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: what we mean by "domain" and what a model is actually for.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 2
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">The Domain and the Model</h1>
+
+  <p class="chapter-intro">Before DDD gives you any patterns or techniques, it asks you to be precise about two things: what territory you're operating in, and what kind of map you need. Everything else follows from getting these right.</p>
+
+  <h2>What Is a Domain?</h2>
+
+  <p>A domain is simply the subject area your software addresses. If you're building software for a hospital, the domain is healthcare — patient records, treatments, billing, scheduling. If you're building for a logistics company, the domain is freight — shipments, routes, carriers, customs. The domain is the world the software lives in.</p>
+
+  <p>This sounds obvious. But "the domain" is often much narrower than the company it serves. A large bank has dozens of domains: retail banking, corporate lending, foreign exchange, compliance, HR. Software built for one domain shouldn't try to serve all of them with a single unified model. That's the source of the "customer" problem from the previous chapter.</p>
+
+  <div class="callout">
+    <div class="callout-label">Domain — Definition</div>
+    <p><strong>Domain:</strong> The specific subject area or sphere of knowledge that a piece of software is built to address. A single organisation typically contains multiple distinct domains, each with its own rules, terminology, and logic.</p>
+  </div>
+
+  <h2>What Is a Model?</h2>
+
+  <p>A model is a simplification. It's not a picture of everything — it's a deliberately selective representation of the things that matter for a specific purpose.</p>
+
+  <p>Consider a map. A street map of London shows roads, landmarks, and postcodes. It ignores elevation, geology, and property ownership. A geological survey map of the same area shows rock formations and ignores roads entirely. Neither map is more "correct" than the other. Each is the right model for a specific purpose.</p>
+
+  <p>A domain model works the same way. It captures the concepts, rules, and relationships that matter for the software's purpose — and consciously ignores everything else. The danger is building a model that tries to capture everything, because then it's genuinely useful for nothing.</p>
+
+  <div class="callout">
+    <div class="callout-label">Domain Model — Definition</div>
+    <p><strong>Domain Model:</strong> A structured, simplified representation of a business domain — the concepts that exist in it, how they relate, and the rules that govern them. A model is always a selective simplification, not a complete picture. Its value comes from what it deliberately leaves out as much as what it includes.</p>
+  </div>
+
+  <h2>Models Live in Code</h2>
+
+  <p>Here's where DDD gets specific. In DDD, the domain model isn't a diagram on a whiteboard or a document in a shared drive. It lives in the code. The code structure reflects the business concepts directly. Classes, modules, and functions carry names that a business person would recognise. Business rules are expressed in code, not buried in stored procedures or encoded in cryptic field names.</p>
+
+  <p>When the model in the code matches the model in the business people's heads, something valuable happens: developers and business people can talk to each other productively. A developer can describe what the code does in terms the business person understands. A business person can explain a new requirement in terms that map directly to the existing code structure.</p>
+
+  <p>When they don't match — and in most legacy systems, they don't — every conversation requires translation, every change requires archaeological investigation of what the code was trying to do, and every new feature risks breaking something unexpected.</p>
+
+  <h2>The Knowledge-Crunching Loop</h2>
+
+  <p>Evans used the term "knowledge crunching" to describe how good models get built. It's not a one-time design exercise. It's a continuous conversation between developers and domain experts — the people who actually understand the business — where each side teaches the other.</p>
+
+  <p>Domain experts teach developers how the business actually works, including the edge cases and exceptions that never make it into requirements documents. Developers help domain experts see their own domain more clearly by asking precise questions that expose ambiguities and contradictions in how the business thinks about itself.</p>
+
+  <p>The model that emerges from this conversation is better than either side could have produced alone. This is the process DDD is trying to institutionalise. It's not a methodology with phases and deliverables. It's a discipline of ongoing collaboration.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- Three nodes in a cycle -->
+      <!-- Domain Expert -->
+      <ellipse cx="110" cy="110" rx="88" ry="44" fill="#eef4f0" stroke="#4a9068" stroke-width="2"/>
+      <text x="110" y="105" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1d3d2a" font-weight="600">Domain</text>
+      <text x="110" y="122" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1d3d2a" font-weight="600">Expert</text>
+
+      <!-- Model -->
+      <ellipse cx="490" cy="110" rx="88" ry="44" fill="#1a1a2e" stroke="#1a1a2e" stroke-width="2"/>
+      <text x="490" y="105" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="white" font-weight="600">The</text>
+      <text x="490" y="122" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="white" font-weight="600">Model</text>
+
+      <!-- Developer -->
+      <ellipse cx="300" cy="42" rx="88" ry="34" fill="#e8d5d3" stroke="#c0392b" stroke-width="2"/>
+      <text x="300" y="37" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#6b1a14" font-weight="600">Developer</text>
+      <text x="300" y="54" text-anchor="middle" font-family="Lora, serif" font-size="11" fill="#6b1a14">asks precise questions</text>
+
+      <!-- Arrows -->
+      <path d="M 196 90 Q 248 60 210 48" fill="none" stroke="#4a9068" stroke-width="1.8" marker-end="url(#arrow-green)"/>
+      <path d="M 388 52 Q 430 72 404 90" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arrow-red)"/>
+      <path d="M 404 130 Q 360 170 196 130" fill="none" stroke="#1a1a2e" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrow-dark)"/>
+
+      <!-- Edge labels -->
+      <text x="218" y="58" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a9068" font-style="italic">shares knowledge</text>
+      <text x="378" y="60" font-family="Source Sans 3, sans-serif" font-size="10" fill="#c0392b" font-style="italic">refines model</text>
+      <text x="290" y="170" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a" font-style="italic">model reflects domain</text>
+
+      <defs>
+        <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/>
+        </marker>
+        <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#c0392b"/>
+        </marker>
+        <marker id="arrow-dark" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diagram-caption">Knowledge crunching: a continuous loop between domain experts, developers, and the model</div>
+  </div>
+
+  <h2>Why "Domain-Driven" and Not "Data-Driven"</h2>
+
+  <p>Most software development starts with data. What tables do we need? What fields? Design the schema first, then build the application around it. This approach is natural for developers and familiar to DBAs. It's also a reliable way to build systems where the data structure slowly diverges from business reality.</p>
+
+  <p>DDD inverts this. Start with the domain — the business concepts, rules, and processes. Let that understanding drive the model. Let the model drive the data structure. The database is an implementation detail, not the foundation.</p>
+
+  <p>This isn't anti-data. It's a sequencing argument. Get the domain model right first. The data structure will follow naturally from a good model. Get the data structure right first and you've pre-committed to a model before you understood the domain.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the single most practical idea in all of DDD — Ubiquitous Language.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 3
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-3">
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">Ubiquitous Language — The Shared Dictionary</h1>
+
+  <p class="chapter-intro">If you only take one idea from DDD, this is the one. Ubiquitous Language is the discipline of building a shared vocabulary between business people and developers — and then enforcing it everywhere, including in the code.</p>
+
+  <h2>The Problem with "Translation"</h2>
+
+  <p>In most organisations, business people and developers speak different languages. Not technically different — everyone speaks English (or whatever the working language is) — but professionally different. Business people talk about customers, orders, fulfilment, policies, claims, portfolios. Developers talk about records, objects, entities, services, tables, APIs.</p>
+
+  <p>When a business person describes a requirement, a developer mentally translates it into technical concepts. When a developer reports progress or asks a clarifying question, the business person mentally translates it back. This translation happens constantly, mostly invisibly, and it introduces errors at every step.</p>
+
+  <p>The errors aren't dramatic. They're subtle. A developer hears "credit the account" and implements it as an accounting transaction, when the business actually meant a loyalty points adjustment. A business person hears "we've modelled that as a relationship" and assumes the developer understood the business rule, when the developer only captured the data linkage.</p>
+
+  <h2>What Ubiquitous Language Means</h2>
+
+  <p>Ubiquitous Language is the practice of establishing a single, shared vocabulary for a domain — developed jointly by business people and developers — and then using it everywhere without translation. In conversations, in documentation, in requirements, and directly in the code.</p>
+
+  <div class="callout">
+    <div class="callout-label">Ubiquitous Language — Definition</div>
+    <p><strong>Ubiquitous Language:</strong> A shared vocabulary, developed collaboratively between business experts and developers, that is used consistently across all conversations, documentation, and code within a Bounded Context. The language is "ubiquitous" because it appears everywhere — not just in meetings, but in class names, method names, and variable names in the actual code.</p>
+  </div>
+
+  <p>The "ubiquitous" part matters. A language that lives in requirements documents but gets translated when it hits the code isn't a Ubiquitous Language — it's just documentation. The discipline is using the same terms in the code that the business uses in conversation. If the business calls it a "policy," the code has a Policy class, not an InsuranceContractRecord.</p>
+
+  <h2>Building It Is a Conversation, Not a Glossary Exercise</h2>
+
+  <p>A common mistake is treating Ubiquitous Language as a glossary creation exercise. Teams hold a workshop, produce a list of defined terms, file it in Confluence, and move on. Two months later nobody refers to it and the code uses different names anyway.</p>
+
+  <p>Genuine Ubiquitous Language emerges from working conversations. A developer asks "when you say the order is confirmed, what exactly has to be true?" The business person explains. The developer asks about edge cases. The business person discovers they haven't thought about one of them. They work it out together. The resulting definition is precise enough to implement and meaningful enough for the business to recognise.</p>
+
+  <p>This process also surfaces hidden complexity early. Often a business person uses a single term to cover several different concepts that need to be separate in the system. The conversation to establish shared language is frequently the moment those distinctions become visible.</p>
+
+  <h2>When the Language Disagrees, the Model Is Wrong</h2>
+
+  <p>Here's a useful diagnostic. If business people stop using certain terms when talking to developers — if they simplify their language, avoid certain words, or find themselves saying "well, in the system it's called..." — the model has diverged from the domain. The business has adapted to the system's model rather than the system reflecting the business's model. That's backwards.</p>
+
+  <p>When the Ubiquitous Language is working, business people and developers can sit in the same room, describe the same situation using the same words, and mean the same thing. That's the target. It's harder to reach than it sounds, and enormously valuable when you get there.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg">
+      <!-- Title -->
+      <text x="330" y="22" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE SAME WORD IN TWO DIFFERENT CONTEXTS</text>
+
+      <!-- Sales context box -->
+      <rect x="20" y="38" width="280" height="220" rx="8" fill="#faf9f6" stroke="#2980b9" stroke-width="2"/>
+      <rect x="20" y="38" width="280" height="34" rx="8" fill="#2980b9"/>
+      <rect x="20" y="58" width="280" height="14" fill="#2980b9"/>
+      <text x="160" y="60" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600" letter-spacing="1">SALES CONTEXT</text>
+
+      <text x="160" y="96" text-anchor="middle" font-family="Lora, serif" font-size="22" fill="#2980b9" font-weight="600">"Customer"</text>
+
+      <text x="40" y="122" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Has a sales rep assigned</text>
+      <text x="40" y="142" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Has a pipeline stage</text>
+      <text x="40" y="162" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ May not have paid yet</text>
+      <text x="40" y="182" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Defined by contract signed</text>
+      <text x="40" y="202" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ "Contact" before the sale</text>
+      <text x="40" y="232" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Rules: credit check, discount limits,</text>
+      <text x="40" y="248" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">territory assignment</text>
+
+      <!-- Service context box -->
+      <rect x="360" y="38" width="280" height="220" rx="8" fill="#faf9f6" stroke="#c0392b" stroke-width="2"/>
+      <rect x="360" y="38" width="280" height="34" rx="8" fill="#c0392b"/>
+      <rect x="360" y="58" width="280" height="14" fill="#c0392b"/>
+      <text x="500" y="60" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600" letter-spacing="1">SERVICE CONTEXT</text>
+
+      <text x="500" y="96" text-anchor="middle" font-family="Lora, serif" font-size="22" fill="#c0392b" font-weight="600">"Customer"</text>
+
+      <text x="380" y="122" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Has a support history</text>
+      <text x="380" y="142" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Has a service tier / SLA</text>
+      <text x="380" y="162" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Must have an active contract</text>
+      <text x="380" y="182" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ Defined by who can raise tickets</text>
+      <text x="380" y="202" font-family="Source Sans 3, sans-serif" font-size="12" fill="#4a4a6a">→ "End user" vs "Account"</text>
+      <text x="380" y="232" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Rules: SLA timers, escalation paths,</text>
+      <text x="380" y="248" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">entitlements</text>
+
+      <!-- VS in middle -->
+      <text x="330" y="158" text-anchor="middle" font-family="Lora, serif" font-size="18" fill="#d8d4cb" font-weight="600">≠</text>
+    </svg>
+    <div class="diagram-caption">The same word, "Customer", carries entirely different meaning and rules in two different parts of the business. A single model can't serve both correctly.</div>
+  </div>
+
+  <h2>The Language Is Bounded</h2>
+
+  <p>One important nuance: Ubiquitous Language isn't universal. It's specific to a context. The sales team's definition of "customer" and the service team's definition can legitimately differ — and the language for each context should reflect that difference, not paper over it. This is why Ubiquitous Language and Bounded Contexts (the next chapter) are inseparable ideas. The language is ubiquitous within a context, not across the entire organisation.</p>
+
+  <p>Trying to create a single Ubiquitous Language for an entire enterprise is a common mistake. It produces either a language so general it's useless, or endless political battles about whose definition of "customer" is the right one. Neither outcome serves anyone.</p>
+
+  <h2>When the System's Language Colonises the Business</h2>
+
+  <p>There's a subtler version of the same problem that anyone who has worked with large packaged applications will recognise immediately. Ubiquitous Language assumes the business's vocabulary shapes the software. In practice, the reverse frequently happens — the software's vocabulary displaces the business's language entirely.</p>
+
+  <p>Sit in a requirements workshop with an ERP implementation team and within twenty minutes the conversation has shifted from business processes to transaction codes, table names, and configuration parameters. The business stakeholders stop contributing because they can no longer follow the discussion. The language in the room has become the system's language, not the business's language. Nobody planned this — it's the natural result of the system being more concrete and immediately present than the business concepts it was built to serve.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Vocabulary Takeover</div>
+    <p>When a packaged application or ERP imposes its own terminology on business conversations, the Ubiquitous Language problem runs in reverse. Instead of the business language failing to reach the code, the system's technical language colonises the business. The symptom: business people stop using their own words and start describing their processes in terms of what the system can do. The consequence: genuine business requirements stop surfacing, because the conversation has been reframed around system constraints. Recognising this pattern is the first step to reversing it.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Bounded Contexts — the most powerful idea in DDD's strategic toolkit.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 4
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-4">
+  <div class="part-header">
+    <div class="part-num">Part Two</div>
+    <h2>Drawing the Map</h2>
+    <p>How to divide a complex business into territories that can each be understood and built independently</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">Bounded Contexts — Territories with Their Own Rules</h1>
+
+  <p class="chapter-intro">Bounded Context is the central strategic pattern in DDD. It's the answer to the question: if different parts of the business use the same words differently, how do we structure the software to handle that without making a mess?</p>
+
+  <h2>The Map Analogy</h2>
+
+  <p>Different maps of the same physical territory serve different purposes and show different things. A political map draws borders based on governance. A physical map shows elevation and terrain. A climate map shows weather patterns. None of these maps is "wrong" — each is the right representation for a specific purpose.</p>
+
+  <p>Bounded Contexts work the same way. The same business reality — the same customers, products, and transactions — can be modelled differently depending on what part of the business is doing the work. A Bounded Context is the explicit boundary within which a particular model applies and a particular language is used consistently.</p>
+
+  <div class="callout">
+    <div class="callout-label">Bounded Context — Definition</div>
+    <p><strong>Bounded Context:</strong> An explicit boundary within which a domain model is defined and applicable. Inside the boundary, all terms have precise, consistent meanings. Outside the boundary, the same terms may mean different things. Each Bounded Context has its own Ubiquitous Language, its own model, and ideally its own codebase or at least its own clearly separated module.</p>
+  </div>
+
+  <h2>What Goes Inside a Bounded Context</h2>
+
+  <p>A Bounded Context contains everything needed to express one coherent slice of the business: the model, the language, the business rules, the code, and ideally the team. The boundary is not just conceptual — it has practical implications for how code is organised, how teams are structured, and how systems are integrated.</p>
+
+  <p>Inside the boundary, the model is consistent. "Order" means one specific thing. "Customer" means one specific thing. "Fulfilment" means one specific thing. The rules are enforced. The language is shared. Developers working inside the context don't need to worry about whether "order" means something different in the warehouse system — that's outside the boundary and handled through integration.</p>
+
+  <h2>Bounded Contexts Are Not Microservices</h2>
+
+  <p>This is a common conflation worth clearing up. A Bounded Context is a conceptual boundary. A microservice is a deployment unit. These concepts are related but not the same thing.</p>
+
+  <p>One Bounded Context can be implemented as multiple services. One service can span parts of multiple contexts (though this is usually a warning sign). A monolithic application can be well-organised into Bounded Contexts with clear internal boundaries even if it's deployed as a single unit. The context boundary is about how you think about and structure the model, not necessarily about how you deploy it.</p>
+
+  <p>That said, Bounded Contexts and microservices often align in practice, because a team owning a Bounded Context and a team owning a microservice tend to be the same team. Conway's Law being what it is, the deployment architecture eventually mirrors the team structure.</p>
+
+  <div class="callout">
+    <div class="callout-label">Conway's Law</div>
+    <p>In 1967, computer scientist Melvin Conway observed that organisations design systems which mirror their own communication structure. A company with four siloed departments will build a system with four poorly integrated modules — not because anyone planned it that way, but because teams naturally build what they can coordinate on. DDD's Bounded Contexts, when aligned with team ownership, work <strong>with</strong> Conway's Law rather than against it. The boundary around the context and the boundary around the team become the same boundary.</p>
+  </div>
+
+  <h2>Finding the Boundaries</h2>
+
+  <p>Where should the boundaries go? This is the hardest question in strategic DDD and there's no algorithm for it. But there are reliable signals.</p>
+
+  <p>Boundaries often emerge where language changes. Pay attention to where the same word means different things to different people — the seam between those meanings is often a natural context boundary. Boundaries also often align with organisational boundaries: different departments, different teams, different business capabilities. This isn't a coincidence. Organisational boundaries exist partly because different parts of the business have genuinely different concerns.</p>
+
+  <p>Watch for where business rules conflict. If the rule about what makes an "account" valid differs between finance and operations, those two groups are probably working in different contexts whether they know it or not.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">BOUNDED CONTEXTS IN AN E-COMMERCE BUSINESS</text>
+
+      <!-- Sales/Orders context -->
+      <rect x="20" y="36" width="190" height="130" rx="10" fill="#eef4f0" stroke="#4a9068" stroke-width="2.5"/>
+      <text x="115" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a9068" font-weight="600" letter-spacing="0.5">ORDERING</text>
+      <text x="115" y="78" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Customer (buyer)</text>
+      <text x="115" y="96" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Order</text>
+      <text x="115" y="114" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Product (catalogue)</text>
+      <text x="115" y="132" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Payment</text>
+      <text x="115" y="154" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Discount</text>
+
+      <!-- Fulfilment context -->
+      <rect x="245" y="36" width="190" height="130" rx="10" fill="#e8d5d3" stroke="#c0392b" stroke-width="2.5"/>
+      <text x="340" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#c0392b" font-weight="600" letter-spacing="0.5">FULFILMENT</text>
+      <text x="340" y="78" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Shipment</text>
+      <text x="340" y="96" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Pick List</text>
+      <text x="340" y="114" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Warehouse Location</text>
+      <text x="340" y="132" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Carrier</text>
+      <text x="340" y="154" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Delivery Window</text>
+
+      <!-- Inventory context -->
+      <rect x="470" y="36" width="190" height="130" rx="10" fill="#dde8f0" stroke="#2980b9" stroke-width="2.5"/>
+      <text x="565" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#2980b9" font-weight="600" letter-spacing="0.5">INVENTORY</text>
+      <text x="565" y="78" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Stock Item</text>
+      <text x="565" y="96" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Quantity on Hand</text>
+      <text x="565" y="114" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Reservation</text>
+      <text x="565" y="132" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Supplier</text>
+      <text x="565" y="154" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Reorder Point</text>
+
+      <!-- Finance context -->
+      <rect x="132" y="200" width="190" height="120" rx="10" fill="#f5f0e8" stroke="#e67e22" stroke-width="2.5"/>
+      <text x="227" y="222" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#e67e22" font-weight="600" letter-spacing="0.5">FINANCE</text>
+      <text x="227" y="242" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Invoice</text>
+      <text x="227" y="260" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Customer (debtor)</text>
+      <text x="227" y="278" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Revenue Line</text>
+      <text x="227" y="296" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1a1a2e">Credit Limit</text>
+
+      <!-- Arrows between contexts -->
+      <line x1="210" y1="100" x2="243" y2="100" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="435" y1="100" x2="468" y2="100" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="115" y1="167" x2="180" y2="200" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="340" y1="167" x2="270" y2="200" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+      <text x="340" y="330" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Each context has its own model. Dashed lines show integration points.</text>
+    </svg>
+    <div class="diagram-caption">Four Bounded Contexts in an e-commerce business. "Customer" appears in both Ordering and Finance — but it means something different in each.</div>
+  </div>
+
+  <h2>Bounded Contexts Protect Teams</h2>
+
+  <p>There's a practical organisational benefit that's easy to underestimate. When a team owns a Bounded Context, they can work within it without needing to understand the entire system. They need to know their model deeply. They need to understand the integration contracts with other contexts. They don't need to understand the internal details of other contexts.</p>
+
+  <p>This is what makes large systems manageable. Not because the complexity disappears, but because it's partitioned. Each team deals with their context's complexity. The integration between contexts is handled at the boundary, explicitly, through defined contracts.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the Context Map — how to make the relationships between your Bounded Contexts visible.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 5
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">The Context Map — How Territories Relate</h1>
+
+  <p class="chapter-intro">Once you've identified your Bounded Contexts, you need to understand how they connect. The Context Map is the tool for making those connections explicit — who talks to whom, on whose terms, and with what kind of relationship.</p>
+
+  <h2>Why Relationships Matter as Much as Boundaries</h2>
+
+  <p>Identifying Bounded Contexts is necessary but not sufficient. The real work — and the real risk — lives at the boundaries between contexts. This is where data crosses lines, where different models have to translate between each other, and where integration bugs hide.</p>
+
+  <p>Most organisations have an implicit Context Map. Different teams have informal understandings of how they depend on each other, what APIs they call, what data they share. The problem with implicit maps is that they're invisible. Nobody has a clear picture of the whole. Dependencies accumulate without scrutiny. Coupling grows in the dark.</p>
+
+  <p>A Context Map makes all of this visible. It's not primarily a technical diagram — it's a political and organisational document. It shows power relationships between teams as much as technical integration patterns.</p>
+
+  <div class="callout">
+    <div class="callout-label">Context Map — Definition</div>
+    <p><strong>Context Map:</strong> A diagram or document that identifies all Bounded Contexts in a system and makes explicit the relationships between them — including the nature of each relationship, which team is upstream and which is downstream, and what integration pattern connects them. The Context Map is a strategic planning tool as much as a technical one.</p>
+  </div>
+
+  <h2>A Familiar Shape — The Swimlane Connection</h2>
+
+  <p>If you've ever drawn swimlane flowcharts — the process diagrams that were standard enterprise practice through the 1990s and 2000s — the Context Map will feel immediately familiar. In a swimlane diagram, each lane represents a department or role, and every process box sits in the lane of whoever owns that step. Ownership is the primary organising principle. The handoff arrows between lanes show where responsibility transfers.</p>
+
+  <p>A Context Map does exactly the same thing, one abstraction level higher. Instead of showing individual process steps, it shows which software system owns which slice of the business. The integration arrows between contexts are the system-level equivalent of swimlane handoffs. The key difference is granularity — a swimlane is process-level and operational, showing fifteen steps across three departments. A Context Map is model-level and architectural, showing which systems own which territories and on whose terms they communicate.</p>
+
+  <p>The two views are complementary. Swimlanes show how work flows between people. The Context Map shows how data and ownership flow between systems. Senior practitioners who spent years drawing swimlane diagrams have been thinking in the right direction all along — DDD simply gives that thinking a formal name at the software architecture level.</p>
+
+  <h2>Upstream and Downstream</h2>
+
+  <p>In a Context Map, every relationship between two contexts has a direction. The upstream context influences the downstream context. Changes in the upstream model ripple downstream. The downstream team has to adapt to changes the upstream team makes.</p>
+
+  <p>This matters because it describes a power relationship. If your team is downstream of a context owned by another team, you're dependent on their decisions. If they change their model, you have to change yours. Understanding who is upstream and downstream of whom — across the entire system — is essential for understanding your real dependencies.</p>
+
+  <p>In large organisations, the most significant upstream context is often a legacy system or an ERP that was built decades ago and now functions as the source of truth for a vast amount of business data. Every other system is downstream of it. Recognising this explicitly changes how you design integrations.</p>
+
+  <h2>Integration Patterns on the Map</h2>
+
+  <p>The Context Map doesn't just show that two contexts are connected — it shows how. Each relationship type has a name in DDD, and the name carries implications about how the integration should be handled. These are covered in depth in Chapter 11, but briefly:</p>
+
+  <p>Some teams share a small piece of the model explicitly — a <em>Shared Kernel</em>. Some relationships are purely conformist, where the downstream team simply adopts the upstream model without translation. Some require a careful translation layer to protect the downstream model from upstream changes. Naming these relationships forces clarity about what you've actually built and what risks you're carrying.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">A CONTEXT MAP — EXAMPLE</text>
+
+      <!-- ERP (upstream anchor) -->
+      <rect x="255" y="34" width="170" height="64" rx="8" fill="#1a1a2e" stroke="#1a1a2e"/>
+      <text x="340" y="60" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">ERP / Core System</text>
+      <text x="340" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)" font-style="italic">Upstream — source of truth</text>
+
+      <!-- Ordering -->
+      <rect x="30" y="160" width="150" height="60" rx="8" fill="#eef4f0" stroke="#4a9068" stroke-width="2"/>
+      <text x="105" y="184" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="#1d3d2a" font-weight="600">Ordering</text>
+      <text x="105" y="202" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a9068">Conformist</text>
+
+      <!-- Fulfilment -->
+      <rect x="265" y="160" width="150" height="60" rx="8" fill="#e8d5d3" stroke="#c0392b" stroke-width="2"/>
+      <text x="340" y="184" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="#6b1a14" font-weight="600">Fulfilment</text>
+      <text x="340" y="202" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#c0392b">Anticorruption Layer</text>
+
+      <!-- Finance -->
+      <rect x="500" y="160" width="150" height="60" rx="8" fill="#f5f0e8" stroke="#e67e22" stroke-width="2"/>
+      <text x="575" y="184" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="#7d4000" font-weight="600">Finance</text>
+      <text x="575" y="202" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#e67e22">Customer-Supplier</text>
+
+      <!-- Reporting (downstream leaf) -->
+      <rect x="132" y="300" width="150" height="60" rx="8" fill="#dde8f0" stroke="#2980b9" stroke-width="2"/>
+      <text x="207" y="324" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="#1a3a5c" font-weight="600">Reporting</text>
+      <text x="207" y="342" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#2980b9">Conformist (reads all)</text>
+
+      <!-- Arrows: ERP → each -->
+      <line x1="290" y1="98" x2="175" y2="160" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-dark2)"/>
+      <line x1="340" y1="98" x2="340" y2="160" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-dark2)"/>
+      <line x1="390" y1="98" x2="510" y2="160" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr-dark2)"/>
+
+      <!-- Ordering → Reporting -->
+      <line x1="130" y1="220" x2="180" y2="300" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-grey)"/>
+      <!-- Fulfilment → Reporting -->
+      <line x1="310" y1="220" x2="240" y2="300" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-grey)"/>
+
+      <!-- Upstream label -->
+      <text x="340" y="128" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#8888aa">↓ upstream influences downstream</text>
+
+      <defs>
+        <marker id="arr-dark2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/>
+        </marker>
+        <marker id="arr-grey" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#888"/>
+        </marker>
+      </defs>
+
+      <text x="340" y="375" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Integration patterns labelled on each relationship</text>
+    </svg>
+    <div class="diagram-caption">A simplified Context Map. The ERP is upstream of three contexts. Each downstream context handles the integration differently.</div>
+  </div>
+
+  <h2>Drawing the Map Is a Political Act</h2>
+
+  <p>Don't underestimate this. When you draw a Context Map and label a relationship as "Conformist" — meaning one team simply accepts the upstream model and builds around it — you're describing a power dynamic. The downstream team has no negotiating leverage. They take what they're given.</p>
+
+  <p>Making this explicit sometimes triggers useful conversations. A team that realises they're conformist to five different upstream contexts may push back and ask for better contracts. A team that discovers they're everybody's upstream anchor may realise they carry more responsibility than they thought. The map creates accountability.</p>
+
+  <h2>The Map Changes</h2>
+
+  <p>A Context Map is a snapshot, not a permanent document. As the organisation evolves, as systems are replaced, as teams restructure, the map changes. The discipline is keeping it current enough to be useful — not treating it as a one-time architectural artefact that slowly becomes fiction.</p>
+
+  <p>Reviewing the Context Map periodically — at least annually, or when major structural changes happen — is a healthy practice. The question to ask at each review: do the relationships on this map still reflect how these systems actually work? If not, either the map is wrong or something has drifted.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: not all parts of the business deserve equal modelling effort — Subdomains help you decide where to invest.</p>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER 6
+     ══════════════════════════════════════════ -->
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Subdomains — What the Business Actually Cares About</h1>
+
+  <p class="chapter-intro">Not every part of a business is equally important to model carefully. Subdomains are DDD's way of helping you decide where to invest deep modelling effort and where to use a simpler off-the-shelf solution.</p>
+
+  <h2>The Investment Question</h2>
+
+  <p>Building software is expensive. Deep domain modelling is more expensive still — it requires sustained collaboration between business experts and developers, careful refinement of the model over time, and deliberate decisions about what to include and exclude. Done well, it produces software that genuinely reflects the business and handles complexity gracefully. Done everywhere, it's wasteful.</p>
+
+  <p>DDD divides the business into three types of subdomain, based on how much modelling investment they deserve. The classification isn't about technical complexity — it's about strategic value.</p>
+
+  <div class="callout">
+    <div class="callout-label">Subdomain — Definition</div>
+    <p><strong>Subdomain:</strong> A distinct area of the business domain. DDD classifies subdomains into three types — Core, Supporting, and Generic — based on their strategic importance to the organisation. The classification guides how much design effort and custom development to invest in each area.</p>
+  </div>
+
+  <h2>Core Domain — The Crown Jewels</h2>
+
+  <p>The Core Domain is the part of the business where you compete. It's what makes the organisation distinctively good at what it does. For a trading firm, it might be the pricing algorithm. For an insurance company, it might be the risk assessment logic. For an e-commerce company, it might be the recommendation engine.</p>
+
+  <p>The Core Domain is where DDD's full arsenal belongs. Custom models, deep collaboration with domain experts, careful refinement over time, the best developers on the team. This is what the organisation should be building rather than buying, because this is where competitive advantage lives.</p>
+
+  <p>The uncomfortable question this forces: what actually is your Core Domain? Many organisations discover, when they ask this question realistically, that they've been investing most of their development effort in the Supporting and Generic domains while their actual competitive differentiator runs on legacy code that nobody wants to touch.</p>
+
+  <h2>Supporting Domain — The Necessary Work</h2>
+
+  <p>Supporting Subdomains are necessary for the business to function but don't differentiate it. A payroll system for a logistics company. An HR system for a bank. These are real, often complex problems — but solving them brilliantly doesn't make the organisation more competitive. They need to work well, but they don't need custom models built from scratch.</p>
+
+  <p>The right investment level here is enough to do the job well, no more. Often this means buying a solution or using a framework rather than building custom. If you do build custom, simpler design approaches are usually appropriate — you don't need the full strategic DDD treatment.</p>
+
+  <h2>Generic Domain — The Commodity</h2>
+
+  <p>Generic Subdomains are problems that are so common across industries that well-established solutions already exist. Authentication. Email sending. PDF generation. Accounting. These are solved problems. The right answer is almost always to buy a solution, use an open-source library, or use a SaaS product.</p>
+
+  <p>Building custom solutions for Generic Subdomains is one of the most common and costly mistakes in enterprise software. It consumes development effort on problems that don't create competitive advantage, produces solutions that are usually worse than what the market already offers, and creates maintenance burden that persists for decades.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="310" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THREE TYPES OF SUBDOMAIN</text>
+
+      <!-- Core -->
+      <rect x="30" y="36" width="170" height="230" rx="10" fill="#1a1a2e" stroke="#1a1a2e"/>
+      <text x="115" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" font-weight="600" letter-spacing="1">CORE DOMAIN</text>
+      <text x="115" y="90" text-anchor="middle" font-family="Lora, serif" font-size="32">👑</text>
+      <text x="115" y="122" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="white" font-weight="600">Your competitive</text>
+      <text x="115" y="140" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="white" font-weight="600">advantage</text>
+      <text x="115" y="170" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Build custom.</text>
+      <text x="115" y="188" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Best people.</text>
+      <text x="115" y="206" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">Full DDD treatment.</text>
+      <text x="115" y="238" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.5)" font-style="italic">Never outsource or</text>
+      <text x="115" y="254" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(255,255,255,0.5)" font-style="italic">use off-the-shelf</text>
+
+      <!-- Supporting -->
+      <rect x="225" y="36" width="170" height="230" rx="10" fill="#eef4f0" stroke="#4a9068" stroke-width="2"/>
+      <text x="310" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a9068" font-weight="600" letter-spacing="1">SUPPORTING</text>
+      <text x="310" y="90" text-anchor="middle" font-family="Lora, serif" font-size="32">⚙️</text>
+      <text x="310" y="122" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1d3d2a" font-weight="600">Necessary but not</text>
+      <text x="310" y="140" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#1d3d2a" font-weight="600">differentiating</text>
+      <text x="310" y="170" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Build simpler.</text>
+      <text x="310" y="188" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Or buy and adapt.</text>
+      <text x="310" y="206" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Lighter modelling.</text>
+      <text x="310" y="238" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Needs to work well,</text>
+      <text x="310" y="254" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">not brilliantly</text>
+
+      <!-- Generic -->
+      <rect x="420" y="36" width="170" height="230" rx="10" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="2"/>
+      <text x="505" y="62" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-weight="600" letter-spacing="1">GENERIC</text>
+      <text x="505" y="90" text-anchor="middle" font-family="Lora, serif" font-size="32">📦</text>
+      <text x="505" y="122" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#4a4a6a" font-weight="600">Solved problems</text>
+      <text x="505" y="140" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#4a4a6a" font-weight="600">everywhere</text>
+      <text x="505" y="170" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Buy. Don't build.</text>
+      <text x="505" y="188" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Use SaaS or OSS.</text>
+      <text x="505" y="206" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">No custom models.</text>
+      <text x="505" y="238" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Building this yourself</text>
+      <text x="505" y="254" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">is waste</text>
+    </svg>
+    <div class="diagram-caption">The three subdomain types and the right investment level for each</div>
+  </div>
+
+  <h2>The Classification Can Be Uncomfortable</h2>
+
+  <p>Every team believes their domain is the Core Domain. Development teams working on the HR system believe HR is strategically critical. Teams working on the reporting layer believe reporting is where the business makes decisions. These beliefs are not wrong, exactly — but they're not the same as competitive differentiation.</p>
+
+  <p>The classification exercise forces a realistic conversation: where does this organisation actually win or lose in the market? That's the Core Domain. Everything else supports it.</p>
+
+  <p>For a retailer, the Core Domain might be demand forecasting and inventory optimisation — the thing that determines whether the right products are on the shelf at the right price. The e-commerce website is important, but it's a Supporting Domain. Authentication and email are Generic. If the retailer has been spending the last decade building a beautiful custom authentication system, that's the subdomain classification conversation they needed to have ten years ago.</p>
+
+  <h2>Subdomains vs Bounded Contexts</h2>
+
+  <p>A quick clarification: subdomains describe the business, Bounded Contexts describe the software. In an ideal world, you'd have one Bounded Context per subdomain. In practice, a single subdomain might have multiple Bounded Contexts (because of legacy system boundaries or team structure), or a Bounded Context might span parts of multiple subdomains. The goal is to move toward alignment over time, not to achieve it perfectly on day one.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Enterprise Reality</div>
+    <p>In practice, most enterprise investment flows toward Supporting and Generic domains — because that's where packaged applications, ERP implementations, and integration work sits. Urgent operational needs crowd out strategic thinking. DDD's subdomain classification doesn't change this reality, but it makes it <strong>visible</strong>. Once a leadership team can see clearly that the Core Domain — the thing they actually compete on — has been chronically underinvested while Supporting and Generic domains consumed the budget, they can make a conscious decision to rebalance. Without the classification, the drift continues unnoticed.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: we go inside a Bounded Context — what you actually build there, starting with Entities and Value Objects.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 7
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-7">
+  <div class="part-header">
+    <div class="part-num">Part Three</div>
+    <h2>Inside a Bounded Context</h2>
+    <p>The building blocks you use to construct a model that captures business rules with precision</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Entities and Value Objects</h1>
+
+  <p class="chapter-intro">Once you're inside a Bounded Context, you need to build the model itself — the objects that represent business concepts and the rules that govern them. DDD starts with a fundamental distinction: some things have an identity that persists over time, and some things are purely defined by what they describe.</p>
+
+  <h2>Two Kinds of Things</h2>
+
+  <p>At Meridian Retail, a customer is a customer regardless of what changes about them. They move house — same customer. They change their name — same customer. They close their account and open a new one — different customer. The thing that makes a customer <em>this</em> customer, rather than any other, is their identity. It persists through change.</p>
+
+  <p>Now consider a delivery address. An address is purely a description — a street, a city, a postcode. If two customers share the same address, those aren't two different things that happen to match. They're the same address. And if a customer updates their delivery address, there's nothing meaningful to "update" — the old address simply no longer applies and the new one does. Addresses don't have identity. They have attributes.</p>
+
+  <p>This is the distinction DDD formalises. Things with persistent identity are <strong>Entities</strong>. Things defined entirely by their attributes are <strong>Value Objects</strong>.</p>
+
+  <div class="callout">
+    <div class="callout-label">Entity — Definition</div>
+    <p><strong>Entity:</strong> An object defined by its identity rather than its attributes. Two Entities are the same object if they share the same identifier, regardless of whether their other attributes differ. Entities change over time but remain the same Entity throughout. Examples at Meridian Retail: Customer, Order, Product, Store.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Value Object — Definition</div>
+    <p><strong>Value Object:</strong> An object defined entirely by its attributes, with no identity of its own. Two Value Objects with identical attributes are interchangeable — there is no meaningful distinction between them. Value Objects should be immutable: rather than modifying one, you replace it with a new one. Examples at Meridian Retail: Address, Money, DateRange, ProductDimensions.</p>
+  </div>
+
+  <h2>Why the Distinction Matters in Practice</h2>
+
+  <p>This isn't philosophical — it has direct consequences for how you design and build the system.</p>
+
+  <p>Entities need unique identifiers. They need to be tracked, found, and updated over time. Their lifecycle matters — when were they created, what state are they in now, what transitions have they been through? Designing an Entity means thinking carefully about identity: what makes this thing uniquely itself, and how do we reliably find it again later?</p>
+
+  <p>Value Objects need none of this. They don't need IDs. They don't need update mechanisms. When something about them changes, you don't update the object — you replace it with a new one that has the correct values. This makes Value Objects significantly simpler to work with, and significantly safer. You can't accidentally corrupt a Value Object by updating it in the wrong place, because there's no update — only replacement.</p>
+
+  <p>A common mistake in enterprise systems is treating everything as an Entity. Every row in every database table gets an ID and a last-modified timestamp, regardless of whether identity is meaningful for that concept. The result is unnecessary complexity. A Money value — say, £49.99 — doesn't need an ID. It needs to be correct. Treating it as an Entity adds overhead without adding value.</p>
+
+  <h2>The Meridian Retail Model</h2>
+
+  <p>At Meridian Retail, consider just the Ordering context. A customer places an order for several products, to be delivered to an address, and pays a total amount.</p>
+
+  <p>The Entities are clear: Customer (identity persists across orders), Order (this specific order has its own lifecycle — placed, confirmed, shipped, delivered), and Product (this specific product has a catalogue history, pricing changes, stock levels). Each needs to be uniquely identified and tracked over time.</p>
+
+  <p>The Value Objects are equally clear: the delivery Address (purely descriptive, replaced when the customer moves), the Money amount (£49.99 is £49.99 regardless of which order it appears on), and the OrderLine quantity (three units of product X is just a number paired with a product reference — no identity needed).</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">ENTITIES vs VALUE OBJECTS — MERIDIAN RETAIL ORDERING CONTEXT</text>
+
+      <!-- Entities column -->
+      <rect x="30" y="36" width="270" height="224" rx="8" fill="#faf9f6" stroke="#1a1a2e" stroke-width="2"/>
+      <rect x="30" y="36" width="270" height="36" rx="8" fill="#1a1a2e"/>
+      <rect x="30" y="56" width="270" height="16" fill="#1a1a2e"/>
+      <text x="165" y="60" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600" letter-spacing="1">ENTITIES — have identity</text>
+
+      <text x="55" y="98" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Customer</text>
+      <text x="55" y="116" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">ID: CUST-00421</text>
+      <text x="55" y="132" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Same customer even if name changes</text>
+
+      <line x1="45" y1="144" x2="285" y2="144" stroke="#d8d4cb" stroke-width="1"/>
+
+      <text x="55" y="162" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Order</text>
+      <text x="55" y="180" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">ID: ORD-2026-88341</text>
+      <text x="55" y="196" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Lifecycle: placed → shipped → delivered</text>
+
+      <line x1="45" y1="208" x2="285" y2="208" stroke="#d8d4cb" stroke-width="1"/>
+
+      <text x="55" y="226" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Product</text>
+      <text x="55" y="244" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">ID: SKU-9918-BLK-M</text>
+
+      <!-- Value Objects column -->
+      <rect x="360" y="36" width="270" height="224" rx="8" fill="#faf9f6" stroke="#4a9068" stroke-width="2"/>
+      <rect x="360" y="36" width="270" height="36" rx="8" fill="#4a9068"/>
+      <rect x="360" y="56" width="270" height="16" fill="#4a9068"/>
+      <text x="495" y="60" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600" letter-spacing="1">VALUE OBJECTS — no identity</text>
+
+      <text x="385" y="98" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Address</text>
+      <text x="385" y="116" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">12 High Street, Bristol, BS1 4AA</text>
+      <text x="385" y="132" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Replaced, never updated</text>
+
+      <line x1="375" y1="144" x2="615" y2="144" stroke="#d8d4cb" stroke-width="1"/>
+
+      <text x="385" y="162" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">Money</text>
+      <text x="385" y="180" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">£49.99 GBP</text>
+      <text x="385" y="196" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">Interchangeable with any other £49.99</text>
+
+      <line x1="375" y1="208" x2="615" y2="208" stroke="#d8d4cb" stroke-width="1"/>
+
+      <text x="385" y="226" font-family="Lora, serif" font-size="13" fill="#1a1a2e" font-weight="600">DateRange</text>
+      <text x="385" y="244" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a">2026-03-01 to 2026-03-14</text>
+    </svg>
+    <div class="diagram-caption">Entities and Value Objects in Meridian Retail's Ordering context. Entities need IDs and have lifecycles. Value Objects are just descriptions — replace them, don't update them.</div>
+  </div>
+
+  <h2>Value Objects Are More Common Than You Think</h2>
+
+  <p>Most developers default to Entities for everything. It's the safe choice — give everything an ID, store it in a table, and you can always find it again. Value Objects require more deliberate thinking.</p>
+
+  <p>But when you look carefully at a business domain, Value Objects are everywhere. Quantities, measurements, currencies, date ranges, coordinates, colour codes, phone numbers, email addresses — all of these are defined purely by what they are, not by who they are. Treating them as Entities adds unnecessary database rows, unnecessary IDs to manage, and unnecessary lifecycle tracking for things that don't have lifecycles.</p>
+
+  <p>The discipline of asking — for every concept in the model — "is this an Entity or a Value Object?" produces cleaner, simpler models. It's one of the most immediately practical questions in all of DDD's tactical toolkit.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Aggregates — how to group Entities and Value Objects into clusters with consistent business rules.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 8
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-8">
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Aggregates — The Consistency Boundary</h1>
+
+  <p class="chapter-intro">Entities don't exist in isolation. A real business concept — an Order, a Customer Account, a Shipment — is made up of several related objects that need to be kept consistent with each other. Aggregates are DDD's answer to how you manage that consistency without losing your mind.</p>
+
+  <h2>The Problem Aggregates Solve</h2>
+
+  <p>At Meridian Retail, an Order is not just one object. It's an Order with OrderLines, each referencing a Product and a quantity, with a delivery Address, a total Money amount, and a current status. These objects are related. They have rules between them: the total must equal the sum of the line amounts. You can't add a line after the order is shipped. You can't have an order with zero lines.</p>
+
+  <p>If these objects can be modified independently — if one piece of code can update an OrderLine while another updates the total, without coordination — the rules between them will eventually break. The total will drift from the sum of the lines. An invalid state will creep in. Nobody planned it. It's just the result of multiple paths to the same data.</p>
+
+  <p>An Aggregate is a cluster of related objects — Entities and Value Objects — that are treated as a single unit for the purposes of data changes. Everything inside the cluster changes together, under consistent rules, through a single controlled entry point.</p>
+
+  <div class="callout">
+    <div class="callout-label">Aggregate — Definition</div>
+    <p><strong>Aggregate:</strong> A cluster of domain objects — Entities and Value Objects — that must be kept consistent with each other. One Entity in the cluster is designated the <strong>Aggregate Root</strong>: the only object through which the outside world can interact with anything inside the Aggregate. Business rules that span multiple objects within the cluster are enforced by the Root, ensuring the whole cluster is always in a valid state.</p>
+  </div>
+
+  <h2>The Aggregate Root</h2>
+
+  <p>The Aggregate Root is the gatekeeper. Every change to anything inside the Aggregate goes through the Root. External code can hold a reference to the Root, but never directly to the objects inside. This isn't bureaucracy — it's the mechanism that makes business rule enforcement possible.</p>
+
+  <p>At Meridian Retail, the Order is the Aggregate Root for the order cluster. To add a line item, you call a method on the Order — not on the OrderLines collection directly. The Order can then check whether the order is in a state that allows new lines, calculate the new total, and enforce any rules about maximum order value or restricted products. All of that logic lives in one place, triggered by one entry point.</p>
+
+  <p>If code could reach directly into the OrderLines collection and add a line without going through the Order, none of that checking would happen. The rule enforcement would have to be duplicated everywhere that collection was touched — which means eventually it won't be, and the invariant will break.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="310" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE ORDER AGGREGATE — MERIDIAN RETAIL</text>
+
+      <!-- Aggregate boundary -->
+      <rect x="30" y="34" width="560" height="240" rx="12" fill="#faf9f6" stroke="#1a1a2e" stroke-width="2.5" stroke-dasharray="8,4"/>
+      <text x="310" y="268" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#1a1a2e" font-style="italic">Aggregate boundary — everything inside changes together</text>
+
+      <!-- Root -->
+      <rect x="220" y="50" width="180" height="70" rx="8" fill="#1a1a2e"/>
+      <text x="310" y="78" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">Order</text>
+      <text x="310" y="96" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.7)">Aggregate Root</text>
+      <text x="310" y="112" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">ORD-2026-88341</text>
+
+      <!-- OrderLine 1 -->
+      <rect x="60" y="170" width="150" height="60" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="135" y="194" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1d3d2a" font-weight="600">OrderLine</text>
+      <text x="135" y="212" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">SKU-9918 × 2 = £29.98</text>
+
+      <!-- OrderLine 2 -->
+      <rect x="235" y="170" width="150" height="60" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="310" y="194" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#1d3d2a" font-weight="600">OrderLine</text>
+      <text x="310" y="212" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">SKU-4421 × 1 = £19.99</text>
+
+      <!-- Address VO -->
+      <rect x="410" y="170" width="150" height="60" rx="6" fill="#f5f0e8" stroke="#e67e22" stroke-width="1.5"/>
+      <text x="485" y="194" text-anchor="middle" font-family="Lora, serif" font-size="12" fill="#7d4000" font-weight="600">Address (VO)</text>
+      <text x="485" y="212" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a4a6a">12 High St, Bristol</text>
+
+      <!-- Arrows from Root -->
+      <line x1="260" y1="120" x2="160" y2="170" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr-agg)"/>
+      <line x1="310" y1="120" x2="310" y2="170" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr-agg)"/>
+      <line x1="360" y1="120" x2="460" y2="170" stroke="#1a1a2e" stroke-width="1.5" marker-end="url(#arr-agg)"/>
+
+      <!-- External access arrow — correct -->
+      <line x1="30" y1="85" x2="218" y2="85" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-ok)"/>
+      <text x="15" y="75" font-family="Source Sans 3, sans-serif" font-size="10" fill="#4a9068" font-weight="600">✓ via Root</text>
+
+      <defs>
+        <marker id="arr-agg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#1a1a2e"/>
+        </marker>
+        <marker id="arr-ok" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diagram-caption">The Order Aggregate. External code reaches the Order (Root) only. The Root manages OrderLines and Address — enforcing rules across the whole cluster.</div>
+  </div>
+
+  <h2>How Big Should an Aggregate Be?</h2>
+
+  <p>This is where teams routinely make mistakes. The instinct is to make Aggregates large — put everything related to an Order into the Order Aggregate, including the Customer, the Products, the Fulfilment record. It feels safe. Everything is in one place.</p>
+
+  <p>The problem is that large Aggregates create contention. Every time any piece of the cluster needs to change, the entire Aggregate must be loaded and saved as a unit. In a system with high transaction volume, this becomes a performance and concurrency bottleneck. Two users trying to modify different parts of a large Aggregate at the same time will conflict, even if they're touching completely unrelated data.</p>
+
+  <p>The right size for an Aggregate is the smallest cluster that can enforce all of its own business rules. At Meridian Retail, the Order Aggregate contains OrderLines because the rule "total must equal sum of lines" spans both. But it doesn't contain the Customer — the Customer has its own lifecycle, its own rules, and its own Aggregate. The Order holds a reference to the Customer's ID, not the Customer object itself.</p>
+
+  <p>Small, focused Aggregates are almost always the right answer. When in doubt, make the Aggregate smaller and handle coordination between Aggregates through Domain Events — which is the subject of the next chapter.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Domain Events — how things that happen in one part of the model trigger responses in another.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 9
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Domain Events — Things That Happened</h1>
+
+  <p class="chapter-intro">Businesses don't just have state — they have history. Things happen, and those things matter. An order was placed. A payment was received. A shipment was delayed. Domain Events are the way DDD captures these business facts, and they turn out to be one of the most powerful ideas in the entire toolkit.</p>
+
+  <h2>The Business Thinks in Events</h2>
+
+  <p>Ask a business person to describe their process and they'll describe it as a sequence of things that happen. "When a customer places an order, we check the stock. When stock is confirmed, we charge the card. When payment clears, we notify the warehouse. When the warehouse picks the order, we send the customer a shipping notification." This is event-driven thinking. The business already works this way. DDD simply makes it explicit in the software model.</p>
+
+  <p>A Domain Event is something that happened in the domain that the business cares about. Three things distinguish it from ordinary code: it's expressed in the past tense, it's named in the business's language, and it's a fact — immutable, not a request or a command.</p>
+
+  <div class="callout">
+    <div class="callout-label">Domain Event — Definition</div>
+    <p><strong>Domain Event:</strong> A record of something meaningful that happened in the domain. Expressed in past tense — OrderPlaced, PaymentReceived, ShipmentDelayed. Domain Events are immutable facts: they record what occurred, not what should happen next. They are named in the Ubiquitous Language of the Bounded Context they originate from.</p>
+  </div>
+
+  <h2>Events at Meridian Retail</h2>
+
+  <p>Walk through a single customer order at Meridian Retail and the events are immediately clear. The customer clicks "confirm order" — that's an <em>OrderPlaced</em> event. The payment gateway responds — that's a <em>PaymentReceived</em> or a <em>PaymentDeclined</em> event. The warehouse confirms the items are available — <em>StockReserved</em>. The order leaves the warehouse — <em>OrderDispatched</em>. The courier delivers it — <em>OrderDelivered</em>.</p>
+
+  <p>Each event is a business fact. It happened. It can't be undone (though subsequent events can respond to it). And it carries just enough information for any part of the system that cares about it to act accordingly.</p>
+
+  <h2>Why Events Matter for Integration</h2>
+
+  <p>Domain Events solve one of the hardest problems in multi-context systems: how do you let one Bounded Context react to things that happen in another, without creating tight coupling between them?</p>
+
+  <p>At Meridian Retail, the Ordering context and the Fulfilment context are separate. Ordering doesn't call Fulfilment directly — that would create a dependency that would make both contexts harder to change independently. Instead, when an order is confirmed, the Ordering context publishes an <em>OrderConfirmed</em> event. The Fulfilment context subscribes to that event and begins its process. Ordering doesn't know or care what Fulfilment does with the event. Fulfilment doesn't need to be available at the moment the order is confirmed.</p>
+
+  <p>The event is the handoff. It crosses the context boundary carrying only the information the downstream context needs, expressed in a form both sides can understand.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">DOMAIN EVENT FLOW — MERIDIAN RETAIL ORDER JOURNEY</text>
+
+      <!-- Timeline line -->
+      <line x1="40" y1="130" x2="640" y2="130" stroke="#d8d4cb" stroke-width="2"/>
+
+      <!-- Events -->
+      <!-- OrderPlaced -->
+      <circle cx="90" cy="130" r="8" fill="#1a1a2e"/>
+      <rect x="55" y="60" width="80" height="50" rx="5" fill="#1a1a2e"/>
+      <text x="95" y="82" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Order</text>
+      <text x="95" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Placed</text>
+      <line x1="95" y1="110" x2="95" y2="122" stroke="#1a1a2e" stroke-width="1.5"/>
+      <text x="95" y="155" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Ordering</text>
+
+      <!-- PaymentReceived -->
+      <circle cx="210" cy="130" r="8" fill="#4a9068"/>
+      <rect x="175" y="155" width="80" height="50" rx="5" fill="#4a9068"/>
+      <text x="215" y="177" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Payment</text>
+      <text x="215" y="193" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Received</text>
+      <line x1="215" y1="138" x2="215" y2="153" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="215" y="118" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Finance</text>
+
+      <!-- StockReserved -->
+      <circle cx="330" cy="130" r="8" fill="#2980b9"/>
+      <rect x="295" y="60" width="80" height="50" rx="5" fill="#2980b9"/>
+      <text x="335" y="82" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Stock</text>
+      <text x="335" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Reserved</text>
+      <line x1="335" y1="110" x2="335" y2="122" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="335" y="155" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Inventory</text>
+
+      <!-- OrderDispatched -->
+      <circle cx="470" cy="130" r="8" fill="#e67e22"/>
+      <rect x="435" y="155" width="80" height="50" rx="5" fill="#e67e22"/>
+      <text x="475" y="177" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Order</text>
+      <text x="475" y="193" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Dispatched</text>
+      <line x1="475" y1="138" x2="475" y2="153" stroke="#e67e22" stroke-width="1.5"/>
+      <text x="475" y="118" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Fulfilment</text>
+
+      <!-- OrderDelivered -->
+      <circle cx="600" cy="130" r="8" fill="#c0392b"/>
+      <rect x="563" y="60" width="80" height="50" rx="5" fill="#c0392b"/>
+      <text x="603" y="82" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Order</text>
+      <text x="603" y="98" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="white" font-weight="600">Delivered</text>
+      <line x1="603" y1="110" x2="603" y2="122" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="603" y="155" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">Fulfilment</text>
+
+      <text x="340" y="240" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Each event is a business fact — past tense, immutable, crossing context boundaries</text>
+    </svg>
+    <div class="diagram-caption">The Domain Event timeline for a Meridian Retail order. Events originate in different Bounded Contexts and flow through the system as business facts.</div>
+  </div>
+
+  <h2>Events vs Commands</h2>
+
+  <p>A common source of confusion is the difference between a Domain Event and a command. A command is an instruction: "place this order," "reserve this stock." It can be rejected — the stock might not be available, the payment might decline. An event is a fact: "the order was placed," "the stock was reserved." It already happened. It can't be rejected, only responded to.</p>
+
+  <p>This distinction matters for how you name things. <em>PlaceOrder</em> is a command — it might fail. <em>OrderPlaced</em> is an event — it succeeded. Getting the naming right keeps the model accurate about what's a request and what's a recorded fact.</p>
+
+  <h2>Events as an Audit Trail</h2>
+
+  <p>A side benefit worth noting: a complete record of Domain Events is a complete business history. You can reconstruct the current state of any Order by replaying the events from when it was placed. This is the basis of a more advanced pattern called Event Sourcing — which goes beyond the scope of this guide, but its possibility flows directly from modelling Domain Events properly from the start.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Repositories and Factories — the supporting patterns for finding and creating domain objects.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 10
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Chapter 10</div>
+  <span class="chapter-number">10</span>
+  <h1 class="chapter-title">Repositories and Factories</h1>
+
+  <p class="chapter-intro">Every domain model needs two unglamorous but essential capabilities: a way to find things that already exist, and a way to create new things correctly. Repositories and Factories are DDD's patterns for these jobs. They're not complex ideas — but getting them right keeps the domain model clean.</p>
+
+  <h2>The Repository — Finding Things</h2>
+
+  <p>A Repository provides collection-like access to Aggregate Roots. To the rest of the domain model, it looks and behaves like a simple in-memory collection — you ask it for an Order by ID, it gives you the Order. You ask it for all open Orders for a given Customer, it gives you the list. The Repository hides the fact that behind the scenes, data is being fetched from a database, translated from storage format, and assembled into the correct domain objects.</p>
+
+  <div class="callout">
+    <div class="callout-label">Repository — Definition</div>
+    <p><strong>Repository:</strong> An abstraction that provides collection-style access to Aggregate Roots, hiding the details of how domain objects are stored and retrieved. The domain model interacts with a Repository as if domain objects lived in a simple in-memory collection — the underlying storage mechanism is irrelevant to the domain logic.</p>
+  </div>
+
+  <p>The key design principle is that Repositories exist only for Aggregate Roots, not for every object in the model. You have an OrderRepository. You don't have an OrderLineRepository — because OrderLines are part of the Order Aggregate and are only ever accessed through it. This enforces the Aggregate boundary at the data access level.</p>
+
+  <p>At Meridian Retail, the Ordering context has an OrderRepository, a CustomerRepository, and a ProductRepository — one per Aggregate Root. Nothing else. Any code that needs an OrderLine gets it by loading the Order first and navigating through the Root.</p>
+
+  <h2>Repositories Are Not DAOs</h2>
+
+  <p>For developers familiar with the Data Access Object pattern, a Repository might look similar. The important difference is conceptual. A DAO is organised around the database table — it's a thin wrapper over SQL operations. A Repository is organised around the domain model — it speaks in domain terms and returns domain objects. The implementation might look similar, but the intention is different. A Repository's interface should contain no trace of database thinking: no table names, no column references, no SQL fragments.</p>
+
+  <h2>The Factory — Creating Things</h2>
+
+  <p>Creating a complex Aggregate correctly can involve significant logic. At Meridian Retail, creating a new Order isn't just instantiating an Order object. It requires generating a unique order ID, setting the initial status, validating that the Customer exists and is in good standing, and potentially applying pricing rules. Putting all of this logic in the Order's constructor makes the constructor unwieldy and mixes creation logic with domain logic.</p>
+
+  <div class="callout">
+    <div class="callout-label">Factory — Definition</div>
+    <p><strong>Factory:</strong> An object or method responsible for creating complex domain objects or Aggregates, encapsulating the creation logic so that clients don't need to know how objects are assembled. Factories ensure that newly created objects are always in a valid, consistent state from the moment they exist.</p>
+  </div>
+
+  <p>A Factory separates the concern of "how do I build this thing correctly" from the domain logic of "what does this thing do." It ensures that every newly created Aggregate starts in a valid state — all required fields populated, all invariants satisfied, no possible path to a half-constructed object that violates business rules.</p>
+
+  <h2>When You Actually Need Them</h2>
+
+  <p>Not every system needs explicit Repository and Factory classes. For simple Aggregates with straightforward creation logic, a constructor and direct database access might be perfectly adequate. These patterns earn their keep in proportion to the complexity of what they're managing. The point isn't to add indirection for its own sake — it's to keep the domain model focused on domain logic, with the mechanics of storage and construction handled separately.</p>
+
+  <p>In a system of any real scale, the Repository pattern in particular becomes almost essential. It's the mechanism that allows you to test domain logic without a real database, swap storage implementations without touching domain code, and keep the domain model accurate about what it actually is: a model of the business, not a wrapper around database operations.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: how Bounded Contexts talk to each other — the integration patterns that keep your model clean at the boundaries.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 11
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-11">
+  <div class="part-header">
+    <div class="part-num">Part Four</div>
+    <h2>How Contexts Talk to Each Other</h2>
+    <p>Integration patterns and the art of keeping your model clean at the boundaries</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 11</div>
+  <span class="chapter-number">11</span>
+  <h1 class="chapter-title">Integration Patterns Between Bounded Contexts</h1>
+
+  <p class="chapter-intro">The boundaries between Bounded Contexts are where most integration complexity lives. DDD names the different kinds of relationships that can exist between contexts — because naming them forces clarity about what you've actually built and what risks you're carrying.</p>
+
+  <h2>The Integration Problem</h2>
+
+  <p>At Meridian Retail, the Ordering context needs to know whether a product is in stock before confirming an order. The Inventory context holds that information. These are two separate Bounded Contexts with separate models — but they need to communicate. How they communicate, and on whose terms, determines how tightly coupled they become and how much either can change independently.</p>
+
+  <p>DDD identifies several distinct relationship patterns. Each makes different trade-offs between coupling, autonomy, and coordination overhead. Understanding which pattern you're using — and being realistic about it — is the first step to managing the relationship well.</p>
+
+  <h2>Shared Kernel</h2>
+
+  <p>Two contexts share a small, explicitly agreed portion of the domain model. Both teams are responsible for this shared piece. Neither can change it without coordinating with the other.</p>
+
+  <div class="callout">
+    <div class="callout-label">Shared Kernel — Definition</div>
+    <p><strong>Shared Kernel:</strong> A small, deliberately shared subset of the domain model that two Bounded Contexts explicitly agree to maintain together. Changes to the Shared Kernel require coordination between both teams. The kernel should be kept as small as possible — the larger it is, the more coordination overhead it creates.</p>
+  </div>
+
+  <p>At Meridian Retail, the product identifier format might be a Shared Kernel between Ordering and Inventory — both contexts need to reference products in a consistent way, and both teams agree on the structure of a product ID. This is a thin, stable shared element. Compare this to sharing the entire Product model — that would be a Shared Kernel so large it effectively merges the two contexts.</p>
+
+  <h2>Customer-Supplier</h2>
+
+  <p>The upstream context (Supplier) produces something the downstream context (Customer) needs. The downstream team has legitimate input into what the upstream provides — they're a customer with requirements. The upstream team has an obligation to meet those requirements, but ultimately controls what they produce.</p>
+
+  <div class="callout">
+    <div class="callout-label">Customer-Supplier — Definition</div>
+    <p><strong>Customer-Supplier:</strong> A relationship where the downstream context (Customer) depends on the upstream context (Supplier) and has negotiating power over what the upstream provides. The upstream team plans to meet the downstream team's needs, and the two teams coordinate through a formal interface agreement. There is genuine dialogue — unlike the Conformist pattern where the downstream simply accepts whatever the upstream produces.</p>
+  </div>
+
+  <p>At Meridian Retail, the Fulfilment context depends on the Ordering context for order data. Fulfilment can tell Ordering what fields it needs, what format it requires, what events it wants published. Ordering takes these requirements seriously. But Ordering doesn't restructure its entire model to serve Fulfilment — it provides a defined interface that meets Fulfilment's legitimate needs.</p>
+
+  <h2>Conformist</h2>
+
+  <p>The downstream context simply adopts the upstream model wholesale, without translation. There's no negotiating power, no formal interface agreement — the downstream team takes what the upstream provides and builds around it.</p>
+
+  <div class="callout">
+    <div class="callout-label">Conformist — Definition</div>
+    <p><strong>Conformist:</strong> A relationship where the downstream context has no negotiating power with the upstream and simply conforms to the upstream model. The downstream team eliminates the complexity of translation by adopting the upstream model directly, at the cost of coupling their model to decisions made by the upstream team.</p>
+  </div>
+
+  <p>This is the pattern that describes most systems downstream of a dominant ERP. The ERP doesn't negotiate. It provides what it provides. The downstream systems conform. The advantage is simplicity — no translation layer. The cost is dependency: when the ERP changes its model, every conformist system downstream has to change too.</p>
+
+  <h2>Anticorruption Layer</h2>
+
+  <p>The downstream context builds a translation layer between itself and the upstream model. The upstream model's concepts are converted into the downstream context's own language before they enter the domain. The downstream model is never exposed to the upstream model directly.</p>
+
+  <div class="callout">
+    <div class="callout-label">Anticorruption Layer — Definition</div>
+    <p><strong>Anticorruption Layer (ACL):</strong> A translation layer that sits between two Bounded Contexts and converts upstream concepts into the downstream context's own model and language. The downstream context is protected from the upstream model's design decisions — changes upstream are absorbed by the ACL rather than propagating into the downstream domain model. The cost is the overhead of building and maintaining the translation layer.</p>
+  </div>
+
+  <p>This is the right answer when the upstream model is poorly designed, unstable, or simply alien to the downstream context's natural language. At Meridian Retail, if the legacy warehouse system uses its own cryptic product codes and status flags, the Fulfilment context builds an ACL that translates those codes into meaningful domain concepts before they touch the Fulfilment model. The Fulfilment team never has to reason about the warehouse's internal logic — only about their own clean model.</p>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">INTEGRATION PATTERNS — DOWNSTREAM RELATIONSHIP OPTIONS</text>
+
+      <!-- Upstream -->
+      <rect x="255" y="36" width="150" height="54" rx="8" fill="#1a1a2e"/>
+      <text x="330" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="12" fill="white" font-weight="600">Upstream</text>
+      <text x="330" y="76" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)">Context A</text>
+
+      <!-- Conformist -->
+      <rect x="30" y="180" width="130" height="60" rx="6" fill="#f4f1ea" stroke="#8888aa" stroke-width="1.5"/>
+      <text x="95" y="204" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#4a4a6a" font-weight="600">Conformist</text>
+      <text x="95" y="222" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">accepts upstream</text>
+      <text x="95" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#8888aa">model as-is</text>
+      <line x1="290" y1="90" x2="130" y2="180" stroke="#8888aa" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-conf)"/>
+
+      <!-- Customer-Supplier -->
+      <rect x="195" y="180" width="130" height="60" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="2"/>
+      <text x="260" y="204" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#1d3d2a" font-weight="600">Customer-Supplier</text>
+      <text x="260" y="222" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#4a4a6a">negotiated interface</text>
+      <text x="260" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#4a4a6a">mutual agreement</text>
+      <line x1="310" y1="90" x2="280" y2="180" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-cs)"/>
+
+      <!-- Shared Kernel -->
+      <rect x="355" y="180" width="130" height="60" rx="6" fill="#dde8f0" stroke="#2980b9" stroke-width="2"/>
+      <text x="420" y="204" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#1a3a5c" font-weight="600">Shared Kernel</text>
+      <text x="420" y="222" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#2980b9">small shared model</text>
+      <text x="420" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#2980b9">joint ownership</text>
+      <line x1="350" y1="90" x2="400" y2="180" stroke="#2980b9" stroke-width="2" marker-end="url(#arr-sk)"/>
+
+      <!-- ACL -->
+      <rect x="510" y="180" width="130" height="60" rx="6" fill="#e8d5d3" stroke="#c0392b" stroke-width="2"/>
+      <text x="575" y="200" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#6b1a14" font-weight="600">Anticorruption</text>
+      <text x="575" y="216" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#6b1a14" font-weight="600">Layer</text>
+      <text x="575" y="232" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="#c0392b">translation buffer</text>
+      <line x1="370" y1="90" x2="540" y2="180" stroke="#c0392b" stroke-width="2" marker-end="url(#arr-acl)"/>
+
+      <defs>
+        <marker id="arr-conf" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8888aa"/></marker>
+        <marker id="arr-cs" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker>
+        <marker id="arr-sk" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2980b9"/></marker>
+        <marker id="arr-acl" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c0392b"/></marker>
+      </defs>
+
+      <text x="330" y="280" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" fill="#8888aa" font-style="italic">Four ways a downstream context can relate to an upstream one</text>
+    </svg>
+    <div class="diagram-caption">The four integration patterns. Conformist is simplest but most dependent. ACL is most protective but most costly to build.</div>
+  </div>
+
+  <h2>Choosing the Right Pattern</h2>
+
+  <p>The choice isn't purely technical — it's partly political. A Conformist relationship is often the result of a power imbalance, not a design decision. A Customer-Supplier relationship requires the upstream team to take the downstream team seriously as a stakeholder. An ACL requires investment in building the translation layer.</p>
+
+  <p>The practical question to ask for every integration on your Context Map: which pattern are we actually using? Many teams discover they've been treating a relationship as Customer-Supplier — expecting the upstream to respond to their needs — when the upstream team treats it as Conformist. Naming the pattern exposes the mismatch and forces a conversation about who actually has what obligations.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Domain Services — behaviour that belongs to the domain but doesn't naturally fit inside any single object.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 12
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-12">
+  <div class="chapter-eyebrow">Chapter 12</div>
+  <span class="chapter-number">12</span>
+  <h1 class="chapter-title">Domain Services — Behaviour That Belongs to No Single Thing</h1>
+
+  <p class="chapter-intro">Not all business logic fits neatly inside an Entity or a Value Object. Sometimes a meaningful business operation involves multiple objects, or represents a calculation or process that doesn't naturally belong to any one of them. That's what Domain Services are for.</p>
+
+  <h2>When an Entity Isn't the Right Home</h2>
+
+  <p>At Meridian Retail, calculating the total cost of an order involves the OrderLines, the product prices, any applicable discounts, and the delivery fee. Where does this logic live? Putting it on the Order makes the Order responsible for knowing about pricing rules — but pricing is its own complex domain with its own rules. Putting it on the Product means a Product needs to know about order context and discounts. Neither feels right.</p>
+
+  <p>When a piece of business logic involves multiple domain objects and doesn't clearly belong to any of them, a Domain Service is the appropriate home. It's a stateless operation — it takes domain objects as input, applies business logic, and returns a result. It carries a meaningful name from the Ubiquitous Language: <em>OrderPricingService</em>, <em>FraudAssessmentService</em>, <em>StockAllocationService</em>.</p>
+
+  <div class="callout">
+    <div class="callout-label">Domain Service — Definition</div>
+    <p><strong>Domain Service:</strong> A stateless operation that encapsulates domain logic which doesn't naturally belong to any single Entity or Value Object. Domain Services are named in the Ubiquitous Language, operate on domain objects, and contain genuine business logic — as opposed to Application Services, which orchestrate use cases but contain no domain logic themselves.</p>
+  </div>
+
+  <h2>Domain Service vs Application Service</h2>
+
+  <p>This distinction trips up most teams. Both are "services" — but they serve different purposes and should be kept strictly separate.</p>
+
+  <p>A Domain Service contains business logic. It knows the rules of the domain. <em>Can this customer receive a loyalty discount on this order type?</em> — that's a domain question, answered with domain rules, expressed in the Ubiquitous Language.</p>
+
+  <p>An Application Service orchestrates. It handles the technical steps of a use case: load the Order from the Repository, call the pricing Domain Service, publish the resulting Domain Event, save the updated Order. It coordinates the pieces but contains no business logic of its own. If you find yourself writing an if-statement in an Application Service that encodes a business rule, that rule belongs in a Domain Service or on an Entity.</p>
+
+  <h2>Don't Overuse Them</h2>
+
+  <p>A word of caution. Domain Services are sometimes used as a dumping ground when developers aren't sure where logic belongs. If the model has grown a proliferating collection of Services for logic that could live on Entities or Value Objects, the model has an anemic domain problem — the objects are just data bags with no behaviour, and all the logic has leaked into Services.</p>
+
+  <p>The right question before creating a Domain Service: is there genuinely no natural home for this logic in an existing Entity or Value Object? If the answer is yes, a Domain Service is appropriate. If you're creating a Service because the Entity feels too complex, the solution is usually to model the domain more carefully, not to move the logic out.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: putting it all together — how to actually run a strategic DDD design process from scratch.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 13
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-13">
+  <div class="part-header">
+    <div class="part-num">Part Five</div>
+    <h2>Putting It Together</h2>
+    <p>How to apply DDD in practice — and what to realistically expect</p>
+  </div>
+
+  <div class="chapter-eyebrow">Chapter 13</div>
+  <span class="chapter-number">13</span>
+  <h1 class="chapter-title">The Strategic Design Process — How to Actually Do This</h1>
+
+  <p class="chapter-intro">DDD is not a methodology with defined phases and exit criteria. It's a set of principles and practices that you apply iteratively, starting with the strategic patterns and going deeper as understanding develops. This chapter describes a practical starting sequence for a team approaching DDD for the first time.</p>
+
+  <h2>Start with the Business, Not the Code</h2>
+
+  <p>The most common mistake teams make when adopting DDD is starting with the tactical patterns — Entities, Aggregates, Repositories — and trying to retrofit them onto an existing codebase. This gets the sequence backwards. The tactical patterns are only as good as the strategic thinking that precedes them. If the Bounded Contexts are wrong, the most carefully designed Aggregates in the world won't save you.</p>
+
+  <p>Strategic design comes first. Understand the domain. Identify the subdomains. Find the natural context boundaries. Map the relationships between them. Only then, with that clarity in hand, do you go inside a context and start designing the model in detail.</p>
+
+  <h2>Step One — Domain Exploration</h2>
+
+  <p>Bring domain experts and developers into the same room. Not a requirements meeting — a discovery conversation. Ask the domain experts to walk through what the business actually does, in their own language, without reference to existing systems. What things exist? What happens to them? What rules govern them? What are the edge cases?</p>
+
+  <p>Listen for the language. Note which terms are used naturally and which feel strained. Note where the same word means different things to different people in the room. Note where domain experts disagree about the rules — that disagreement often marks a hidden context boundary.</p>
+
+  <p>At Meridian Retail, this conversation quickly reveals that "order" means something entirely different to the Ordering team (a customer's purchasing intent) and the Fulfilment team (a warehouse pick instruction). That's not a terminology problem to solve with a glossary — that's a context boundary.</p>
+
+  <h2>Step Two — Subdomain Classification</h2>
+
+  <p>Map what you've learned onto the three subdomain types. Where does Meridian Retail actually compete? Their personalisation and recommendations engine — that's Core. Their order management is sophisticated but not differentiating — Supporting. Their payroll, authentication, and email infrastructure — Generic.</p>
+
+  <p>This classification should be done explicitly, with leadership input, because it determines where the organisation invests. It's a strategic decision as much as a technical one.</p>
+
+  <h2>Step Three — Draw the Context Map</h2>
+
+  <p>Identify the Bounded Contexts — the software boundaries that correspond to distinct models and teams. Draw the relationships between them. Label the integration patterns accurately. Name the upstream and downstream directions. This is the document that will govern architectural decisions for the next several years. Take the time to get it right, and review it regularly.</p>
+
+  <h2>Step Four — Establish Ubiquitous Language Per Context</h2>
+
+  <p>For each Bounded Context you'll be building or significantly changing, start developing the shared vocabulary. This happens through ongoing conversation, not a one-off workshop. The language evolves as understanding deepens. The test is always whether business people and developers can have a real conversation about the context using the same words to mean the same things.</p>
+
+  <h2>Step Five — Model the Core Domain First</h2>
+
+  <p>Apply the tactical patterns — Entities, Value Objects, Aggregates, Domain Events — to the Core Domain first. This is where the investment is justified. For Supporting and Generic domains, simpler approaches are usually adequate. Don't spend three months designing a perfect Aggregate model for the payroll system.</p>
+
+  <h2>Iteration, Not Perfection</h2>
+
+  <p>The model will be wrong. Accept this. The first Context Map will miss boundaries and misclassify relationships. The first Aggregate design will be too large. The Ubiquitous Language will have gaps that only become visible when you try to use it to describe edge cases.</p>
+
+  <p>This is not failure — it's the process. Evans called it knowledge crunching for a reason. Each iteration produces a better model because each iteration produces deeper understanding. The discipline is treating the model as a living thing that improves with use, not a deliverable that gets signed off and filed.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Practical Starting Point</div>
+    <p>If you're starting from scratch with an existing complex system, don't try to boil the ocean. Pick one Bounded Context — ideally in the Core Domain — and apply DDD thinking there first. Build the Ubiquitous Language for that context. Map its relationships to adjacent contexts. Model its key Aggregates. Get that right, demonstrate the value, then expand. DDD adopted incrementally is infinitely better than DDD planned comprehensively and never executed.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: the mistakes that derail DDD efforts — and how to spot them before they do damage.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 14
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-14">
+  <div class="chapter-eyebrow">Chapter 14</div>
+  <span class="chapter-number">14</span>
+  <h1 class="chapter-title">Common Mistakes and How to Spot Them</h1>
+
+  <p class="chapter-intro">DDD is widely misapplied. The patterns are visible enough to copy, but the thinking behind them is easy to miss. These are the mistakes that appear most often — in organisations that believe they're doing DDD and in organisations that tried and gave up.</p>
+
+  <h2>The Big Ball of Mud Bounded Context</h2>
+
+  <p>A team draws a Context Map, labels the entire system as one Bounded Context, and declares the strategic design done. Inside this single context, every concept from every part of the business coexists — the sales customer and the service customer, the ordering product and the inventory stock item, all sharing one model and one language. The "boundary" contains everything, which means it contains nothing useful.</p>
+
+  <p>The symptom: developers refer to "the system" as a single thing with a single model. Business people from different departments use different terms for the same data and nobody considers this a problem worth addressing. The fix: start mapping where the language actually differs and draw the context boundaries there.</p>
+
+  <h2>Ubiquitous Language That Lives Only in Documents</h2>
+
+  <p>A team runs a glossary workshop, produces a terms document, adds it to the wiki, and moves on. Three months later, the code uses entirely different names. The domain experts stopped referring to the glossary in week two. The developers never looked at it after week one.</p>
+
+  <p>Ubiquitous Language only works when it's enforced in the code — when the class names, method names, and variable names match the business vocabulary exactly. A language that exists only in documentation is decorative, not functional. The test: can you open the codebase and read it aloud to a business person, and will they understand what they're hearing?</p>
+
+  <h2>Anemic Domain Model</h2>
+
+  <p>The domain objects — Entities and Value Objects — are pure data containers with no behaviour. All the business logic lives in Services. The Entities have getters and setters but no methods that represent meaningful business operations. The model looks like DDD on the surface (it has the right class names) but behaves like a data-transfer layer with an elaborate naming convention on top.</p>
+
+  <p>At Meridian Retail, an anemic Order has a setStatus() method instead of a confirm(), dispatch(), and cancel() method that enforce the rules about what transitions are valid. The behaviour that belongs to the Order has leaked into a service that manipulates it from the outside. The symptom: you can put an Order into an invalid state by calling methods in the wrong sequence, because the Order doesn't enforce its own invariants.</p>
+
+  <h2>Aggregates That Are Too Large</h2>
+
+  <p>Faced with uncertainty about boundaries, teams err toward inclusion — everything related to an Order goes into the Order Aggregate. The Customer, the Products, the Fulfilment record, the Payment history. The Aggregate becomes a god object that must be loaded in its entirety for any operation, creates contention under load, and is nearly impossible to test in isolation.</p>
+
+  <p>The rule of thumb: if loading an Aggregate requires joining more than three or four tables, it's probably too large. If modifying one piece of an Aggregate routinely causes conflicts with another team modifying a different piece, the Aggregate boundary is in the wrong place.</p>
+
+  <h2>DDD Applied Everywhere Regardless of Complexity</h2>
+
+  <p>Every table in the system gets an Aggregate. Every operation gets a Domain Service. The Generic subdomain — authentication, email, file storage — gets full tactical DDD treatment. The team spends weeks designing the perfect Email Value Object for a capability they could have solved in an afternoon with a third-party library.</p>
+
+  <p>DDD earns its cost in proportion to domain complexity. For simple CRUD, it's unnecessary overhead. The classification of subdomains into Core, Supporting, and Generic exists precisely to prevent this mistake. Apply the full treatment where it pays. Use simpler approaches everywhere else.</p>
+
+  <h2>Starting Tactical Without Strategic Foundation</h2>
+
+  <p>The team reads about Aggregates and Domain Events and starts applying them to the existing codebase without first addressing Bounded Contexts and Ubiquitous Language. The tactical patterns improve the code locally but don't address the fundamental problem: the model doesn't reflect the business because nobody has had the strategic conversation about what the model should be.</p>
+
+  <p>Tactical patterns applied without strategic foundation are sophisticated carpentry inside a poorly designed house. The joints are cleaner but the rooms are still in the wrong places.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: a realistic look of what in DDD has stood the test of time — and what hasn't.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     CHAPTER 15
+     ══════════════════════════════════ -->
+
+<div class="guide-page" id="page-15">
+  <div class="chapter-eyebrow">Chapter 15</div>
+  <span class="chapter-number">15</span>
+  <h1 class="chapter-title">What Ages Well and What Doesn't</h1>
+
+  <p class="chapter-intro">DDD was published in 2003. Some of its ideas have proven to be timeless. Others were reasonable in their context and have aged poorly. Acknowledging the difference is more useful than treating the whole thing as equally sacred.</p>
+
+  <h2>What Has Stood the Test of Time</h2>
+
+  <p>The strategic patterns are essentially untouched by two decades of change. Bounded Contexts, Context Maps, Ubiquitous Language, and the subdomain classification framework are as relevant today as they were in 2003. They're tool-agnostic, language-agnostic, and architecture-agnostic. They apply to monoliths and microservices, to relational databases and event stores, to Java systems built in 2003 and Python systems built in 2024. The thinking they require — clarity about boundaries, honest naming, deliberate investment decisions — is permanently useful.</p>
+
+  <p>Domain Events have aged particularly well, arguably better than Evans anticipated. The rise of event-driven architecture, message-driven microservices, and Event Sourcing has made Domain Events a central pattern rather than an interesting supplement. Any system built today for significant scale will almost certainly use Domain Events heavily. Evans got this right early.</p>
+
+  <p>The Aggregate pattern is durable in its core insight — that consistency boundaries need explicit design — even if the specific mechanics continue to be debated. The idea that you can't just let any piece of code reach into any object and modify it, that business rules need enforced boundaries, is a permanent truth about building reliable systems.</p>
+
+  <h2>What Has Aged Poorly</h2>
+
+  <p>The tactical patterns — Repositories, Factories, and the detailed object-oriented mechanics around them — were written in a specific era of enterprise Java development. They solved real problems that existed in 2003 when ORMs were young, when constructor injection wasn't standard, and when the dominant enterprise architecture involved heavyweight containers and complex object graphs. Many of those problems are now handled by frameworks, by modern ORMs, by dependency injection containers, by databases with better native support for the patterns DDD was working around.</p>
+
+  <p>The Repository pattern, specifically, is frequently over-engineered today. Evans described it as an abstraction that allows you to treat persistence like an in-memory collection — a genuinely useful idea. What it became in many Java codebases was a mandatory layer of indirection between every Aggregate and its database, regardless of whether that abstraction added any value. In systems where the Repository interface and its single implementation are always changed together, you're not getting abstraction — you're getting boilerplate.</p>
+
+  <p>The Factory pattern has fared similarly. For genuinely complex creation logic, it's still the right tool. But in codebases that create a Factory class for every Aggregate as a matter of principle, most of those Factories contain three lines of code and add nothing but an extra class to navigate.</p>
+
+  <div class="callout">
+    <div class="callout-label">The Trade-offs and Limitations</div>
+    <p>Evans himself has acknowledged that the tactical patterns in the original book were written with early 2000s Java in mind. The strategic patterns — Bounded Contexts, Ubiquitous Language, subdomain classification, context mapping — are the durable contribution of DDD. Apply them everywhere. Apply the tactical patterns where they earn their complexity, not as a mandatory checklist.</p>
+  </div>
+
+  <h2>The Object-Oriented Assumption</h2>
+
+  <p>DDD as Evans wrote it assumes object-oriented programming as the implementation language. Entities are objects. Aggregates are object graphs. Behaviour lives on objects. This assumption runs deep through Chapters 7 to 12 of the original book and through Vaughn Vernon's Implementing DDD even more thoroughly.</p>
+
+  <p>The world has moved on. Functional programming languages, event-driven architectures, and document databases all require the tactical patterns to be reinterpreted rather than applied literally. The concepts remain valid — the distinction between things with identity and things that are purely descriptive is still meaningful in a functional language, even if it isn't expressed as a class hierarchy. But the specific patterns need translation, and blindly applying object-oriented DDD tactics to a functional codebase produces confusion rather than clarity.</p>
+
+  <h2>What Vernon's Books Added</h2>
+
+  <p>Vaughn Vernon's two books — <em>Implementing Domain-Driven Design</em> (2013) and <em>Domain-Driven Design Distilled</em> (2016) — are worth acknowledging briefly. IDDD is the more comprehensive of the two: 600 pages working through every pattern with detailed implementation examples. It's the reference manual for practitioners already committed to DDD. DDD Distilled is the shorter version, attempting to make the ideas accessible in under 200 pages. Both books lean heavily toward Java and object-oriented implementation, and both were written before the current era of polyglot architectures and cloud-native design.</p>
+
+  <p>Vernon's most valuable contribution is arguably his work on Aggregates — specifically the guidance on keeping Aggregates small and using Domain Events for cross-Aggregate coordination. This guidance, largely implicit in Evans, is made explicit and practical in IDDD and has influenced how most DDD practitioners think about Aggregate design today.</p>
+
+  <h2>The Enduring Value Proposition</h2>
+
+  <p>Strip away the implementation patterns that have aged, and what remains is a discipline for thinking clearly about complex business domains before you build software to serve them. That discipline — understanding the business deeply, naming things precisely, drawing clear boundaries, investing effort where it creates competitive advantage — has no expiry date.</p>
+
+  <p>The reason DDD remains relevant two decades after publication is that the underlying problem it solves — the gap between business reality and software models — has not been solved by any subsequent approach. Microservices made it worse before people started applying DDD thinking to service boundaries. Cloud-native architectures didn't address it. The emergence of AI-assisted development makes it more important, not less — because a system that feeds ambiguous, poorly-bounded domain concepts into automated processes gets ambiguous, confident, incorrect results at greater speed.</p>
+
+  <p>The strategic patterns are the lasting gift. Use them. Be selective about the tactical patterns. And read Evans knowing that his contribution is the thinking, not just the patterns — he was teaching you how to reason about domains, not just what class names to use.</p>
+
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">The Glossary follows — a practical reference for every major DDD term used in this guide.</p>
+</div>
+
+<div class="guide-page" id="page-16">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Glossary of DDD Terms</h1>
+  <p class="chapter-intro">Every major term in this guide, defined clearly. Where a term has a more technical meaning in Evans or Vernon, that's noted briefly.</p>
+
+  <div class="glossary-entry">
+    <div class="glossary-term">Aggregate</div>
+    <p class="glossary-def">A cluster of related objects (Entities and Value Objects) that are treated as a single unit for the purposes of data changes. One object in the cluster is the Aggregate Root — the only entry point for modifying anything inside. Ensures business rules are enforced consistently across the whole cluster.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Aggregate Root</div>
+    <p class="glossary-def">The single Entity that controls access to everything inside an Aggregate. External code can only interact with an Aggregate through its Root, never by reaching inside and modifying child objects directly.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Anticorruption Layer (ACL)</div>
+    <p class="glossary-def">A translation layer that sits between two Bounded Contexts and converts the upstream model's concepts into the downstream context's own language. Protects your model from being polluted by another context's design decisions.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Bounded Context</div>
+    <p class="glossary-def">An explicit boundary within which one domain model applies. Inside the boundary, terms have precise, agreed meanings. Outside it, the same term may mean something different. Each Bounded Context has its own Ubiquitous Language.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Context Map</div>
+    <p class="glossary-def">A diagram or document that shows all Bounded Contexts in a system and the relationships between them — including integration patterns and upstream/downstream dependencies.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Core Domain</div>
+    <p class="glossary-def">The part of the business where the organisation competes — its source of competitive advantage. DDD's full design investment belongs here. Should never be outsourced or replaced by off-the-shelf software.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Domain</div>
+    <p class="glossary-def">The subject area or sphere of knowledge that a piece of software addresses. A single organisation typically contains multiple distinct domains.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Domain Event</div>
+    <p class="glossary-def">Something that happened in the domain that the business cares about. Expressed in past tense: OrderPlaced, PaymentReceived, CustomerRegistered. Domain Events are facts — they record what occurred, not instructions for what to do next.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Domain Model</div>
+    <p class="glossary-def">A structured, simplified representation of a business domain — the concepts, rules, and relationships that matter for the software's purpose. A model is always a deliberate simplification, not a complete picture of reality.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Domain Service</div>
+    <p class="glossary-def">A piece of business logic that doesn't naturally belong to any single Entity or Value Object. Stateless operations that involve multiple objects or cross-cutting business rules.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Entity</div>
+    <p class="glossary-def">An object defined by its identity — it has a unique identifier that persists over time. Even if all its attributes change, it remains the same Entity. A person, an order, a bank account are typical Entities.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Factory</div>
+    <p class="glossary-def">An object or method responsible for creating complex domain objects or Aggregates, encapsulating the creation logic so that clients don't have to know the details of how objects are assembled.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Generic Subdomain</div>
+    <p class="glossary-def">A part of the business that represents a solved, commodity problem — authentication, email, PDF generation. The right approach is to buy or use an existing solution rather than build custom.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Knowledge Crunching</div>
+    <p class="glossary-def">Evans's term for the ongoing, collaborative process by which domain experts and developers together deepen their shared understanding of the domain. The source from which a good model emerges.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Repository</div>
+    <p class="glossary-def">An abstraction that provides collection-like access to domain objects, hiding the details of how they are stored and retrieved. The rest of the domain model treats the Repository as if it were a simple in-memory collection.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Shared Kernel</div>
+    <p class="glossary-def">A small, explicitly shared part of the domain model that two Bounded Contexts agree to maintain together. Changes require coordination between both teams. Should be kept small — the larger the Shared Kernel, the more coordination overhead.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Strategic Design</div>
+    <p class="glossary-def">The higher-level DDD patterns concerned with the overall structure of the system — Bounded Contexts, Context Maps, Subdomains. The durable, tool-agnostic half of DDD that applies regardless of programming language or architecture style.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Subdomain</div>
+    <p class="glossary-def">A distinct area of the business domain. DDD classifies subdomains as Core, Supporting, or Generic based on their strategic importance — which determines how much design investment they deserve.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Supporting Subdomain</div>
+    <p class="glossary-def">A part of the business that is necessary but not differentiating. Needs to work well but doesn't require full DDD investment. Often a candidate for buying rather than building, or building with simpler design approaches.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Tactical Design</div>
+    <p class="glossary-def">The lower-level DDD patterns for building the internals of a Bounded Context — Entities, Value Objects, Aggregates, Domain Events, Repositories, Factories, Domain Services. More implementation-specific than Strategic Design and more tied to object-oriented thinking.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Ubiquitous Language</div>
+    <p class="glossary-def">A shared vocabulary, developed jointly by business experts and developers, used consistently in all conversations, documentation, and code within a Bounded Context. The "ubiquitous" part means it appears in the code itself — not just in documents.</p>
+  </div>
+  <div class="glossary-entry">
+    <div class="glossary-term">Value Object</div>
+    <p class="glossary-def">An object defined entirely by its attributes, with no identity of its own. Two Value Objects with the same attributes are interchangeable. Money, addresses, date ranges, and measurements are typical Value Objects. Should be immutable.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT — NAVIGATION
+     ══════════════════════════════════════════ -->
+<site-footer></site-footer>
+</body>
+</html>

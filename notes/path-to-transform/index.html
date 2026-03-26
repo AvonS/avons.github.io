@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/article.css?v=1.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Path to Transformation: Harnessing Agentic Engineering for the Enterprise — Avon Software Labs</title>
+<script src="../../assets/components.js?v=1.1" defer></script>
+
+<meta name="description" content="A practical guide series for the enterprise agentic transition — and why brownfield projects need a different conversation">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/notes/path-to-transform/">
+<meta property="og:title" content="Path to Transformation: Harnessing Agentic Engineering for the Enterprise">
+<meta property="og:description" content="A practical guide series for the enterprise agentic transition — and why brownfield projects need a different conversation">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/notes/path-to-transform/">
+<meta property="twitter:title" content="Path to Transformation: Harnessing Agentic Engineering for the Enterprise">
+<meta property="twitter:description" content="A practical guide series for the enterprise agentic transition — and why brownfield projects need a different conversation">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+<site-header-article></site-header-article>
+<div class="article-wrap">
+
+<div class="doc-title-block">
+  <p class="doc-eyebrow">Field Notes</p>
+  <h1 class="doc-main-title">Path to Transformation: Harnessing Agentic Engineering for the Enterprise</h1>
+  <p class="doc-subtitle">A practical guide series for the enterprise agentic transition — and why brownfield projects need a different conversation</p>
+  <div class="doc-meta">
+    <span>v1.0</span>
+    <span>·</span>
+    <span>March 2026</span>
+  </div>
+</div>
+
+<p>If you haven't read the <a href="../agentic-engineering/">Agentic Engineering Journey</a>, start there! It introduces Dan Shapiro's five levels, along with DDD, BMAD, and Attractor to orient someone new to the field. If you are new to any of these concepts, that's your foundational read.</p>
+
+<p>That initial article maps the territory well. What it doesn't do—because it wasn't written to—is address the gap between that map and the enterprise reality. The five levels often assume a fresh start. Most enterprise teams, however, are not starting fresh. They navigate systems accumulating technical and functional debt for decades, managing SAP or large application implementations with years of undocumented custom code, and supporting legacy applications where core architects left long ago.</p>
+
+<p>This series of seven guides is an attempt to address that gap. It begins where most agentic development discourse doesn't: with domain clarity before tooling, business process understanding before specification, and a realistic account of what works—and what doesn't—in brownfield environments.</p>
+
+<h1>The Gap the Discourse Is Not Addressing</h1>
+<p>Current agentic development literature largely targets greenfield projects—new codebases, clean domain models, teams unburdened by accumulated decisions. The assumption is that you can start with a clear specification, hand it to a structured agent workflow, and converge on working software. For genuinely new projects with well-understood domains, that assumption holds.</p>
+
+<p>The enterprise reality is different. Greenfield projects are a minority. And even those that begin clean quickly become brownfield—a business rule changing during UAT, an architectural compromise made under pressure, a "temporary" integration running for years in production. Today's greenfield is tomorrow's brownfield, and under enterprise timelines, that transition happens faster than most project managers admit.</p>
+
+<p>Most enterprise teams aren't asking "how do we build a dark factory?" They're asking "how do we transition to an agentic world without making things worse?" This is a distinct question that hasn't received serious attention from the agentic development community.</p>
+
+<p>Brownfield projects present a specific challenge: the system itself *is* the specification. Every implicit decision from a decade of patches, hot-fixes, and workarounds is encoded in running code, not in any document an agent can read. Business rules governing edge cases live in the heads of long-gone experts. Terminology, once agreed, has drifted across teams. An agent operating here without careful domain preparation will produce confident, internally consistent, yet wrong output—errors that surface only when the new system clashes with the old reality.</p>
+
+<div class="callout callout-insight">
+  <strong>Key Insight:</strong> The efficacy of LLMs in agentic development isn't about "trusting the AI." It's about the quality of the input context and the robustness of the harness you build. Trust resides in the precision of your inputs and the controls of your harness, not in the LLM's inherent "magic."
+</div>
+
+<h1>The Seven Guides — Your Thinking Toolkit</h1>
+<p>The guides in this series are not a methodology to adopt wholesale. They are a thinking toolkit—seven lenses on the same problem, each addressing a different part of the enterprise transformation challenge. Read what fits your context. Apply what earns its place.</p>
+
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr><th>Guide</th><th>Title</th><th>What it Solves</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="../../guides/ddd/">Domain-Driven Design — A Practical Reference</a></td>
+      <td>The conceptual foundation. Addresses how an agent working from an ambiguous domain model will amplify that ambiguity at speed. Focuses on Ubiquitous Language, Bounded Contexts, and Subdomain classification.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="../../guides/event-storming/">Event Storming — A Practical Workshop Guide</a></td>
+      <td>The discovery method. Covers the workshop technique for applying DDD to a specific business with its actual experts, including facilitation and output-to-DDD mapping.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="../../guides/flowcharts/">The Flowchart-First Path</a></td>
+      <td>The offline alternative. A systematic method for building a domain model from existing swimlane flowcharts, overlaying DDD vocabulary on existing business documentation.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="../../guides/ddd-to-context/">Domain Context Engineering</a></td>
+      <td>The LLM-driven pipeline. Presents a structured <code>domain-ctx.txt</code> format and LLM prompts that generate BMAD Briefs, PRDs, and Architecture skeletons with consistent terminology.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><a href="../../guides/bmad/">The BMAD Method — A Practical Guide</a></td>
+      <td>Structured execution at Levels 3 and 4. Covers agent roles, the Brief-PRD-Architecture-Story workflow, and brownfield relevance for application support.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><a href="../../guides/attractor/">Attractor — A Practical Guide</a></td>
+      <td>The lights-out factory and its enterprise adaptation. Details NLSpec, Directed Graphs, Holdout Scenarios, Digital Twins, and practical multi-agent collaboration.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><a href="../../guides/synthesis/">From Domain to Factory — The Synthesis Guide</a></td>
+      <td>The argument that ties the other six together. Explains the dependency sequence, walks through a worked example, and introduces the Harness Engineering framing.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h1>The Flowchart-First Path — Why It Matters for Enterprise</h1>
+<p>Most enterprise organizations already possess swimlane flowcharts—produced for ISO certification, regulatory compliance, or business process reengineering. These documents, often outdated, hold the raw material for a domain model. The insight of the Flowchart-First guide is that swimlane notation and DDD vocabulary are the same map at different zoom levels.</p>
+<p>Every swimlane represents an Actor. Every process box is a Command and an implied Domain Event. Every cross-lane handoff arrow is a Domain Event crossing a context boundary—a critical element routinely left unnamed. Every decision diamond is a Policy. The lane boundaries suggest Bounded Context candidates.</p>
+<p>A DDD practitioner, reading an existing flowchart through this lens, can extract a draft domain model in hours. The revealed gaps—unhandled exceptions, unwritten policies, shifting terminology—become a targeted question list for domain experts. This is not a full-day workshop, but a structured document for asynchronous review.</p>
+<p>LLMs possess substantial generic knowledge of standard ERP process flows (SAP Order to Cash, Oracle Procure to Pay). What an LLM doesn't know is your specific implementation: Z-exits, custom approval hierarchies, unrecorded business rules. The domain context file captures this delta—the unique aspects diverging from the LLM's baseline knowledge. This reframes the effort for brownfield ERP environments: you ask experts where your process differs from standard, not to explain standard processes. The result is a much smaller, more focused conversation.</p>
+<p>The LLM-driven pipeline then generates BMAD Briefs, PRDs, and Architecture skeletons from this context file, leveraging the LLM's ERP knowledge with your organization's specific delta. Consistent terminology, correct scope, functional requirements derived from Domain Events. Human contribution is domain expertise; LLM contribution is consistent mechanical translation—neither duplicates the other.</p>
+
+<h1>The Reframe That Changes Everything: Harness Engineering</h1>
+<p>The prevailing discourse on agentic development maturity often frames the journey as a leap of faith: control agent output, gradually trust more, eventually reach Level 5 and trust completely. Enterprise architects and risk-conscious engineering leaders hear this and rightly hesitate.</p>
+<p>The correct framing is different, and it transforms the emotional character of the journey: it's not "trust the agent more," but "build the harness better." Each level of harness maturity removes a human bottleneck, not by blind trust, but because the harness now encodes the knowledge and checks previously performed manually.</p>
+<p>The harness is the full collection of specifications, domain context files, quality constraints, workflow guidance, and transition conditions that controls the agent's "how" loop. <code>domain-ctx.txt</code> is harness. The BMAD artefact chain is harness. The NLSpec is harness. CLAUDE.md is harness. Every well-written Story File is harness. Building a better harness isn't about trust; it's about encoding what you already know precisely enough for an agent to apply consistently.</p>
+<p>At Level 2, the human holds all context. Nothing happens when you step away because nothing is encoded. The human is the bottleneck because the human *is* the harness. At Level 3, the BMAD artefact chain carries specification context. The human remains in the loop at review gates, but the agent works autonomously between them. At Level 4, the NLSpec carries architectural decisions and quality constraints. The human reviews outcomes, not individual steps. At Level 5, the holdout scenario suite carries verification—the human bottleneck is removed not because the agent is blindly trusted, but because every human verification has been encoded in the harness.</p>
+<p>This reframing has practical consequences for enterprises: you don't need to decide how much to trust an agent. You need to decide how much harness you have built. If the harness covers the decision, the agent can make it reliably. If not, a human must make it—not because agents are inherently untrustworthy, but because the specific knowledge required hasn't been encoded yet.</p>
+<p>Kief Morris at Thoughtworks named this practice "Harness Engineering" in March 2026. While "Spec-Driven Development" (a popular framing) names one component, Harness Engineering asks: which component of the control system failed? That's the more useful diagnostic question.</p>
+
+<h1>The Posture — Experiment, Not Transform</h1>
+<p>The most important thing to convey about these seven guides is simple: they are not a methodology to adopt wholesale. Agentic development is a tectonic shift—as significant as the pre/post-internet distinction. But tectonic shifts are felt gradually. The right response is not to redesign your entire SDLC overnight, but to experiment carefully, accumulate evidence, and build mental models that allow for better decisions as the technology matures.</p>
+<p>Start with one practice. Apply NLSpec discipline to a project's Story Files—making them precise enough that a Developer agent never guesses about terminology or scope. Or run a Flowchart-First exercise on a business process. Or add ADR generation to a BMAD Architecture session. Pick the practice that addresses your actual bottleneck, in your current project, with your existing team.</p>
+<p>Measure what changes, not abstractly, but within your project. If story rejection rates drop due to more precise Story Files, that practice has earned its place. Extend it. If not, it may not be the right starting point. Try another tool from the toolkit.</p>
+<p>Organizations that navigate the post-Agentic transition most effectively will not be those adopting the most frameworks fastest. They will be those experimenting thoughtfully now, building an accumulated understanding of what works in their context, and achieving the harness maturity to deploy more autonomy responsibly when technology and discipline align.</p>
+<p>Pre-Agentic organizations skipping experimentation will adopt practices without understanding why—the Agile ceremony problem all over again. They'll copy CLAUDE.md from a starred GitHub repo and wonder why the agent is unpredictable. They'll install BMAD as a process without the domain clarity that makes artifacts meaningful. They'll reach Level 2, feel the productivity lift, and stop—because Level 2 always feels like the destination.</p>
+<p>The dark factory isn't the immediate goal for most enterprise teams. The goal is building the mental models, practices, and harness discipline that make the next level reachable when you're ready. That work is available to every organization today, regardless of their current maturity.</p>
+
+<h1>What Comes Next</h1>
+<p>The seven guides are available as standalone HTML files—each navigable by chapter, readable offline, with diagrams. They are designed to be read in any order based on your journey. Start with the DDD guide if domain clarity is your gap. Choose the Flowchart-First guide if you have existing process documentation and want a practical starting point. Begin with the BMAD guide if you are already using agent-assisted development and need more structure. Or dive into the Synthesis guide if you want the overarching argument for the sequence before any individual layer.</p>
+<p>The blog series will delve deeper into each of these areas as the thinking evolves. Initial posts will specifically address application support and brownfield use cases—areas where most enterprise teams operate, and where current discourse provides the least guidance.</p>
+<p>In the meantime, the realistic summary is this: the technology is ready for careful experimentation. The frameworks exist to structure that experimentation. The domain clarity work—the unglamorous, time-consuming, discipline-requiring effort of understanding your business precisely enough to specify it—is the prerequisite no tool can substitute for.</p>
+
+<utterances-comments repo="AvonS/avons.github.io"></utterances-comments>
+
+<div class="article-feedback-meta">
+  <p>Prefer email? Reach out at <span class="spamspan"><span class="u">avonslabs</span> [at] <span class="d">gmail [dot] com</span> (<span class="t">AvonSlabs</span>)</span> &nbsp;·&nbsp;
+  Follow <a href="https://github.com/AvonS" target="_blank">github.com/AvonS</a> for future updates and related work in agentic engineering.</p>
+</div>
+
+<site-footer-article></site-footer-article>
+</div>
+
+</body>
+</html>

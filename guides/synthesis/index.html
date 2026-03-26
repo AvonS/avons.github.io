@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Domain to Factory — Synthesis Guide — Avon Software Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+
+<meta name="description" content="The question every agentic development framework answers second — and should answer first">
+<meta name="keywords" content="agentic engineering, LLM, AI, software development, DDD, BMAD, Attractor, design, architecture, brownfield, enterprise">
+<meta name="author" content="Avon Software Labs">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/guides/synthesis/">
+<meta property="og:title" content="From Domain to Factory — Synthesis Guide">
+<meta property="og:description" content="The question every agentic development framework answers second — and should answer first">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/guides/synthesis/">
+<meta property="twitter:title" content="From Domain to Factory — Synthesis Guide">
+<meta property="twitter:description" content="The question every agentic development framework answers second — and should answer first">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+
+<guide-header title="Domain to Factory Synthesis"></guide-header>
+
+<!-- TOC -->
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">The Synthesis Guide</div>
+    <h1>From Domain to Factory</h1>
+    <p class="subtitle">How DDD, Event Storming, BMAD, and Attractor form a single deliberate sequence — not a menu of options</p>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — The Missing Argument</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">What the Agentic Discourse Gets Wrong</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">The Sequence, Not the Menu — Including the Harness Engineering Progression</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — The Four Layers Connected</div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">Layer 1 — DDD: Domain Clarity Before Anything Else</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">Layer 2 — Event Storming: Surfacing the Model in a Room</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">Layer 3 — BMAD: Structured Execution at Levels 3 and 4</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">Layer 4 — Attractor: When the Factory Is the Answer</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — The Complete Picture</div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">A Worked Example — Meridian Retail End to End</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">Where to Start — Realistic Entry Points</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">The Discipline That Ties It All Together — Including On the Loop and the Agentic Flywheel</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">—</span><span class="toc-name">Guide Index and Glossary</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<!-- CH1 -->
+<div class="guide-page" id="page-1">
+  <div class="part-header"><div class="part-num">Part One</div><h2>The Missing Argument</h2><p>The question every agentic development framework answers second — and should answer first</p></div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">What the Agentic Discourse Gets Wrong</h1>
+  <p class="chapter-intro">Every framework for agentic development — BMAD, Attractor, the twelve-factor agents approach, the RPI workflow — shares a silent assumption. It assumes you already know what to build. It assumes the domain is understood, the concepts are named, the boundaries are clear. It goes straight to the question of how to execute, without asking whether you have the clarity to execute correctly.</p>
+  <h2>The Confident Wrong Answer</h2>
+  <p>Here is the failure mode nobody talks about. An organisation adopts an agentic development framework. The agents are capable. The tooling works. The process runs smoothly. Specifications are written, stories are generated, code is produced at impressive velocity. And then — three months in — the business realises that the system being built reflects the development team's understanding of the domain, not the business's actual domain. The customer object in the ordering system is not the same concept as the customer object in the billing system. The agent built both — confidently, consistently, precisely — based on a model that was never challenged.</p>
+  <p>This is not a prompt engineering failure. It is not a framework failure. It is a domain modelling failure that happened upstream of the first prompt, before the first spec was written, before the first story was generated. The agent amplified a misunderstanding rather than a correct understanding. Speed made it worse, not better.</p>
+  <div class="callout"><div class="callout-label">The Core Problem</div><p>Every agent framework, every harness engineering approach, every context engineering discipline — strip away the names and the goal is identical: give the LLM precise context, and structure the process precisely enough that the agent does not have to fill gaps with its own judgment. <strong>DDD is the discipline for achieving that precision at the domain level before you write a single prompt or spec.</strong> It is the missing first step in every agentic transformation discussion. Not because the frameworks are wrong — they're not. Because they start one step too late.</p></div>
+  <h2>The Sales Order Customer and the Complaint Ticket Customer</h2>
+  <p>Consider a business with a sales team and a customer service team. Both use the word "customer." In the sales context, a customer is a person or organisation who has signed a contract and is potentially due for renewal. In the customer service context, a customer is any person who has raised a support ticket — which may include contacts at a client organisation who were never part of the sales relationship at all.</p>
+  <p>Same word. Two different things. If your specification doesn't distinguish them, your agent will pick one interpretation and proceed confidently in the wrong direction. It will build a customer service system that queries the sales database and wonders why it can't find the end users who are calling in. Or it will build a sales renewal system that surfaces support contacts as renewal targets and generates nonsense outreach.</p>
+  <p>That is not an agent problem. That is a domain problem. The agent did exactly what it was told. It was told the wrong thing — not because anyone lied, but because nobody had done the work of making the distinction explicit before the specification was written.</p>
+  <h2>What the Discourse Assumes You Have Already Done</h2>
+  <p>Read any agentic development framework documentation and you will find the same implicit starting point: a clear problem to solve, a defined scope, a shared vocabulary, an understanding of what the system should do. BMAD's Brief session assumes the human can articulate the project clearly enough for the Analyst agent to structure it. Attractor's NLSpec assumes someone can write a specification that is complete enough for an agent to work from without guessing.</p>
+  <p>These assumptions are reasonable — if the prerequisite work has been done. The problem is that most organisations approach agentic development without having done it. They have years of accumulated misunderstanding about their own domain, encoded in legacy systems that nobody fully comprehends, expressed in terminology that means different things to different teams. They hand this confusion to a capable agent framework and expect it to produce clarity. It produces confident confusion instead.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the four disciplines as a deliberate sequence — and what breaks when you skip any step.</p>
+</div>
+
+<!-- CH2 -->
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">The Sequence, Not the Menu — Why Order Matters</h1>
+  <p class="chapter-intro">DDD, Event Storming, BMAD, and Attractor are not four tools you pick from based on preference. They are four layers of a single discipline, each building on the one before it. Understanding them as a sequence rather than a menu changes how you use each one — and makes clear why so many agentic transformation efforts stall at the same predictable points.</p>
+  <h2>The Four Layers</h2>
+  <div class="layer-card l1">
+    <div class="layer-num">LAYER 1</div>
+    <div class="layer-name">Domain-Driven Design — The Conceptual Foundation</div>
+    <p class="layer-desc">Establishes the vocabulary, the boundaries, and the model of the domain. Answers the question: what does this business actually consist of, and how do the parts relate? Without this, every downstream layer operates on an unexamined model that may or may not reflect reality.</p>
+  </div>
+  <div class="layer-card l2">
+    <div class="layer-num">LAYER 2</div>
+    <div class="layer-name">Event Storming — The Discovery Method</div>
+    <p class="layer-desc">The practical workshop technique for surfacing the domain model from the people who know it. Translates DDD's concepts from theory into a specific business's reality. Without this, the domain model is the architect's assumption rather than the business's actual knowledge.</p>
+  </div>
+  <div class="layer-card l3">
+    <div class="layer-num">LAYER 3</div>
+    <div class="layer-name">BMAD — Structured Agentic Execution</div>
+    <p class="layer-desc">The framework for turning a well-understood domain into working software through a structured multi-agent workflow with human oversight. Without the domain clarity from Layers 1 and 2, BMAD's artefact chain produces precise documents about an imprecise model.</p>
+  </div>
+  <div class="layer-card l4">
+    <div class="layer-num">LAYER 4</div>
+    <div class="layer-name">Attractor — The Lights-Out Factory</div>
+    <p class="layer-desc">Spec-driven development at full autonomy. Only viable when the specification is so precise and complete that an agent can work from it without guessing. That precision is the output of Layers 1, 2, and 3 working in sequence. Without them, the factory produces at speed what nobody fully wanted.</p>
+  </div>
+  <h2>What Breaks When You Skip a Layer</h2>
+  <p>Skip Layer 1 and Layer 2, and jump straight to BMAD. The Brief session produces a project brief that reflects the human's unexamined mental model. The PRD encodes assumptions nobody challenged. The Architecture locks in boundaries that don't reflect how the business actually works. The resulting code is internally consistent and externally wrong. The framework worked perfectly. The input was wrong.</p>
+  <p>Skip Layer 1 and Layer 2, and jump to Attractor. The NLSpec is written with the same unexamined vocabulary that caused the problem in the first place. The same word appears in three sections meaning three different things. The agent picks one interpretation and implements it consistently at speed. The factory produces the wrong system very efficiently.</p>
+  <p>Skip Layer 2 only — go from DDD concepts directly to BMAD without the Event Storming discovery session. The DDD model is an architect's hypothesis rather than a model grounded in the actual business. It may be conceptually elegant and practically wrong — elegant because it was designed in the abstract, wrong because the real business has edge cases and exceptions and historical decisions that only surface when the people who live in the domain are in the room.</p>
+  <div class="callout"><div class="callout-label">The Sequence Is the Architecture</div><p>Each layer produces something the next layer needs. DDD produces the conceptual framework. Event Storming produces the grounded domain model. BMAD produces the structured specification and artefact chain. Attractor produces the working software. <strong>Each layer's output is the next layer's prerequisite. This is not a stylistic preference — it is a dependency graph. You cannot have the output of Layer 3 without the input from Layer 2 without the foundation from Layer 1.</strong></p></div>
+  <h2>Harness Engineering — Not Spec-Driven Development</h2>
+  <p>The term "Spec-Driven Development" has gained traction in the agentic development community as a label for the practice of writing specifications before implementation. It is not wrong, but it is incomplete — and in some uses it is actively misleading. Writing a specification is one component of a harness. It is not the harness.</p>
+  <p>A harness is the full collection of specifications, domain context, quality checks, workflow guidance, and transition conditions that controls the agent's how loop. The domain-ctx.txt is harness. The BMAD artefact chain is harness. The NLSpec is harness. The CLAUDE.md is harness. The holdout scenario suite is harness. "Spec-Driven Development" names one input to the harness and treats it as the whole. Harness Engineering names the complete activity — building, maintaining, and improving everything that makes the agent's how loop reliable.</p>
+  <p>The distinction matters because it changes what you do when output quality falls short. In the SDD frame, the instinct is to improve the specification. Sometimes that is right. But the specification may be fine — the gap may be in the quality checks, or the transition conditions, or the domain context. Harness Engineering asks: which component of the harness failed? SDD only asks: is the spec good enough?</p>
+  <h2>The Progression Is Not "Trust the Agent More" — It Is "Build the Harness Better"</h2>
+  <p>This is the observation that changes how you think about the five-level maturity framework — and it is one that the current discourse has not articulated clearly.</p>
+  <p>The common framing of the progression from Level 2 to Level 5 is increasing agent autonomy — you start by controlling every step and gradually step back as you trust the agent more. That framing is wrong in a way that matters. It makes the progression feel like a leap of faith. It implies that moving to Level 4 requires trusting the agent with things you used to verify yourself. Enterprise architects and risk-conscious engineering leaders hear this framing and stop. Rightfully.</p>
+  <p>The correct framing is harness maturity. Each level of harness maturity removes one class of human bottleneck — not because you trust the agent more, but because the harness now carries the knowledge and the checks that the human was previously providing manually.</p>
+  <div class="callout"><div class="callout-label">The Harness Progression — Five Levels Reframed</div><p>
+  <strong>Level 2 — No harness. Human is the harness.</strong><br>
+  The human carries all context, reviews every output, triggers every transition. The human is the bottleneck because there is nothing else to carry the load.<br><br>
+  <strong>Level 3 — Harness emerging.</strong><br>
+  BMAD artefact chain, domain-ctx.txt, CLAUDE.md. Harness partially defined. Human resolves the gaps the harness does not yet cover. Bottleneck moves from every output to transition points between agents.<br><br>
+  <strong>Level 4 — Harness mature.</strong><br>
+  NLSpec discipline, explicit phase control, shared context packages. Harness complete enough that the human reviews outcomes rather than steps. Bottleneck moves from transitions to outcome evaluation.<br><br>
+  <strong>Level 5 — Harness complete. Dark factory.</strong><br>
+  Holdout scenarios handle evaluation. The human owns the why loop. The harness owns the how loop entirely. No human bottleneck remains — not because the agent is trusted blindly, but because every class of human verification has been encoded in the harness.<br><br>
+  <strong>The progression is not "trust the agent more." It is "build the harness better." Each level of harness maturity removes one class of human bottleneck. The dark factory is not a leap of faith — it is the endpoint of a measurable engineering progression.</strong></p></div>
+  <p>This reframing has a practical consequence for enterprise organisations. You do not need to decide how much to trust the agent. You need to decide how much harness you have built. If the harness covers the decision, the agent can make it reliably. If the harness does not cover the decision, a human needs to make it — not because agents are untrustworthy in the abstract, but because the specific knowledge required to make that decision has not yet been encoded in the harness.</p>
+  <p>Every experiment with agentic development is, in this framing, a harness engineering exercise. What knowledge did the agent need that wasn't in the harness? Add it. What check failed that should have been automatic? Build it. What transition condition was ambiguous? Specify it. The harness improves with every cycle. The dark factory is not the starting point — it is what the harness becomes when the improvement cycles are complete.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">THE FOUR-LAYER SEQUENCE</text>
+      <defs><marker id="arr-seq" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker></defs>
+      <!-- Layer 1 -->
+      <rect x="30" y="36" width="600" height="52" rx="8" fill="#eef4f0" stroke="#4a9068" stroke-width="2"/>
+      <text x="120" y="57" font-family="JetBrains Mono,monospace" font-size="10" fill="#4a9068" font-weight="600">LAYER 1</text>
+      <text x="120" y="74" font-family="Lora,serif" font-size="13" fill="#1d3d2a" font-weight="600">Domain-Driven Design</text>
+      <text x="370" y="57" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Output: shared vocabulary, bounded contexts, domain model</text>
+      <text x="370" y="74" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Input to Layer 2: conceptual framework for discovery</text>
+      <!-- Arrow -->
+      <line x1="330" y1="90" x2="330" y2="106" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-seq)"/>
+      <!-- Layer 2 -->
+      <rect x="30" y="108" width="600" height="52" rx="8" fill="#e8d5d3" stroke="#c0392b" stroke-width="2"/>
+      <text x="120" y="129" font-family="JetBrains Mono,monospace" font-size="10" fill="#c0392b" font-weight="600">LAYER 2</text>
+      <text x="120" y="146" font-family="Lora,serif" font-size="13" fill="#6b1a14" font-weight="600">Event Storming</text>
+      <text x="370" y="129" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Output: grounded domain model, boundaries, language</text>
+      <text x="370" y="146" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Input to Layer 3: verified domain knowledge</text>
+      <!-- Arrow -->
+      <line x1="330" y1="162" x2="330" y2="178" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-seq)"/>
+      <!-- Layer 3 -->
+      <rect x="30" y="180" width="600" height="52" rx="8" fill="#dde8f0" stroke="#2980b9" stroke-width="2"/>
+      <text x="120" y="201" font-family="JetBrains Mono,monospace" font-size="10" fill="#2980b9" font-weight="600">LAYER 3</text>
+      <text x="120" y="218" font-family="Lora,serif" font-size="13" fill="#1a3a5c" font-weight="600">BMAD</text>
+      <text x="370" y="201" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Output: artefact chain, story files, working software</text>
+      <text x="370" y="218" font-family="Source Sans 3,sans-serif" font-size="11" fill="#4a4a6a">Input to Layer 4: mature domain, spec-writing discipline</text>
+      <!-- Arrow -->
+      <line x1="330" y1="234" x2="330" y2="250" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-seq)"/>
+      <!-- Layer 4 -->
+      <rect x="30" y="252" width="600" height="36" rx="8" fill="#1e1e38" stroke="#8888cc" stroke-width="2"/>
+      <text x="120" y="268" font-family="JetBrains Mono,monospace" font-size="10" fill="#8888cc" font-weight="600">LAYER 4</text>
+      <text x="120" y="282" font-family="Lora,serif" font-size="13" fill="#e8e6e0" font-weight="600">Attractor — Lights-Out Factory</text>
+      <text x="370" y="268" font-family="Source Sans 3,sans-serif" font-size="11" fill="#b0aec8">Output: production software at factory velocity</text>
+      <text x="370" y="282" font-family="Source Sans 3,sans-serif" font-size="11" fill="#6e6c88">Requires: complete, precise, coherent NLSpec</text>
+    </svg>
+    <div class="diagram-caption">Each layer's output is the next layer's prerequisite. The sequence is a dependency graph, not a stylistic preference.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Layer 1 in depth — what DDD contributes and why it cannot be skipped.</p>
+</div>
+
+<!-- CH3 -->
+<div class="guide-page" id="page-3">
+  <div class="part-header"><div class="part-num">Part Two</div><h2>The Four Layers Connected</h2><p>What each layer contributes, what it needs from the layer before it, and what breaks without it</p></div>
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">Layer 1 — DDD: Domain Clarity Before Anything Else</h1>
+  <p class="chapter-intro">Domain-Driven Design is twenty years old. It predates agentic development by two decades. The discourse around AI-driven software has largely ignored it — which is precisely why teams adopting agentic frameworks are hitting the same wall that DDD was invented to address.</p>
+  <h2>What DDD Contributes to the Sequence</h2>
+  <p>DDD's contribution to agentic development is not its tactical patterns — the Repositories, Factories, and Aggregates that belong to the early 2000s Java era. Those are implementation patterns with limited relevance to the current moment. DDD's contribution is its strategic patterns, and specifically three ideas that are prerequisites for any agentic approach to work correctly.</p>
+  <p>The first is Ubiquitous Language — the discipline of building a shared vocabulary between business people and developers, and enforcing it in the code. In an agentic context, the vocabulary must also be enforced in the specification. An agent working from a specification where the same concept is called three different names across three sections will treat them as three different concepts. Ubiquitous Language is not optional in an NLSpec — it is the mechanism that makes the specification internally consistent.</p>
+  <p>The second is Bounded Contexts — the discipline of drawing explicit boundaries around parts of the domain where a specific model and specific vocabulary applies. The sales customer and the service customer are different concepts in different Bounded Contexts. An agent that crosses that boundary without knowing it exists will corrupt both models. Bounded Context boundaries must be visible in the specification — they cannot be left implicit for the agent to infer.</p>
+  <p>The third is Subdomain classification — the discipline of identifying which parts of the domain are the organisation's competitive differentiator (Core Domain), which are necessary but generic (Supporting), and which are commodity problems with off-the-shelf solutions (Generic). This classification determines where to invest agentic development effort and where to buy or use existing solutions. A team that builds a bespoke agent-driven authentication system has spent significant investment on a Generic Subdomain. A team that leaves its Core Domain on legacy code while automating the Generic work has optimised in the wrong direction.</p>
+  <div class="callout"><div class="callout-label">The DDD Connection That Nobody Has Made</div><p>Every agent framework requires precise context. DDD is the 20-year-old discipline for building that precision at the domain level. The sales order customer and the complaint ticket customer are the same word pointing at two different things. <strong>If the specification doesn't distinguish them, the agent picks one interpretation and proceeds confidently in the wrong direction. That is not a prompt engineering failure. That is a domain modelling failure upstream of the prompt.</strong> This is the connection the current agentic development discourse has not made — and it is the reason this guide series starts with DDD.</p></div>
+  <h2>What DDD Produces That the Next Layer Needs</h2>
+  <p>Layer 1 produces three things that Layer 2 depends on. A conceptual framework — the vocabulary of domains, models, contexts, and events — that gives the Event Storming session its structure. A set of questions — where are the context boundaries, what is the Ubiquitous Language of each area, what is the Core Domain — that the session is designed to answer. And the discipline of domain thinking itself — the habit of asking "what does this mean, precisely, in this context?" before assuming shared understanding.</p>
+  <p>Without Layer 1, an Event Storming session produces a wall of sticky notes that the team can't structure into a coherent model. The events are real. The boundaries are invisible because nobody has the framework to see them. The session produces energy without architecture.</p>
+  <div class="guide-ref"><div class="guide-dot" style="background:#4a9068"></div><div class="guide-ref-text"><strong>Read the DDD Guide</strong> for the full treatment of Ubiquitous Language, Bounded Contexts, Context Maps, and Subdomain classification</div></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Layer 2 — how Event Storming turns DDD's framework into a specific business's grounded domain model.</p>
+</div>
+
+<!-- CH4 -->
+<div class="guide-page" id="page-4">
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">Layer 2 — Event Storming: Surfacing the Model in a Room</h1>
+  <p class="chapter-intro">DDD gives you the framework for thinking about a domain. Event Storming gives you the method for applying that framework to a specific business, with the people who actually know it. The output is not a theoretical model — it is a grounded model that reflects real business complexity, real edge cases, and real boundary decisions made by the people who live in the domain.</p>
+  <h2>The Problem Event Storming Solves in the Sequence</h2>
+  <p>DDD's framework is powerful and abstract. The danger is that an experienced architect applies it to a domain they think they understand — drawing Bounded Contexts on a whiteboard, naming the Ubiquitous Language from memory, classifying subdomains based on their own judgment. The resulting model is intellectually sound and organisationally wrong. It reflects the architect's mental model of the business, not the business's actual reality.</p>
+  <p>Event Storming is the correction mechanism. It puts the people who know the domain — the operations manager, the customer service lead, the finance director, the warehouse manager — in the same room as the people building the software. The model that emerges from that room is not the architect's hypothesis. It is the combined knowledge of everyone who works in the domain, surfaced through the discipline of naming events and debating sequences.</p>
+  <h2>What Event Storming Produces for the Sequence</h2>
+  <p>A well-run Event Storming session produces three outputs that Layer 3 depends on directly.</p>
+  <p>First, a grounded Ubiquitous Language — not the vocabulary the architect assumed, but the vocabulary the business actually uses, tested against the disagreements and clarifications that surface in the session. When two people put up stickies for the same event using different words, the conversation about whether these are the same thing or different things produces a more precise language than any top-down glossary exercise.</p>
+  <p>Second, candidate Bounded Context boundaries — the seams where the language shifts, where the team and responsibility changes, where pivotal events mark major business transitions. These boundaries are not imposed by the architect. They emerge from where the domain experts naturally cluster, where the vocabulary naturally changes, where the Hotspot stickies accumulate most densely.</p>
+  <p>Third, a visible model of what the business actually does — the full sequence of Domain Events from end to end, with the parallel tracks, the exception paths, the policies that encode hidden business rules, and the hotspots that mark genuine complexity. This is the raw material that the BMAD Brief, PRD, and Architecture sessions need to produce specifications that reflect reality.</p>
+  <div class="callout"><div class="callout-label">Event Storming as Domain Validation</div><p>Event Storming doesn't just surface the domain — it validates the domain model. When the operations manager and the developer put the same event in different positions on the timeline, and the resulting conversation reveals that these are actually two different events that have been collapsed into one concept, the model becomes more accurate. <strong>This validation happens before any specification is written, before any agent begins work. The cost of this discovery is a conversation. The cost of discovering it after implementation is a rework cycle.</strong></p></div>
+  <h2>The Bridge Between Layer 2 and Layer 3</h2>
+  <p>The Design Level variant of Event Storming — the most detailed of the three variants — produces output that maps directly onto BMAD's artefact chain. The Aggregates identified in the Design Level session become the architectural foundation of the BMAD Architecture Document. The Commands and Events become the vocabulary of the Story Files. The Policies surface the business rules that must be encoded in the implementation. The Read Models define what information must be available at each decision point.</p>
+  <p>This is not a coincidence of terminology. Event Storming's Design Level and BMAD's Architecture session are addressing the same question from different directions: what does this software need to do, and what model should it express? Running Event Storming's Design Level before BMAD's Architecture session means the Architecture Document is grounded in validated domain knowledge rather than architectural assumption.</p>
+  <div class="guide-ref"><div class="guide-dot" style="background:#c0392b"></div><div class="guide-ref-text"><strong>Read the Event Storming Guide</strong> for the full workshop process — Big Picture, Process Level, and Design Level — including facilitation, remote sessions, and the DDD mapping</div></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Layer 3 — how BMAD turns validated domain knowledge into structured agentic execution.</p>
+</div>
+
+<!-- CH5 -->
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">Layer 3 — BMAD: Structured Execution at Levels 3 and 4</h1>
+  <p class="chapter-intro">With a validated domain model from Layers 1 and 2, the team now has what BMAD's planning phase actually needs — a clear understanding of what the software should do, expressed in precise shared vocabulary, with boundaries that reflect how the business actually works. At this point, BMAD can function as designed rather than compensating for domain ambiguity it was never built to resolve.</p>
+  <h2>What Changes When Layer 1 and 2 Are in Place</h2>
+  <p>The BMAD Brief session changes character entirely when the domain model has been validated through Event Storming. Instead of the Analyst agent spending the session surfacing basic questions about what the project is for and who it serves, the human comes in with those questions already answered. The Brief can focus on scope, constraints, and the specific capabilities being built — not on untangling domain confusion that should have been resolved before the session began.</p>
+  <p>The PRD session benefits from the Ubiquitous Language. The PM agent and the human review build the requirements document using the terms the business actually uses, tested against real domain expert knowledge. The requirements are grounded in the same model that the Event Storming session produced. When the business analyst reads the PRD, they recognise the terminology as their own — not a developer's translation of their concepts into technical language.</p>
+  <p>The Architecture session benefits most dramatically. The Architect agent is working from a model where the Bounded Context boundaries are already known, where the Aggregates have been identified in the Design Level Event Storming session, where the integration patterns between contexts have been discussed and named. The Architecture Document is not building the model from scratch — it is translating a validated model into a technical specification.</p>
+  <h2>The Story File as Context Package</h2>
+  <p>BMAD's Story File — the atomic unit of development work — is structurally identical to the context package concept in advanced agentic development. It concentrates everything the Developer agent needs for one specific task: the relevant portion of the architecture, the acceptance criteria, the domain constraints, the integration requirements. When the domain model is clear, story files can be precise. When it isn't, story files carry the same ambiguity that caused the problem upstream.</p>
+  <p>This is why the RPI (Research-Plan-Implement) workflow from the 12 Factor Agents approach connects naturally here. The Research phase is where domain understanding is built before any code is written. DDD provides the framework for that research — knowing which Bounded Contexts are relevant, which entities have domain significance, where the consistency boundaries sit. RPI without DDD thinking produces research that is technically accurate but semantically shallow. With DDD thinking, the research phase produces the precise domain understanding that makes the plan phase concrete and the implementation phase reliable.</p>
+  <h2>What Layer 3 Produces for Layer 4</h2>
+  <p>A team that has run BMAD successfully across several projects has built two things that Layer 4 requires. The first is a mature, validated domain model — the accumulated output of multiple planning cycles that have been grounded in Event Storming and refined through implementation. The second is specification-writing discipline — the habit of writing artefacts precise enough for agents to work from, tested against the real consequences of imprecision in the Story File quality and implementation output.</p>
+  <p>These two things together are what makes NLSpec possible. You cannot write a 7,000-line specification for an agent to work from without both. The domain model tells you what to specify. The specification-writing discipline tells you how to make it precise enough to work.</p>
+  <div class="guide-ref"><div class="guide-dot" style="background:#2980b9"></div><div class="guide-ref-text"><strong>Read the BMAD Guide</strong> for the full agent team, artefact chain, planning workflow, and scaling from solo to enterprise</div></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Layer 4 — when the factory becomes viable, and what it requires from the layers beneath it.</p>
+</div>
+
+<!-- CH6 -->
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Layer 4 — Attractor: When the Factory Is the Answer</h1>
+  <p class="chapter-intro">The lights-out software factory is the endpoint of the sequence, not an entry point. StrongDM's three-person team built it after years of deep domain expertise in infrastructure security — a domain they know so precisely that they can write 7,000 lines of specification without guessing about what the business requires. That precision is not a coincidence. It is the output of accumulated domain clarity that Layers 1, 2, and 3 are designed to build.</p>
+  <h2>Why Layer 4 Requires the Layers Beneath It</h2>
+  <p>McCarthy's factory manifesto states the prerequisite plainly: "The bottleneck has shifted from implementation speed to spec quality. And spec quality is a function of how deeply you understand your system, your customers, and the problem." That deep understanding is not an assumption the factory makes. It is a requirement it enforces. An NLSpec written without domain clarity produces an agent that implements the ambiguity precisely and consistently — which is worse than an agent that asks clarifying questions, because the errors are harder to detect.</p>
+  <p>The holdout scenario suite — Attractor's mechanism for preventing specification gaming — requires the same domain clarity. Writing behavioural specifications the agent cannot see requires knowing what the system should do from the outside, in terms of observable business behaviour. That knowledge comes from the domain model built in Layers 1 and 2. Without it, the scenarios describe what the developer thinks the system should do — which may not match what the business actually needs.</p>
+  <h2>The NLSpec as Culmination</h2>
+  <p>Seen through the lens of the full sequence, an NLSpec is the culmination of the domain modelling work, not its replacement. The Ubiquitous Language from Layer 1 becomes the terminology that makes the specification internally consistent — the same word meaning the same thing in every section. The Bounded Context boundaries from Layer 1 and 2 become the structural boundaries of the specification — what falls inside this spec and what is explicitly out of scope. The Domain Events from the Event Storming session become the behavioural anchors — the things that happen in the business that the factory must produce and respond to.</p>
+  <p>When all of that is in place, the specification can be complete. Not complete in the sense of capturing every possible state — no specification does that. Complete in the sense that the agent never has to choose between two plausible interpretations of what was wanted, because only one interpretation is consistent with the model.</p>
+  <h2>Layer 4 Is Not the Goal for Most Organisations</h2>
+  <p>This is worth stating clearly. Layer 4 is the horizon, not the immediate target. The majority of enterprise organisations are at Level 2 today. The path to Layer 4 runs through Layer 1 and Layer 2 and Layer 3. Attempting to build an NLSpec for Attractor without the domain clarity that Layers 1 and 2 produce is attempting the hardest part of the sequence first, without the prerequisites. It produces an expensive and carefully maintained record of everything the organisation doesn't yet know about its own domain.</p>
+  <div class="callout"><div class="callout-label">The Factory as Proof of Understanding</div><p>StrongDM's factory is significant not primarily because of the technology it uses. It is significant because three people understand their domain — infrastructure security — precisely enough to write a specification that an agent can implement correctly. <strong>The factory is proof of understanding, not a shortcut around it.</strong> Every organisation that wants to reach Layer 4 needs to build that understanding first. Layers 1, 2, and 3 are how you build it.</p></div>
+  <div class="guide-ref"><div class="guide-dot" style="background:#8888cc"></div><div class="guide-ref-text"><strong>Read the Attractor Guide</strong> for the four architecture patterns, the NLSpec approach, the holdout scenario methodology, and the practical brownfield assessment</div></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: a worked example — Meridian Retail moving through all four layers end to end.</p>
+</div>
+
+<!-- CH7 -->
+<div class="guide-page" id="page-7">
+  <div class="part-header"><div class="part-num">Part Three</div><h2>The Complete Picture</h2><p>A worked example, an honest entry point guide, and the discipline that ties everything together</p></div>
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">A Worked Example — Meridian Retail End to End</h1>
+  <p class="chapter-intro">Meridian Retail is a mid-size omnichannel retailer with online, in-store, and wholesale channels. They've decided to build a new returns management system — a process identified as one of their biggest operational pain points. This is how they move through all four layers.</p>
+  <h2>Layer 1 — Applying DDD Thinking</h2>
+  <p>Before the first workshop, the architecture team applies DDD's strategic framework to the returns domain. They identify that "customer" means different things to the customer service team (who handles the return) and the finance team (who processes the refund). They recognise that the returns process spans at least two Bounded Contexts: a Customer Service context where the return is initiated and approved, and a Finance context where the refund is processed and the revenue adjustment is recorded.</p>
+  <p>They classify the returns management capability as a Supporting Subdomain — it's important and complex, but it's not how Meridian competes in the market. Their Core Domain is demand forecasting and personalisation. This classification tells them that returns management deserves careful design but not the full Core Domain treatment — they should build it well, not brilliantly.</p>
+  <p>Most importantly, they identify the key question the Event Storming session needs to answer: does the returns approval process live in the Customer Service context or does it span both contexts? That seam is where the most complexity is likely to hide.</p>
+  <h2>Layer 2 — The Event Storming Session</h2>
+  <p>A Big Picture session brings together the customer service lead, the warehouse manager, the finance director, two developers, and the senior architect. Within ninety minutes of chaotic exploration, the wall reveals something the architecture team didn't know: the returns process has four distinct paths depending on the product category and the return reason. The customer service team refers to these as "the four streams" — but nobody had documented them, and the developers had never heard the term.</p>
+  <p>A Process Level session on the most complex of the four streams — high-value items with potential fraud flags — surfaces three policies that were entirely implicit: "Whenever a return request arrives for an order over £500, always flag for senior agent review." "Whenever a return is approved for a fraudulently used payment method, trigger a security alert." "Whenever a refund is issued within 24 hours of a new order by the same customer, hold the refund for manual review." These policies were business rules that lived in the heads of two senior customer service agents. They had never been written down.</p>
+  <p>The Design Level session maps the process to Aggregates: a ReturnRequest Aggregate in the Customer Service context that owns the approval workflow, and a Refund Aggregate in the Finance context that owns the payment processing. The integration between them is a Domain Event — ReturnApproved — published by the Customer Service context and consumed by Finance.</p>
+  <h2>Layer 3 — BMAD Execution</h2>
+  <p>The BMAD Brief session starts with the team in genuine alignment — they know the four streams, they have named the key Aggregates, they understand the integration pattern. The Brief is tight: this project builds the Customer Service context's half of returns management, with a defined integration contract to the Finance context. The PRD captures the four streams explicitly, including the three implicit policies that the Event Storming session surfaced. The Architecture Document reflects the Bounded Context boundary: Customer Service owns the ReturnRequest Aggregate; Finance owns the Refund Aggregate; the integration is event-driven.</p>
+  <p>The Story Files are precise because the model is precise. Story 4 — "Implement the high-value return fraud flag policy" — can embed the exact policy rule, the exact threshold (£500), the exact trigger conditions, and the exact acceptance criteria, because all of those were named and agreed in the Event Storming session. The Developer agent implementing Story 4 is not guessing about what "high-value" means. It's in the story file. The story file reflects the domain model. The domain model was validated by the people who actually work in the domain.</p>
+  <h2>Layer 4 — The Factory Horizon</h2>
+  <p>Meridian is not ready for Layer 4 today. But running Layers 1 through 3 across their returns management system has produced two things that move them toward it: a precise, validated domain model for one of their most complex processes, and a team that has practised writing specifications precise enough for agents to work from without guessing. When they've repeated this across their Customer Service context, their Ordering context, and their Finance context — when the model is mature and the specification discipline is embedded — the NLSpec for a factory run becomes possible. Not because the technology has changed. Because the domain understanding has been built.</p>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg">
+      <text x="330" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">MERIDIAN RETAIL — FOUR-LAYER JOURNEY</text>
+      <defs><marker id="arr-mer" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4a9068"/></marker></defs>
+      <!-- Timeline -->
+      <line x1="60" y1="140" x2="600" y2="140" stroke="#d8d4cb" stroke-width="1.5"/>
+      <!-- L1 -->
+      <circle cx="100" cy="140" r="10" fill="#4a9068"/>
+      <rect x="60" y="36" width="90" height="86" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="105" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068" font-weight="600">DDD</text>
+      <text x="105" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">Identify 2</text>
+      <text x="105" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">contexts</text>
+      <text x="105" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">Supporting</text>
+      <text x="105" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">subdomain</text>
+      <line x1="105" y1="124" x2="105" y2="130" stroke="#4a9068" stroke-width="1.5"/>
+      <!-- L2 -->
+      <circle cx="240" cy="140" r="10" fill="#c0392b"/>
+      <rect x="195" y="36" width="95" height="86" rx="6" fill="#e8d5d3" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="242" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#c0392b" font-weight="600">Event Storming</text>
+      <text x="242" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">4 return streams</text>
+      <text x="242" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">3 hidden policies</text>
+      <text x="242" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">2 aggregates</text>
+      <text x="242" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">named</text>
+      <line x1="242" y1="124" x2="242" y2="130" stroke="#c0392b" stroke-width="1.5"/>
+      <!-- L3 -->
+      <circle cx="400" cy="140" r="10" fill="#2980b9"/>
+      <rect x="350" y="36" width="105" height="86" rx="6" fill="#dde8f0" stroke="#2980b9" stroke-width="1.5"/>
+      <text x="402" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#2980b9" font-weight="600">BMAD</text>
+      <text x="402" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">Brief, PRD, Arch</text>
+      <text x="402" y="92" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">Precise story</text>
+      <text x="402" y="108" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">files — policies</text>
+      <text x="402" y="122" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a">embedded</text>
+      <line x1="402" y1="124" x2="402" y2="130" stroke="#2980b9" stroke-width="1.5"/>
+      <!-- L4 horizon -->
+      <circle cx="560" cy="140" r="10" fill="#1e1e38" stroke="#8888cc" stroke-width="2" stroke-dasharray="3,2"/>
+      <rect x="510" y="36" width="110" height="86" rx="6" fill="#f4f1ea" stroke="#8888aa" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="565" y="58" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-weight="600">Factory</text>
+      <text x="565" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Horizon</text>
+      <text x="565" y="96" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa">When domain</text>
+      <text x="565" y="112" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa">is mature</text>
+      <line x1="565" y1="124" x2="565" y2="130" stroke="#8888aa" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <!-- Arrows along timeline -->
+      <line x1="112" y1="140" x2="228" y2="140" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-mer)"/>
+      <line x1="252" y1="140" x2="348" y2="140" stroke="#4a9068" stroke-width="2" marker-end="url(#arr-mer)"/>
+      <line x1="412" y1="140" x2="548" y2="140" stroke="#8888aa" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-mer)"/>
+      <!-- Below timeline -->
+      <text x="105" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Week 1</text>
+      <text x="242" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Week 2</text>
+      <text x="402" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Weeks 3–12</text>
+      <text x="560" y="168" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">Year 2+</text>
+      <!-- What was found -->
+      <rect x="30" y="190" width="600" height="70" rx="6" fill="#faf9f6" stroke="#d8d4cb" stroke-width="1"/>
+      <text x="40" y="210" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068" font-weight="600">What Event Storming found that no one knew:</text>
+      <text x="40" y="228" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a4a6a">4 distinct return streams (not one process) · 3 implicit fraud policies (never documented) · 2 Aggregates across 2 Bounded Contexts</text>
+      <text x="40" y="246" font-family="Source Sans 3,sans-serif" font-size="10" fill="#c0392b">Without Layer 2, these would have been discovered in production. With Layer 2, they were captured in a sticky-note session.</text>
+    </svg>
+    <div class="diagram-caption">Meridian Retail's journey through the four layers. The discoveries in Layer 2 changed what Layers 3 and 4 needed to build.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the realistic entry points — where different organisations should start in the sequence.</p>
+</div>
+
+<!-- CH8 -->
+<div class="guide-page" id="page-8">
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Where to Start — Realistic Entry Points</h1>
+  <p class="chapter-intro">The sequence is a dependency graph. You cannot start at Layer 4 without the prerequisites that Layers 1, 2, and 3 provide. But most organisations don't start at Layer 1 either — they start wherever they are, which is usually somewhere in the middle. This chapter is an realistic guide to finding your starting point and moving forward from there.</p>
+  <h2>If You Are at Level 1 or 2 — Start at Layer 1</h2>
+  <p>If your organisation is using AI tools for autocomplete and occasional pair programming but hasn't made any structural changes to how software is developed, start with DDD. Not with a big design exercise — with a focused conversation about one domain you're planning to build software for. Pick a process. Map the concepts. Name the boundaries. Ask whether "customer" means the same thing to your sales team and your service team. The answers will be instructive.</p>
+  <p>Then run a Big Picture Event Storming session on that domain. Don't try to cover the whole organisation. Pick the Core Domain — the thing you actually compete on — and map it with the people who know it. What you learn will shape every technical decision that follows.</p>
+  <h2>If You Have Domain Clarity But No Agentic Structure — Start at Layer 3</h2>
+  <p>If your team already has strong domain knowledge — if the boundaries are understood, the vocabulary is shared, the model is validated through years of work in the domain — you can start BMAD immediately. The prerequisite work is already done. Your entry point is the Brief session. Run a pilot on a low-risk greenfield project. Get one complete cycle through Brief, PRD, Architecture, Stories, Implementation, and QA. Document what worked and what didn't. Then expand.</p>
+  <h2>If You Have Legacy Systems With No Specification — Start at Layer 2</h2>
+  <p>If your domain is brownfield — existing systems, accumulated behaviour, implicit business rules that nobody has documented — start with Event Storming as a documentation exercise before it's a design exercise. Run a Big Picture session on the existing system with the people who work in it. What you surface is not what you're going to build. It's what you need to understand before you can build anything. The output feeds a specification exercise that generates the domain model the brownfield system encodes but has never expressed.</p>
+  <h2>If You Are Running BMAD Successfully — Think About Layer 4 Prerequisites</h2>
+  <p>If your team has run BMAD across multiple projects and the artefact chain is mature, start asking the Layer 4 questions: Is your domain model stable and validated? Is your specification writing precise enough that agents rarely need to make interpretive decisions? Have you built the holdout scenario infrastructure that Attractor requires? Do you have digital twins for your key external integrations? If the answers are mostly yes, Layer 4 is on the horizon. If the answers are mostly no, you know what to build next.</p>
+  <div class="break-box"><div class="break-label">The Most Dangerous Starting Point</div><p>Starting at Layer 4 without Layers 1, 2, and 3. Writing an NLSpec for a domain you haven't modelled. Running a factory on a specification that encodes unexamined assumptions. The factory will produce precisely and at speed. The output will reflect what you assumed, not what the business needed. The speed makes it harder to catch, not easier.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the discipline that ties all four layers together — specification clarity as the single thread.</p>
+</div>
+
+<!-- CH9 -->
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">The Discipline That Ties It All Together</h1>
+  <p class="chapter-intro">Four layers. Four different tools. Four different communities of practice that mostly don't talk to each other. The DDD community rarely mentions BMAD. The agentic development community rarely mentions Event Storming. The harness engineering community rarely cites Evans. But they are all working on the same problem from different angles — and the thread that connects them is a single discipline: making intent explicit before asking anything to execute it.</p>
+  <h2>Specification Clarity — The Single Thread</h2>
+  <p>Evans called it knowledge crunching — the continuous, collaborative process of making domain understanding explicit. Brandolini called it the chaotic exploration — the act of getting implicit knowledge out of people's heads and onto a wall where it can be examined and challenged. BMAD calls it the artefact chain — the progressive refinement of intent from project brief to story file. McCarthy calls it spec quality — the depth of understanding encoded in natural language precise enough for an agent to work from without guessing.</p>
+  <p>Different names. The same discipline. The act of making what you know — about the business, about the domain, about what the software should do — explicit enough that something else can act on it reliably. That something else was once a human developer who could ask clarifying questions. It is now an agent that cannot.</p>
+  <h2>Why This Discipline Is Harder Now, Not Easier</h2>
+  <p>A human developer encountering an ambiguous requirement has options. They can ask the product manager. They can look at how similar cases were handled before. They can make a reasonable judgment and flag it for review. Their judgment is domain-informed — not perfect, but shaped by context, convention, and the ability to recognise when something doesn't feel right.</p>
+  <p>An agent has none of these options. It picks the most plausible interpretation and implements it confidently and completely. The output looks finished. The code compiles. The tests pass — because the agent wrote the tests against the interpretation it chose. The misunderstanding is encoded in working code that is hard to distinguish from correct code on superficial review.</p>
+  <p>This is why the specification discipline matters more in the agentic era, not less. Every assumption left implicit is a decision the agent makes without accountability. The blast radius of an underspecified context is larger and quieter than an underspecified requirement handed to a human team. The human team would have asked questions. The agent produced answers.</p>
+  <h2>The 35-Year Perspective</h2>
+  <p>The specification discipline has always been the scarcest resource in software engineering. Every experienced architect knows this. The hard part has never been writing code — it has been knowing precisely what code to write. The requirements gathering exercise, the design review, the architecture decision — these were always the leverage points, the places where a good decision prevented ten bad implementations and a bad decision caused ten good implementations of the wrong thing.</p>
+  <p>What the agentic era changes is the consequence of getting it wrong. A bad requirement given to a human team produces a misaligned implementation that takes weeks to build and days to identify and fix. A bad requirement given to a factory produces a misaligned implementation that takes hours to build, looks finished, and may take weeks to identify because everything about it is internally consistent. The speed multiplier works in both directions.</p>
+  <div class="callout"><div class="callout-label">The Unchanged Truth</div><p>The discipline that Evans was teaching in 2003 is the discipline that McCarthy is requiring in 2025. Know your domain. Name your concepts precisely. Draw your boundaries deliberately. Validate your model against the people who live in it. Make your intent explicit before asking anything — human or agent — to execute it. <strong>The dark factory doesn't change this discipline. It makes the consequences of skipping it visible faster and at greater scale.</strong></p></div>
+  <h2>What the Series Has Built</h2>
+  <p>This guide series is five documents, but it is one argument. Domain-Driven Design is the conceptual foundation — the framework for thinking clearly about a business domain before building software to serve it. Event Storming is the practical method — the workshop technique for surfacing that clear thinking from the people who have it. BMAD is the structured execution layer — the framework for turning validated domain knowledge into working software with appropriate human oversight. Attractor is the horizon — the lights-out factory that becomes viable when the domain understanding is precise enough and the specification discipline is mature enough. And this document is the argument for why these four are a sequence rather than a menu — why the order matters, why each layer enables the next, and why the discipline that ties them together is not a new idea but a very old one that the agentic era has made newly urgent.</p>
+  <h2>On the Loop — Where the Human Belongs</h2>
+  <p>Kief Morris at Thoughtworks (March 2026) introduced a vocabulary that maps precisely onto the discipline this series has been building toward. It is worth naming explicitly because it gives enterprise practitioners a clean way to explain their own role in an agentic development environment.</p>
+  <p>Three positions are possible. Outside the loop — the human owns the outcome, the agent owns everything in between. This is vibe coding at its extreme. The appeal is obvious. The failure mode is equally obvious: agents working without a harness spiral on messy codebases, compound errors, and produce technically correct output that is wrong about the domain. Outside the loop works for throwaway scripts and simple prototypes. It does not work for systems that need to be maintained.</p>
+  <p>In the loop — the human acts as gatekeeper at every agent step, inspecting each artefact, triggering each transition. This is the eight-hour BMAD session from the comparison video. The human is the bottleneck. Agents generate faster than humans can inspect. The productivity gain of the agent is absorbed by the overhead of the human gatekeeping every output.</p>
+  <p>On the loop — the human builds and maintains the harness that the agent runs. When output is wrong, the human improves the harness rather than correcting the artefact. The domain-ctx.txt is harness. The BMAD artefact chain is harness. The NLSpec is harness. The CLAUDE.md and AGENTS.md files are harness. The entire body of work in this guide series is harness engineering — defining the how loop precisely enough that the agent can run it reliably without human gatekeeping at every step.</p>
+  <div class="callout"><div class="callout-label">Harness Engineering — The Human's Job in the Post-Agentic Era</div><p>The harness is the collection of specifications, constraints, quality checks, and workflow guidance that controls the agent's how loop. Building and improving the harness is the emerging practice Morris calls Harness Engineering. <strong>Every domain context file you write, every BMAD artefact chain you refine, every NLSpec section you make more precise — this is harness engineering. The harness is the accumulated learning of every experiment. It compounds over time in a way that individual prompt improvements do not.</strong></p></div>
+  <h2>The Agentic Flywheel — The Horizon</h2>
+  <p>Morris describes what becomes possible when the harness is mature enough: agents that improve the harness itself. Feed the agent richer signals — pipeline results, test outcomes, production error logs, operational data — and it can analyse the performance of its own how loop and recommend improvements. Initially the human reviews recommendations and approves specific changes. As confidence grows, recommendations above a certain quality threshold are applied automatically.</p>
+  <p>This is the Attractor trajectory extended. The factory does not just run a harness — it evolves one. The human's role shifts further: from building the harness to steering the improvement of the harness. From on the loop to on the meta-loop. The why loop — the human's irreducible domain — is the same. The how loop becomes increasingly self-managing.</p>
+  <p>For most enterprise teams today this is the horizon, not the immediate target. The discipline described in this series — domain clarity before execution, specification precision before implementation, harness quality before autonomy — is the foundation that makes the flywheel possible when the organisation is ready for it. You cannot hand the harness to an agent to improve if the harness was never built with sufficient rigour to be evaluated. The sequence matters here too.</p>
+  <h2>The Synthesis Discipline — Contextualise, Do Not Just Adopt</h2>
+  <p>The Fowler article arrived in March 2026, a month after the domain context engineering and flowchart-first approaches in this series were first developed — independently and without reference to each other. Both arrived at the same underlying insight: the human's job is to define the how loop, not to run it. That independent convergence is validation of a kind that citing sources cannot provide. When practitioners working in different contexts arrive at the same structure, the structure is probably right.</p>
+  <p>But independent convergence is also a reminder of the discipline that enterprise practitioners need to maintain in the post-Agentic era. The agentic development space is producing a significant volume of frameworks, methodologies, and vocabulary. Some of it is genuinely new. Much of it is rediscovery of what experienced practitioners already know — specification before execution, context quality before agent autonomy, domain clarity before implementation. The COBOL teacher who required a system flowchart before lab time was doing harness engineering. They just did not have a name for it.</p>
+  <p>The right posture is neither wholesale adoption nor dismissal. Read what industry veterans are writing. Test it against your own experience. Where external framing improves on your own vocabulary, adopt it. Where your own context requires adaptation, adapt it. Where the external framework makes assumptions your environment does not satisfy, name that gap explicitly and work around it. This synthesis discipline — contextualise, do not just adopt — is itself the most durable skill in a space where the tooling changes faster than the underlying principles do.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Guide Index and Glossary follow.</p>
+</div>
+
+<!-- CH10 — GLOSSARY AND INDEX -->
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Guide Index and Glossary</h1>
+  <p class="chapter-intro">A reference to all five guides in the series, plus definitions of the cross-cutting concepts that appear across multiple layers.</p>
+
+  <h2>The Five Guides</h2>
+  <div class="guide-ref" style="margin-bottom:.5rem"><div class="guide-dot" style="background:#4a9068"></div><div class="guide-ref-text"><strong>Domain-Driven Design — A Practical Reference</strong> — Ubiquitous Language, Bounded Contexts, Context Maps, Subdomains, Entities, Aggregates, Domain Events, integration patterns. The conceptual foundation of the sequence.</div></div>
+  <div class="guide-ref" style="margin-bottom:.5rem"><div class="guide-dot" style="background:#c0392b"></div><div class="guide-ref-text"><strong>Event Storming — A Practical Workshop Guide</strong> — Big Picture, Process Level, and Design Level sessions. Facilitation, sticky note vocabulary, remote workshops, failure modes, and the complete DDD-to-Event Storming mapping.</div></div>
+  <div class="guide-ref" style="margin-bottom:.5rem"><div class="guide-dot" style="background:#2980b9"></div><div class="guide-ref-text"><strong>The BMAD Method — A Practical Guide</strong> — Agent team roles, the artefact chain, planning workflow, development cycle, human-in-the-loop design, scaling, greenfield vs brownfield, and failure modes.</div></div>
+  <div class="guide-ref" style="margin-bottom:.5rem"><div class="guide-dot" style="background:#8888cc"></div><div class="guide-ref-text"><strong>Attractor — A Practical Guide</strong> — The dark factory, StrongDM's factory, NLSpec, directed graph phases, scenarios as holdout-set, digital twins, harness engineering and spec-driven development, the post-agile organisation, and the brownfield reality.</div></div>
+  <div class="guide-ref" style="margin-bottom:2rem"><div class="guide-dot" style="background:#c0392b"></div><div class="guide-ref-text"><strong>From Domain to Factory — The Synthesis Guide</strong> (this document) — The argument for why the four layers form a sequence, what each layer contributes, what breaks when layers are skipped, and the discipline that ties them together.</div></div>
+
+  <h2>Cross-Cutting Glossary</h2>
+
+  <div class="glossary-entry"><div class="glossary-term">Agentic Development</div><p class="glossary-def">Software development in which AI agents perform significant portions of the implementation work autonomously — not just assisting developers, but writing, testing, and in some cases shipping code without human involvement at the implementation level. The five-level maturity framework (Shapiro) describes the range from Level 1 autocomplete to Level 5 lights-out factory.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Bounded Context</div><p class="glossary-def">An explicit boundary within which a specific domain model and a specific Ubiquitous Language applies. Different Bounded Contexts may use the same word to mean different things. Making context boundaries explicit is the prerequisite for writing specifications that agents can process without ambiguity. See the DDD Guide, Chapter 4.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Context Package</div><p class="glossary-def">The concentrated, curated information that an agent needs before beginning a task — equivalent to the ambient context a human developer carries from years of working in the domain. In BMAD, the Story File is the context package. In Attractor, the NLSpec is the context package. In both cases, context quality is the leading indicator of output quality.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Core Domain</div><p class="glossary-def">The part of the business domain where the organisation actually competes — its source of differentiation. DDD argues that the Core Domain deserves the deepest modelling investment. In agentic development, Core Domain clarity is what makes precise NLSpec possible. Generic and Supporting domains should be bought or built simply; the Core Domain should be understood deeply. See the DDD Guide, Chapter 6.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Domain Event</div><p class="glossary-def">Something that happened in the business that the business cares about. Past tense, business language. The primary unit of Event Storming's vocabulary (orange sticky). The mechanism by which Bounded Contexts communicate without tight coupling. In an NLSpec, Domain Events are the behavioural anchors — the things the factory must produce and respond to. See both the DDD Guide (Chapter 9) and the Event Storming Guide (Chapter 2).</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Knowledge Crunching</div><p class="glossary-def">Evans's term for the ongoing collaborative process by which domain experts and developers together build and refine shared domain understanding. The process that Event Storming operationalises. The prerequisite for specification clarity. The discipline that the agentic era has made newly urgent by raising the cost of skipping it.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">NLSpec (Natural Language Specification)</div><p class="glossary-def">A structured natural language document that serves as the control instrument for an agent-driven software factory. Requires domain clarity from Layers 1 and 2 to be complete. Requires specification-writing discipline from Layer 3 to be precise. The culmination of the four-layer sequence, not a shortcut around it. See the Attractor Guide, Chapter 4.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Specification Clarity</div><p class="glossary-def">The discipline of making intent explicit before asking anything — human or agent — to execute it. The single thread that runs through all four layers of the sequence. Ubiquitous Language is specification clarity at the vocabulary level. Event Storming is specification clarity at the domain model level. BMAD's artefact chain is specification clarity at the project level. NLSpec is specification clarity at the factory level.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Ubiquitous Language</div><p class="glossary-def">A shared vocabulary, developed collaboratively between business experts and developers, used consistently in all conversations, documentation, and code within a Bounded Context. In agentic development, Ubiquitous Language must also be enforced in the specification — an NLSpec where the same concept is called three different names across three sections will produce a system with three different concepts where one was intended. See the DDD Guide, Chapter 3.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">The Four-Layer Sequence</div><p class="glossary-def">The core argument of this guide: DDD (domain clarity), Event Storming (domain discovery), BMAD (structured execution), Attractor (factory) form a dependency sequence rather than a menu of options. Each layer's output is the next layer's prerequisite. Skipping any layer transfers its cost to a later stage where it is more expensive to address.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Why Harness Engineering Rather Than Spec-Driven Development</div><p class="glossary-def">Spec-Driven Development names one component of the harness — the specification — and treats it as the whole. Harness Engineering names the complete activity: building and maintaining the full collection of specifications, domain context files, quality checks, workflow guidance, and transition conditions that controls the agent's how loop. The distinction matters in practice: when agent output quality falls short, SDD asks "is the spec good enough?" Harness Engineering asks "which component of the harness failed?" The answer is frequently not the specification.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Harness Engineering</div><p class="glossary-def">The emerging practice of building and maintaining the collection of specifications, constraints, quality checks, and workflow guidance that controls an agent's how loop. Named by Kief Morris (Thoughtworks, March 2026). The domain-ctx.txt, the BMAD artefact chain, the NLSpec, the CLAUDE.md — these are all harness artefacts. The human's job in an on-the-loop position is to improve the harness rather than correct individual agent outputs. The harness is the accumulated learning of every agentic experiment, compounding over time.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">On the Loop</div><p class="glossary-def">The human position in agentic development where the human builds and maintains the harness rather than gatekeeping every agent output (in the loop) or delegating everything to the agent (outside the loop). The human defines the how loop precisely enough for the agent to run it reliably, and improves the harness when output quality falls short rather than correcting individual artefacts. First described by Kief Morris (Thoughtworks, March 2026) as the productive middle ground between vibe coding and micromanagement.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Agentic Flywheel</div><p class="glossary-def">The stage of agentic development maturity where agents analyse the performance of their own how loop and recommend — or automatically apply — improvements to the harness. Requires a mature harness with rich evaluation signals: test results, pipeline outcomes, operational data, production error logs. The human role shifts from building the harness to steering its improvement. Described by Kief Morris (Thoughtworks, March 2026) as the next evolution beyond on-the-loop harness engineering. Corresponds to the Attractor trajectory extended: not just running a harness, but evolving one.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Why Loop / How Loop</div><p class="glossary-def">A framework for understanding human and agent roles in software development, introduced by Kief Morris (Thoughtworks, March 2026). The why loop is the human-owned cycle of turning ideas into outcomes — the business intent, the domain requirements, the definition of what success means. The how loop is the agent-runnable cycle of turning specifications into working software — the implementation, the testing, the iteration. The on-the-loop position places the human at the boundary between them: owning the why loop, defining and maintaining the how loop, without personally running the how loop step by step.</p></div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>
