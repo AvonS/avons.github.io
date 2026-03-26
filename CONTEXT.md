@@ -149,6 +149,13 @@ Meta tags for search engines and social media sharing (Open Graph, Twitter Cards
 **To update/re-generate meta tags:**
 Run the `add_meta_tags.py` script located in the repository root. This script extracts page titles and descriptions to create the meta tags, ensuring consistency and proper formatting.
 
+## Known Issues / Backlog
+
+-   **Email Obfuscation Improvement:** Investigate replacing current SpamSpan implementation with a more modern approach like `undergroundwires/safe-email` for improved robustness and maintainability.
+-   **PDF Regeneration:** Regenerate `agentic-engineering-journey.pdf` after B&W colour scheme change and font update (current PDF still uses old styling).
+-   **Landing Page Evolution:** Evolve landing page toward karpathy.ai style once more articles exist.
+-   **SEO Meta Tags (Advanced):** Implement more dynamic `og:image` and `description` generation based on article content, rather than generic site-wide values.
+
 ---
 
 ## Git Workflow
