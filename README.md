@@ -1,6 +1,6 @@
 # Avon Software Labs: The Path to Agentic Engineering
 
-<img src="assets/logo.png?v=1.1" alt="Avon Software Labs Logo" width="60">
+<img src="assets/logo.png?v=1.1" alt="Avon Software Labs Logo" width="120">
 
 Welcome to **Avon Software Labs**, a personal space dedicated to exploring the evolving landscape of agentic engineering. This repository hosts a collection of articles and guides designed to help practitioners navigate the transition from traditional agile to agent-first development.
 
