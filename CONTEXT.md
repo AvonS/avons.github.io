@@ -20,6 +20,7 @@ git branch --show-current
 - **Site:** avons.github.io  
 - **Purpose:** Personal blog/publishing space for articles on agentic engineering and related frameworks  
 - **Style:** Black and white editorial — clean, professional, low-strain charcoal dark mode.
+- **License:** MIT License for code (see LICENSE file), CC BY 4.0 for content (see site footer).
 
 ---
 
