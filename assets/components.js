@@ -72,7 +72,7 @@ class SiteHeaderHome extends HTMLElement {
       <header class="site-header">
         <div class="site-header-main">
           <a class="site-name" href="/">
-            <img src="assets/logo.png?v=1.1" alt="Avon Software Labs" class="logo-img">
+            <img src="/assets/logo.png?v=1.1" alt="Avon Software Labs" class="logo-img">
             <span class="logo-text">Avon <strong>Software Labs</strong></span>
           </a>
           <nav class="site-header-nav">
@@ -95,7 +95,7 @@ class SiteHeaderArticle extends HTMLElement {
       <header class="site-header">
         <div class="site-header-main">
           <a class="site-name" href="/">
-            <img src="../assets/logo.png?v=1.1" alt="Avon Software Labs" class="logo-img">
+            <img src="/assets/logo.png?v=1.1" alt="Avon Software Labs" class="logo-img">
             <span class="logo-text">Avon <strong>Software Labs</strong></span>
           </a>
           <nav class="site-header-nav">
@@ -120,7 +120,7 @@ class GuideHeader extends HTMLElement {
       <nav class="guide-nav" id="guide-nav">
         <div class="guide-nav-left">
           <a class="guide-logo-link" href="/" title="Back to Home">
-            <img src="../../assets/logo.png?v=1.1" alt="Avon Software Labs" class="guide-logo-img">
+            <img src="/assets/logo.png?v=1.1" alt="Avon Software Labs" class="guide-logo-img">
           </a>
         </div>
 
