@@ -108,6 +108,35 @@ Classes defined in `article.css`:
 
 ---
 
+## Maintenance & Operations
+
+### 🛡️ Local Development
+To prevent browser caching while working locally, always use the custom dev server:
+```bash
+python3 serve.py
+```
+This serves the site at `http://localhost:8080` with caching disabled.
+
+### 🚀 Cache-Busting (Deploying Updates)
+The site uses a simple query-string versioning system (`?v=X.X`) for shared assets (CSS, JS, Logo). 
+
+**When to bump the version:**
+Whenever you make changes to:
+- `assets/*.css`
+- `assets/*.js`
+- `assets/logo.png`
+
+**How to bump:**
+Update the `?v=1.1` parameter in all `<link>`, `<script>`, and `<img>` tags across:
+1. `index.html` (root)
+2. `agentic-engineering/index.html`
+3. All `guides/*/index.html` files
+4. Header definitions in `assets/components.js`
+
+This ensures that returning visitors immediately see your latest design and logic updates rather than stale cached versions.
+
+---
+
 ## Git Workflow
 
 1. Work on `feature/name` branch.
