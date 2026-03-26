@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attractor — A Plain English Guide</title>
+<title>Attractor — A Practical Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=1.1">
@@ -18,7 +18,7 @@
 <!-- TOC -->
 <div class="guide-page active" id="page-0">
   <div class="toc-header">
-    <div class="toc-label">A Plain English Guide</div>
+    <div class="toc-label">A Practical Guide</div>
     <h1>Attractor</h1>
     <p class="subtitle">Spec-driven development and the lights-out software factory</p>
   </div>
@@ -42,7 +42,7 @@
     <div class="toc-item" onclick="showPage(10)"><span class="toc-num">10</span><span class="toc-name">The Post-Agile Organisation — What Changes at Level 5</span><span class="toc-dots"></span></div>
   </div>
   <div class="toc-part">
-    <div class="toc-part-label">Part Four — The Practical Path and Honest Assessment</div>
+    <div class="toc-part-label">Part Four — The Practical Path and Trade-offs and Limitations</div>
     <div class="toc-item" onclick="showPage(11)"><span class="toc-num">11</span><span class="toc-name">Multi-Agent Collaboration with Shared Context — The Practical Path</span><span class="toc-dots"></span></div>
     <div class="toc-item" onclick="showPage(12)"><span class="toc-num">12</span><span class="toc-name">Capturing Agent Decisions — ADRs in a Lights-Out Factory</span><span class="toc-dots"></span></div>
     <div class="toc-item" onclick="showPage(13)"><span class="toc-num">13</span><span class="toc-name">The Brownfield Reality — What Attractor Cannot Do</span><span class="toc-dots"></span></div>
@@ -238,7 +238,7 @@
   <h2>The Infrastructure-World Parallel</h2>
   <p>This pattern has precedent in infrastructure engineering. Test Kitchen for Chef, Molecule for Ansible, cnspec for Terraform — all implement the outer test loop principle: the thing being tested must not see or control the tests. Infrastructure engineers learned this lesson decades ago. Attractor applies it to software for the first time.</p>
   <h2>The Residual Risk</h2>
-  <p>Stanford CodeX raised a valid concern in February 2026: if the builder and inspector share the same blind spots — the same training data, reasoning patterns, categories of misunderstanding — no diversity of tests eliminates the risk that both miss the same thing. The holdout set mitigates specification gaming. It does not fully resolve the deeper problem that an agent cannot catch failures it is not built to recognise. An honest limitation of the pattern, not a reason to abandon it.</p>
+  <p>Stanford CodeX raised a valid concern in February 2026: if the builder and inspector share the same blind spots — the same training data, reasoning patterns, categories of misunderstanding — no diversity of tests eliminates the risk that both miss the same thing. The holdout set mitigates specification gaming. It does not fully resolve the deeper problem that an agent cannot catch failures it is not built to recognise. A known limitation of the pattern, not a reason to abandon it.</p>
   <hr class="section-rule">
   <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the digital twin universe — integration testing without touching production systems.</p>
 </div>
@@ -255,13 +255,13 @@
   <h2>The Economic Inversion</h2>
   <p>Creating a high-fidelity behavioural clone of a significant SaaS application was always technically possible. Before AI, it was never economically feasible — the engineering effort to maintain an accurate clone of a rapidly evolving external service exceeded any realistic testing benefit. AI makes the build and maintenance feasible for the first time. The agent harness can rebuild the twin from updated API documentation faster than a human team can track API changes manually.</p>
   <h2>The Governance Gap</h2>
-  <p>Haselwanter raised the honest question: who validates that twins correctly reflect reality? Digital twins go stale when real services change. The pragmatic answer: don't mirror the entire service. Find the minimal viable twin that catches the failures that actually hurt in production. Maintain that subset rigorously. A twin that covers 80% of the integration surface and is accurately maintained is more valuable than one that covers 100% and drifts.</p>
+  <p>Haselwanter raised a valid question: who validates that twins correctly reflect reality? Digital twins go stale when real services change. The pragmatic answer: don't mirror the entire service. Find the minimal viable twin that catches the failures that actually hurt in production. Maintain that subset rigorously. A twin that covers 80% of the integration surface and is accurately maintained is more valuable than one that covers 100% and drifts.</p>
   <h2>Do You Actually Need a Digital Twin?</h2>
-  <p>For most enterprise teams, the honest answer is no — not yet, and possibly not ever. Every enterprise already has DEV and QA environments for unit and integration testing. Every major payment gateway, messaging platform, and identity provider publishes a sandbox API specifically designed for integration testing. Services like GitHub, Gmail, and Slack can be tested against dummy accounts at no cost. For a team running agentic workflows at normal development velocity, this combination covers the integration testing surface adequately.</p>
+  <p>For most enterprise teams, the practical answer is no — not yet, and possibly not ever. Every enterprise already has DEV and QA environments for unit and integration testing. Every major payment gateway, messaging platform, and identity provider publishes a sandbox API specifically designed for integration testing. Services like GitHub, Gmail, and Slack can be tested against dummy accounts at no cost. For a team running agentic workflows at normal development velocity, this combination covers the integration testing surface adequately.</p>
   <p>Digital twins earn their place under one specific condition: automated scenario evaluation at factory scale, running unattended, at volumes that real sandbox environments cannot support. When a factory is running thousands of scenario evaluations overnight in rapid succession, real sandbox APIs introduce problems that don't exist in human-paced testing — rate limits, state accumulation across runs, external dependency on third-party uptime, and per-call costs that compound at scale. A local digital twin has none of these constraints.</p>
   <p>That is a Level 5 problem. For teams at Level 3 or Level 4, existing DEV and QA environments plus vendor sandboxes are the right answer. Use what you already have. Build a digital twin only when you have adopted the holdout scenario pattern at sufficient automation scale that real environments have become the bottleneck. That is the point at which the build cost is justified — not before.</p>
   <h2>Do You Actually Need a Digital Twin?</h2>
-  <p>For most teams, the honest answer is no — not yet. The digital twin solves problems that only emerge at factory-scale automated evaluation. Before that threshold, existing infrastructure covers the testing surface adequately and at far lower build cost.</p>
+  <p>For most teams, the practical answer is no — not yet. The digital twin solves problems that only emerge at factory-scale automated evaluation. Before that threshold, existing infrastructure covers the testing surface adequately and at far lower build cost.</p>
   <p>Every enterprise already has DEV and QA environments for unit and integration testing. Payment gateway and SaaS providers — Stripe, PayPal, Twilio, Salesforce, GitHub — maintain purpose-built sandbox environments specifically for integration testing, kept in sync with their production APIs by the vendor at no cost to you. Dummy accounts on Gmail, GitHub, and Slack are free and immediate. For agent-assisted development at Level 3 or Level 4, this combination covers the integration testing surface correctly.</p>
   <p>The digital twin earns its investment only when three conditions are simultaneously true. First, you are running automated scenario evaluations at a volume and frequency that real sandbox environments cannot sustain — hitting rate limits, incurring per-call costs, or requiring deterministic state reset between thousands of runs. Second, you are operating unattended overnight, where an external sandbox outage stops the factory. Third, you have already adopted the holdout scenario pattern at sufficient maturity that the sandbox environment itself has become the bottleneck. Until all three conditions apply, prefer existing environments and vendor sandboxes. Build what earns its place.</p>
   <div class="callout"><div class="callout-label">The Practical Hierarchy</div><p>
@@ -320,7 +320,7 @@
   <h2>What Remains</h2>
   <p>Specification writing. Scenario maintenance. Digital twin maintenance. Outcome evaluation. Architectural decision-making. These are the activities that remain when implementation is removed from the human workload. They require judgment, domain knowledge, and the ability to make intent explicit — precisely the capabilities that distinguish senior engineers from junior ones, and experienced architects from recent graduates.</p>
   <h2>The Skill Shift</h2>
-  <p>The skill that becomes most valuable in a Level 5 environment is specification clarity — the ability to make intent explicit and constraints clear before the agent begins. This is not a new skill. Experienced architects have always known that the hard part of software development is knowing precisely what to build. The dark factory doesn't create a new requirement. It removes the implementation complexity that used to hide how few people were actually excellent at the specification work. The career implication is uncomfortable but honest: roles whose primary value was translating reasonably clear specifications into working code are the roles most at risk. That translation work is what agents do. The specification work requires the judgment that comes from deep domain experience.</p>
+  <p>The skill that becomes most valuable in a Level 5 environment is specification clarity — the ability to make intent explicit and constraints clear before the agent begins. This is not a new skill. Experienced architects have always known that the hard part of software development is knowing precisely what to build. The dark factory doesn't create a new requirement. It removes the implementation complexity that used to hide how few people were actually excellent at the specification work. The career implication is uncomfortable but realistic: roles whose primary value was translating reasonably clear specifications into working code are the roles most at risk. That translation work is what agents do. The specification work requires the judgment that comes from deep domain experience.</p>
   <div class="callout"><div class="callout-label">Post-Agile Is Not Anti-Iterative</div><p>The post-agile factory iterates rapidly. Specifications are refined quickly. Agents implement almost immediately. External scenarios validate continuously. The iteration happens on the specification, not on the code. <strong>Abolishing Jira is easy. Building a specification culture where requirements are precise enough for an agent to work from without guessing is hard.</strong> Most teams discover this after the ceremony has been deleted and the discipline hasn't been built.</p></div>
   <hr class="section-rule">
   <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the cost equation — what the token economics of a software factory actually look like.</p>
@@ -348,14 +348,14 @@
   <p>The Directed Graph principle transfers to collaborative environments as explicit workflow discipline. You do not need Graphviz DOT syntax and automated transition evaluation to benefit from the core idea: the agent should not decide its own sequencing. The phases should be explicit, the transition conditions should be clear, and the human should control when the agent moves from one phase to the next.</p>
   <p>In practice this means: research before planning, planning before implementation, verification before merge. The RPI workflow — Research, Plan, Implement — is the Directed Graph principle applied at the individual developer-agent level. BMAD's artefact chain — Brief, PRD, Architecture, Story, Implementation, QA — is the same principle applied at the project level. The graph doesn't have to be formal to be real. It has to be explicit, agreed, and followed.</p>
   <h2>The Experimentation Posture</h2>
-  <p>The honest framing for any team adopting these principles is experimentation, not transformation. Today's greenfield is tomorrow's brownfield. Every enterprise project goes live with some technical and functional debt — the business rule that wasn't documented, the edge case that was deferred, the architectural compromise made under deadline pressure. The discipline described in this chapter does not eliminate that reality. It reduces the accumulation rate.</p>
+  <p>The practical framing for any team adopting these principles is experimentation, not transformation. Today's greenfield is tomorrow's brownfield. Every enterprise project goes live with some technical and functional debt — the business rule that wasn't documented, the edge case that was deferred, the architectural compromise made under deadline pressure. The discipline described in this chapter does not eliminate that reality. It reduces the accumulation rate.</p>
   <p>Start with one practice. Apply NLSpec discipline to one project's Story Files — make them precise enough that the Developer agent never has to guess about terminology or scope. Measure what changes. If story rejection rates drop, if rework cycles shorten, if the QA agent produces fewer false positives, the practice has earned its place. Extend it. If it produces no measurable improvement in your context, it may not be the right starting point — try the Directed Graph discipline instead.</p>
   <p>The goal is not to reach Level 5. The goal is to build the mental models, the practices, and the organisational discipline that make the next level reachable. Pre-Agentic organisations that experiment thoughtfully now will have the accumulated understanding to make better decisions as the technology matures. Post-Agentic organisations that skipped the experimentation phase will be adopting practices without understanding why they work — which is the Agile ceremony problem all over again.</p>
   <h2>The Scenarios and Twins — When They Become Worth Building</h2>
   <p>The holdout scenario suite and the digital twin environment are not starting points. They are the infrastructure that becomes worth building once the first two principles are mature. A team that has solid NLSpec discipline and explicit phase control will naturally encounter the next bottleneck: the agent passes all the tests it wrote itself, but the output is still wrong in ways that only surface in production. That is the specification gaming problem. That is when holdout scenarios earn their investment.</p>
   <p>Similarly: a team that has mature specification discipline will encounter the limits of testing against mocked external services. The mock says the right thing; the real service behaves differently under load, under error conditions, under the specific sequence of calls the agent happens to make. That is when digital twins earn their investment. Both patterns solve real problems. Neither solves them cheaply. Build them when the problem they solve is the bottleneck — not before.</p>
   <hr class="section-rule">
-  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the brownfield reality — what Attractor cannot do and the honest migration path.</p>
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the brownfield reality — what Attractor cannot do and a realistic migration path.</p>
 </div>
 
 
@@ -365,7 +365,7 @@
   <span class="chapter-number">12</span>
   <h1 class="chapter-title">Capturing Agent Decisions — ADRs in a Lights-Out Factory</h1>
   <p class="chapter-intro">StrongDM made a deliberate architectural choice: treat internal code structure as opaque. If the holdout scenarios pass, the code is correct — the reasoning behind structural decisions is irrelevant. This is internally consistent for a three-person team that wrote both the NLSpec and the scenarios and can evolve them as understanding deepens. It is not sufficient for enterprise organisations operating under audit requirements, long system lifespans, and teams that change over time. This chapter presents the enterprise adaptation.</p>
-  <h2>StrongDM's Position — Honest and Deliberate</h2>
+  <h2>StrongDM's Position — Practical and Deliberate</h2>
   <p>The StrongDM factory manifesto states it plainly: code is treated analogously to an ML model snapshot — opaque weights whose correctness is inferred exclusively from externally observable behaviour. Internal structure is treated as opaque. The governance model is entirely behavioural: pass the scenarios, stay passing. No ADRs. No architectural rationale. No decision log.</p>
   <p>This is not an oversight. It is a principled position that follows directly from the factory's core constraint — code must not be reviewed by humans. If humans are not reviewing code, capturing the reasoning behind code structure serves no purpose within the factory's own feedback loop. The NLSpec defines what must be built. The scenarios define what correct means. Everything in between is the factory's business.</p>
   <p>The position works under one specific condition: the organisation writing the NLSpec and the scenarios is the same organisation that will maintain and evolve the system, indefinitely, with full context. For StrongDM's three-person team, that condition holds. For most enterprise contexts, it does not.</p>
@@ -450,14 +450,14 @@
   <h2>The Comprehension-Performance Gap</h2>
   <p>Qiao et al. (arXiv:2511.02922) documented what they call the comprehension-performance gap. Copilot reduced brownfield task completion time by approximately 48% — a genuine productivity gain. But gains in implementation speed did not correspond to improved understanding of the codebase. AI makes developers faster at modifying legacy code without helping them understand it. A codebase being modified at higher velocity by developers with no deeper understanding of what they're modifying is a dangerous combination over the medium term.</p>
   <h2>The Four-Phase Brownfield Migration</h2>
-  <p>The honest path from brownfield to eventual Level 4 or 5 operation is a four-phase migration, and none of the phases can be skipped.</p>
+  <p>The realistic path from brownfield to eventual Level 4 or 5 operation is a four-phase migration, and none of the phases can be skipped.</p>
   <p>Phase one: deploy AI at Level 2 to Level 3 and accept the J-curve. Use AI to accelerate existing work within the conventional development model. Expect a productivity dip during the transition as the team learns the tools. This builds capability without attempting structural change.</p>
   <p>Phase two: use AI to document what the system actually does. Generate specifications from existing code. Build scenario suites that capture real behaviour — including all the edge cases and implicit rules encoded in code but nowhere else. Tools like EPAM's ART parse COBOL, Java, and Python and generate functional specifications. The output is imperfect but significantly better than starting from nothing.</p>
   <p>Phase three: redesign the CI/CD pipeline for AI-generated code at volume. Different testing gates, different review thresholds, different deployment strategies. The pipeline that works for human-written code at human velocity is not the pipeline that works for agent-generated code at factory velocity.</p>
   <p>Phase four: begin new development at Level 4 to 5 while maintaining legacy in parallel. No big-bang cutover. New capabilities built in the factory model. Legacy maintained with conventional tools. The proportion of factory-built code grows over time as legacy is replaced.</p>
   <div class="callout"><div class="callout-label">The Defining Insight</div><p>"The organisations arriving fastest are not the ones with the most expensive vendor tools. They are the ones who can write the most accurate specs about their code — and have the deepest domain understanding." <strong>The factory is a discipline problem before it is a technology problem. An organisation that cannot write a precise specification for what it wants to build cannot run a software factory.</strong> The factory doesn't create the specification discipline. It requires it as a prerequisite.</p></div>
   <hr class="section-rule">
-  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the honest readiness assessment — prerequisites for Level 5.</p>
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: a realistic readiness assessment — prerequisites for Level 5.</p>
 </div>
 
 <!-- CH13 -->
@@ -476,17 +476,17 @@
   <p>For any system integrating with external services — which is any real enterprise system — digital twins of those services need to exist before the factory can run integration testing without production risk. Building adequate twins for a complex enterprise environment is a significant up-front investment.</p>
   <h2>Prerequisite 5 — Organisational Tolerance for a Different Way of Working</h2>
   <p>No sprints. No standups. No Jira board. No code review. The middle layer of coordination work disappears. The transition requires genuine leadership commitment to a different operating model — not just tool adoption, but structural change. Organisations that adopt the tools while maintaining the ceremonies they were designed to replace produce Level 2 results at Level 5 cost.</p>
-  <h2>The Honest Answer for Most Enterprise Organisations</h2>
+  <h2>The Realistic Answer for Most Enterprise Organisations</h2>
   <p>For most enterprise development organisations, Level 5 is a three to five year horizon — not because the technology isn't ready, but because the organisational prerequisites take that long to build. The right goal for most organisations today is Level 3, with a deliberate plan toward Level 4. BMAD provides the structured on-ramp to Level 3. The Attractor patterns — particularly NLSpec discipline and the holdout scenario approach — are applicable at Level 3 and build the capabilities that Level 4 and eventually Level 5 require.</p>
   <hr class="section-rule">
-  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Glossary follows — every major Attractor and Spec-Driven Development term defined in plain English.</p>
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Glossary follows — every major Attractor and Spec-Driven Development term defined clearly.</p>
 </div>
 
 <!-- GLOSSARY -->
 <div class="guide-page" id="page-15">
   <div class="chapter-eyebrow">Reference</div>
   <h1 class="chapter-title">Glossary</h1>
-  <p class="chapter-intro">Every major term used in this guide, defined in plain English.</p>
+  <p class="chapter-intro">Every major term used in this guide, defined clearly.</p>
   <div class="glossary-entry"><div class="glossary-term">Attractor</div><p class="glossary-def">The open-source agent framework built by StrongDM to run their lights-out software factory. The repository consists of three Markdown specification files and the agent harness that processes them. Embodies four architecture patterns: NLSpec, directed graph phases, scenarios as holdout-set, and digital twins.</p></div>
   <div class="glossary-entry"><div class="glossary-term">Comprehension-Performance Gap</div><p class="glossary-def">The documented phenomenon (Qiao et al., arXiv:2511.02922) where AI-assisted development improves implementation speed without improving developers' understanding of the codebase. Copilot reduced brownfield task completion time by approximately 48% while leaving codebase comprehension unchanged — making developers faster at modifying systems they understand no better than before.</p></div>
   <div class="glossary-entry"><div class="glossary-term">Dark Factory</div><p class="glossary-def">A software development environment where agents write, test, and ship code without human involvement in the implementation work. Named for Fanuc's lights-out manufacturing facility in Oshino, Japan. Corresponds to Level 5 in Dan Shapiro's five-level maturity framework.</p></div>

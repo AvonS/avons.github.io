@@ -82,6 +82,48 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   margin-left: 8px;
 }
 
+/* ── Curriculum Grid ── */
+.curriculum-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 32px;
+}
+.curriculum-stage {
+  border-left: 2px solid var(--rule);
+  padding-left: 32px;
+  position: relative;
+}
+.curriculum-stage::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--black);
+  border-radius: 50%;
+}
+.stage-header {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--black);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+  background: var(--soft-bg);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.curriculum-stage .article-card {
+  padding: 24px 0;
+}
+.curriculum-stage .article-title {
+  font-size: 1.25rem;
+}
+
 /* ── Article cards ── */
 .article-card {
   padding: 32px 0; border-bottom: 1px solid var(--rule);

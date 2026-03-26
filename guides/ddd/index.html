@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Domain-Driven Design — A Plain English Reference</title>
+<title>Domain-Driven Design — A Practical Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=1.1">
@@ -20,7 +20,7 @@
      ══════════════════════════════════════════ -->
 <div class="guide-page active" id="page-0">
   <div class="toc-header">
-    <div class="toc-label">A Plain English Reference</div>
+    <div class="toc-label">A Practical Reference</div>
     <h1>Domain-Driven Design</h1>
     <p class="subtitle">Aligning software models with business domains</p>
   </div>
@@ -697,7 +697,7 @@
 
   <p>The Core Domain is where DDD's full arsenal belongs. Custom models, deep collaboration with domain experts, careful refinement over time, the best developers on the team. This is what the organisation should be building rather than buying, because this is where competitive advantage lives.</p>
 
-  <p>The uncomfortable question this forces: what actually is your Core Domain? Many organisations discover, when they ask this honestly, that they've been investing most of their development effort in the Supporting and Generic domains while their actual competitive differentiator runs on legacy code that nobody wants to touch.</p>
+  <p>The uncomfortable question this forces: what actually is your Core Domain? Many organisations discover, when they ask this question realistically, that they've been investing most of their development effort in the Supporting and Generic domains while their actual competitive differentiator runs on legacy code that nobody wants to touch.</p>
 
   <h2>Supporting Domain — The Necessary Work</h2>
 
@@ -758,7 +758,7 @@
 
   <p>Every team believes their domain is the Core Domain. Development teams working on the HR system believe HR is strategically critical. Teams working on the reporting layer believe reporting is where the business makes decisions. These beliefs are not wrong, exactly — but they're not the same as competitive differentiation.</p>
 
-  <p>The classification exercise forces an honest conversation: where does this organisation actually win or lose in the market? That's the Core Domain. Everything else supports it.</p>
+  <p>The classification exercise forces a realistic conversation: where does this organisation actually win or lose in the market? That's the Core Domain. Everything else supports it.</p>
 
   <p>For a retailer, the Core Domain might be demand forecasting and inventory optimisation — the thing that determines whether the right products are on the shelf at the right price. The e-commerce website is important, but it's a Supporting Domain. Authentication and email are Generic. If the retailer has been spending the last decade building a beautiful custom authentication system, that's the subdomain classification conversation they needed to have ten years ago.</p>
 
@@ -1078,7 +1078,7 @@
 
   <p>A common source of confusion is the difference between a Domain Event and a command. A command is an instruction: "place this order," "reserve this stock." It can be rejected — the stock might not be available, the payment might decline. An event is a fact: "the order was placed," "the stock was reserved." It already happened. It can't be rejected, only responded to.</p>
 
-  <p>This distinction matters for how you name things. <em>PlaceOrder</em> is a command — it might fail. <em>OrderPlaced</em> is an event — it succeeded. Getting the naming right keeps the model honest about what's a request and what's a recorded fact.</p>
+  <p>This distinction matters for how you name things. <em>PlaceOrder</em> is a command — it might fail. <em>OrderPlaced</em> is an event — it succeeded. Getting the naming right keeps the model accurate about what's a request and what's a recorded fact.</p>
 
   <h2>Events as an Audit Trail</h2>
 
@@ -1131,7 +1131,7 @@
 
   <p>Not every system needs explicit Repository and Factory classes. For simple Aggregates with straightforward creation logic, a constructor and direct database access might be perfectly adequate. These patterns earn their keep in proportion to the complexity of what they're managing. The point isn't to add indirection for its own sake — it's to keep the domain model focused on domain logic, with the mechanics of storage and construction handled separately.</p>
 
-  <p>In a system of any real scale, the Repository pattern in particular becomes almost essential. It's the mechanism that allows you to test domain logic without a real database, swap storage implementations without touching domain code, and keep the domain model honest about what it actually is: a model of the business, not a wrapper around database operations.</p>
+  <p>In a system of any real scale, the Repository pattern in particular becomes almost essential. It's the mechanism that allows you to test domain logic without a real database, swap storage implementations without touching domain code, and keep the domain model accurate about what it actually is: a model of the business, not a wrapper around database operations.</p>
 
   <hr class="section-rule">
   <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: how Bounded Contexts talk to each other — the integration patterns that keep your model clean at the boundaries.</p>
@@ -1158,7 +1158,7 @@
 
   <p>At Meridian Retail, the Ordering context needs to know whether a product is in stock before confirming an order. The Inventory context holds that information. These are two separate Bounded Contexts with separate models — but they need to communicate. How they communicate, and on whose terms, determines how tightly coupled they become and how much either can change independently.</p>
 
-  <p>DDD identifies several distinct relationship patterns. Each makes different trade-offs between coupling, autonomy, and coordination overhead. Understanding which pattern you're using — and being honest about it — is the first step to managing the relationship well.</p>
+  <p>DDD identifies several distinct relationship patterns. Each makes different trade-offs between coupling, autonomy, and coordination overhead. Understanding which pattern you're using — and being realistic about it — is the first step to managing the relationship well.</p>
 
   <h2>Shared Kernel</h2>
 
@@ -1257,7 +1257,7 @@
 
   <p>The choice isn't purely technical — it's partly political. A Conformist relationship is often the result of a power imbalance, not a design decision. A Customer-Supplier relationship requires the upstream team to take the downstream team seriously as a stakeholder. An ACL requires investment in building the translation layer.</p>
 
-  <p>The honest question to ask for every integration on your Context Map: which pattern are we actually using? Many teams discover they've been treating a relationship as Customer-Supplier — expecting the upstream to respond to their needs — when the upstream team treats it as Conformist. Naming the pattern exposes the mismatch and forces a conversation about who actually has what obligations.</p>
+  <p>The practical question to ask for every integration on your Context Map: which pattern are we actually using? Many teams discover they've been treating a relationship as Customer-Supplier — expecting the upstream to respond to their needs — when the upstream team treats it as Conformist. Naming the pattern exposes the mismatch and forces a conversation about who actually has what obligations.</p>
 
   <hr class="section-rule">
   <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: Domain Services — behaviour that belongs to the domain but doesn't naturally fit inside any single object.</p>
@@ -1342,7 +1342,7 @@
 
   <h2>Step Three — Draw the Context Map</h2>
 
-  <p>Identify the Bounded Contexts — the software boundaries that correspond to distinct models and teams. Draw the relationships between them. Label the integration patterns honestly. Name the upstream and downstream directions. This is the document that will govern architectural decisions for the next several years. Take the time to get it right, and review it regularly.</p>
+  <p>Identify the Bounded Contexts — the software boundaries that correspond to distinct models and teams. Draw the relationships between them. Label the integration patterns accurately. Name the upstream and downstream directions. This is the document that will govern architectural decisions for the next several years. Take the time to get it right, and review it regularly.</p>
 
   <h2>Step Four — Establish Ubiquitous Language Per Context</h2>
 
@@ -1415,7 +1415,7 @@
   <p>Tactical patterns applied without strategic foundation are sophisticated carpentry inside a poorly designed house. The joints are cleaner but the rooms are still in the wrong places.</p>
 
   <hr class="section-rule">
-  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: an honest assessment of what in DDD has stood the test of time — and what hasn't.</p>
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">Next: a realistic look of what in DDD has stood the test of time — and what hasn't.</p>
 </div>
 
 <!-- ══════════════════════════════════
@@ -1427,7 +1427,7 @@
   <span class="chapter-number">15</span>
   <h1 class="chapter-title">What Ages Well and What Doesn't</h1>
 
-  <p class="chapter-intro">DDD was published in 2003. Some of its ideas have proven to be timeless. Others were reasonable in their context and have aged poorly. Being honest about the difference is more useful than treating the whole thing as equally sacred.</p>
+  <p class="chapter-intro">DDD was published in 2003. Some of its ideas have proven to be timeless. Others were reasonable in their context and have aged poorly. Acknowledging the difference is more useful than treating the whole thing as equally sacred.</p>
 
   <h2>What Has Stood the Test of Time</h2>
 
@@ -1446,7 +1446,7 @@
   <p>The Factory pattern has fared similarly. For genuinely complex creation logic, it's still the right tool. But in codebases that create a Factory class for every Aggregate as a matter of principle, most of those Factories contain three lines of code and add nothing but an extra class to navigate.</p>
 
   <div class="callout">
-    <div class="callout-label">The Honest Assessment</div>
+    <div class="callout-label">The Trade-offs and Limitations</div>
     <p>Evans himself has acknowledged that the tactical patterns in the original book were written with early 2000s Java in mind. The strategic patterns — Bounded Contexts, Ubiquitous Language, subdomain classification, context mapping — are the durable contribution of DDD. Apply them everywhere. Apply the tactical patterns where they earn their complexity, not as a mandatory checklist.</p>
   </div>
 
@@ -1464,20 +1464,20 @@
 
   <h2>The Enduring Value Proposition</h2>
 
-  <p>Strip away the implementation patterns that have aged, and what remains is a discipline for thinking clearly about complex business domains before you build software to serve them. That discipline — understanding the business deeply, naming things precisely, drawing honest boundaries, investing effort where it creates competitive advantage — has no expiry date.</p>
+  <p>Strip away the implementation patterns that have aged, and what remains is a discipline for thinking clearly about complex business domains before you build software to serve them. That discipline — understanding the business deeply, naming things precisely, drawing clear boundaries, investing effort where it creates competitive advantage — has no expiry date.</p>
 
   <p>The reason DDD remains relevant two decades after publication is that the underlying problem it solves — the gap between business reality and software models — has not been solved by any subsequent approach. Microservices made it worse before people started applying DDD thinking to service boundaries. Cloud-native architectures didn't address it. The emergence of AI-assisted development makes it more important, not less — because a system that feeds ambiguous, poorly-bounded domain concepts into automated processes gets ambiguous, confident, incorrect results at greater speed.</p>
 
   <p>The strategic patterns are the lasting gift. Use them. Be selective about the tactical patterns. And read Evans knowing that his contribution is the thinking, not just the patterns — he was teaching you how to reason about domains, not just what class names to use.</p>
 
   <hr class="section-rule">
-  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">The Glossary follows — a plain English reference for every major DDD term used in this guide.</p>
+  <p style="color: var(--guide-ink-faint); font-size: 0.9rem; font-style: italic;">The Glossary follows — a practical reference for every major DDD term used in this guide.</p>
 </div>
 
 <div class="guide-page" id="page-16">
   <div class="chapter-eyebrow">Reference</div>
   <h1 class="chapter-title">Glossary of DDD Terms</h1>
-  <p class="chapter-intro">Every major term in this guide, defined in plain English. Where a term has a more technical meaning in Evans or Vernon, that's noted briefly.</p>
+  <p class="chapter-intro">Every major term in this guide, defined clearly. Where a term has a more technical meaning in Evans or Vernon, that's noted briefly.</p>
 
   <div class="glossary-entry">
     <div class="glossary-term">Aggregate</div>

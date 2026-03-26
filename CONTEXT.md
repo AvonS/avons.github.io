@@ -27,12 +27,18 @@ git branch --show-current
 
 ```
 avons.github.io/
-├── index.html              ← Landing Page (Editorial List)
-├── agentic-engineering/    ← Main Article: "The Agentic Engineering Journey"
-├── guides/                 ← Deep-dive SPA guides
-│   ├── ddd/                ← Domain-Driven Design
-│   ├── bmad/               ← BMAD Method
-│   └── attractor/          ← Attractor Framework
+├── index.html              ← Landing Page (Curriculum Roadmap)
+├── notes/                  ← Articles and Field Notes
+│   ├── agentic-engineering/ ← "The Agentic Engineering Journey"
+│   └── curriculum-launch/   ← WIP Intro Blog Post
+├── guides/                 ← Deep-dive SPA curriculum
+│   ├── ddd/                ← Guide 1: Domain-Driven Design
+│   ├── event-storming/     ← Guide 2: Event Storming
+│   ├── flowcharts/         ← Guide 3: Flowchart-First Path
+│   ├── ddd-to-context/     ← Guide 4: Domain Context Engineering
+│   ├── bmad/               ← Guide 5: BMAD Method
+│   ├── attractor/          ← Guide 6: Attractor Framework
+│   └── synthesis/          ← Guide 7: From Domain to Factory
 └── assets/
     ├── style.css           ← Global base styles + Dark Mode tokens
     ├── landing.css         ← Home page specific styles
