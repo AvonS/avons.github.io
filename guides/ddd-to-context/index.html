@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Context Engineering — Avon Software Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+</head>
+<body>
+
+<guide-header title="Domain Context Engineering"></guide-header>
+
+<!-- TOC -->
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Practical Guide</div>
+    <h1>Domain Context Engineering</h1>
+    <p class="subtitle">From flowcharts to BMAD artefacts &mdash; using LLMs to standardise the handoff from domain discovery to development</p>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part One &mdash; The Problem and the Idea</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">The Handoff Problem &mdash; Where Domain Clarity Goes to Die</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">The Pipeline &mdash; Flowcharts to BMAD with LLMs in the Middle</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two &mdash; The domain-ctx.txt Format</div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">What domain-ctx.txt Is &mdash; Structure and Purpose</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">The Full Format Specification</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">A Worked Example &mdash; Meridian Retail Returns Context</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three &mdash; The LLM Prompts</div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">Prompt 1 &mdash; Generating domain-ctx.txt from Flowcharts</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">Prompt 2 &mdash; Generating the BMAD Brief from domain-ctx.txt</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">Prompt 3 &mdash; Generating the PRD from domain-ctx.txt</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">Prompt 4 &mdash; Generating the Architecture Skeleton</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Four &mdash; Making It Work</div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">10</span><span class="toc-name">Maintaining the Context File Over Time</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(11)"><span class="toc-num">11</span><span class="toc-name">Trade-offs and Limitations &mdash; Including Brownfield ERP as a Special Case</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(12)"><span class="toc-num">&mdash;</span><span class="toc-name">Format Quick Reference and Glossary</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<!-- CH1 -->
+<div class="guide-page" id="page-1">
+  <div class="part-header"><div class="part-num">Part One</div><h2>The Problem and the Idea</h2><p>Why the handoff from domain discovery to development execution loses so much value &mdash; and a practical fix</p></div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">The Handoff Problem &mdash; Where Domain Clarity Goes to Die</h1>
+  <p class="chapter-intro">A team runs a successful Event Storming session. The wall is covered with orange and blue stickies. The Bounded Contexts are named. The Ubiquitous Language is agreed. Three domain experts and four developers stand in front of it and see the same picture for the first time. Then the session ends, the stickies get photographed, and someone has to turn all of it into a BMAD Brief. That someone sits at their desk, looks at the photos, and starts writing. By the time they finish, half the precision has leaked out.</p>
+  <h2>How Precision Leaks</h2>
+  <p>The leakage is not deliberate. Nobody decides to introduce ambiguity. It happens because the translation from domain model to development artefact is done by a single person, in isolation, without a mechanism to enforce consistency. The term the domain experts agreed would be called <em>ReturnRequest</em> appears as <em>ReturnRequest</em> in section one of the PRD, <em>ReturnRecord</em> in section three, and <em>return</em> (lowercase, undefined) in the acceptance criteria. Three names for one concept. The agent implementing Story 7 picks one and proceeds confidently.</p>
+  <p>This is the Ubiquitous Language problem Evans identified in 2003, recurring at the handoff between domain modelling and development specification. DDD solved it for the conversation between developers and domain experts. Nobody solved it for the translation between domain model and development artefact &mdash; because until recently, a human doing the translation was the only option.</p>
+  <div class="callout"><div class="callout-label">The Core Insight</div><p>The handoff from domain model to BMAD artefacts is a mechanical translation problem, not a judgment problem. The terminology should be consistent because it was agreed. The Bounded Context boundaries should appear in the PRD scope definition because they were drawn. The Domain Events should become the functional requirements because they represent what the system must produce. <strong>A machine can do this translation more consistently than a human &mdash; not because it understands the domain better, but because it applies the same rules every time without drift.</strong></p></div>
+  <h2>The Standardisation Benefit</h2>
+  <p>When an LLM generates the BMAD Brief and PRD directly from a structured domain context file, three things become consistent by construction. The terminology &mdash; every term in the artefacts matches the Ubiquitous Language exactly as defined in the context file, because the LLM reads the definition before writing the artefact. The scope &mdash; what is in scope and what is out of scope is derived from the Bounded Context definition, not from the Brief writer's memory of what was decided. The functional requirements &mdash; they are derived from the Domain Events, which are the agreed facts the system must produce.</p>
+  <p>For IT teams that run multiple projects in the same domain, the standardisation compounds. Every project's BMAD artefacts use the same terminology, the same scope boundaries, the same event vocabulary. A new developer joining the third project recognises the language from the first two. The context file is the organisational memory that travels between projects.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the full pipeline &mdash; from flowcharts to BMAD artefacts with LLMs doing the translation.</p>
+</div>
+
+<!-- CH2 -->
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">The Pipeline &mdash; Flowcharts to BMAD with LLMs in the Middle</h1>
+  <p class="chapter-intro">The complete pipeline has one human decision point and four LLM-assisted steps. The human decision point is irreducible &mdash; domain expert validation cannot be automated. Everything else benefits from LLM assistance for consistency and speed.</p>
+  <h2>The Full Pipeline</h2>
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="pipeline-icon human">H</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">Input: Existing flowcharts and process documentation</div>
+        <div class="pipeline-desc">Swimlane diagrams, ISO process maps, compliance documentation, any existing business process description. Uploaded as images or text to the LLM session.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon llm">L</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">LLM Step 1: Extract, overlay, and gap-check</div>
+        <div class="pipeline-desc">The LLM reads the flowcharts, applies the DDD notation mapping, identifies Domain Events, Commands, Actors, Policies, and Bounded Context candidates. Simultaneously identifies gaps &mdash; missing exception paths, implicit policies not drawn, ambiguous terminology, unclear context boundaries. Outputs a draft domain model plus a structured question list for the domain expert.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon human">H</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">Human: Domain expert answers the questions</div>
+        <div class="pipeline-desc">The only irreducible human step. The domain expert reviews the draft model, answers the gap questions, corrects any misinterpretations. This can be done asynchronously &mdash; a document sent by email and returned with comments. The LLM has done the analytical work; the human provides the knowledge the documentation didn't capture.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon llm">L</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">LLM Step 2: Generate domain-ctx.txt</div>
+        <div class="pipeline-desc">Synthesises the draft model and the expert's answers into a structured, coherent domain context file. Enforces consistent naming throughout. Checks internal coherence &mdash; flags any remaining contradictions for human resolution. Outputs the versioned domain-ctx.txt.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon human">H</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">Human: Review and approve domain-ctx.txt</div>
+        <div class="pipeline-desc">The domain expert and the DDD practitioner review the context file. Lightweight &mdash; not a workshop, a document review. The question is simply: does this match how we understand the domain? Approve or request specific corrections.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon llm">L</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">LLM Step 3: Generate BMAD artefacts</div>
+        <div class="pipeline-desc">From the approved domain-ctx.txt, the LLM generates the BMAD Brief, PRD, and Architecture skeleton. Terminology is consistent by construction &mdash; pulled directly from the Ubiquitous Language section of the context file. Scope is derived from the Bounded Context definition. Functional requirements are derived from Domain Events.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon human">H</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">Human: Review and approve BMAD artefacts</div>
+        <div class="pipeline-desc">The standard BMAD human-in-the-loop review gates. The Brief, PRD, and Architecture are reviewed and approved before Story generation begins. This review is faster than conventional BMAD because the terminology and scope are already consistent &mdash; the reviewer is checking correctness, not untangling drift.</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&#8595;</div>
+    <div class="pipeline-step">
+      <div class="pipeline-icon output">&#10003;</div>
+      <div class="pipeline-content">
+        <div class="pipeline-title">Output: BMAD Story Files &rarr; Implementation</div>
+        <div class="pipeline-desc">The Scrum Master generates Story Files from the approved artefacts. Each Story File inherits the consistent terminology from the context file, through the PRD, through to the implementation. The Ubiquitous Language reaches all the way to the Developer agent's context.</div>
+      </div>
+    </div>
+  </div>
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 660 120" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="arr-pipe" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#4a9068"/></marker></defs>
+      <rect x="10" y="40" width="95" height="40" rx="6" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1.5"/>
+      <text x="57" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a4a6a" font-weight="600">Flowcharts</text>
+      <text x="57" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa">existing docs</text>
+      <line x1="107" y1="60" x2="123" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+      <rect x="125" y="40" width="95" height="40" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="172" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1d3d2a" font-weight="600">LLM extracts</text>
+      <text x="172" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068">+ gap checks</text>
+      <line x1="222" y1="60" x2="238" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+      <rect x="240" y="40" width="95" height="40" rx="6" fill="#1a1a2e"/>
+      <text x="287" y="54" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="white" font-weight="600">Human</text>
+      <text x="287" y="67" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="rgba(255,255,255,.7)">expert answers</text>
+      <text x="287" y="78" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="#c0392b">irreducible</text>
+      <line x1="337" y1="60" x2="353" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+      <rect x="355" y="40" width="95" height="40" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="402" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1d3d2a" font-weight="600">LLM generates</text>
+      <text x="402" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068">domain-ctx.txt</text>
+      <line x1="452" y1="60" x2="468" y2="60" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-pipe)"/>
+      <rect x="470" y="40" width="115" height="40" rx="6" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="527" y="57" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1d3d2a" font-weight="600">LLM generates</text>
+      <text x="527" y="71" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068">BMAD artefacts</text>
+      <text x="287" y="22" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-style="italic">One human decision point. Four LLM-assisted steps. Consistent terminology end to end.</text>
+    </svg>
+    <div class="diagram-caption">The pipeline in one line. The human irreducible step is domain expert knowledge validation &mdash; everything else benefits from LLM consistency.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: what domain-ctx.txt is &mdash; structure, purpose, and the FastHTML parallel that inspired it.</p>
+</div>
+
+<!-- CH3 -->
+<div class="guide-page" id="page-3">
+  <div class="part-header"><div class="part-num">Part Two</div><h2>The domain-ctx.txt Format</h2><p>Structure, specification, and a worked Meridian Retail example</p></div>
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">What domain-ctx.txt Is &mdash; Structure and Purpose</h1>
+  <p class="chapter-intro">FastHTML publishes a file called llms-ctx.txt &mdash; a single flat text document that distils their entire framework into a form an LLM can consume as context. Not a chatbot, not a RAG system, not vector embeddings. Just well-organised text that gives an agent everything it needs to generate correct FastHTML code. domain-ctx.txt applies the same principle to a business domain.</p>
+  <h2>The FastHTML Parallel</h2>
+  <p>FastHTML's llms-ctx.txt tells an agent how to use their framework &mdash; the API, the conventions, the patterns to follow. domain-ctx.txt tells an agent what the business domain looks like &mdash; the concepts, the boundaries, the language, the events. One is a technical context package. The other is a domain context package. Both serve the same purpose: give the agent the specific knowledge it needs to produce correct output in this specific context, without having to infer it from general training.</p>
+  <p>The format is deliberately simple. Plain text, structured with clear section headers. No special markup language, no proprietary format. An LLM can read it, a human can edit it, and a version control system can track it. It loads into a Claude Project, a BMAD session, or an Attractor NLSpec preamble without any transformation.</p>
+  <div class="callout"><div class="callout-label">The Portability Principle</div><p>domain-ctx.txt is a single file that travels with the project. It is attached to every agent session that touches the domain &mdash; BMAD planning sessions, Developer agent sessions, QA agent sessions, and eventually the Attractor NLSpec. Every agent that reads it starts with the same domain understanding. <strong>The Ubiquitous Language reaches from the domain expert's answer to the Developer agent's context window &mdash; without any human translator in between.</strong></p></div>
+  <h2>What the File Contains</h2>
+  <p>The file has seven sections, each serving a distinct purpose for downstream agents.</p>
+  <p><strong>Project Header</strong> &mdash; name, domain, version, date, and a one-paragraph clear description of what this domain does and why it exists. The agent reads this first and frames everything that follows.</p>
+  <p><strong>Subdomain Classification</strong> &mdash; explicit Core, Supporting, and Generic classification with brief reasoning. Tells the agent where to invest modelling depth and where to use simple approaches.</p>
+  <p><strong>Bounded Contexts</strong> &mdash; each context named, described in two sentences, and given its precise scope. What is inside, what is explicitly outside.</p>
+  <p><strong>Ubiquitous Language</strong> &mdash; one entry per term, per context. Term, precise definition, what it is not. This section is the most important for preventing specification drift.</p>
+  <p><strong>Domain Events</strong> &mdash; sequenced by context. Past tense name, what triggered it, what it means to the business, what it produces or enables downstream.</p>
+  <p><strong>Policies</strong> &mdash; the automatic reactions. "Whenever X, if Y, then Z automatically." These are the hidden business rules that flowcharts rarely make explicit.</p>
+  <p><strong>Integration Map</strong> &mdash; which events cross which context boundaries, and what the receiving context does with them. The machine-readable Context Map.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the complete format specification &mdash; every section, every field, every convention.</p>
+</div>
+
+<!-- CH4 -->
+<div class="guide-page" id="page-4">
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">The Full Format Specification</h1>
+  <p class="chapter-intro">The specification below defines every section of domain-ctx.txt. Follow it precisely &mdash; the prompts in Part Three are written to produce and consume this exact structure.</p>
+  <div class="code-label">domain-ctx.txt &mdash; Complete Format Specification</div>
+  <div class="code-block"><pre><span class="comment"># ============================================================
+# domain-ctx.txt
+# Domain Context File &mdash; [Project Name]
+# Version: 1.0 | Date: YYYY-MM-DD | Status: Approved
+# ============================================================</span>
+
+<span class="section">## PROJECT OVERVIEW</span>
+<span class="key">Domain:</span> <span class="value">[Short domain name &mdash; e.g. "Meridian Retail &mdash; Returns Management"]</span>
+<span class="key">Scope:</span> <span class="value">[One sentence: what this file covers and what it explicitly excludes]</span>
+<span class="key">Description:</span> <span class="value">[Two to three sentences: what this domain does, who it serves,
+why it exists. Clear and simple. No technical jargon.]</span>
+<span class="key">Approved by:</span> <span class="value">[Domain expert name and role]</span>
+
+<span class="section">## SUBDOMAIN CLASSIFICATION</span>
+<span class="key">Core Domain:</span> <span class="value">[What the organisation competes on &mdash; name it, one sentence why]</span>
+<span class="key">Supporting:</span> <span class="value">[Necessary but not differentiating &mdash; name each, one phrase]</span>
+<span class="key">Generic:</span> <span class="value">[Commodity problems &mdash; buy or reuse, do not build]</span>
+
+<span class="section">## BOUNDED CONTEXTS</span>
+<span class="comment"># One block per Bounded Context. Repeat this structure for each.</span>
+
+<span class="key">Context:</span> <span class="value">[ContextName &mdash; use business capability name, not department name]</span>
+<span class="key">Owns:</span> <span class="value">[What this context is responsible for &mdash; two sentences max]</span>
+<span class="key">In scope:</span> <span class="value">[Explicit list of what belongs here]</span>
+<span class="key">Out of scope:</span> <span class="value">[Explicit list of what does NOT belong here]</span>
+<span class="key">Team:</span> <span class="value">[Which team or role owns this context]</span>
+<span class="key">Language note:</span> <span class="value">[Any terminology that differs from adjacent contexts &mdash;
+e.g. "Customer here means any person who has raised a support ticket,
+NOT the legal entity that holds the contract (see Finance context)"]</span>
+
+<span class="section">## UBIQUITOUS LANGUAGE</span>
+<span class="comment"># One entry per term per context. Terms in different contexts
+# that share a name MUST have separate entries.
+# Format: [ContextName] :: [Term] :: [Definition] :: [What it is NOT]</span>
+
+<span class="value">CustomerService :: ReturnRequest :: A formal request by a customer to
+return a purchased item, created when the customer initiates the return
+process. Has a lifecycle: Pending, UnderReview, Approved, Rejected. ::
+NOT the physical item being returned. NOT the refund transaction.</span>
+
+<span class="value">Finance :: Customer :: The legal entity (person or organisation) that
+holds a financial obligation with Meridian Retail. Identified by account
+number. May differ from the person who initiated the return. ::
+NOT the end user who raised the support ticket (see CustomerService context).</span>
+
+<span class="comment"># Continue for every significant term in every context.</span>
+
+<span class="section">## DOMAIN EVENTS</span>
+<span class="comment"># Sequenced by context. Past tense. Business language.
+# Format per event:</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Event:</span> <span class="value">ReturnRequested</span>
+<span class="key">Triggered by:</span> <span class="value">Customer submits return request via portal or phone</span>
+<span class="key">Business meaning:</span> <span class="value">A return has been formally initiated. The business is
+now obligated to process it within SLA.</span>
+<span class="key">Produces:</span> <span class="value">ReturnRequest record in Pending state. SLA timer started.</span>
+<span class="key">Consumed by:</span> <span class="value">CustomerService context (internal) for review workflow</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Event:</span> <span class="value">ReturnApproved</span>
+<span class="key">Triggered by:</span> <span class="value">Agent approves the return after review</span>
+<span class="key">Business meaning:</span> <span class="value">Meridian has accepted the return. Customer is entitled to refund.</span>
+<span class="key">Produces:</span> <span class="value">ReturnRequest moves to Approved state</span>
+<span class="key">Consumed by:</span> <span class="value">Finance context &mdash; triggers RefundInitiation</span>
+
+<span class="comment"># Continue for every Domain Event in every context.</span>
+
+<span class="section">## POLICIES</span>
+<span class="comment"># The automatic business rules. Whenever X, if Y, then Z.
+# These are the most frequently missing element in flowcharts.</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Policy:</span> <span class="value">HighValueReturnFlag</span>
+<span class="key">Rule:</span> <span class="value">Whenever ReturnRequested AND order value exceeds GBP 500,
+automatically flag ReturnRequest for SeniorAgentReview before
+any approval action is permitted.</span>
+<span class="key">Rationale:</span> <span class="value">Fraud risk threshold agreed by CS and Finance in March 2024.</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Policy:</span> <span class="value">SLAEscalation</span>
+<span class="key">Rule:</span> <span class="value">Whenever ReturnRequest remains in Pending state for more than
+48 hours, automatically escalate to TeamLeader and notify customer.</span>
+<span class="key">Rationale:</span> <span class="value">Regulatory requirement under Consumer Rights Act 2015.</span>
+
+<span class="section">## INTEGRATION MAP</span>
+<span class="comment"># Which events cross which context boundaries.
+# This is the machine-readable Context Map.</span>
+
+<span class="key">Event:</span> <span class="value">ReturnApproved</span>
+<span class="key">From:</span> <span class="value">CustomerService</span>
+<span class="key">To:</span> <span class="value">Finance</span>
+<span class="key">Pattern:</span> <span class="value">Customer-Supplier (Finance is downstream, CS is upstream)</span>
+<span class="key">Payload:</span> <span class="value">ReturnRequest ID, Customer account number, refund amount,
+refund method (original payment method or store credit)</span>
+<span class="key">Finance action:</span> <span class="value">Initiates RefundTransaction. Generates InvoiceAdjustment.</span>
+
+<span class="section">## OPEN QUESTIONS</span>
+<span class="comment"># Unresolved items requiring domain expert input.
+# Remove each entry once resolved and incorporate answer above.</span>
+
+<span class="key">Q1:</span> <span class="value">When a return is approved but the original payment method has
+expired, what is the fallback? Store credit only, or can the agent
+issue a cheque?</span>
+<span class="key">Owner:</span> <span class="value">Finance team</span>
+<span class="key">Needed by:</span> <span class="value">Before PRD review</span>
+
+<span class="comment"># ============================================================
+# END OF FILE
+# ============================================================</span></pre></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: a complete worked example &mdash; Meridian Retail's Returns Management domain-ctx.txt.</p>
+</div>
+
+<!-- CH5 -->
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">A Worked Example &mdash; Meridian Retail Returns Context</h1>
+  <p class="chapter-intro">A realistic but abbreviated domain-ctx.txt for Meridian Retail's Returns Management domain, showing how the format works in practice. This is the output of LLM Step 2 after the domain expert has answered the gap questions from LLM Step 1.</p>
+  <div class="code-label">meridian-returns-ctx.txt</div>
+  <div class="code-block"><pre><span class="comment"># ============================================================
+# domain-ctx.txt
+# Domain Context File &mdash; Meridian Retail Returns Management
+# Version: 1.0 | Date: 2026-03-18 | Status: Approved
+# ============================================================</span>
+
+<span class="section">## PROJECT OVERVIEW</span>
+<span class="key">Domain:</span> <span class="value">Meridian Retail &mdash; Returns Management</span>
+<span class="key">Scope:</span> <span class="value">Covers the CustomerService and Finance contexts for returns
+processing. Excludes the Ordering context, the Inventory context,
+and the Loyalty context.</span>
+<span class="key">Description:</span> <span class="value">Manages the end-to-end lifecycle of customer return requests,
+from initial submission through approval or rejection, to refund
+processing. Serves customers who wish to return purchased items
+and the teams that evaluate and process those requests.
+Meridian processes approximately 4,000 return requests per month
+across four product categories, each with distinct handling rules.</span>
+<span class="key">Approved by:</span> <span class="value">Sarah Chen, Head of Customer Operations</span>
+
+<span class="section">## SUBDOMAIN CLASSIFICATION</span>
+<span class="key">Core Domain:</span> <span class="value">Demand forecasting and personalisation engine &mdash;
+this is where Meridian competes. Returns management is Supporting.</span>
+<span class="key">Supporting:</span> <span class="value">Returns Management (this domain), Order Management,
+Inventory Management</span>
+<span class="key">Generic:</span> <span class="value">Authentication, Email/SMS notification, PDF generation,
+Payment gateway integration (buy, do not build)</span>
+
+<span class="section">## BOUNDED CONTEXTS</span>
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Owns:</span> <span class="value">The evaluation and approval of return requests. All decisions
+about whether a return is valid and on what terms it is accepted
+belong here.</span>
+<span class="key">In scope:</span> <span class="value">Return request creation, SLA tracking, agent review workflow,
+fraud flagging, approval and rejection decisions, customer communication</span>
+<span class="key">Out of scope:</span> <span class="value">Refund processing, invoice adjustment, payment gateway
+interaction, inventory restocking</span>
+<span class="key">Team:</span> <span class="value">Customer Operations team</span>
+<span class="key">Language note:</span> <span class="value">Customer here means any person who contacts us about a
+return &mdash; including contacts at business accounts who may not be
+the contract holder. This differs from the Finance context where
+Customer means the legal entity with a financial obligation.</span>
+
+<span class="key">Context:</span> <span class="value">Finance</span>
+<span class="key">Owns:</span> <span class="value">The financial processing of approved returns &mdash; refund
+transactions, invoice adjustments, and revenue reconciliation.</span>
+<span class="key">In scope:</span> <span class="value">Refund transaction creation, payment gateway calls, invoice
+adjustment, revenue recognition reversal, financial audit trail</span>
+<span class="key">Out of scope:</span> <span class="value">Return request evaluation, customer communication, SLA
+management, fraud assessment</span>
+<span class="key">Team:</span> <span class="value">Finance Operations team</span>
+<span class="key">Language note:</span> <span class="value">Customer here means the legal entity (person or company)
+with a financial account. Identified by AccountNumber, not by
+the name of the person who raised the return.</span>
+
+<span class="section">## UBIQUITOUS LANGUAGE</span>
+<span class="value">CustomerService :: ReturnRequest :: A formal request to return a
+purchased item. Has states: Pending, UnderReview, FlaggedForSeniorReview,
+Approved, Rejected. Created when a customer initiates a return. ::
+NOT the physical item. NOT the refund. NOT a complaint.</span>
+
+<span class="value">CustomerService :: ReturnStream :: One of four defined handling
+pathways for returns: Standard (items under GBP 100), HighValue
+(items over GBP 100), Damaged (items returned in damaged condition),
+Fraud (items flagged for suspected fraudulent return). Each stream
+has distinct SLAs and approval workflows. ::
+NOT a technical queue or database partition &mdash; a business concept.</span>
+
+<span class="value">CustomerService :: SeniorAgentReview :: A mandatory review step for
+ReturnRequests that meet specific criteria (value threshold, fraud
+flags). Only a Senior Agent or Team Leader can approve or reject a
+ReturnRequest in SeniorAgentReview state. ::
+NOT a general escalation mechanism. Specifically for returns.</span>
+
+<span class="value">Finance :: RefundTransaction :: A financial record of a refund
+payment made to a customer. Has states: Pending, Processing, Completed,
+Failed. Linked to a ReturnRequest by ID but owned entirely by Finance. ::
+NOT the ReturnRequest itself. The ReturnRequest is approved in
+CustomerService; the RefundTransaction is created in Finance.</span>
+
+<span class="value">Finance :: Customer :: The legal entity (person or company) that holds
+a Meridian account. Identified by AccountNumber. May differ from the
+individual who raised the return request. ::
+NOT the person who called customer service. See CustomerService
+context for that concept.</span>
+
+<span class="section">## DOMAIN EVENTS</span>
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Event:</span> <span class="value">ReturnRequested</span>
+<span class="key">Triggered by:</span> <span class="value">Customer submits return request via web portal, mobile app,
+or phone (agent logs on their behalf)</span>
+<span class="key">Business meaning:</span> <span class="value">A return has been formally initiated. SLA clock starts.
+Business is obligated to respond within 24 hours for Standard stream,
+4 hours for all other streams.</span>
+<span class="key">Produces:</span> <span class="value">ReturnRequest in Pending state. SLA timer activated.
+ReturnStream assigned based on item value and category.</span>
+<span class="key">Consumed by:</span> <span class="value">CustomerService internally (triggers review assignment)</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Event:</span> <span class="value">ReturnApproved</span>
+<span class="key">Triggered by:</span> <span class="value">Agent (or Senior Agent for flagged requests) approves
+the ReturnRequest</span>
+<span class="key">Business meaning:</span> <span class="value">Meridian has accepted the return. Customer is entitled
+to refund. This is a financial commitment.</span>
+<span class="key">Produces:</span> <span class="value">ReturnRequest state changes to Approved. Customer notified.</span>
+<span class="key">Consumed by:</span> <span class="value">Finance context &mdash; triggers RefundTransaction creation</span>
+
+<span class="key">Context:</span> <span class="value">Finance</span>
+<span class="key">Event:</span> <span class="value">RefundIssued</span>
+<span class="key">Triggered by:</span> <span class="value">Payment gateway confirms refund payment sent</span>
+<span class="key">Business meaning:</span> <span class="value">Money has left Meridian and is in transit to the customer.
+Revenue reversal is now final.</span>
+<span class="key">Produces:</span> <span class="value">RefundTransaction state changes to Completed.
+InvoiceAdjustment created. Customer notified by Finance.</span>
+<span class="key">Consumed by:</span> <span class="value">Reporting context (for revenue reconciliation)</span>
+
+<span class="section">## POLICIES</span>
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Policy:</span> <span class="value">HighValueFlag</span>
+<span class="key">Rule:</span> <span class="value">Whenever ReturnRequested AND item value exceeds GBP 500,
+automatically set ReturnRequest state to FlaggedForSeniorReview.
+Standard agents cannot approve or reject until Senior Agent reviews.</span>
+<span class="key">Rationale:</span> <span class="value">Fraud risk threshold. Agreed CS/Finance policy March 2024.</span>
+
+<span class="key">Context:</span> <span class="value">CustomerService</span>
+<span class="key">Policy:</span> <span class="value">SLABreach</span>
+<span class="key">Rule:</span> <span class="value">Whenever ReturnRequest remains in Pending or UnderReview state
+beyond SLA threshold (24h Standard, 4h all other streams), automatically
+escalate to TeamLeader AND send customer acknowledgement with updated
+expected response time.</span>
+<span class="key">Rationale:</span> <span class="value">Consumer Rights Act 2015 compliance.</span>
+
+<span class="key">Context:</span> <span class="value">Finance</span>
+<span class="key">Policy:</span> <span class="value">ExpiredPaymentFallback</span>
+<span class="key">Rule:</span> <span class="value">Whenever RefundTransaction fails due to expired original payment
+method, automatically issue StoreCreditVoucher for the refund amount
+AND notify customer. Do NOT attempt alternative payment methods.</span>
+<span class="key">Rationale:</span> <span class="value">Confirmed by Finance Director, March 2026. Cheque issuance
+discontinued due to processing cost.</span>
+
+<span class="section">## INTEGRATION MAP</span>
+<span class="key">Event:</span> <span class="value">ReturnApproved</span>
+<span class="key">From:</span> <span class="value">CustomerService</span>
+<span class="key">To:</span> <span class="value">Finance</span>
+<span class="key">Pattern:</span> <span class="value">Customer-Supplier. Finance is downstream. CS publishes
+the event; Finance subscribes. Finance cannot reject the event &mdash;
+if CS approved it, Finance processes it.</span>
+<span class="key">Payload:</span> <span class="value">ReturnRequestID, CustomerAccountNumber, RefundAmountGBP,
+OriginalPaymentMethodToken, RefundMethod (OriginalPayment | StoreCredit)</span>
+<span class="key">Finance action:</span> <span class="value">Creates RefundTransaction in Pending state. Calls payment
+gateway asynchronously. Applies ExpiredPaymentFallback policy if needed.</span>
+
+<span class="section">## OPEN QUESTIONS</span>
+<span class="comment"># All questions resolved at time of approval. File is clean.</span>
+<span class="comment"># ============================================================
+# END OF FILE  v1.0  2026-03-18
+# ============================================================</span></pre></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Prompt 1 &mdash; how to instruct an LLM to generate this file from existing flowcharts.</p>
+</div>
+
+<!-- CH6 -->
+<div class="guide-page" id="page-6">
+  <div class="part-header"><div class="part-num">Part Three</div><h2>The LLM Prompts</h2><p>Practical prompts for each step in the pipeline &mdash; ready to use, annotated with the reasoning behind each instruction</p></div>
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Prompt 1 &mdash; Generating domain-ctx.txt from Flowcharts</h1>
+  <p class="chapter-intro">This is the most complex prompt in the pipeline. It instructs the LLM to do four things simultaneously: extract the domain model from the flowcharts, apply the DDD notation mapping, identify gaps, and produce both a draft context file and a structured question list for the domain expert.</p>
+  <h2>How to Use This Prompt</h2>
+  <p>Open a new Claude session. Attach the flowchart images or paste the process documentation text. Then paste this prompt. The LLM will produce two outputs in one response: a draft domain-ctx.txt and a numbered question list. Send the question list to the domain expert. When answers return, paste them into a follow-up message with the instruction: "Update the draft domain-ctx.txt with these answers and flag any remaining open questions."</p>
+  <div class="prompt-label">Prompt 1 &mdash; Flowchart to domain-ctx.txt</div>
+  <div class="prompt-block"><p>You are a Domain-Driven Design practitioner helping to build a domain context file from existing business process documentation.
+
+I am attaching [swimlane flowcharts / process documents / both]. Your task is to produce two outputs:
+
+OUTPUT 1: A draft domain-ctx.txt following this exact structure:
+- PROJECT OVERVIEW (domain name, scope, plain English description)
+- SUBDOMAIN CLASSIFICATION (Core / Supporting / Generic)
+- BOUNDED CONTEXTS (one block per context, with scope and language notes)
+- UBIQUITOUS LANGUAGE (one entry per term per context, with precise definition and what it is NOT)
+- DOMAIN EVENTS (sequenced by context, with trigger, business meaning, and what consumes them)
+- POLICIES (the automatic business rules &mdash; whenever X, if Y, then Z)
+- INTEGRATION MAP (which events cross which context boundaries and what the receiving context does)
+- OPEN QUESTIONS (gaps you identified that need domain expert input)
+
+OUTPUT 2: A structured question list for the domain expert, covering:
+- Missing exception paths (what happens when the normal flow breaks?)
+- Implicit policies (what happens automatically that the flowchart doesn't show?)
+- Ambiguous terminology (the same word used differently in different parts of the process)
+- Unclear context boundaries (where responsibility is ambiguous)
+
+INSTRUCTIONS FOR THE EXTRACTION:
+- Swimlane = Actor + candidate Bounded Context boundary. Name contexts after business capabilities, not departments.
+- Process box = Command (imperative form) + implied Domain Event (past tense). Name both.
+- Cross-lane handoff arrow = Domain Event crossing a context boundary. This is the most important element. Name it explicitly in past tense.
+- Decision diamond = Policy. Rewrite as: Whenever [Event], if [Condition], then [Action] automatically.
+- Start/end ovals = triggering and outcome Domain Events.
+- External entities = External Systems. Name the integration point.
+- Document symbols = Read Models. What information does the Actor need to make this decision?
+
+NAMING CONVENTIONS:
+- Domain Events: PastTense, CamelCase (ReturnApproved, not "Return is approved")
+- Commands: Imperative, CamelCase (ApproveReturn, not "Approving return")
+- Bounded Contexts: Business capability name, not department name
+- Ubiquitous Language terms: Capitalised when used as domain terms in definitions
+
+QUALITY CHECKS TO APPLY:
+- Flag any term used in multiple contexts with possibly different meanings
+- Flag any process step that appears to span two different business concerns
+- Flag any decision point where the business rule is not fully specified in the flowchart
+- Flag any process that shows only the happy path with no exception handling
+
+Be specific in your questions. Instead of "please clarify the exception handling", write "When a return request arrives for an order that was paid using a gift card, what happens to the refund? The flowchart does not show this case."
+
+The domain expert is a business person, not a developer. Write questions clearly without technical jargon.</p></div>
+  <div class="callout"><div class="callout-label">Why Each Instruction Is There</div><p>The naming conventions are explicit because LLMs will default to their own conventions without instruction. The quality checks mirror the four gap categories from the Flowchart-First guide. The instruction to write questions clearly is critical &mdash; <strong>domain experts disengage from questions that sound like developer requirements. The LLM must speak the business person's language, not the DDD practitioner's language.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Prompt 2 &mdash; generating the BMAD Brief from the approved context file.</p>
+</div>
+
+<!-- CH7 -->
+<div class="guide-page" id="page-7">
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Prompt 2 &mdash; Generating the BMAD Brief from domain-ctx.txt</h1>
+  <p class="chapter-intro">The BMAD Brief is the first artefact in the development chain &mdash; the structured summary of what is being built, for whom, and with what constraints. Generated from domain-ctx.txt, it inherits the Ubiquitous Language and Bounded Context scope directly, with no manual translation step.</p>
+  <h2>How to Use This Prompt</h2>
+  <p>Start a new Claude session (or a BMAD Analyst session if you are running BMAD). Paste the approved domain-ctx.txt in full. Then paste this prompt. The output is a BMAD-format Brief that can go directly into the human review gate.</p>
+  <div class="prompt-label">Prompt 2 &mdash; domain-ctx.txt to BMAD Brief</div>
+  <div class="prompt-block"><p>You are a BMAD Analyst agent. I am providing you with an approved domain context file (domain-ctx.txt) for [project name]. Your task is to generate a BMAD Project Brief from this context file.
+
+[PASTE domain-ctx.txt HERE]
+
+Generate a BMAD Project Brief with these sections:
+
+1. PROJECT PURPOSE
+   - What problem does this software solve? (derive from the PROJECT OVERVIEW description)
+   - Who are the primary users? (derive from the Actors in the DOMAIN EVENTS section)
+   - What does success look like? (one measurable outcome per Bounded Context in scope)
+
+2. SCOPE
+   - In scope: derive directly from the BOUNDED CONTEXTS "In scope" fields
+   - Out of scope: derive directly from the BOUNDED CONTEXTS "Out of scope" fields
+   - List any external systems from the INTEGRATION MAP that are integration points but not built here
+
+3. KEY CONCEPTS
+   - List every term from the UBIQUITOUS LANGUAGE section
+   - Use the exact definitions from the context file &mdash; do not paraphrase
+   - This section is the Ubiquitous Language that all subsequent artefacts must use
+
+4. CONSTRAINTS AND POLICIES
+   - List every Policy from the POLICIES section
+   - Include the Rationale for each &mdash; the human reviewer needs to know why each rule exists
+
+5. OPEN QUESTIONS
+   - Carry forward any remaining items from the OPEN QUESTIONS section
+   - Add any new questions that arise from the Brief drafting that the context file doesn't answer
+
+6. ASSUMPTIONS
+   - List the assumptions made in interpreting the context file
+   - Flag any place where the context file is ambiguous and you chose an interpretation
+
+CRITICAL INSTRUCTIONS:
+- Use ONLY the terminology defined in the UBIQUITOUS LANGUAGE section. Do not introduce synonyms.
+- Do not expand the scope beyond what the BOUNDED CONTEXTS define. If something is "Out of scope" in the context file, it is out of scope in the Brief.
+- Do not add requirements not implied by the Domain Events. If an event is not in the context file, do not invent it.
+- Write for a business audience. The Brief will be reviewed by the domain expert who approved the context file &mdash; they should recognise their domain in what you write.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Prompt 3 &mdash; generating the PRD from domain-ctx.txt.</p>
+</div>
+
+<!-- CH8 -->
+<div class="guide-page" id="page-8">
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">Prompt 3 &mdash; Generating the PRD from domain-ctx.txt</h1>
+  <p class="chapter-intro">The Product Requirements Document translates the domain model into functional requirements &mdash; what the system must do, expressed in the business's language. Generated from domain-ctx.txt, the PRD's functional requirements map directly to Domain Events, and the acceptance criteria reflect the Policies explicitly.</p>
+  <h2>How to Use This Prompt</h2>
+  <p>Use this prompt in the BMAD PM session, after the Brief has been approved. Provide both the approved domain-ctx.txt and the approved Brief. The PRD inherits the language of both.</p>
+  <div class="prompt-label">Prompt 3 &mdash; domain-ctx.txt to BMAD PRD</div>
+  <div class="prompt-block"><p>You are a BMAD Product Manager agent. I am providing you with an approved domain context file and approved Project Brief. Your task is to generate a BMAD Product Requirements Document (PRD).
+
+[PASTE domain-ctx.txt HERE]
+[PASTE approved Brief HERE]
+
+Generate the PRD with these sections:
+
+1. PRODUCT GOALS
+   - One goal per Bounded Context in scope
+   - Goals must be verifiable &mdash; derive from the business meaning of the outcome Domain Events
+
+2. USER ROLES
+   - One entry per Actor defined in the DOMAIN EVENTS section
+   - Name, what they need to accomplish, what decisions they make
+
+3. FUNCTIONAL REQUIREMENTS
+   - Organise by Bounded Context
+   - Each Domain Event becomes a functional requirement:
+     "The system must [produce this event] when [trigger condition]"
+   - Each Policy becomes an acceptance criterion:
+     "Whenever [event], if [condition], the system must automatically [action]"
+   - Each Read Model becomes a data display requirement:
+     "When [actor] is about to [issue this command], the system must display [this information]"
+
+4. INTEGRATION REQUIREMENTS
+   - One entry per row in the INTEGRATION MAP
+   - What event is published, what it contains, what the receiving context expects
+
+5. OUT OF SCOPE
+   - Carry forward exactly from the BOUNDED CONTEXTS "Out of scope" fields
+   - Add any requirements that arose during drafting that are not covered by the context file
+
+6. ACCEPTANCE CRITERIA SUMMARY
+   - One criterion per Policy from the POLICIES section
+   - Written as testable conditions: Given [state], When [event], Then [outcome]
+   - Include the Rationale from the context file so QA understands why each criterion exists
+
+CRITICAL INSTRUCTIONS:
+- Every functional requirement must trace back to a Domain Event or Policy in the context file.
+- Do not invent requirements. If a capability is not implied by a Domain Event or Policy in the context file, it does not belong in this PRD &mdash; add it to Open Questions instead.
+- Use the UBIQUITOUS LANGUAGE terms exactly. If the context file says ReturnRequest, the PRD says ReturnRequest &mdash; not return, not request, not case.
+- The Policies section of the context file defines the acceptance criteria. Do not soften or generalise them. "Whenever ReturnRequest remains Pending for 48 hours, automatically escalate" is a testable criterion. "Handle SLA breaches appropriately" is not.</p></div>
+  <div class="callout"><div class="callout-label">The Traceability Chain</div><p>Every functional requirement in the PRD traces to a Domain Event. Every acceptance criterion traces to a Policy. Every term traces to the Ubiquitous Language. <strong>This traceability is the standardisation benefit &mdash; a reviewer can check any requirement in the PRD against the context file and verify it is correctly derived. The chain from domain expert knowledge to PRD acceptance criterion is explicit and auditable.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Prompt 4 &mdash; generating the Architecture skeleton from domain-ctx.txt.</p>
+</div>
+
+<!-- CH9 -->
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Prompt 4 &mdash; Generating the Architecture Skeleton</h1>
+  <p class="chapter-intro">The Architecture skeleton is not a complete technical design &mdash; it is the structural foundation that the BMAD Architect session builds from. Generated from domain-ctx.txt, it ensures the technical architecture reflects the Bounded Context boundaries and integration patterns that the domain discovery produced.</p>
+  <h2>What the Skeleton Provides</h2>
+  <p>The Architecture skeleton answers the structural questions that flow directly from the domain model: how many components, how do they align with Bounded Contexts, how do they communicate, what are the data ownership rules. The BMAD Architect session fills in the technology choices, the detailed data models, and the non-functional requirements. The skeleton prevents the most expensive architectural mistake: designing a monolith that crosses Bounded Context boundaries, or designing a microservice architecture that doesn't align with them.</p>
+  <div class="prompt-label">Prompt 4 &mdash; domain-ctx.txt to Architecture Skeleton</div>
+  <div class="prompt-block"><p>You are a BMAD Architect agent. I am providing an approved domain context file and approved PRD. Your task is to generate an Architecture skeleton &mdash; the structural foundation for the full Architecture Document.
+
+[PASTE domain-ctx.txt HERE]
+[PASTE approved PRD HERE]
+
+Generate the Architecture skeleton with these sections:
+
+1. COMPONENT MAP
+   - One component per Bounded Context in scope
+   - Component name matches the Context name from domain-ctx.txt exactly
+   - For each component: what it owns, what it exposes, what it depends on
+   - Derive ownership from "In scope" and "Out of scope" in the BOUNDED CONTEXTS section
+
+2. DATA OWNERSHIP RULES
+   - Which component is the system of record for each aggregate?
+   - Derive from the Domain Events: the context that produces the authoritative event owns the data
+   - Example: CustomerService produces ReturnApproved &rarr; CustomerService owns ReturnRequest data
+   - No component may write to another component's data directly
+
+3. INTEGRATION ARCHITECTURE
+   - One entry per row in the INTEGRATION MAP from domain-ctx.txt
+   - Proposed mechanism: event bus, direct API call, or async queue
+   - Recommend event-driven integration for all cross-context events unless there is a strong reason otherwise
+   - Integration pattern from context file (Customer-Supplier, Conformist, etc.) determines who sets the contract
+
+4. AGGREGATE CANDIDATES
+   - One candidate per significant noun cluster in the DOMAIN EVENTS section
+   - Name, what Domain Events it produces, what Commands it handles
+   - These are candidates &mdash; the full Architect session will confirm or refine them
+
+5. EXTERNAL SYSTEM INTEGRATION POINTS
+   - One entry per External System from the INTEGRATION MAP
+   - What the system provides, what event triggers the integration, proposed integration pattern
+
+6. ARCHITECTURAL RISKS
+   - Identify any Bounded Context boundary that is unclear and may need further domain clarification
+   - Identify any integration that is synchronous in the domain model but may need to be async in implementation
+   - Identify any Policy that implies a complex state machine (flag for careful story decomposition)
+
+7. OPEN ARCHITECTURAL QUESTIONS
+   - Technology choices not yet made (leave for Architect review)
+   - Non-functional requirements not addressed by the context file (performance, security, scalability)
+   - Data migration concerns if this replaces an existing system
+
+CRITICAL INSTRUCTIONS:
+- Do not cross Bounded Context boundaries in component ownership. Each component owns its own data.
+- Do not choose specific technologies &mdash; this skeleton is technology-agnostic. The Architect session makes technology choices.
+- Every structural decision must trace to the context file. If a decision cannot be justified by the domain model, flag it as an Open Architectural Question.
+- Use the exact component names and event names from the context file. Do not rename anything.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: maintaining the context file over time &mdash; the ongoing discipline that makes the pipeline sustainable.</p>
+</div>
+
+<!-- CH10 -->
+<div class="guide-page" id="page-10">
+  <div class="part-header"><div class="part-num">Part Four</div><h2>Making It Work</h2><p>Maintenance, realistic assessment, and where human judgment remains irreplaceable</p></div>
+  <div class="chapter-eyebrow">Chapter 10</div>
+  <span class="chapter-number">10</span>
+  <h1 class="chapter-title">Maintaining the Context File Over Time</h1>
+  <p class="chapter-intro">The domain-ctx.txt file is not a one-time deliverable. The domain evolves &mdash; new policies are introduced, edge cases surface during implementation, business rules change. The context file needs to evolve with it, or it becomes fiction and the standardisation benefit evaporates.</p>
+  <h2>Version Control Is Not Optional</h2>
+  <p>The context file belongs in version control alongside the code. Every change to domain-ctx.txt is a commit with a message that explains what changed and why. When a Policy changes, the commit records when it changed, who approved it, and what the old rule was. When a new Domain Event is added, the commit records what triggered the addition &mdash; a new business requirement, a discovered edge case, a regulatory change.</p>
+  <p>This is not bureaucracy. It is the audit trail that makes the pipeline trustworthy in regulated industries. A regulator asking "what were the business rules governing high-value returns in Q3 2025?" gets an answer from the git history, not from someone's memory.</p>
+  <h2>The Coherence Check Prompt</h2>
+  <p>As the context file grows, contradictions accumulate. This is the CLAUDE.md problem at domain scale. When a new Policy is added, run this prompt before committing the update:</p>
+  <div class="prompt-label">Coherence Check &mdash; Run Before Every Significant Update</div>
+  <div class="prompt-block"><p>Review this domain-ctx.txt for internal coherence. Check for:
+
+1. TERMINOLOGY CONSISTENCY: Is every term used in the Domain Events and Policies section defined in the Ubiquitous Language section? Flag any term used without a definition.
+
+2. NAMING CONSISTENCY: Is every concept referred to by exactly one name throughout the file? Flag any place where the same concept appears to be referred to by different names.
+
+3. POLICY CONFLICTS: Do any two Policies produce contradictory outcomes for the same event? For example, does one Policy say "automatically approve" and another say "flag for review" for overlapping conditions?
+
+4. INTEGRATION COMPLETENESS: Is every cross-context event in the Domain Events section listed in the Integration Map? Flag any event marked "Consumed by [other context]" that does not appear in the Integration Map.
+
+5. SCOPE CONSISTENCY: Does any Domain Event or Policy reference a concept that is "Out of scope" for the context it belongs to? Flag any boundary violations.
+
+For each issue found, state: the section and line, the nature of the conflict, and a suggested resolution.
+Do not resolve issues automatically. List them for human review.
+
+[PASTE domain-ctx.txt HERE]</p></div>
+  <h2>When to Update the Context File</h2>
+  <p>Three triggers should prompt an update. First, when a Story implementation reveals a domain assumption that the context file doesn't cover &mdash; the developer encountered an edge case the domain expert hadn't thought of. Second, when a business rule changes &mdash; the Policy threshold moves, a new regulatory requirement is introduced, a process is redesigned. Third, when an Open Question is resolved &mdash; the answer gets incorporated and the question is removed.</p>
+  <p>What should not trigger an update: technical implementation decisions. If the team decides to use PostgreSQL instead of MongoDB, that doesn't change the domain-ctx.txt. If the team decides to implement the integration as a message queue rather than a REST call, that doesn't change the domain-ctx.txt. The context file captures domain knowledge, not implementation choices.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the realistic assessment &mdash; what LLMs do well in this pipeline and where human judgment is irreplaceable.</p>
+</div>
+
+<!-- CH11 -->
+<div class="guide-page" id="page-11">
+  <div class="chapter-eyebrow">Chapter 11</div>
+  <span class="chapter-number">11</span>
+  <h1 class="chapter-title">Trade-offs and Limitations &mdash; What LLMs Do Well and Where Humans Stay Essential</h1>
+  <p class="chapter-intro">The pipeline described in this guide is genuinely useful. It is also genuinely limited in specific ways that matter. Understanding both realistically is more valuable than either uncritical enthusiasm or reflexive scepticism about LLM involvement.</p>
+  <h2>What LLMs Do Well in This Pipeline</h2>
+  <p>Mechanical translation. Applying the notation mapping from Chapter 3 consistently across a long, complex flowchart is exactly the kind of structured, rule-following task that LLMs handle reliably. A human doing the same overlay for the fifth time this month will introduce inconsistencies. The LLM applies the same rules every time.</p>
+  <p>Terminology enforcement. Once the Ubiquitous Language is defined in domain-ctx.txt, the LLM will use those terms consistently throughout the PRD and Architecture skeleton &mdash; because it is instructed to, and because it can check its own output against the definitions in the same session. A human writer will drift. The LLM drifts only when the context window is very long and the definitions are far from where they're being used, which is why section ordering in the context file matters.</p>
+  <p>Gap detection. The LLM will reliably identify places where the flowchart shows only the happy path, where decision conditions are underspecified, and where the same word appears in different lanes. It applies the same checklist every time. A human reviewer gets tired and misses the fifth decision diamond.</p>
+  <p>Traceability. Every requirement in the LLM-generated PRD traces to a Domain Event or Policy because the prompt requires it. Human-written PRDs accumulate requirements of unclear origin. The LLM-generated PRD is auditable by construction.</p>
+  <h2>Where Humans Remain Essential</h2>
+  <p>Domain knowledge validation. The LLM extracted the domain model from what the documentation says. The domain expert knows what the documentation doesn't say &mdash; the edge case that everyone knows about but nobody wrote down, the business rule that was changed three years ago and the old flowchart still shows the old version, the exception that matters enormously but only happens twice a year. No LLM can supply this knowledge. The domain expert validation step is irreducible.</p>
+  <p>Strategic classification. Deciding which subdomain is Core is a strategic business decision, not a pattern-matching exercise. The LLM can apply the Core/Supporting/Generic framework mechanically &mdash; and will frequently be wrong about which part of the business is genuinely differentiating. This classification requires someone with business strategy knowledge, not just process knowledge.</p>
+  <p>Ambiguity resolution. When the LLM flags a terminology conflict &mdash; "customer" means different things in two lanes &mdash; it can identify the conflict but cannot resolve it. The resolution is a business decision: do we rename one of them, do we draw a clearer context boundary, do we accept that both usages are legitimate in their respective contexts? That is a human judgment about the business, not a pattern-matching problem.</p>
+  <p>Quality judgment on the generated artefacts. The LLM produces a PRD that is internally consistent and correctly derived from the context file. It cannot tell you whether the resulting PRD captures what the business actually needs. The human reviewer brings the judgment that the brief is right, not just internally coherent.</p>
+  <div class="callout"><div class="callout-label">The Right Mental Model</div><p>Think of the LLM as a highly consistent, tireless translator that speaks both "business process flowchart" and "DDD domain model" and "BMAD artefact." It translates accurately and consistently. <strong>It has no idea whether the source material is telling the truth about the business. That verification is the human's job &mdash; and it is the only job in the pipeline that cannot be delegated.</strong></p></div>
+  <h2>The Brownfield ERP Case — The Context File as a Delta</h2>
+  <p>Brownfield ERP environments are where the domain context engineering approach is most immediately valuable — and where the scoping question matters most. A brownfield SAP or Oracle environment does not need a complete domain specification in its context file. The LLM already carries that.</p>
+  <p>LLMs have substantial generic knowledge of standard ERP process flows. SAP's Order to Cash, Procure to Pay, Record to Report — the standard transaction flows, the table structures, the module boundaries, the common configuration patterns. Oracle EBS, Workday, Salesforce — the same applies. This knowledge is broad and reasonably accurate for standard implementations. What it does not contain is your implementation — the organisation-specific customisations, the non-standard approval hierarchies, the Z-exits added in 2014 for a specific country's tax requirements, the terminology that drifted from SAP standard after three system integrators worked on the platform over fifteen years.</p>
+  <p>That delta — the gap between the standard ERP model the LLM already knows and the specific version your organisation actually runs — is precisely what the domain-ctx.txt needs to capture for brownfield ERP. Not the complete O2C process. The places where yours diverges from the standard. How large that gap is varies significantly by organisation, by ERP product, and by how heavily the system has been customised over the years.</p>
+  <div class="callout"><div class="callout-label">The Brownfield ERP Pipeline</div><p>
+  <strong>LLM's existing ERP knowledge</strong> — the baseline. Already present. Do not duplicate it in the context file.<br>
+  <strong>Flowchart-first overlay</strong> — surfaces your specific delta from the standard. Where your process diverges, where the terminology differs, where the custom rules live.<br>
+  <strong>Domain expert gap-filling</strong> — validates the delta and supplies what the documentation doesn't show.<br>
+  <strong>domain-ctx.txt</strong> — encodes your specific delta. The delta file, not the complete specification.<br>
+  <strong>BMAD artefacts</strong> — generated with both the LLM's baseline knowledge and your delta as context.<br><br>
+  <strong>The domain expert's time is spent explaining what makes your implementation different — not explaining what a goods receipt is.</strong></p></div>
+  <h2>What Belongs in a Brownfield ERP Context File</h2>
+  <p>The scoping discipline for a brownfield ERP context file follows directly from this. Include what diverges from standard. Exclude what the LLM already knows accurately.</p>
+  <p>Include: custom approval workflows that differ from the standard module configuration. Organisation-specific terminology — the internal names your teams use that differ from SAP or Oracle standard terminology, because those differences are exactly where the agent will make the wrong assumption if not corrected. Z-exits and enhancements — custom code that modifies standard behaviour, with the business rationale, because the LLM has no knowledge of these and they are frequently where the most important business rules live. Non-standard integration patterns between modules or between the ERP and adjacent systems. Historical decisions that constrain what can change — the business rule that cannot be altered because of a contractual commitment or a regulatory requirement from a decade ago.</p>
+  <p>Exclude: standard process flows the LLM already knows. Standard module configuration options. Standard terminology that matches the ERP vendor's own documentation. Generic ERP concepts like goods receipt, three-way match, cost centre, or payment terms — these are already in the LLM's training data with sufficient accuracy for most purposes.</p>
+  <p>When in doubt, test the assumption before writing it into the context file. Ask the LLM what it knows about a specific process in your ERP. If the answer is accurate and complete for your context, don't document it — the LLM already has it. If the answer is accurate for the standard but misses your organisation's specific variant, document precisely the variant. If the answer is wrong or absent, document the correct version in full.</p>
+  <p>This approach produces a context file that is significantly smaller than a complete domain specification — potentially a few hundred lines rather than several thousand, depending on how heavily the system has been customised — while delivering the same quality of agent output. The LLM contributes its broad ERP knowledge. The context file contributes your organisation's specific reality. Neither duplicates the other.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Format Quick Reference and Glossary follow.</p>
+</div>
+
+<!-- CH12 GLOSSARY -->
+<div class="guide-page" id="page-12">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Format Quick Reference and Glossary</h1>
+  <p class="chapter-intro">A one-page reference for the domain-ctx.txt sections and key terms used in this guide.</p>
+  <h2>domain-ctx.txt Section Quick Reference</h2>
+  <div class="code-label">Section summary</div>
+  <div class="code-block"><pre><span class="section">## PROJECT OVERVIEW</span>     <span class="comment">Domain name, scope, description, approver</span>
+<span class="section">## SUBDOMAIN CLASSIFICATION</span> <span class="comment">Core / Supporting / Generic with rationale</span>
+<span class="section">## BOUNDED CONTEXTS</span>    <span class="comment">One block per context &mdash; owns, in scope, out of scope, language note</span>
+<span class="section">## UBIQUITOUS LANGUAGE</span>  <span class="comment">One entry per term per context &mdash; definition and what it is NOT</span>
+<span class="section">## DOMAIN EVENTS</span>       <span class="comment">Sequenced by context &mdash; trigger, meaning, produces, consumed by</span>
+<span class="section">## POLICIES</span>            <span class="comment">Whenever X, if Y, then Z automatically &mdash; with rationale</span>
+<span class="section">## INTEGRATION MAP</span>     <span class="comment">Cross-context events &mdash; from, to, pattern, payload, receiving action</span>
+<span class="section">## OPEN QUESTIONS</span>      <span class="comment">Unresolved gaps &mdash; remove when answered and incorporate above</span></pre></div>
+
+  <h2>Glossary</h2>
+  <div class="glossary-entry"><div class="glossary-term">domain-ctx.txt</div><p class="glossary-def">A structured plain-text domain context file that distils a business domain model into a form an LLM can consume as context. Inspired by FastHTML's llms-ctx.txt approach of curated, flat, machine-readable documentation. Contains Bounded Contexts, Ubiquitous Language, Domain Events, Policies, and an Integration Map. Versioned alongside the codebase. Serves as the single authoritative domain reference for all agent sessions in a project.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Domain Context Engineering</div><p class="glossary-def">The practice of deliberately constructing, maintaining, and using domain context files to standardise the handoff from domain discovery to development execution. Combines the DDD discipline of domain modelling with the LLM capability of consistent mechanical translation, to produce BMAD artefacts that inherit the precision of the domain model without manual re-translation by a human writer.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Handoff Problem</div><p class="glossary-def">The loss of domain precision that occurs when a human translates a domain model (from DDD or Event Storming) into development artefacts (BMAD Brief, PRD, Architecture). Caused by single-person translation in isolation, without a mechanism to enforce terminology consistency. The domain-ctx.txt pipeline solves this by making the LLM the translator, with the Ubiquitous Language as a constraint it must follow.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">LLM-Driven Pipeline</div><p class="glossary-def">The four-step process: (1) LLM extracts domain model from flowcharts and identifies gaps, (2) human domain expert fills the gaps, (3) LLM generates domain-ctx.txt, (4) LLM generates BMAD artefacts from the context file. LLM involvement provides consistency. Human involvement provides knowledge the documentation doesn't contain. The human decision point &mdash; domain expert validation &mdash; is irreducible.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Traceability Chain</div><p class="glossary-def">The auditable linkage from domain expert knowledge through domain-ctx.txt through BMAD artefacts to Story Files and implementation. Every functional requirement in the PRD traces to a Domain Event. Every acceptance criterion traces to a Policy. Every term traces to the Ubiquitous Language. The LLM-driven pipeline builds this chain by construction &mdash; prompts require derivation from the context file, not invention.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Ubiquitous Language Enforcement</div><p class="glossary-def">The mechanism by which domain-ctx.txt prevents terminology drift across BMAD artefacts. The LLM generating the PRD is instructed to use only terms defined in the UBIQUITOUS LANGUAGE section. Because the definitions are in the same context window as the generation instructions, the LLM applies them consistently. This is the mechanical equivalent of what Evans called the Ubiquitous Language discipline &mdash; applied at the artefact generation layer rather than the human conversation layer.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Delta Context File</div><p class="glossary-def">A domain-ctx.txt scoped specifically for brownfield ERP environments, capturing only the organisation-specific divergences from standard ERP process flows rather than a complete domain specification. Relies on the LLM's existing generic ERP knowledge as the baseline, and documents only the customisations, non-standard terminology, Z-exits, and historical decisions that constitute the organisation's specific delta. Significantly smaller than a complete context file while delivering equivalent agent output quality for ERP-related development work.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Z-Exit (in context file terms)</div><p class="glossary-def">A SAP enhancement or custom code insertion point that modifies standard ERP behaviour for organisation-specific requirements. Z-exits are among the most important elements to capture in a brownfield ERP delta context file because they represent business rules that exist nowhere in the LLM's training data &mdash; they are unique to the organisation, frequently undocumented, and often encode critical business logic whose absence from agent context produces confidently wrong output.</p></div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>

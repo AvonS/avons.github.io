@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flowchart-First Path — Avon Software Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/guide.css?v=1.1">
+<script src="../../assets/components.js?v=1.1" defer></script>
+<script src="../../assets/guide.js?v=1.1" defer></script>
+</head>
+<body>
+
+<guide-header title="The Flowchart-First Path"></guide-header>
+
+<div class="guide-page active" id="page-0">
+  <div class="toc-header">
+    <div class="toc-label">A Practical Guide</div>
+    <h1>The Flowchart-First Path</h1>
+    <p class="subtitle">Building a domain model from existing business process diagrams when a live Event Storming session is not possible</p>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part One — The Idea</div>
+    <div class="toc-item" onclick="showPage(1)"><span class="toc-num">01</span><span class="toc-name">The Problem This Solves — When Event Storming Is Not Possible</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(2)"><span class="toc-num">02</span><span class="toc-name">The Insight — Swimlanes and DDD Are the Same Map at Different Zoom Levels</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(3)"><span class="toc-num">03</span><span class="toc-name">The Notation Mapping — How Flowchart Elements Translate to DDD Concepts</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Two — The Process</div>
+    <div class="toc-item" onclick="showPage(4)"><span class="toc-num">04</span><span class="toc-name">Step 1 — Collect the Flowcharts</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(5)"><span class="toc-num">05</span><span class="toc-name">Step 2 — Overlay the DDD Vocabulary</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(6)"><span class="toc-num">06</span><span class="toc-name">Step 3 — Find the Gaps and Surface the Hotspots</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(7)"><span class="toc-num">07</span><span class="toc-name">Step 4 — Build the Domain Model</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Part Three — Trade-offs and Limitations</div>
+    <div class="toc-item" onclick="showPage(8)"><span class="toc-num">08</span><span class="toc-name">What the Flowchart-First Path Does Well — and Where It Falls Short</span><span class="toc-dots"></span></div>
+    <div class="toc-item" onclick="showPage(9)"><span class="toc-num">09</span><span class="toc-name">Where This Fits in the Four-Layer Sequence</span><span class="toc-dots"></span></div>
+  </div>
+  <div class="toc-part">
+    <div class="toc-part-label">Reference</div>
+    <div class="toc-item" onclick="showPage(10)"><span class="toc-num">&#8212;</span><span class="toc-name">Notation Reference and Glossary</span><span class="toc-dots"></span></div>
+  </div>
+</div>
+
+<div class="guide-page" id="page-1">
+  <div class="part-header"><div class="part-num">Part One</div><h2>The Idea</h2><p>A different path to the same destination — the domain model without the workshop</p></div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <span class="chapter-number">01</span>
+  <h1 class="chapter-title">The Problem This Solves</h1>
+  <p class="chapter-intro">Event Storming requires people in a room. The right people — domain experts who know the business deeply, developers who will build the software, enough diversity of knowledge that the model that emerges is genuinely grounded. In an ideal world, that room is always available. In enterprise reality, it frequently is not.</p>
+  <h2>The Enterprise Constraints That Make Live Sessions Difficult</h2>
+  <p>The domain expert who knows the returns process in detail is based in a different country and available for thirty minutes on Thursday. The regulatory team whose input is essential for the compliance domain will not participate in informal workshops — their process requires formal sign-off at defined stages, not sticky notes. The business process owner is willing to contribute but has already documented everything in Visio flowcharts that took six months to produce and she does not see the point of redoing the work.</p>
+  <p>These are not excuses. They are real constraints that determine what is actually possible in large organisations. A methodology that only works when all the right people can spend a full day in the same room will be bypassed or ignored in every situation where that condition isn't met — which is most situations in most enterprises.</p>
+  <div class="callout"><div class="callout-label">The Alternative Path</div><p>Most organisations already have swimlane flowcharts — produced for ISO certification, regulatory compliance, process improvement initiatives, or onboarding documentation. These flowcharts are sitting on shared drives, rarely consulted, gradually becoming inaccurate. <strong>They are also, with the right eyes, the raw material for a domain model. The DDD practitioner's job is to read them in a new way — not as process documentation, but as an unstructured Event Storming output waiting to be organised.</strong></p></div>
+  <h2>The Flowchart-First Path</h2>
+  <p>The flowchart-first path is an alternative route to the same destination as Event Storming — a grounded domain model expressed in DDD terminology. Instead of surfacing knowledge in a live workshop, it works from existing documentation that the business has already produced. The DDD practitioner overlays the Event Storming vocabulary on the existing diagrams, identifies what is present, what is missing, and what is ambiguous, and then uses targeted async conversations to fill the gaps.</p>
+  <p>The output is equivalent in structure to a Design Level Event Storming result — Bounded Contexts, Domain Events, Commands, Actors, and Policies — derived from documentation that already exists rather than knowledge that had to be freshly extracted. The process is slower than a well-run live session. It is also more accessible, more inclusive of stakeholders who won't participate in workshops, and more respectful of existing documentation investments.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the insight that makes this work — swimlanes and DDD are the same map at different zoom levels.</p>
+</div>
+
+<div class="guide-page" id="page-2">
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <span class="chapter-number">02</span>
+  <h1 class="chapter-title">The Insight — Swimlanes and DDD Are the Same Map at Different Zoom Levels</h1>
+  <p class="chapter-intro">The swimlane flowchart and the Event Storming output are not two different things. They are two representations of the same underlying business reality, drawn at different levels of abstraction with different vocabularies. Once you see this, the flowchart-first path becomes obvious.</p>
+  <h2>What a Swimlane Flowchart Already Captures</h2>
+  <p>The swimlane flowchart was invented in the 1990s as a way to show business processes with explicit ownership — which department or role is responsible for each step. It became standard practice for process documentation in quality management, regulatory compliance, and business process reengineering. By the 2000s, every major enterprise had accumulated libraries of them.</p>
+  <p>Look at a well-drawn swimlane through a DDD lens and the correspondence is immediate. Each lane represents an Actor or a team — which maps directly to the pink Actor stickies of Event Storming. Each process box inside a lane represents a step that someone performs — a Command in DDD terminology. Each handoff arrow between lanes — the moment a process transfers from one lane to another — represents something that has happened that triggers the next step. That is a Domain Event. The lane boundaries themselves, where the vocabulary and the responsibility shift from one department to another, are the natural locations of Bounded Context boundaries.</p>
+  <p>The decision diamond — the branching point where the process takes one of two paths depending on a condition — is a Policy. "Whenever the return value exceeds £500, route to senior review" is exactly the purple sticky note formulation: "Whenever X, do Y automatically."</p>
+  <div class="callout"><div class="callout-label">Three Levels of the Same Map</div><p>A swimlane flowchart shows <strong>how work flows between people and departments</strong> — the operational process view. A subdomain map shows <strong>what the business is made of and what matters strategically</strong> — the business capability view. A Context Map shows <strong>which software owns what and how systems relate</strong> — the system architecture view. These three are not competing representations. They are the same territory described at increasing levels of abstraction. The swimlane is the foundation that both of the others can be derived from — if you know how to read it.</p></div>
+  <h2>The German Engineering Parallel</h2>
+  <p>There is a pleasing connection here to the Pflichtenheft tradition discussed in the Attractor guide. German engineering culture has always insisted on precise process documentation before any system is built — contractually binding, comprehensive, owned by the business. The swimlane flowchart is the closest equivalent in British and American practice. Both cultures were already doing domain modelling. They just weren't calling it that, and they weren't connecting it to the software design that followed.</p>
+  <p>The flowchart-first path is, in a sense, retrofitting the DDD vocabulary onto a documentation tradition that predates DDD by decades. The business was always describing its domain. The missing step was the discipline of reading that description through a lens that makes it useful for software design.</p>
+  <h2>What the Swimlane Misses</h2>
+  <p>The correspondence is genuine but not complete. Swimlane flowcharts have systematic gaps that the DDD overlay will expose. They typically show the happy path and mention exceptions only briefly. They rarely capture the implicit policies — the business rules that govern automatic reactions — because those rules live in people's heads and are assumed to be obvious. They don't distinguish between process steps that are truly atomic business events and steps that are administrative logistics. And they don't capture the language precisely enough — the same step might be described differently by different authors, masking a real conceptual distinction.</p>
+  <p>These gaps are not failures of the flowchart. They are the reason the DDD practitioner's job is to overlay, not just to transcribe. The overlay process surfaces what is missing as much as what is present.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: the notation mapping — a precise translation table between flowchart elements and DDD concepts.</p>
+</div>
+
+<div class="guide-page" id="page-3">
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <span class="chapter-number">03</span>
+  <h1 class="chapter-title">The Notation Mapping — How Flowchart Elements Translate to DDD Concepts</h1>
+  <p class="chapter-intro">The translation between swimlane notation and Event Storming vocabulary is systematic. Every element in a standard swimlane flowchart has a DDD equivalent. Knowing the mapping precisely is what makes the overlay step both fast and rigorous.</p>
+  <h2>The Complete Mapping</h2>
+  <div class="map-row">
+    <div class="map-cell header">Flowchart Element</div>
+    <div class="map-cell header">DDD / Event Storming Equivalent</div>
+    <div class="map-cell header">Notes on Translation</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Swimlane (horizontal band)</div>
+    <div class="map-cell ddd">Actor / Role + candidate Bounded Context boundary</div>
+    <div class="map-cell note">Lane = who owns the work. Lane boundary = where language and responsibility shifts — candidate context boundary.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Process box (rectangle)</div>
+    <div class="map-cell ddd">Command (imperative) + implied Domain Event (past tense)</div>
+    <div class="map-cell note">"Approve Return" is the Command. "ReturnApproved" is the Domain Event it produces. Both are usually implied by one box.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Handoff arrow between lanes</div>
+    <div class="map-cell ddd">Domain Event crossing a context boundary</div>
+    <div class="map-cell note">The most important element. A cross-lane arrow is always a Domain Event — something happened that triggered work in a different part of the business.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Decision diamond (Yes/No branch)</div>
+    <div class="map-cell ddd">Policy (purple sticky)</div>
+    <div class="map-cell note">"If value &gt; £500, route to senior review" is a Policy: "Whenever ReturnRequested AND value &gt; £500, flag for SeniorReview." Name the condition explicitly.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Start / End oval</div>
+    <div class="map-cell ddd">Pivotal Domain Event</div>
+    <div class="map-cell note">The start event is what triggered the process. The end event is what the process produces. Both are important anchors for the domain model.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">External entity (box outside lanes)</div>
+    <div class="map-cell ddd">External System (lilac in Event Storming)</div>
+    <div class="map-cell note">Payment gateway, ERP, logistics provider. Not part of the domain model but an integration point that must be named.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Document symbol</div>
+    <div class="map-cell ddd">Read Model (information needed to make a decision)</div>
+    <div class="map-cell note">A document or report referenced in a process step is usually a Read Model — the data an Actor needs to issue the next Command.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Delay / Wait symbol</div>
+    <div class="map-cell ddd">Time-based Policy or SLA trigger</div>
+    <div class="map-cell note">"Wait 24 hours" is usually a Policy: "Whenever 24 hours elapse after ReturnRequested with no action, escalate automatically."</div>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg class="diagram" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+      <text x="340" y="18" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="11" fill="#8888aa" letter-spacing="1" font-weight="600">SIDE BY SIDE — CONVENTIONAL vs DDD-ANNOTATED SWIMLANE</text>
+      <defs>
+        <marker id="arr-fc" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#4a4a6a"/></marker>
+        <marker id="arr-ddd" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#4a9068"/></marker>
+      </defs>
+
+      <!-- LEFT — Conventional -->
+      <text x="165" y="38" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-weight="600" letter-spacing="1">CONVENTIONAL</text>
+      <!-- Lane 1 -->
+      <rect x="20" y="48" width="290" height="80" rx="0" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1"/>
+      <text x="30" y="68" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa" font-weight="600">Customer</text>
+      <rect x="80" y="58" width="80" height="32" rx="4" fill="white" stroke="#4a4a6a" stroke-width="1.5"/>
+      <text x="120" y="78" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1a1a2e">Submit Return</text>
+      <line x1="160" y1="74" x2="188" y2="74" stroke="#4a4a6a" stroke-width="1.5" marker-end="url(#arr-fc)"/>
+      <!-- Lane 2 -->
+      <rect x="20" y="128" width="290" height="80" rx="0" fill="#faf9f6" stroke="#d8d4cb" stroke-width="1"/>
+      <text x="30" y="148" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa" font-weight="600">Customer Service</text>
+      <rect x="80" y="140" width="80" height="32" rx="4" fill="white" stroke="#4a4a6a" stroke-width="1.5"/>
+      <text x="120" y="160" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1a1a2e">Review Request</text>
+      <!-- Decision -->
+      <polygon points="210,156 225,140 240,156 225,172" fill="white" stroke="#4a4a6a" stroke-width="1.5"/>
+      <text x="225" y="153" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="#4a4a6a">High</text>
+      <text x="225" y="163" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="#4a4a6a">value?</text>
+      <line x1="160" y1="156" x2="208" y2="156" stroke="#4a4a6a" stroke-width="1.5" marker-end="url(#arr-fc)"/>
+      <!-- Lane 3 -->
+      <rect x="20" y="208" width="290" height="80" rx="0" fill="#f4f1ea" stroke="#d8d4cb" stroke-width="1"/>
+      <text x="30" y="228" font-family="Source Sans 3,sans-serif" font-size="9" fill="#8888aa" font-weight="600">Finance</text>
+      <rect x="80" y="220" width="80" height="32" rx="4" fill="white" stroke="#4a4a6a" stroke-width="1.5"/>
+      <text x="120" y="240" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="9" fill="#1a1a2e">Process Refund</text>
+      <!-- Cross-lane arrow -->
+      <line x1="120" y1="172" x2="120" y2="218" stroke="#4a4a6a" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr-fc)"/>
+      <text x="165" y="330" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#8888aa" font-style="italic">Process steps, ownership implied</text>
+
+      <!-- RIGHT — DDD annotated -->
+      <text x="510" y="38" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068" font-weight="600" letter-spacing="1">DDD-ANNOTATED</text>
+      <!-- Lane 1 — Customer -->
+      <rect x="365" y="48" width="290" height="80" rx="0" fill="#eef4f0" stroke="#4a9068" stroke-width="1.5"/>
+      <text x="378" y="62" font-family="Source Sans 3,sans-serif" font-size="9" fill="#4a9068" font-weight="600">Actor: Customer</text>
+      <!-- Command box -->
+      <rect x="410" y="66" width="90" height="28" rx="3" fill="#2980b9"/>
+      <text x="455" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="white" font-weight="600">RequestReturn</text>
+      <text x="455" y="87" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,255,255,.7)">Command</text>
+      <!-- Event -->
+      <rect x="510" y="66" width="100" height="28" rx="3" fill="#f39c12"/>
+      <text x="560" y="76" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="white" font-weight="600">ReturnRequested</text>
+      <text x="560" y="87" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,255,255,.7)">Domain Event</text>
+      <line x1="502" y1="80" x2="508" y2="80" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-ddd)"/>
+
+      <!-- Lane 2 — Customer Service Context -->
+      <rect x="365" y="128" width="290" height="80" rx="0" fill="#faf9f6" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="378" y="142" font-family="Source Sans 3,sans-serif" font-size="9" fill="#c0392b" font-weight="600">BC: Customer Service Context</text>
+      <!-- Command -->
+      <rect x="375" y="150" width="90" height="28" rx="3" fill="#2980b9"/>
+      <text x="420" y="160" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="white" font-weight="600">ReviewReturn</text>
+      <text x="420" y="171" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,255,255,.7)">Command</text>
+      <!-- Policy diamond -->
+      <rect x="478" y="148" width="80" height="32" rx="3" fill="#8e44ad"/>
+      <text x="518" y="160" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="white" font-weight="600">When value</text>
+      <text x="518" y="170" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="white" font-weight="600">&gt;500 flag</text>
+      <text x="518" y="188" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="#8e44ad">Policy</text>
+      <line x1="467" y1="164" x2="476" y2="164" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-ddd)"/>
+
+      <!-- Lane 3 — Finance Context -->
+      <rect x="365" y="208" width="290" height="80" rx="0" fill="#f5f0e8" stroke="#e67e22" stroke-width="1.5"/>
+      <text x="378" y="222" font-family="Source Sans 3,sans-serif" font-size="9" fill="#e67e22" font-weight="600">BC: Finance Context</text>
+      <rect x="420" y="228" width="90" height="28" rx="3" fill="#2980b9"/>
+      <text x="465" y="238" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="white" font-weight="600">IssueRefund</text>
+      <text x="465" y="249" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,255,255,.7)">Command</text>
+      <rect x="525" y="228" width="100" height="28" rx="3" fill="#f39c12"/>
+      <text x="575" y="238" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="8" fill="white" font-weight="600">RefundIssued</text>
+      <text x="575" y="249" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="7" fill="rgba(255,255,255,.7)">Domain Event</text>
+      <line x1="512" y1="242" x2="523" y2="242" stroke="#4a9068" stroke-width="1.5" marker-end="url(#arr-ddd)"/>
+
+      <!-- Cross-context Domain Event arrow -->
+      <line x1="560" y1="96" x2="560" y2="126" stroke="#f39c12" stroke-width="2" marker-end="url(#arr-ddd)"/>
+      <text x="575" y="115" font-family="Source Sans 3,sans-serif" font-size="7" fill="#f39c12" font-style="italic">event crosses</text>
+      <line x1="465" y1="180" x2="465" y2="226" stroke="#f39c12" stroke-width="2" marker-end="url(#arr-ddd)"/>
+      <text x="480" y="206" font-family="Source Sans 3,sans-serif" font-size="7" fill="#f39c12" font-style="italic">ReturnApproved</text>
+
+      <text x="510" y="330" text-anchor="middle" font-family="Source Sans 3,sans-serif" font-size="10" fill="#4a9068" font-style="italic">Contexts named, events explicit, policies visible</text>
+    </svg>
+    <div class="diagram-caption">The same Meridian Retail returns process — conventional swimlane on the left, DDD-annotated on the right. The information is identical. The vocabulary makes it actionable for domain modelling and specification writing.</div>
+  </div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Step 1 — collecting and assessing the flowcharts you have to work with.</p>
+</div>
+
+<div class="guide-page" id="page-4">
+  <div class="part-header"><div class="part-num">Part Two</div><h2>The Process</h2><p>Four steps from existing flowcharts to a domain model ready for specification writing</p></div>
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <span class="chapter-number">04</span>
+  <h1 class="chapter-title">Step 1 — Collect the Flowcharts</h1>
+  <p class="chapter-intro">The starting point is an audit — finding what exists, assessing its quality, and identifying the coverage gaps before the overlay work begins. This step is often underestimated. The quality and completeness of what you collect determines the quality of what you can produce.</p>
+  <h2>Where Flowcharts Live in Enterprise Organisations</h2>
+  <p>Business process documentation accumulates in specific places depending on what drove its creation. ISO 9001 and ISO 27001 certification programmes produce the most comprehensive coverage — detailed swimlane diagrams for every significant business process, maintained and reviewed annually. Regulatory compliance exercises produce focused documentation for the processes regulators care about. Business process reengineering projects from the 2000s and early 2010s produced extensive libraries that are now frequently outdated but still describe the underlying business logic correctly even where the tooling has changed.</p>
+  <p>The places to look: quality management systems, compliance documentation repositories, SharePoint process libraries, training material (which often contains the clearest process diagrams because they had to be understood by someone new), and the personal files of long-serving operations managers who documented their processes for their own reference.</p>
+  <h2>Assessing What You Find</h2>
+  <p>Not all flowcharts are equally useful. Assess each document on three dimensions before including it in the overlay exercise.</p>
+  <div class="step-block"><div class="step-num">ASSESS 01</div><p><strong>Recency and accuracy</strong> — how recently was this reviewed against actual practice? A flowchart from 2018 describes how the business worked in 2018. The process may have changed significantly since then, particularly around any system migrations or reorganisations. Use it as a starting point, not as ground truth.</p></div>
+  <div class="step-block"><div class="step-num">ASSESS 02</div><p><strong>Coverage of the domain you care about</strong> — does it cover the full end-to-end process, or only a slice? A flowchart that shows the customer-facing returns process but stops at "send to warehouse" misses the fulfilment half. Note the gaps explicitly — they become targeted questions for the async follow-up conversations.</p></div>
+  <div class="step-block"><div class="step-num">ASSESS 03</div><p><strong>Author knowledge</strong> — who drew this and how did they know what they knew? A flowchart drawn by the team that actually does the work carries different authority than one drawn by a business analyst who observed the process once. Understanding the provenance helps you calibrate how much you trust each element.</p></div>
+  <h2>What to Do When Flowcharts Don't Exist</h2>
+  <p>Some organisations have no process documentation at all. In this case, the flowchart-first path requires a lightweight documentation step before the overlay can begin. Ask the domain expert to draw the process as they understand it — even a rough sketch on paper is sufficient. The goal is not a polished document. It is an externalisation of the expert's mental model that the DDD practitioner can then work with. The imprecision in the sketch is information — it shows where the expert's own understanding is fuzzy, which is exactly where the domain model will be most important.</p>
+  <div class="tool-note"><div class="tool-note-label">A Note on Tooling</div><p>A small number of diagramming tools are beginning to support DDD-aware notation — allowing process maps and domain models to coexist in the same diagram with explicit support for Events, Commands, and Bounded Context boundaries. If your organisation is selecting or evaluating diagramming tools, it is worth checking whether candidates support this kind of hybrid notation. The tooling landscape is evolving quickly in this area. Any specific tool recommendation here would likely be outdated within a year, so evaluate based on current capability rather than reputation.</p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Step 2 — overlaying the DDD vocabulary on what you have collected.</p>
+</div>
+
+<div class="guide-page" id="page-5">
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <span class="chapter-number">05</span>
+  <h1 class="chapter-title">Step 2 — Overlay the DDD Vocabulary</h1>
+  <p class="chapter-intro">The overlay step is where the DDD practitioner's skill is most needed. It is not transcription — it is interpretation. The same flowchart element can map to different DDD concepts depending on context. The practitioner's job is to make those distinctions deliberately and consistently.</p>
+  <h2>The Working Method</h2>
+  <p>Work through each flowchart systematically, applying the notation mapping from Chapter 3. The most productive approach is to work on a digital copy of the flowchart and annotate each element with its DDD equivalent — using colour coding that mirrors the Event Storming convention (orange for Domain Events, blue for Commands, purple for Policies, pink for Actors, context boundary lines between lanes where appropriate).</p>
+  <p>The annotation is a conversation with the flowchart. As you work, you will encounter elements that don't map cleanly. A process box that is neither clearly a Command nor clearly an administrative step. A lane that seems to span two different business concerns and may need to be split into two Bounded Contexts. A decision diamond whose condition is too vague to express as a Policy without knowing more about the business rule behind it. These ambiguities are not problems to resolve by guessing — they are the hotspots that Step 3 will address.</p>
+  <h2>Naming Domain Events Correctly</h2>
+  <p>The most important discipline in the overlay step is naming Domain Events correctly. The flowchart will give you process step names in various formats — imperative ("Approve Return"), noun ("Return Approval"), gerund ("Approving Return"). These need to be converted to past tense business language: <em>ReturnApproved</em>.</p>
+  <p>The naming discipline matters because it forces a question that the flowchart doesn't answer: what exactly happened? "Return Approval" is a step. "ReturnApproved" is a fact — a specific thing that is now true about the world. Making this precise often reveals that what looked like one step in the flowchart is actually two or three different events depending on the circumstances. A return might be automatically approved (AutoApprovalGranted), approved by an agent after review (ReturnApprovedByAgent), or approved after escalation to a senior agent (ReturnEscalatedAndApproved). The flowchart shows one box. The business has three distinct facts.</p>
+  <h2>Naming Bounded Contexts</h2>
+  <p>Don't name Bounded Contexts after departments. Department names change. Departments merge and split. They carry organisational politics that shouldn't be embedded in a software model. Name contexts after the business capability they own: <em>Ordering</em>, not <em>Sales Department</em>. <em>Fulfilment</em>, not <em>Warehouse Operations</em>. <em>Customer Service</em>, not <em>Contact Centre</em>. The capability name will outlast the organisational structure.</p>
+  <div class="callout"><div class="callout-label">The Most Revealing Moment</div><p>The moment in the overlay process that produces the most insight is when you encounter the same word used differently in two adjacent lanes. The customer service lane uses "customer" to mean anyone who has raised a ticket. The finance lane uses "customer" to mean any legal entity that owes money. These are not the same concept. The flowchart treats them as one word, which is why the system built from it has always had confusing data. <strong>The DDD overlay makes this visible before any specification is written — which is the entire point of the exercise.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Step 3 — identifying the gaps and surfacing them as targeted questions.</p>
+</div>
+
+<div class="guide-page" id="page-6">
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <span class="chapter-number">06</span>
+  <h1 class="chapter-title">Step 3 — Find the Gaps and Surface the Hotspots</h1>
+  <p class="chapter-intro">The overlay step tells you what the flowcharts contain. This step tells you what they don't contain — and what that missing information is worth finding. Not every gap matters equally. The discipline is triaging which gaps will produce specification failures if left unfilled.</p>
+  <h2>The Four Categories of Gap</h2>
+  <p>Gaps in flowchart-derived domain models fall into four predictable categories. Working through each systematically produces a targeted list of questions for the async follow-up conversations that replace the live workshop.</p>
+  <div class="step-block"><div class="step-num">GAP TYPE 01 — Missing Policies</div><p><strong>The implicit business rules that govern automatic reactions.</strong> Flowcharts show what happens in the normal case. They rarely show what happens automatically when a condition is met. "When order value exceeds £500, automatically flag for senior review" is a Policy that almost certainly exists in the business but will not appear in the flowchart unless someone thought to draw it explicitly. Surface these by asking: for each Domain Event, what happens automatically in response? Who decides, and under what conditions?</p></div>
+  <div class="step-block"><div class="step-num">GAP TYPE 02 — Missing Exception Paths</div><p><strong>The cases where the happy path breaks down.</strong> Business flowcharts are drawn for the normal case. The returns process that appears straightforward has dozens of exceptions: the item is lost in transit, the customer disputes the return reason, the refund fails due to an expired card, the returned item is damaged beyond resale. Each exception is a Domain Event and a set of Commands that the model must include.</p></div>
+  <div class="step-block"><div class="step-num">GAP TYPE 03 — Ambiguous Terminology</div><p><strong>The words that appear in multiple lanes with possibly different meanings.</strong> These are the Ubiquitous Language violations that the overlay step will have flagged. Each one needs a targeted question: in your team's context, when you say X, do you mean A or B? Is this the same X that the finance team refers to, or a different concept with the same name?</p></div>
+  <div class="step-block"><div class="step-num">GAP TYPE 04 — Missing Context Boundaries</div><p><strong>The places where responsibility is unclear.</strong> A process step that appears in one lane but logically seems to belong in another. A handoff that crosses multiple lanes simultaneously. A decision point where it's not clear which team actually makes the call. These unclear boundaries are where the most integration complexity will live in the eventual system.</p></div>
+  <h2>The Async Follow-Up</h2>
+  <p>The output of this step is a structured set of questions — specific, targeted, and grouped by the domain expert who can best answer them. Not a generic "can we have a meeting" request, but a document that says: "I've reviewed the returns process flowchart and have five specific questions about the fraud flagging logic. Could you review these and respond by end of week?"</p>
+  <p>This format respects the domain expert's time, produces answers that are directly useful, and creates a documented record of the decisions made — which is itself a valuable addition to the domain model. The answers become part of the specification foundation.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: Step 4 — assembling the domain model from what the overlay and the conversations have produced.</p>
+</div>
+
+<div class="guide-page" id="page-7">
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <span class="chapter-number">07</span>
+  <h1 class="chapter-title">Step 4 — Build the Domain Model</h1>
+  <p class="chapter-intro">With the overlay complete and the gaps filled through targeted conversations, the raw material for a domain model exists. This step assembles it into the structured form that BMAD's planning sessions and eventually the NLSpec require.</p>
+  <h2>What the Domain Model Needs to Contain</h2>
+  <p>The domain model produced by the flowchart-first path should contain the same elements as a Design Level Event Storming output: named Bounded Contexts with their Ubiquitous Language, a timeline of Domain Events within each context, the Commands and Actors that produce those events, the Policies that govern automatic reactions, the Read Models that Actors need to make decisions, and the integration events that flow between contexts.</p>
+  <p>It should also contain explicit documentation of every naming decision made during the overlay — why "customer" in the Customer Service context means something different from "customer" in the Finance context, why the returns process was split into four distinct streams rather than treated as one, why the fraud flag policy was captured as an explicit Policy rather than embedded in a process step. These decisions are part of the domain model. They explain the model to anyone who reads it later.</p>
+  <h2>The Context Map</h2>
+  <p>The integration events between Bounded Contexts — the cross-lane handoff arrows that the overlay translated into Domain Events — become the Context Map. Name each integration relationship explicitly: is the Finance context conforming to what the Customer Service context publishes, or is there a negotiated Customer-Supplier relationship? Is there an Anticorruption Layer needed to protect the Finance model from the Customer Service model's assumptions? The flowchart shows the integration. The Context Map names the relationship type, which determines the design approach.</p>
+  <h2>Validation — The Final Step Before Handoff</h2>
+  <p>Before the domain model is handed to the BMAD planning session or used as the basis for an NLSpec, validate it with the domain experts who contributed to it. Not a formal review meeting — a document they can read and comment on asynchronously. The question to ask: does this model match how you think about the business? Is there anything here that doesn't feel right? Is there anything missing that you would expect to see?</p>
+  <p>This validation is not optional. The model was built from documentation and async conversations, not from the rich, contested, clarifying experience of a live session. There will be things it missed. The validation step is the opportunity to catch them before they become specification errors.</p>
+  <div class="callout"><div class="callout-label">The Output and Its Practical Status</div><p>A domain model built through the flowchart-first path is a good starting point, not a finished product. It is more complete than a model built from pure assumption, more grounded than an architect's sketch, and more practical than waiting indefinitely for the perfect Event Storming session. <strong>Treat it as a validated hypothesis rather than a verified fact. The implementation work will surface additional refinements. Plan for iteration, not for perfection at handoff.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: a realistic look of what the flowchart-first path does well and where it falls short.</p>
+</div>
+
+<div class="guide-page" id="page-8">
+  <div class="part-header"><div class="part-num">Part Three</div><h2>Trade-offs and Limitations</h2><p>What this approach delivers, what it doesn't, and where it sits in the larger picture</p></div>
+  <div class="chapter-eyebrow">Chapter 8</div>
+  <span class="chapter-number">08</span>
+  <h1 class="chapter-title">What the Flowchart-First Path Does Well — and Where It Falls Short</h1>
+  <p class="chapter-intro">The flowchart-first path is a genuinely useful technique with real limitations. Understanding both realistically is more useful than either uncritical enthusiasm or reflexive scepticism.</p>
+  <h2>What It Does Well</h2>
+  <p>It respects existing work. Business process documentation took time, expertise, and organisational effort to produce. The flowchart-first path builds on that investment rather than ignoring it. The business stakeholders who produced the original documentation are more receptive to a process that uses their work as a starting point than one that dismisses it in favour of a new methodology.</p>
+  <p>It works asynchronously. The domain expert contributes by providing documentation and answering targeted questions at their own pace. There is no requirement for a full-day synchronous session. This makes the approach viable in globally distributed organisations, regulated industries with formal participation requirements, and organisations where senior domain experts are constrained by time.</p>
+  <p>It produces an auditable trail. The progression from original flowchart through DDD overlay through gap-filling conversations to final domain model is documented at every step. In regulated industries, this traceability is not a nice-to-have — it is a compliance requirement.</p>
+  <p>It surfaces existing documentation gaps. The overlay process reliably identifies places where the flowchart is ambiguous, outdated, or incomplete. These gaps are valuable information even if the domain model weren't the goal — they represent risks in the existing process documentation that the organisation needs to address anyway.</p>
+  <h2>Where It Falls Short</h2>
+  <p>It misses the energy of the room. A live Event Storming session produces something the flowchart-first path cannot replicate: the spontaneous collisions between perspectives that generate unexpected insight. The finance director and the warehouse manager in the same room, looking at the same timeline, discovering that their understanding of what happens at order dispatch are fundamentally different — that discovery happens in ten minutes of conversation and changes the model significantly. In the async flowchart process, that collision may not happen at all.</p>
+  <p>It is limited by the quality of the source documentation. Happy-path flowcharts produce happy-path domain models. If the existing documentation doesn't show the exception paths, the fraud cases, the edge conditions that cause the most implementation pain, the overlay won't surface them. The gap-finding step helps, but it can only ask questions about gaps the practitioner has thought to look for.</p>
+  <p>It is slower. A well-run two-day Event Storming session produces a domain model of equivalent depth in a fraction of the elapsed time. The async back-and-forth of the flowchart-first path across a distributed organisation can take weeks to produce what a good in-person session produces in two days.</p>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">Next: where the flowchart-first path sits in the four-layer sequence — and when to use it.</p>
+</div>
+
+<div class="guide-page" id="page-9">
+  <div class="chapter-eyebrow">Chapter 9</div>
+  <span class="chapter-number">09</span>
+  <h1 class="chapter-title">Where This Fits in the Four-Layer Sequence</h1>
+  <p class="chapter-intro">The flowchart-first path is an alternative implementation of Layer 2 — the domain discovery layer — not a replacement for the entire sequence. Understanding where it fits determines when to use it and when to insist on the live workshop alternative.</p>
+  <h2>It Is Layer 2, Not a Shortcut Around It</h2>
+  <p>The synthesis guide describes four layers: DDD as the conceptual foundation, Event Storming as the discovery method, BMAD as the structured execution framework, and Attractor as the lights-out factory. The flowchart-first path replaces the Event Storming workshop in Layer 2. It does not replace Layer 1 — the DDD conceptual framework is still required to make sense of what the flowcharts contain. It does not compress Layers 3 and 4 — the domain model produced still needs to feed into BMAD's planning chain before any agent begins implementation.</p>
+  <p>The output of the flowchart-first path is equivalent in form to a Design Level Event Storming output — a grounded domain model with named Bounded Contexts, Domain Events, Commands, Actors, Policies, and a Context Map. The quality may be somewhat lower, given the limitations described in Chapter 8. The effort required to feed it into BMAD or to construct an NLSpec from it is the same.</p>
+  <h2>When to Use It</h2>
+  <p>Use the flowchart-first path when a live Event Storming session is genuinely not feasible — not when it's merely inconvenient. The live session is better when it can be done. The flowchart-first path is better than nothing, but it should not become the default simply because it is less disruptive to schedules.</p>
+  <p>Specific contexts where it is the right choice: organisations with comprehensive existing process documentation where the investment in live sessions would duplicate that work without adding proportional value; globally distributed teams where getting the right people in the same room requires international travel; regulated industries where formal participation in informal workshops is not permitted; and initial domain exploration exercises where the goal is to understand what is already known before deciding where the genuine gaps are.</p>
+  <h2>Combining Both Approaches</h2>
+  <p>The flowchart-first path and live Event Storming are not mutually exclusive. In practice, the most effective approach for a complex domain is often to run the flowchart-first path first — using it to build a preliminary domain model and identify the highest-value areas of uncertainty — and then run a focused Event Storming session specifically on those areas of uncertainty. Instead of a two-day Big Picture session on the entire domain, a three-hour Process Level session on the two or three processes where the preliminary model has the most gaps.</p>
+  <p>This combination respects both the existing documentation investment and the genuine power of the live session. The flowchart-first path does the broad coverage. The Event Storming session does the deep dives. Together they produce a domain model that is both comprehensive and grounded.</p>
+  <div class="callout"><div class="callout-label">The Practical Recommendation</div><p>For most enterprise organisations approaching agentic development: start with the flowchart-first path to establish a baseline domain model from existing documentation. Use that model to identify where understanding is solid and where it is uncertain. Then run targeted Event Storming sessions on the uncertain areas. Feed the combined output into BMAD. <strong>This sequence respects existing investment, produces a better model than either approach alone, and gets to working software faster than waiting for the perfect conditions for a comprehensive live session that may never arrive.</strong></p></div>
+  <hr class="section-rule">
+  <p style="color: var(--guide-ink-faint);font-size:.9rem;font-style:italic;">The Notation Reference and Glossary follow.</p>
+</div>
+
+<div class="guide-page" id="page-10">
+  <div class="chapter-eyebrow">Reference</div>
+  <h1 class="chapter-title">Notation Reference and Glossary</h1>
+  <p class="chapter-intro">A quick reference for the flowchart-to-DDD mapping and definitions of key terms.</p>
+
+  <h2>Complete Notation Mapping</h2>
+  <div class="map-row">
+    <div class="map-cell header">Flowchart Element</div>
+    <div class="map-cell header">DDD / Event Storming Equivalent</div>
+    <div class="map-cell header">Colour in Annotation</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Swimlane (horizontal band)</div>
+    <div class="map-cell ddd">Actor + Bounded Context boundary</div>
+    <div class="map-cell note">Name lane after business capability, not department. Draw context boundary line at lane edge.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Process box (rectangle)</div>
+    <div class="map-cell ddd">Command (blue) + Domain Event (orange)</div>
+    <div class="map-cell note">Name the Command in imperative form. Name the resulting Domain Event in past tense.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Cross-lane handoff arrow</div>
+    <div class="map-cell ddd">Domain Event crossing context boundary</div>
+    <div class="map-cell note">Name explicitly — this is the integration event between contexts. Critical for Context Map.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Decision diamond</div>
+    <div class="map-cell ddd">Policy (purple)</div>
+    <div class="map-cell note">Rewrite as: "Whenever [Event], if [Condition], then [Action] automatically."</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Start oval</div>
+    <div class="map-cell ddd">Triggering Domain Event</div>
+    <div class="map-cell note">What happened that started this process? Name it in past tense.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">End oval</div>
+    <div class="map-cell ddd">Outcome Domain Event</div>
+    <div class="map-cell note">What has happened when the process is complete? The business fact the process produces.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">External entity</div>
+    <div class="map-cell ddd">External System (lilac)</div>
+    <div class="map-cell note">Integration point. Name the system and what Domain Event it produces or consumes.</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Document symbol</div>
+    <div class="map-cell ddd">Read Model (yellow)</div>
+    <div class="map-cell note">What information does the Actor need to make the decision or issue the Command?</div>
+  </div>
+  <div class="map-row">
+    <div class="map-cell flowchart">Delay / wait symbol</div>
+    <div class="map-cell ddd">Time-based Policy (purple)</div>
+    <div class="map-cell note">"Whenever [time elapses] after [Event] with [condition], trigger [action] automatically."</div>
+  </div>
+
+  <h2 style="margin-top:2.5rem">Glossary</h2>
+
+  <div class="glossary-entry"><div class="glossary-term">Bounded Context (in flowchart terms)</div><p class="glossary-def">The software boundary that corresponds to a swimlane or group of related swimlanes — the area where one team owns the process and one consistent vocabulary applies. Named after the business capability, not the department. The cross-lane handoff arrows between Bounded Contexts become the integration events on the Context Map.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Command (in flowchart terms)</div><p class="glossary-def">The instruction that triggers a process step — equivalent to the blue sticky note in Event Storming. Derived from a process box in the flowchart. Written in imperative form: ApproveReturn, IssueRefund, RequestEscalation. Every Command produces a Domain Event.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Domain Event (in flowchart terms)</div><p class="glossary-def">Something that happened that the business cares about — equivalent to the orange sticky note in Event Storming. Derived from process boxes (what they produce) and cross-lane handoff arrows (what crosses context boundaries). Written in past tense: ReturnApproved, RefundIssued, EscalationTriggered.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Flowchart-First Path</div><p class="glossary-def">An alternative implementation of Layer 2 (domain discovery) in the four-layer sequence, using existing business process documentation as the starting point rather than a live Event Storming workshop. Produces a domain model through systematic overlay of DDD vocabulary on swimlane flowcharts, followed by targeted async conversations to fill the gaps.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Hotspot (in flowchart terms)</div><p class="glossary-def">An element in the flowchart overlay where the DDD translation is ambiguous, contested, or clearly missing information. The accumulation of hotspots across the overlay produces the gap list that drives the async follow-up conversations with domain experts.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Notation Mapping</div><p class="glossary-def">The systematic translation table between swimlane flowchart elements (process boxes, decision diamonds, handoff arrows, swimlanes) and their DDD/Event Storming equivalents (Commands, Policies, Domain Events, Bounded Contexts). See the reference table above.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Policy (in flowchart terms)</div><p class="glossary-def">An automatic reaction — the business rule that governs what happens next without human intervention. Derived from decision diamonds in the flowchart. Expressed as: "Whenever [Event], if [Condition], then [Action] automatically." Often the most valuable gap to fill, because Policies are routinely implicit in flowcharts and critical to get right in specifications.</p></div>
+  <div class="glossary-entry"><div class="glossary-term">Read Model (in flowchart terms)</div><p class="glossary-def">The information an Actor needs to make a decision or issue a Command. Derived from document symbols in the flowchart, or inferred from the decision point — what data must be visible to the person making this choice? Read Models define the data requirements of the user interface or query layer.</p></div>
+</div>
+
+<site-footer></site-footer>
+</body>
+</html>
