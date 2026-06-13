@@ -10,20 +10,20 @@
 <title>Harness Engineering in Practice — Avon Software Labs</title>
 <script src="../../assets/components.js?v=1.1" defer></script>
 
-<meta name="description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop while the agent does the work">
-<meta name="keywords" content="harness engineering, agentic development, AI coding, spec-driven development, human-in-the-loop, DDD, BMAD">
+<meta name="description" content="A concrete reference implementation — how to actually use a harness for greenfield and brownfield projects">
+<meta name="keywords" content="harness engineering, agentic development, AI coding, spec-driven development, human-in-the-loop, DDD, BMAD, greenfield, brownfield">
 <meta name="author" content="Avon Software Labs">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://avons.github.io/notes/harness-eng/">
 <meta property="og:title" content="Harness Engineering in Practice — Avon Software Labs">
-<meta property="og:description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop">
+<meta property="og:description" content="A concrete reference implementation — how to actually use a harness for greenfield and brownfield projects">
 <meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
 
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://avons.github.io/notes/harness-eng/">
 <meta property="twitter:title" content="Harness Engineering in Practice — Avon Software Labs">
-<meta property="twitter:description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop">
+<meta property="twitter:description" content="A concrete reference implementation — how to actually use a harness for greenfield and brownfield projects">
 <meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
 
 </head>
@@ -33,10 +33,10 @@
 
 <!-- ══ COVER ══════════════════════════════════════════════════════ -->
 <div class="doc-title-block">
-  <p class="doc-eyebrow">A Worked Example</p>
+  <p class="doc-eyebrow">The Series Concludes Here</p>
   <h1 class="doc-main-title">Harness Engineering in Practice</h1>
-  <p class="doc-subtitle">How a file-based harness keeps the human in the loop while the agent does the work</p>
-  <p class="doc-tagline">The ceremony is not overhead. It is the correction mechanism.</p>
+  <p class="doc-subtitle">A concrete reference implementation — greenfield and brownfield</p>
+  <p class="doc-tagline">Enough theory. Here is how to actually do it.</p>
   <div class="doc-meta">
     <span>v1.0</span>
     <span>·</span>
@@ -47,75 +47,113 @@
 </div>
 
 <!-- ══ INTRODUCTION ═══════════════════════════════════════════════ -->
-<h1>The Dilbert Problem</h1>
-<p>You ask an AI agent to build a swing. It builds a box. It is confident about the box. It shows you the box with pride. You look at the box and think — well, it is a box. Maybe that is what I wanted.</p>
-<p>This is not a hypothetical. It is the default outcome of AI-assisted development without structure. The agent reads your instructions, interprets them through its own patterns, produces something that technically satisfies the literal request, and presents it as complete. The gap between what you meant and what it built is invisible — because nobody defined the gap before the work started.</p>
-<p>I have seen this happen on real projects. An AI agent was given detailed architecture decision records — ten of them, covering technology choices, design patterns, and integration constraints. The agent read every ADR. It understood the vocabulary. It produced code that was internally consistent and externally wrong. It had built exactly what the ADRs described, but it had missed the reasoning behind the ADRs — the trade-offs, the rejected alternatives, the constraints that were implicit in the decisions but never spelled out in the documents.</p>
-<p>The specs were there. The agent read them. It still got things wrong.</p>
-<div class="callout callout-insight"><strong>The Core Problem:</strong> Reading a spec is not the same as being constrained by a process that forces verification at each step. The agent can read an architecture decision and then ignore it in implementation — because there is no gate that asks "did you follow this decision?" The harness builds that gate.</div>
+<h1>Enough Theory</h1>
+<p>Seven guides. DDD, Event Storming, Flowcharts, Domain Context Engineering, BMAD, Attractor, the Synthesis. We have spent six months building the theoretical foundation for agentic engineering — the four layers, the dependency sequence, the discipline that ties them together.</p>
+<p>This is where the theory stops and the practice begins.</p>
+<p>The <a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng</a> repository is a concrete reference implementation of Layer 3 — the structured execution harness that turns domain knowledge into shipped features with human oversight. It is not a framework you install. It is a file-based convention you clone, adapt, and use. Any agent. Any project. From big picture to shipped feature.</p>
+<p>This article explains the rationale behind the approach, walks through the mechanics, and shows two worked examples: a greenfield project from scratch, and a brownfield project reverse-engineering an existing codebase. If the previous guides answered "why," this one answers "how."</p>
 
-<!-- ══ WHAT IS A HARNESS ══════════════════════════════════════════ -->
-<h1>What a Harness Actually Is</h1>
-<p>The term "harness engineering" was named by Kief Morris at Thoughtworks in March 2026. The insight: when agent output quality falls short, the question is not "is the spec good enough?" — it is "which component of the harness failed?"</p>
-<p>A harness is the full collection of specifications, constraints, quality checks, and workflow guidance that controls an agent's how loop. It is not a plugin. It is not a runtime. It is a file-based convention that any agent can follow.</p>
-<p>A practical harness has five components:</p>
-<p><strong>The constitution</strong> — the permanent rules the agent reads every session. Technology decisions, naming conventions, security rules, things explicitly rejected.</p>
-<p><strong>The domain context</strong> — the vocabulary, the boundaries, the events the business cares about. Without this, the agent builds on an unexamined model that may or may not reflect reality.</p>
-<p><strong>The feature loop</strong> — the structured sequence from idea to shipped code. Propose, plan, implement, verify, done. Each step produces a document. Each document is reviewed by a human before the next step begins.</p>
-<p><strong>The quality gates</strong> — the checkpoints where the agent stops and waits. Not "ask the AI to argue against you" — that is simulation, not challenge. The gate is a hard stop. The work is presented to a human. The human reviews it. The human approves it or sends it back.</p>
-<p><strong>The narrative log</strong> — the append-only record of what was built, why, and what was learned. The "why" layer that helps future sessions understand how the project emerged.</p>
-<div class="callout callout-insight"><strong>The Architecture:</strong> The workflow is the tool. The folder structure is the state machine. The AGENTS.md is the system prompt. The acceptance.md is the contract. Any agent that can read and write files will follow it. No runtime. No server. No API keys.</div>
-
-<!-- ══ THE HUMAN GATES ═══════════════════════════════════════════ -->
-<h1>The Human Gates — Why Ceremony Is the Point</h1>
-<p>The harness has four gates per feature where the agent explicitly stops and waits. This is not overhead. This is the external accountability that prevents the Dilbert swing.</p>
-<p><strong>Gate 1 — Design Review.</strong> The agent creates a proposal (what and why) and a design (how). Then it stops. The human reviews both. Does this match what I actually want? Are the assumptions correct? The human approves or rejects.</p>
-<p><strong>Gate 2 — Task Approval.</strong> The agent breaks the design into tasks and writes acceptance criteria — the contract. Then it stops. The human reviews: are these the right tasks? Is this what "done" means?</p>
-<p><strong>Gate 3 — Test Failure Escalation.</strong> If the agent fails to make tests pass after three attempts, it stops and escalates. No silent workarounds. No "close enough."</p>
-<p><strong>Gate 4 — Verification Sign-off.</strong> The agent runs the full test suite, fills a verification report, and stops. The human reviews: did everything pass? Does the verification match the acceptance criteria? The human signs off.</p>
-<p>Plus two phase-level gates: the human approves the backlog before work starts, and the human signs off before a phase merges to main.</p>
-<div class="callout callout-warn"><strong>The Point:</strong> Each gate is a structured moment where the human steps outside the agreement spiral and makes a decision. The agent cannot agree with itself through the gate. A human must be there. That is not bureaucracy. That is the correction mechanism that private AI conversations lack.</div>
-
-<!-- ══ THE FEATURE WALKTHROUGH ═══════════════════════════════════ -->
-<h1>A Feature Walkthrough — Propose to Done</h1>
-<p><strong>Step 1: The human picks a feature from the backlog.</strong> The agent reads the phase backlog, creates a feature branch, writes a proposal and a design. Then it stops. The human reviews. Maybe the design makes an assumption that is wrong. The human edits, approves or rejects. Fifteen minutes. It prevents three days of wrong implementation.</p>
-<p><strong>Step 2: The agent plans the work.</strong> Given design approval, the agent creates tasks and acceptance criteria. Then it stops. The human reviews. One criterion might be missing an edge case. The human adds it. Ten minutes. It prevents a feature that breaks for the edge case that actually matters in production.</p>
-<p><strong>Step 3: The agent implements.</strong> Given task approval, the agent works through each task: write the test (confirm it fails), write the code (make it pass), commit, report. If tests fail three times, it stops and escalates.</p>
-<p><strong>Step 4: The agent verifies.</strong> When all tasks are complete, the agent runs the full test suite and fills a verification report. Then it stops. The human reviews. Signs off.</p>
-<p><strong>Step 5: The agent merges.</strong> Given sign-off, the agent creates a pull request, merges to the phase branch, updates the dashboard, and appends an entry to the build narrative. Then it picks the next feature.</p>
-<div class="callout callout-insight"><strong>The Time Cost:</strong> Five steps. Three human review points. Maybe forty-five minutes of human time across the entire feature. The alternative — no gates — saves those forty-five minutes and risks building the wrong thing entirely. For any project worth maintaining, the math is obvious.</div>
-
-<!-- ══ CONTEXT RECOVERY ══════════════════════════════════════════ -->
-<h1>The Three Layers of Context Recovery</h1>
-<p>Agents have no memory across sessions. Every new session starts cold. The harness solves this with three files that together recover context in under thirty seconds.</p>
-<p><strong>Layer 1: The narrative log.</strong> The agent reads the last three entries in the build narrative — what was built, what was decided, what comes next. The fastest way to recover context.</p>
-<p><strong>Layer 2: The compact snapshot.</strong> For the active feature, a single file contains the relevant rules, key interfaces, acceptance criteria status, current task, and files modified. Instead of reading six files, the agent reads one.</p>
-<p><strong>Layer 3: The task list.</strong> The agent checks the task checklist. What is done. What is next. Where to continue.</p>
-<div class="callout callout-quote"><p>Status tells you <em>where</em> you are. The snapshot tells you <em>what</em> is happening. The narrative tells you <em>how you got here</em>. All three are needed. None is sufficient alone.</p></div>
-
-<!-- ══ THE AI MANIFESTO CONNECTION ═══════════════════════════════ -->
-<h1>Skin in the Game — The AI Manifesto Connection</h1>
-<p>The <a href="https://krishavanoor.github.io/" target="_blank">AI Manifesto</a> names the problem precisely: <em>"The greatest risk of AI is not that it will think for us. It is that it will agree with us — and we will not notice."</em></p>
-<p>Private AI conversations have no correction mechanism. There is no peer watching. No friend to say "are you sure about that?" The conversation feels intimate — and that intimacy is exactly what makes it dangerous. Agreement produces trust. Trust produces deeper disclosure. Deeper disclosure produces more tailored agreement.</p>
-<p>The manifesto's Principle 5 says: <em>"Build External Accountability."</em> The harness builds it structurally. Not by asking the AI to argue against you — the manifesto already tells us that is simulation, not challenge. The harness builds it by stopping the conversation entirely and putting the work in front of a human who is genuinely outside the agreement spiral.</p>
-<p>Every human gate in the harness is a structured moment where the human must step outside the conversation and make a decision. The agent cannot agree with itself through the gate. A human must be there.</p>
+<!-- ══ THE RATIONALE ═════════════════════════════════════════════ -->
+<h1>The Rationale</h1>
+<p>The problem is not that AI agents are incompetent. They are remarkably capable. The problem is structural: an agent that tends toward agreement, working from input that may be incomplete, in a conversation with no external correction mechanism, will produce confident wrong answers at speed.</p>
+<p>The <a href="https://krishavanoor.github.io/" target="_blank">AI Manifesto</a> names this precisely: <em>"The greatest risk of AI is not that it will think for us. It is that it will agree with us — and we will not notice."</em></p>
+<p>A harness addresses this by building the correction mechanism structurally. Not by asking the AI to argue against you — the manifesto already tells us that is simulation, not challenge. By stopping the conversation entirely and putting the work in front of a human who is genuinely outside the agreement spiral.</p>
+<p>Every human gate — design review, task approval, verification sign-off — is a structured moment where the human steps outside the spiral and makes a decision. The ceremony is not overhead. It is the external accountability that prevents the Dilbert swing.</p>
 <div class="callout callout-insight"><strong>The Principle:</strong> The agent is a fast, tireless collaborator who needs a human hand on the wheel — not because it is incompetent, but because it cannot see its own blind spots. The human stays responsible for quality. The harness makes that responsibility practical.</div>
-<p>This is not a red pill. It is not a revolution. It is an evolution — the recognition that the human's role in AI-assisted development is not to prompt better, but to build accountability structures that keep the honest thinking honest.</p>
+
+<!-- ══ HOW IT WORKS ═════════════════════════════════════════════ -->
+<h1>How It Works — The Mechanics</h1>
+<p>A harness has five components. Together they form a state machine that controls the agent's how loop:</p>
+<p><strong>The constitution</strong> — permanent rules the agent reads every session. Technology decisions, naming conventions, security rules. This is the foundational law that everything else conforms to.</p>
+<p><strong>The domain context</strong> — vocabulary, boundaries, events the business cares about. Without this, the agent builds on an unexamined model. With it, the agent uses the same terms the business draws.</p>
+<p><strong>The feature loop</strong> — propose, plan, implement, verify, done. Each step produces a document. Each document is reviewed by a human before the next step begins. The loop is the state machine that prevents the agent from running ahead.</p>
+<p><strong>The quality gates</strong> — checkpoints where the agent stops and waits. Hard stops. The work is presented to a human. The human approves or sends it back. No approval, no next step.</p>
+<p><strong>The narrative log</strong> — append-only record of what was built, why, and what was learned. The "why" layer that helps future sessions understand how the project emerged.</p>
+<p>The architecture is deliberately simple: the workflow is the tool, the folder structure is the state machine, any agent that can read and write files will follow it. No runtime. No server. No API keys.</p>
+
+<!-- ══ GREENFIELD EXAMPLE ════════════════════════════════════════ -->
+<h1>Worked Example — Greenfield Project</h1>
+<p>Starting from an empty directory. You have an idea for a Go service that processes financial transactions. No existing code. No existing docs. Just the idea.</p>
+
+<h2>Step 1: Initialise the Harness</h2>
+<p>Open your AI agent (Claude Code, Codex, Copilot — any Tier 1+ agent) in the project directory and paste:</p>
+<div class="callout callout-quote"><p>Read the harness rules from https://github.com/AvonS/harness-eng and initialise this project using the harness. Follow bootstrap/init.md exactly.</p></div>
+<p>The agent clones the harness temporarily, reads the bootstrap instructions, creates the <code>.project/</code> scaffold, detects your language (Go — it sees <code>go.mod</code>), activates the Go skill, and asks you to confirm. Two minutes. The scaffold is ready.</p>
+
+<h2>Step 2: Build Domain Context (Optional but Recommended)</h2>
+<p>Run <code>/h:domain</code>. The agent interviews you:</p>
+<ul>
+  <li>What does this system do? — "Processes financial transactions, validates them, and routes them to clearing houses."</li>
+  <li>What are the main areas? — "Transaction validation, clearing, reconciliation."</li>
+  <li>What events matter? — "TransactionReceived, Validated, Cleared, Reconciled, Failed."</li>
+  <li>Any automatic rules? — "Transactions over £10,000 require enhanced due diligence."</li>
+</ul>
+<p>The agent produces a <code>domain-ctx.txt</code> — bounded contexts, ubiquitous language, domain events, policies. You review it, correct the terminology, approve. Five minutes. The domain is grounded.</p>
+
+<h2>Step 3: Constitution and Architecture</h2>
+<p>Run <code>/h:constitution</code>. The agent reads your domain context, reads any docs you have, and builds <code>CONSTITUTION.md</code> — the permanent rules. Technology stack (Go, PostgreSQL), naming conventions (from your ubiquitous language), security rules (secrets in <code>~/.config</code>), things explicitly rejected.</p>
+<p>You review. Approve. Run <code>/h:phases</code>. The agent proposes a phase roadmap — Phase 1: Transaction Engine, Phase 2: Clearing Integration, Phase 3: Reconciliation. You approve.</p>
+
+<h2>Step 4: Build Features</h2>
+<p>Run <code>/h:phase-plan phase-1-transaction-engine</code>. The agent creates the phase folder, the backlog, and the git branch. You approve the backlog.</p>
+<p>Run <code>/h:feature-propose transaction-validation</code>. The agent writes a proposal and design. Stops. You review — the design looks right, but the agent missed the idempotency requirement. You add it. Approve.</p>
+<p>Run <code>/h:feature-plan</code>. The agent writes tasks and acceptance criteria. Stops. You approve. Run <code>/h:feature-implement</code>. The agent works through each task: test first, code, commit, report. After each task, it updates the compact context snapshot. After three failed test attempts, it stops and escalates.</p>
+<p>Run <code>/h:feature-verify</code>. The agent runs the full test suite, fills the verification report. Stops. You sign off. Run <code>/h:feature-done</code>. The agent creates a PR, merges, updates the dashboard, appends to the build narrative.</p>
+<p>Pick the next feature. Repeat.</p>
+
+<div class="callout callout-insight"><strong>The Result:</strong> After Phase 1, you have a working transaction engine with tests, verified acceptance criteria, a build narrative explaining every decision, and a live dashboard showing project status. The agent built the code. You validated every step. Neither worked alone.</div>
+
+<!-- ══ BROWNFIELD EXAMPLE ════════════════════════════════════════ -->
+<h1>Worked Example — Brownfield Project</h1>
+<p>An existing Go service. 15,000 lines of code. No documentation. No tests. The original developer left. You need to add features without breaking what exists.</p>
+
+<h2>Step 1: Initialise and Reverse-Engineer</h2>
+<p>Clone the harness into the project as <code>.harness/</code>. Run <code>/h:domain --brownfield</code>. The agent scans the codebase:</p>
+<ul>
+  <li>Reads the database schema — reveals the actual entities and relationships</li>
+  <li>Scans API endpoints — reveals the commands and read models</li>
+  <li>Extracts Go types and interfaces — reveals the module boundaries</li>
+  <li>Reads git history — reveals what changed when and why</li>
+</ul>
+<p>The agent produces a draft <code>domain-ctx.txt</code> from what it found. It flags gaps: "The <code>Customer</code> type in <code>internal/billing/</code> is different from the <code>Customer</code> in <code>internal/support/</code> — are these the same concept?" You answer: different bounded contexts. The agent updates the domain context. Approve.</p>
+
+<h2>Step 2: Constitution from Existing Code</h2>
+<p>Run <code>/h:constitution</code>. The agent reads the codebase, the domain context, and any existing docs. It builds <code>CONSTITUTION.md</code> from what exists — not what should exist. The naming conventions come from the actual code, not an ideal. The architecture rules come from the actual module boundaries, not a diagram.</p>
+<p>You review. Some rules need updating — the agent found inconsistencies in the existing code. You decide which patterns to keep and which to fix. Approve.</p>
+
+<h2>Step 3: Existing Work Assessment</h2>
+<p>Run <code>/h:status</code>. The agent scans the project structure and generates a baseline dashboard. No phases yet — just a snapshot of what exists. You use this to plan the first phase: what needs to be built, what needs to be fixed, what needs to be documented.</p>
+
+<h2>Step 4: Build on Top</h2>
+<p>From here, the workflow is identical to greenfield. Phase plan, feature propose, feature plan, implement, verify, done. The difference is the constitution and domain context are grounded in reality, not aspiration. The agent does not guess about how the existing code works — it was reverse-engineered from the actual codebase.</p>
+
+<div class="callout callout-insight"><strong>The Brownfield Advantage:</strong> The harness does not replace your existing code. It wraps it in a process that prevents new features from breaking old behaviour. Every change goes through the same gates. Every change is verified against the existing test suite. Every change is documented in the build narrative. The agent extends the codebase without erasing its history.</div>
+
+<!-- ══ THE THREE LAYERS OF CONTEXT ══════════════════════════════ -->
+<h1>Context Recovery — How the Agent Resumes</h1>
+<p>Agents have no memory across sessions. The harness solves this with three layers:</p>
+<p><strong>The narrative log</strong> — last three entries of the build story. What was built, what was decided, what comes next. Fastest context recovery.</p>
+<p><strong>The compact snapshot</strong> — one file per feature with relevant rules, interfaces, acceptance criteria, current task, files modified. One file instead of six.</p>
+<p><strong>The task list</strong> — checklist of what is done and what is next.</p>
+<p>Together, the agent resumes in under thirty seconds without re-reading the constitution, architecture, or full design documents.</p>
 
 <!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
-<h1>Where This Fits in the Four-Layer Sequence</h1>
-<p>harness-eng is <a href="../synthesis/" target="_blank">Layer 3</a> in the sequence this blog series has been building:</p>
-<p><strong>Layer 1 — DDD:</strong> Domain clarity before anything else. The vocabulary, the boundaries, the model of what the business actually does.</p>
-<p><strong>Layer 2 — Event Storming:</strong> The discovery method. Surfacing the domain model from the people who know it, not from the architect's assumptions.</p>
-<p><strong>Layer 3 — Structured Execution:</strong> The harness. Turning validated domain knowledge into shipped features with human oversight. This is where harness-eng lives.</p>
-<p><strong>Layer 4 — The Factory:</strong> Full autonomy. Only viable when the domain understanding is precise enough that an agent can work from a spec without guessing.</p>
-<p>harness-eng also includes an optional domain context command — a bridge to Layer 1 for projects that need it. Not full DDD. The minimum domain grounding needed to prevent the agent from building on an unexamined model.</p>
-<div class="callout callout-quote"><p>The progression is not "trust the agent more." It is "build the harness better." Each level of harness maturity removes one class of human bottleneck. The dark factory is not a leap of faith — it is the endpoint of a measurable engineering progression.</p></div>
+<h1>Where This Fits</h1>
+<p>harness-eng is <a href="../synthesis/" target="_blank">Layer 3</a> in the four-layer sequence. It assumes Layers 1 and 2 have been done — the domain is understood, the vocabulary is agreed, the boundaries are drawn. It provides the execution discipline that prevents the confident wrong answer.</p>
+<p>The optional <code>/h:domain</code> command bridges to Layer 1 — a lightweight domain context for projects that need grounding without full DDD ceremony.</p>
+<p>Layer 4 — the dark factory — is the horizon. It becomes viable when the domain understanding from Layers 1 and 2, combined with the execution discipline from Layer 3, produces specifications precise enough for full autonomy. That is not where most teams are today. Layer 3 is.</p>
+
+<!-- ══ WHAT COMES NEXT ═══════════════════════════════════════════ -->
+<h1>What Comes Next</h1>
+<p>The harness is the foundation. Two extensions are emerging that will complement it:</p>
+<p><strong>A context hub for enterprise applications.</strong> Andrew Ng's <a href="https://github.com/andrewyng/context-hub" target="_blank">context-hub</a> helps agents with latest API documentation. The same approach applies to ERP systems and enterprise applications — SAP, Oracle, Salesforce. During large projects, the implementation team builds a context repository: vanilla application behaviour plus organisation-specific extensions and customisations. The harness constitution reads this repository. The agent starts with accurate domain knowledge, not generic training data.</p>
+<p><strong>Vector search and code intelligence.</strong> MCP-based tools like Sourcegraph and Tree-sitter can help coding agents find what they need quickly — reducing token burn and increasing accuracy. The harness does not replace these tools. It complements them. The harness controls the workflow. The tools improve the agent's ability to execute within that workflow.</p>
+<p>Neither is a harness problem. Both enrich the harness. The workflow stays the same. The agent gets better at following it.</p>
 
 <!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
 <h1>Companion Resources</h1>
 <ul>
-  <li><a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng on GitHub</a> — the file-based harness (MIT licence)</li>
+  <li><a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng on GitHub</a> — the reference implementation (MIT licence)</li>
   <li><a href="https://avons.github.io/" target="_blank">The Agentic Engineering Journey</a> — the five levels and three frameworks</li>
   <li><a href="../synthesis/" target="_blank">From Domain to Factory</a> — the four-layer sequence</li>
   <li><a href="https://krishavanoor.github.io/" target="_blank">The AI Manifesto</a> — the user manual for thinking clearly with AI</li>
