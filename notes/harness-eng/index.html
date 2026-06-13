@@ -73,12 +73,18 @@
 
 <!-- ══ GREENFIELD EXAMPLE ════════════════════════════════════════ -->
 <h1>Worked Example — Greenfield Project</h1>
-<p>Starting from an empty directory. You have an idea for a Go service that processes financial transactions. No existing code. No existing docs. Just the idea.</p>
+<p>Starting from an empty directory. You have an idea for a service that processes financial transactions. No existing code. No existing docs. You are not even sure which language to use yet.</p>
 
-<h2>Step 1: Initialise the Harness</h2>
-<p>Open your AI agent (Claude Code, Codex, Copilot — any Tier 1+ agent) in the project directory and paste:</p>
+<h2>Step 1: Explore the Problem First</h2>
+<p>Before any harness, before any tooling decisions, you need to understand the problem. Open your AI agent and have a conversation. No harness. No structure. Just exploration.</p>
+<div class="callout callout-quote"><p>I want to build a service that processes financial transactions. Help me think through the problem — what are the main components, what are the hard parts, what should I consider before choosing a technology stack?</p></div>
+<p>The agent explores with you. You discuss throughput requirements, compliance constraints, integration points, team size, deployment model. By the end of the conversation, you have a rough outline of the problem and a sense of which technology fits. Maybe Go for the performance and deployment model. Maybe Python for the ecosystem and speed of development. Maybe Node for the team's existing skills.</p>
+<p>This is not wasted time. This is the thinking that prevents the Dilbert swing. The harness cannot fix a problem you have not thought through.</p>
+
+<h2>Step 2: Initialise the Harness</h2>
+<p>Now that you have direction, open your agent in the project directory and paste:</p>
 <div class="callout callout-quote"><p>Read the harness rules from https://github.com/AvonS/harness-eng and initialise this project using the harness. Follow bootstrap/init.md exactly.</p></div>
-<p>The agent clones the harness temporarily, reads the bootstrap instructions, creates the <code>.project/</code> scaffold, detects your language (Go — it sees <code>go.mod</code>), activates the Go skill, and asks you to confirm. Two minutes. The scaffold is ready.</p>
+<p>The agent creates the <code>.project/</code> scaffold. You confirm the language you chose during exploration. The Go skill activates. The Makefile template is ready. Two minutes. The scaffold is ready.</p>
 
 <h2>Step 2: Build Domain Context (Optional but Recommended)</h2>
 <p>Run <code>/h:domain</code>. The agent interviews you:</p>
