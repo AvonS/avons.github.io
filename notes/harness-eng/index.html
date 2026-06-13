@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css?v=1.1">
+<link rel="stylesheet" href="../../assets/article.css?v=1.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harness Engineering in Practice — Avon Software Labs</title>
+<script src="../../assets/components.js?v=1.1" defer></script>
+
+<meta name="description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop while the agent does the work">
+<meta name="keywords" content="harness engineering, agentic development, AI coding, spec-driven development, human-in-the-loop, DDD, BMAD">
+<meta name="author" content="Avon Software Labs">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://avons.github.io/notes/harness-eng/">
+<meta property="og:title" content="Harness Engineering in Practice — Avon Software Labs">
+<meta property="og:description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop">
+<meta property="og:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://avons.github.io/notes/harness-eng/">
+<meta property="twitter:title" content="Harness Engineering in Practice — Avon Software Labs">
+<meta property="twitter:description" content="A worked example of Layer 3 — how a file-based harness keeps the human in the loop">
+<meta property="twitter:image" content="https://avons.github.io/assets/logo.png?v=1.1">
+
+</head>
+<body>
+<site-header-article></site-header-article>
+<div class="article-wrap">
+
+<!-- ══ COVER ══════════════════════════════════════════════════════ -->
+<div class="doc-title-block">
+  <p class="doc-eyebrow">A Worked Example</p>
+  <h1 class="doc-main-title">Harness Engineering in Practice</h1>
+  <p class="doc-subtitle">How a file-based harness keeps the human in the loop while the agent does the work</p>
+  <p class="doc-tagline">The ceremony is not overhead. It is the correction mechanism.</p>
+  <div class="doc-meta">
+    <span>v1.0</span>
+    <span>·</span>
+    <span>June 2026</span>
+    <span>·</span>
+    <a href="https://avons.github.io" target="_blank">avons.github.io</a>
+  </div>
+</div>
+
+<!-- ══ INTRODUCTION ═══════════════════════════════════════════════ -->
+<h1>The Dilbert Problem</h1>
+<p>You ask an AI agent to build a swing. It builds a box. It is confident about the box. It shows you the box with pride. You look at the box and think — well, it is a box. Maybe that is what I wanted.</p>
+<p>This is not a hypothetical. It is the default outcome of AI-assisted development without structure. The agent reads your instructions, interprets them through its own patterns, produces something that technically satisfies the literal request, and presents it as complete. The gap between what you meant and what it built is invisible — because nobody defined the gap before the work started.</p>
+<p>I have seen this happen on real projects. An AI agent was given detailed architecture decision records — ten of them, covering technology choices, design patterns, and integration constraints. The agent read every ADR. It understood the vocabulary. It produced code that was internally consistent and externally wrong. It had built exactly what the ADRs described, but it had missed the reasoning behind the ADRs — the trade-offs, the rejected alternatives, the constraints that were implicit in the decisions but never spelled out in the documents.</p>
+<p>The specs were there. The agent read them. It still got things wrong.</p>
+<div class="callout callout-insight"><strong>The Core Problem:</strong> Reading a spec is not the same as being constrained by a process that forces verification at each step. The agent can read an architecture decision and then ignore it in implementation — because there is no gate that asks "did you follow this decision?" The harness builds that gate.</div>
+
+<!-- ══ WHAT IS A HARNESS ══════════════════════════════════════════ -->
+<h1>What a Harness Actually Is</h1>
+<p>The term "harness engineering" was named by Kief Morris at Thoughtworks in March 2026. The insight: when agent output quality falls short, the question is not "is the spec good enough?" — it is "which component of the harness failed?"</p>
+<p>A harness is the full collection of specifications, constraints, quality checks, and workflow guidance that controls an agent's how loop. It is not a plugin. It is not a runtime. It is a file-based convention that any agent can follow.</p>
+<p>A practical harness has five components:</p>
+<p><strong>The constitution</strong> — the permanent rules the agent reads every session. Technology decisions, naming conventions, security rules, things explicitly rejected.</p>
+<p><strong>The domain context</strong> — the vocabulary, the boundaries, the events the business cares about. Without this, the agent builds on an unexamined model that may or may not reflect reality.</p>
+<p><strong>The feature loop</strong> — the structured sequence from idea to shipped code. Propose, plan, implement, verify, done. Each step produces a document. Each document is reviewed by a human before the next step begins.</p>
+<p><strong>The quality gates</strong> — the checkpoints where the agent stops and waits. Not "ask the AI to argue against you" — that is simulation, not challenge. The gate is a hard stop. The work is presented to a human. The human reviews it. The human approves it or sends it back.</p>
+<p><strong>The narrative log</strong> — the append-only record of what was built, why, and what was learned. The "why" layer that helps future sessions understand how the project emerged.</p>
+<div class="callout callout-insight"><strong>The Architecture:</strong> The workflow is the tool. The folder structure is the state machine. The AGENTS.md is the system prompt. The acceptance.md is the contract. Any agent that can read and write files will follow it. No runtime. No server. No API keys.</div>
+
+<!-- ══ THE HUMAN GATES ═══════════════════════════════════════════ -->
+<h1>The Human Gates — Why Ceremony Is the Point</h1>
+<p>The harness has four gates per feature where the agent explicitly stops and waits. This is not overhead. This is the external accountability that prevents the Dilbert swing.</p>
+<p><strong>Gate 1 — Design Review.</strong> The agent creates a proposal (what and why) and a design (how). Then it stops. The human reviews both. Does this match what I actually want? Are the assumptions correct? The human approves or rejects.</p>
+<p><strong>Gate 2 — Task Approval.</strong> The agent breaks the design into tasks and writes acceptance criteria — the contract. Then it stops. The human reviews: are these the right tasks? Is this what "done" means?</p>
+<p><strong>Gate 3 — Test Failure Escalation.</strong> If the agent fails to make tests pass after three attempts, it stops and escalates. No silent workarounds. No "close enough."</p>
+<p><strong>Gate 4 — Verification Sign-off.</strong> The agent runs the full test suite, fills a verification report, and stops. The human reviews: did everything pass? Does the verification match the acceptance criteria? The human signs off.</p>
+<p>Plus two phase-level gates: the human approves the backlog before work starts, and the human signs off before a phase merges to main.</p>
+<div class="callout callout-warn"><strong>The Point:</strong> Each gate is a structured moment where the human steps outside the agreement spiral and makes a decision. The agent cannot agree with itself through the gate. A human must be there. That is not bureaucracy. That is the correction mechanism that private AI conversations lack.</div>
+
+<!-- ══ THE FEATURE WALKTHROUGH ═══════════════════════════════════ -->
+<h1>A Feature Walkthrough — Propose to Done</h1>
+<p><strong>Step 1: The human picks a feature from the backlog.</strong> The agent reads the phase backlog, creates a feature branch, writes a proposal and a design. Then it stops. The human reviews. Maybe the design makes an assumption that is wrong. The human edits, approves or rejects. Fifteen minutes. It prevents three days of wrong implementation.</p>
+<p><strong>Step 2: The agent plans the work.</strong> Given design approval, the agent creates tasks and acceptance criteria. Then it stops. The human reviews. One criterion might be missing an edge case. The human adds it. Ten minutes. It prevents a feature that breaks for the edge case that actually matters in production.</p>
+<p><strong>Step 3: The agent implements.</strong> Given task approval, the agent works through each task: write the test (confirm it fails), write the code (make it pass), commit, report. If tests fail three times, it stops and escalates.</p>
+<p><strong>Step 4: The agent verifies.</strong> When all tasks are complete, the agent runs the full test suite and fills a verification report. Then it stops. The human reviews. Signs off.</p>
+<p><strong>Step 5: The agent merges.</strong> Given sign-off, the agent creates a pull request, merges to the phase branch, updates the dashboard, and appends an entry to the build narrative. Then it picks the next feature.</p>
+<div class="callout callout-insight"><strong>The Time Cost:</strong> Five steps. Three human review points. Maybe forty-five minutes of human time across the entire feature. The alternative — no gates — saves those forty-five minutes and risks building the wrong thing entirely. For any project worth maintaining, the math is obvious.</div>
+
+<!-- ══ CONTEXT RECOVERY ══════════════════════════════════════════ -->
+<h1>The Three Layers of Context Recovery</h1>
+<p>Agents have no memory across sessions. Every new session starts cold. The harness solves this with three files that together recover context in under thirty seconds.</p>
+<p><strong>Layer 1: The narrative log.</strong> The agent reads the last three entries in the build narrative — what was built, what was decided, what comes next. The fastest way to recover context.</p>
+<p><strong>Layer 2: The compact snapshot.</strong> For the active feature, a single file contains the relevant rules, key interfaces, acceptance criteria status, current task, and files modified. Instead of reading six files, the agent reads one.</p>
+<p><strong>Layer 3: The task list.</strong> The agent checks the task checklist. What is done. What is next. Where to continue.</p>
+<div class="callout callout-quote"><p>Status tells you <em>where</em> you are. The snapshot tells you <em>what</em> is happening. The narrative tells you <em>how you got here</em>. All three are needed. None is sufficient alone.</p></div>
+
+<!-- ══ THE AI MANIFESTO CONNECTION ═══════════════════════════════ -->
+<h1>Skin in the Game — The AI Manifesto Connection</h1>
+<p>The <a href="https://krishavanoor.github.io/" target="_blank">AI Manifesto</a> names the problem precisely: <em>"The greatest risk of AI is not that it will think for us. It is that it will agree with us — and we will not notice."</em></p>
+<p>Private AI conversations have no correction mechanism. There is no peer watching. No friend to say "are you sure about that?" The conversation feels intimate — and that intimacy is exactly what makes it dangerous. Agreement produces trust. Trust produces deeper disclosure. Deeper disclosure produces more tailored agreement.</p>
+<p>The manifesto's Principle 5 says: <em>"Build External Accountability."</em> The harness builds it structurally. Not by asking the AI to argue against you — the manifesto already tells us that is simulation, not challenge. The harness builds it by stopping the conversation entirely and putting the work in front of a human who is genuinely outside the agreement spiral.</p>
+<p>Every human gate in the harness is a structured moment where the human must step outside the conversation and make a decision. The agent cannot agree with itself through the gate. A human must be there.</p>
+<div class="callout callout-insight"><strong>The Principle:</strong> The agent is a fast, tireless collaborator who needs a human hand on the wheel — not because it is incompetent, but because it cannot see its own blind spots. The human stays responsible for quality. The harness makes that responsibility practical.</div>
+<p>This is not a red pill. It is not a revolution. It is an evolution — the recognition that the human's role in AI-assisted development is not to prompt better, but to build accountability structures that keep the honest thinking honest.</p>
+
+<!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
+<h1>Where This Fits in the Four-Layer Sequence</h1>
+<p>harness-eng is <a href="../synthesis/" target="_blank">Layer 3</a> in the sequence this blog series has been building:</p>
+<p><strong>Layer 1 — DDD:</strong> Domain clarity before anything else. The vocabulary, the boundaries, the model of what the business actually does.</p>
+<p><strong>Layer 2 — Event Storming:</strong> The discovery method. Surfacing the domain model from the people who know it, not from the architect's assumptions.</p>
+<p><strong>Layer 3 — Structured Execution:</strong> The harness. Turning validated domain knowledge into shipped features with human oversight. This is where harness-eng lives.</p>
+<p><strong>Layer 4 — The Factory:</strong> Full autonomy. Only viable when the domain understanding is precise enough that an agent can work from a spec without guessing.</p>
+<p>harness-eng also includes an optional domain context command — a bridge to Layer 1 for projects that need it. Not full DDD. The minimum domain grounding needed to prevent the agent from building on an unexamined model.</p>
+<div class="callout callout-quote"><p>The progression is not "trust the agent more." It is "build the harness better." Each level of harness maturity removes one class of human bottleneck. The dark factory is not a leap of faith — it is the endpoint of a measurable engineering progression.</p></div>
+
+<!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
+<h1>Companion Resources</h1>
+<ul>
+  <li><a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng on GitHub</a> — the file-based harness (MIT licence)</li>
+  <li><a href="https://avons.github.io/" target="_blank">The Agentic Engineering Journey</a> — the five levels and three frameworks</li>
+  <li><a href="../synthesis/" target="_blank">From Domain to Factory</a> — the four-layer sequence</li>
+  <li><a href="https://krishavanoor.github.io/" target="_blank">The AI Manifesto</a> — the user manual for thinking clearly with AI</li>
+</ul>
+
+</div>
+
+<site-footer></site-footer>
+
+</body>
+</html>
