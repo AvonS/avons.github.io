@@ -90,6 +90,7 @@
 <p><strong>The narrative log</strong> — append-only record of what was built, why, and what was learned. The "why" layer that helps future sessions understand how the project emerged.</p>
 <p>The architecture is deliberately simple: the workflow is the tool, the folder structure is the state machine, any agent that can read and write files will follow it. No runtime. No server. No API keys.</p>
 
+<div class="mermaid-wrap" style="overflow-x: auto;">
 <div class="mermaid">
 graph TD
     INIT["/h:init<br/>Constitution · BRD · Architecture"]
@@ -122,6 +123,7 @@ graph TD
     style APPROVE fill:#ffd700,stroke:#b8860b,color:#000
     style DONE fill:#90ee90,stroke:#228b22
     style INIT fill:#87ceeb,stroke:#4682b4
+</div>
 </div>
 
 <p>Each box is a command. Each arrow is a state transition. The human gate at <code>/h:approve</code> is the only mandatory stop — the gold box. Everything else is the agent working, the human reviewing at natural pause points.</p>
@@ -182,6 +184,7 @@ graph TD
 <p>The main feature loop handles new features. But once software ships, most work is not new features — it is change requests and bug fixes. The harness has separate, lighter workflows for these.</p>
 <p>A request comes in. The agent triages it: is this a bug (something broken per spec), a CR (modification to existing behaviour), a new feature (scope addition), or deferred (not for this phase)? Bugs and CRs get a shortened path — no full design cycle, but still require approval before building.</p>
 
+<div class="mermaid-wrap" style="overflow-x: auto;">
 <div class="mermaid">
 graph TD
     REQUEST["Incoming Request"]
@@ -213,6 +216,7 @@ graph TD
     style FEATURE fill:#87ceeb,stroke:#4682b4
     style DEFERRED fill:#ddd,stroke:#999
     style REQUEST fill:#f0e6ff,stroke:#9370db
+</div>
 </div>
 
 <p>The shortened path skips full design but keeps the approval gate. The regression test comes first — prove the bug exists, then fix it. The full test suite runs before verification. The discipline is lighter but the accountability is the same.</p>
@@ -262,6 +266,7 @@ graph TD
 <h1>Git Flow — Branches and Commits</h1>
 <p>The harness manages git branches automatically. Every feature, bug fix, and change request gets its own branch. Commits follow a convention that ties every change back to the spec.</p>
 
+<div class="mermaid-wrap" style="overflow-x: auto;">
 <div class="mermaid">
 gitGraph
     commit id: "init"
@@ -300,6 +305,7 @@ gitGraph
     checkout phase-1
     merge bugfix/BUG-001-auth
 </div>
+</div>
 
 <p>Commit convention: <code>type(ID): description</code>. Every commit traces back to a spec, a design, or a task. Six months later, <code>git log --oneline</code> tells the story of what was built and why.</p>
 
@@ -313,7 +319,7 @@ gitGraph
 
 <!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
 <h1>Where This Fits</h1>
-<p>harness-eng is <a href="../synthesis/" target="_blank">Layer 3</a> in the four-layer sequence. It assumes Layers 1 and 2 have been done — the domain is understood, the vocabulary is agreed, the boundaries are drawn. It provides the execution discipline that prevents the confident wrong answer.</p>
+<p>harness-eng is <a href="../../guides/synthesis/" target="_blank">Layer 3</a> in the four-layer sequence. It assumes Layers 1 and 2 have been done — the domain is understood, the vocabulary is agreed, the boundaries are drawn. It provides the execution discipline that prevents the confident wrong answer.</p>
 <p>Layer 4 — the dark factory — is the horizon. It becomes viable when the domain understanding from Layers 1 and 2, combined with the execution discipline from Layer 3, produces specifications precise enough for full autonomy. That is not where most teams are today. Layer 3 is.</p>
 
 <!-- ══ WHAT COMES NEXT ═══════════════════════════════════════════ -->
@@ -352,13 +358,20 @@ gitGraph
 <ul>
   <li><a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng on GitHub</a> — the reference implementation (MIT licence)</li>
   <li><a href="https://avons.github.io/" target="_blank">The Agentic Engineering Journey</a> — the five levels and three frameworks</li>
-  <li><a href="../synthesis/" target="_blank">From Domain to Factory</a> — the four-layer sequence</li>
+  <li><a href="../../guides/synthesis/" target="_blank">From Domain to Factory</a> — the four-layer sequence</li>
   <li><a href="https://krishavanoor.github.io/ai-manifesto/" target="_blank">The AI Manifesto</a> — the user manual for thinking clearly with AI</li>
 </ul>
 
 </div>
 
-<site-footer></site-footer>
+<utterances-comments repo="AvonS/avons.github.io"></utterances-comments>
+
+<div class="article-feedback-meta">
+  <p>Prefer email? Reach out at <span class="spamspan"><span class="u">avonslabs</span> [at] <span class="d">gmail [dot] com</span> (<span class="t">AvonSlabs</span>)</span> &nbsp;·&nbsp;
+  Follow <a href="https://github.com/AvonS" target="_blank">github.com/AvonS</a> for future updates and related work in agentic engineering.</p>
+</div>
+
+<site-footer-article></site-footer-article>
 
 </body>
 </html>

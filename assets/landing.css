@@ -126,7 +126,7 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
 .curriculum-stage .article-card {
   padding: 24px 0;
 }
-.curriculum-stage .article-card:not(.featured) .article-title {
+.curriculum-stage .article-title {
   font-size: 1.25rem;
 }
 
@@ -152,7 +152,7 @@ body { font-family: "DM Sans", system-ui, sans-serif;; background: var(--bg); }
   font-size: 1.5rem; font-weight: 700; line-height: 1.2;
   color: var(--black); margin-bottom: 8px;
 }
-.article-card.featured .article-title { font-size: 1.9rem; }
+
 .article-subtitle {
   font-family: "DM Sans", sans-serif;
   font-style: italic; font-size: 0.92rem;
