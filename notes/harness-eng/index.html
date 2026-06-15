@@ -51,23 +51,28 @@
 </div>
 
 <!-- ══ INTRODUCTION ═══════════════════════════════════════════════ -->
-<h1>Enough Theory</h1>
-<p>Seven guides. DDD, Event Storming, Flowcharts, Domain Context Engineering, BMAD, Attractor, the Synthesis. We have spent six months building the theoretical foundation for agentic engineering — the four layers, the dependency sequence, the discipline that ties them together.</p>
-<p>This is where the theory stops and the practice begins.</p>
-<p>The <a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng</a> repository is a concrete reference implementation of Layer 3 — the structured execution harness that turns domain knowledge into shipped features with human oversight. It is not a framework you install. It is a file-based convention you clone, adapt, and use. Tested with open agents like MiMo Code and OpenCode. From big picture to shipped feature.</p>
-<p>This article explains the rationale behind the approach, walks through the mechanics, and shows two worked examples: a greenfield project from scratch, and a brownfield project reverse-engineering an existing codebase. If the previous guides answered "why," this one answers "how."</p>
+<h1>The Journey So Far</h1>
+<p>Over the past several months, we have published seven guides that build the theoretical foundation for agentic engineering: <a href="../../guides/ddd/" target="_blank">DDD</a>, <a href="../../guides/event-storming/" target="_blank">Event Storming</a>, <a href="../../guides/flowcharts/" target="_blank">Flowcharts</a>, <a href="../../guides/ddd-to-context/" target="_blank">Domain Context Engineering</a>, <a href="../../guides/bmad/" target="_blank">BMAD</a>, <a href="../../guides/attractor/" target="_blank">Attractor</a>, and <a href="../../guides/synthesis/" target="_blank">the Synthesis</a>. Together, they define the four layers of agentic development, the dependency sequence between them, and the discipline that ties them together.</p>
+<p>This article is the reference implementation of those theories — specifically Layer 3, the structured execution harness. It is not a new framework. It is a concrete way to apply what the earlier guides described. If the previous guides answered "why," this one answers "how."</p>
+<p>The <a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng</a> repository is the working proof: a file-based convention you clone, adapt, and use. Tested with open agents like MiMo Code and OpenCode. From big picture to shipped feature.</p>
 
 <!-- ══ THE RATIONALE ═════════════════════════════════════════════ -->
 <h1>The Rationale</h1>
 <p>The problem is not that AI agents are incompetent. They are remarkably capable. The problem is structural: an agent that tends toward agreement, working from input that may be incomplete, in a conversation with no external correction mechanism, will produce confident wrong answers at speed.</p>
-<p>The <a href="https://krishavanoor.github.io/" target="_blank">AI Manifesto</a> names this precisely: <em>"The greatest risk of AI is not that it will think for us. It is that it will agree with us — and we will not notice."</em></p>
+<p>The <a href="https://krishavanoor.github.io/ai-manifesto/" target="_blank">AI Manifesto</a> names this precisely: <em>"The greatest risk of AI is not that it will think for us. It is that it will agree with us — and we will not notice."</em></p>
 <p>A harness addresses this by building the correction mechanism structurally. Not by asking the AI to argue against you — the manifesto already tells us that is simulation, not challenge. By stopping the conversation entirely and putting the work in front of a human who is genuinely outside the agreement spiral.</p>
 <p>Every human gate — design review, task approval, verification sign-off — is a structured moment where the human steps outside the spiral and makes a decision. The ceremony is not overhead. It is the external accountability that prevents the Dilbert swing.</p>
 <div class="callout callout-insight"><strong>The Principle:</strong> The agent is a fast, tireless collaborator who needs a human hand on the wheel — not because it is incompetent, but because it cannot see its own blind spots. The human stays responsible for quality. The harness makes that responsibility practical.</div>
 
+<h2>Scope: Long-Running, Multi-Phase Projects</h2>
+<p>The harness is designed for projects that span weeks or months — multi-phase efforts where context drifts, requirements evolve, and the cost of building the wrong thing compounds over time. It is a reference implementation. Adapt it to your use case. Keep it minimal and simple. The goal is not to follow every step perfectly. The goal is to ship the right thing.</p>
+
+<h2>Will It Scale to Multi-User Teams?</h2>
+<p>That depends on the team, not the harness. The harness provides structure — shared documents, consistent conventions, clear gates. But structure without discipline is just paperwork. Culture eats process for breakfast! A team that values quality will use the harness effectively. A team that doesn't will find ways around it. The harness makes the right thing easy. It cannot make the team care.</p>
+
 <!-- ══ DESIGN PHILOSOPHY ════════════════════════════════════════ -->
 <h1>Design Philosophy — Who Is in the Driving Seat</h1>
-<p>The design philosophy behind the harness is simple: the human is in control. Not as a figurehead. Not as a rubber stamp. As the person making decisions.</p>
+<p>The design philosophy behind the harness is simple: the human is in control — making decisions, not just approving them.</p>
 <p>During <strong>define</strong> and <strong>design</strong>, the agent is a collaborator. It asks clarifying questions, identifies gaps, suggests story breakdowns, challenges assumptions. It is thinking alongside you — not generating for you. The active phase folder accumulates detailed context: specs, designs, research, interfaces. You can see everything the agent has considered.</p>
 <p>Then comes the <strong>approve gate</strong>. The agent stops. The work is in front of you. The design document, the interfaces, the file layout, the verification criteria. You review it. You make changes. You approve or send it back. This is not a formality — it is the single most important moment in the feature lifecycle. The design you approve is the contract the agent builds against.</p>
 <p>After approval, the agent shifts. During <strong>build</strong> and <strong>verify</strong>, it is a junior programmer. It follows the tasks in order. It writes tests first. It commits after each task. It does not improvise. It does not add features. It executes the approved design with discipline. If something goes wrong after three attempts, it stops and escalates.</p>
@@ -133,28 +138,21 @@ graph TD
 
 <h2>Step 2: Initialise the Harness</h2>
 <p>Now that you have direction, open your agent in the project directory and paste:</p>
-<div class="callout callout-quote"><p>Read the harness rules from https://github.com/AvonS/harness-eng and initialise this project using the harness. Follow bootstrap/init.md exactly.</p></div>
-<p>The agent creates the <code>.project/</code> scaffold. You confirm the language you chose during exploration. The Go skill activates. The Makefile template is ready. Two minutes. The scaffold is ready.</p>
+<div class="callout callout-quote"><p>Read the harness rules from https://github.com/AvonS/harness-eng and initialise this project using the harness.</p></div>
+<p>The agent scans your project (empty in this case), asks clarifying questions, and creates the <code>.harness-eng/</code> scaffold with constitution, BRD, architecture, and technology decisions. Two minutes. The foundation is ready.</p>
 
-<h2>Step 2: Build Domain Context (Optional but Recommended)</h2>
-<p>Run <code>/h:domain</code>. The agent interviews you:</p>
-<ul>
-  <li>What does this system do? — "Processes financial transactions, validates them, and routes them to clearing houses."</li>
-  <li>What are the main areas? — "Transaction validation, clearing, reconciliation."</li>
-  <li>What events matter? — "TransactionReceived, Validated, Cleared, Reconciled, Failed."</li>
-  <li>Any automatic rules? — "Transactions over £10,000 require enhanced due diligence."</li>
-</ul>
-<p>The agent produces a <code>domain-ctx.txt</code> — bounded contexts, ubiquitous language, domain events, policies. You review it, correct the terminology, approve. Five minutes. The domain is grounded.</p>
+<h2>Step 3: Define Features</h2>
+<p>Say <code>"define the features from the BRD"</code>. The agent reads your BRD, counts requirements, and creates feature specs with Given/When/Then stories. For large BRDs (5+ requirements), it automatically organizes into phases — Phase 1: Foundation, Phase 2: MVP, Phase 3: Enhancements.</p>
+<p>You review the features. Approve the phase plan.</p>
 
-<h2>Step 3: Constitution and Architecture</h2>
-<p>Run <code>/h:constitution</code>. The agent reads your domain context, reads any docs you have, and builds <code>CONSTITUTION.md</code> — the permanent rules. Technology stack (Go, PostgreSQL), naming conventions (from your ubiquitous language), security rules (secrets in <code>~/.config</code>), things explicitly rejected.</p>
-<p>You review. Approve. Run <code>/h:phases</code>. The agent proposes a phase roadmap — Phase 1: Transaction Engine, Phase 2: Clearing Integration, Phase 3: Reconciliation. You approve.</p>
+<h2>Step 4: Design and Approve</h2>
+<p>Say <code>"design this feature"</code>. The agent creates a design document — architecture, interfaces, file layout, constitution compliance check. Stops. You review — the design looks right, but the agent missed the idempotency requirement. You add it. Say <code>"approved"</code>.</p>
 
-<h2>Step 4: Build Features</h2>
-<p>Run <code>/h:phase-plan phase-1-transaction-engine</code>. The agent creates the phase folder, the backlog, and the git branch. You approve the backlog.</p>
-<p>Run <code>/h:feature-propose transaction-validation</code>. The agent writes a proposal and design. Stops. You review — the design looks right, but the agent missed the idempotency requirement. You add it. Approve.</p>
-<p>Run <code>/h:feature-plan</code>. The agent writes tasks and acceptance criteria. Stops. You approve. Run <code>/h:feature-implement</code>. The agent works through each task: test first, code, commit, report. After each task, it updates the compact context snapshot. After three failed test attempts, it stops and escalates.</p>
-<p>Run <code>/h:feature-verify</code>. The agent runs the full test suite, fills the verification report. Stops. You sign off. Run <code>/h:feature-done</code>. The agent creates a PR, merges, updates the dashboard, appends to the build narrative.</p>
+<h2>Step 5: Build</h2>
+<p>Say <code>"break this into tasks"</code>. The agent writes granular tasks with dependencies. Say <code>"build it"</code>. The agent works through each task: test first, code, commit, report. After three failed test attempts, it stops and escalates.</p>
+
+<h2>Step 6: Verify and Release</h2>
+<p>Say <code>"verify the feature"</code>. The agent runs the full test suite, fills the verification report. Say <code>"release it"</code>. The agent creates a PR, merges, updates the dashboard, appends to the build narrative.</p>
 <p>Pick the next feature. Repeat.</p>
 
 <div class="callout callout-insight"><strong>The Result:</strong> After Phase 1, you have a working transaction engine with tests, verified acceptance criteria, a build narrative explaining every decision, and a live dashboard showing project status. The agent built the code. You validated every step. Neither worked alone.</div>
@@ -163,25 +161,19 @@ graph TD
 <h1>Worked Example — Brownfield Project</h1>
 <p>An existing Go service. 15,000 lines of code. No documentation. No tests. The original developer left. You need to add features without breaking what exists.</p>
 
-<h2>Step 1: Initialise and Reverse-Engineer</h2>
-<p>Clone the harness into the project as <code>.harness/</code>. Run <code>/h:domain --brownfield</code>. The agent scans the codebase:</p>
-<ul>
-  <li>Reads the database schema — reveals the actual entities and relationships</li>
-  <li>Scans API endpoints — reveals the commands and read models</li>
-  <li>Extracts Go types and interfaces — reveals the module boundaries</li>
-  <li>Reads git history — reveals what changed when and why</li>
-</ul>
-<p>The agent produces a draft <code>domain-ctx.txt</code> from what it found. It flags gaps: "The <code>Customer</code> type in <code>internal/billing/</code> is different from the <code>Customer</code> in <code>internal/support/</code> — are these the same concept?" You answer: different bounded contexts. The agent updates the domain context. Approve.</p>
+<h2>Step 1: Initialise the Harness</h2>
+<p>Open your agent in the project directory and paste:</p>
+<div class="callout callout-quote"><p>Read the harness rules from https://github.com/AvonS/harness-eng and initialise this project using the harness.</p></div>
+<p>The agent scans your existing code, reads any docs (README, ADRs), and reverse-engineers the constitution, BRD, and architecture from what exists. It derives naming conventions from the actual code, not an ideal. The architecture rules come from the actual module boundaries, not a diagram.</p>
 
-<h2>Step 2: Constitution from Existing Code</h2>
-<p>Run <code>/h:constitution</code>. The agent reads the codebase, the domain context, and any existing docs. It builds <code>CONSTITUTION.md</code> from what exists — not what should exist. The naming conventions come from the actual code, not an ideal. The architecture rules come from the actual module boundaries, not a diagram.</p>
-<p>You review. Some rules need updating — the agent found inconsistencies in the existing code. You decide which patterns to keep and which to fix. Approve.</p>
+<h2>Step 2: Review and Refine</h2>
+<p>The agent flags gaps: "The <code>Customer</code> type in <code>internal/billing/</code> is different from the <code>Customer</code> in <code>internal/support/</code> — are these the same concept?" You answer: different bounded contexts. The agent updates the architecture. You review the derived documents. Some rules need updating — the agent found inconsistencies in the existing code. You decide which patterns to keep and which to fix. Approve.</p>
 
-<h2>Step 3: Existing Work Assessment</h2>
-<p>Run <code>/h:status</code>. The agent scans the project structure and generates a baseline dashboard. No phases yet — just a snapshot of what exists. You use this to plan the first phase: what needs to be built, what needs to be fixed, what needs to be documented.</p>
+<h2>Step 3: Check Status</h2>
+<p>Say <code>"show status"</code>. The agent shows project status — version, active features, phase progress. No phases yet — just a snapshot of what exists. You use this to plan the first phase: what needs to be built, what needs to be fixed, what needs to be documented.</p>
 
 <h2>Step 4: Build on Top</h2>
-<p>From here, the workflow is identical to greenfield. Phase plan, feature propose, feature plan, implement, verify, done. The difference is the constitution and domain context are grounded in reality, not aspiration. The agent does not guess about how the existing code works — it was reverse-engineered from the actual codebase.</p>
+<p>From here, the workflow is identical to greenfield. Define features, design, approve, tasks, build, verify, release. The difference is the constitution and architecture are grounded in reality, not aspiration. The agent does not guess about how the existing code works — it was reverse-engineered from the actual codebase.</p>
 
 <div class="callout callout-insight"><strong>The Brownfield Advantage:</strong> The harness does not replace your existing code. It wraps it in a process that prevents new features from breaking old behaviour. Every change goes through the same gates. Every change is verified against the existing test suite. Every change is documented in the build narrative. The agent extends the codebase without erasing its history.</div>
 
@@ -233,12 +225,45 @@ graph TD
 <p><strong>The task list</strong> — checklist of what is done and what is next.</p>
 <p>Together, the agent resumes in under thirty seconds without re-reading the constitution, architecture, or full design documents.</p>
 
+<!-- ══ PROJECT VISIBILITY ══════════════════════════════════════ -->
+<h1>Project Visibility — Status and Health</h1>
+<p>In multi-phase projects, visibility is critical. You need to know where you are, what's done, what's next, and whether the agent is following the rules. Two commands provide this:</p>
+
+<h2>Status — Where Am I?</h2>
+<p>Say <code>"show status"</code>. The agent runs the status script and shows:</p>
+<ul>
+  <li><strong>Project description</strong> — one-liner from the BRD, so you remember what you're building</li>
+  <li><strong>Key goals</strong> — top success metrics from the BRD</li>
+  <li><strong>Version</strong> — current harness version and whether an update is available</li>
+  <li><strong>SLICE_LOG freshness</strong> — when was the last meaningful commit logged</li>
+  <li><strong>Active features</strong> — how many features are in progress across all phases</li>
+  <li><strong>Phase progress</strong> — which phases are complete, which are in progress, which haven't started</li>
+  <li><strong>Next step</strong> — what the agent should do next</li>
+</ul>
+<p>In a six-phase project, this is your daily standup. One command, full picture. No scrolling through folders, no guessing what the agent did last session.</p>
+
+<h2>Health — Is the Agent Following the Rules?</h2>
+<p>Say <code>"check health"</code>. The agent runs compliance checks and reports:</p>
+<ul>
+  <li><strong>CRITICAL:</strong> Did the agent read the constitution before acting?</li>
+  <li><strong>CRITICAL:</strong> Is the design approved before build started?</li>
+  <li><strong>CRITICAL:</strong> Is the SLICE_LOG updated after meaningful commits?</li>
+  <li><strong>HIGH:</strong> Are tests written before implementation?</li>
+  <li><strong>HIGH:</strong> Is the agent on the correct git branch?</li>
+  <li><strong>MEDIUM:</strong> Are tasks followed in order?</li>
+  <li><strong>MEDIUM:</strong> Do commit messages follow convention?</li>
+</ul>
+<p>When violations are detected, the health check uses strong language: <em>"VIOLATION: Agent did not read CONSTITUTION.md before action. This is a CRITICAL failure."</em> This is intentional — the health check is a corrective mechanism, not a gentle reminder.</p>
+<p>In multi-phase projects, the health check catches drift early. The agent starts skipping steps, cutting corners, forgetting to log. The health check notices before you do.</p>
+
+<div class="callout callout-insight"><strong>The Multi-Phase Reality:</strong> In a project with 4 phases, 15 features, and 200+ tasks, the agent will drift. It will forget to update SLICE_LOG. It will skip the approval gate. It will commit without the right message format. The status command shows you where you are. The health command shows you whether the agent is still following the rules. Together, they keep the project on track without you reading every file.</div>
+
 <!-- ══ GIT FLOW ══════════════════════════════════════════════════ -->
 <h1>Git Flow — Branches and Commits</h1>
 <p>The harness manages git branches automatically. Every feature, bug fix, and change request gets its own branch. Commits follow a convention that ties every change back to the spec.</p>
 
 <div class="mermaid">
-gitgraph
+gitGraph
     commit id: "init"
     branch phase-1
     checkout phase-1
@@ -254,7 +279,7 @@ gitgraph
     commit id: "verify(F001)"
 
     checkout phase-1
-    merge feature/F001-session-mgr id: "PR merged"
+    merge feature/F001-session-mgr
     commit id: "chore: archive F001"
 
     branch feature/F002-streaming
@@ -264,7 +289,7 @@ gitgraph
     commit id: "verify(F002)"
 
     checkout phase-1
-    merge feature/F002-streaming id: "PR merged"
+    merge feature/F002-streaming
     commit id: "chore: archive F002"
 
     branch bugfix/BUG-001-auth
@@ -273,17 +298,22 @@ gitgraph
     commit id: "fix(BUG-001): auth fix"
 
     checkout phase-1
-    merge bugfix/BUG-001-auth id: "PR merged"
+    merge bugfix/BUG-001-auth
 </div>
 
 <p>Commit convention: <code>type(ID): description</code>. Every commit traces back to a spec, a design, or a task. Six months later, <code>git log --oneline</code> tells the story of what was built and why.</p>
 
 <div class="callout callout-insight"><strong>The Convention:</strong> <code>spec(F001)</code>, <code>design(F001)</code>, <code>feat(F001): task 1.1</code>, <code>test(F001)</code>, <code>verify(F001)</code>, <code>fix(BUG-001): description</code>. The ID in the commit maps to the ID in the spec. Traceability from requirement to code, enforced by convention.</div>
 
+<!-- ══ LIMITATIONS ═════════════════════════════════════════════════ -->
+<h1>Limitations — What This Does Not Guarantee</h1>
+<p>No harness guarantees that a model will behave as expected. The agent may skip steps, forget to update logs, or deviate from the approved design. The harness makes the right path clear, but it cannot force the agent to follow it.</p>
+<p>The human must steer. The health command catches drift. The status command shows where you are. But the human is still responsible for watching, correcting, and deciding. The harness is a guide rail, not an autopilot.</p>
+<p>This is a reference implementation — not a production-tested tool. It works for the cases we have tested. It may need adaptation for your context. Use it as a starting point, not a finished product.</p>
+
 <!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
 <h1>Where This Fits</h1>
 <p>harness-eng is <a href="../synthesis/" target="_blank">Layer 3</a> in the four-layer sequence. It assumes Layers 1 and 2 have been done — the domain is understood, the vocabulary is agreed, the boundaries are drawn. It provides the execution discipline that prevents the confident wrong answer.</p>
-<p>The optional <code>/h:domain</code> command bridges to Layer 1 — a lightweight domain context for projects that need grounding without full DDD ceremony.</p>
 <p>Layer 4 — the dark factory — is the horizon. It becomes viable when the domain understanding from Layers 1 and 2, combined with the execution discipline from Layer 3, produces specifications precise enough for full autonomy. That is not where most teams are today. Layer 3 is.</p>
 
 <!-- ══ WHAT COMES NEXT ═══════════════════════════════════════════ -->
@@ -297,7 +327,7 @@ gitgraph
 <h1>What You Get</h1>
 <p>harness-eng ships as files you copy into your project — no runtime, no server, no API keys. Clone the repo and you have:</p>
 <ul>
-  <li><strong>11 workflow commands</strong> — init, define, design, approve, tasks, build, verify, release (the 8-step feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), and status (project dashboard). Each is a Markdown file the agent reads and follows.</li>
+  <li><strong>14 workflow commands</strong> — init, define, design, approve, tasks, build, verify, release (the 8-step feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), upgrade-harness (upgrade to latest version), status (project dashboard), and health (agent compliance check). Each is a Markdown file the agent reads and follows.</li>
   <li><strong>Smart templates</strong> — constitution, BRD, architecture, feature specs with Given/When/Then stories, phase plans, build narrative. The agent fills them from your existing docs or from conversation.</li>
   <li><strong>Language skills</strong> — Go, Python, Node/TypeScript, SQL, Git. These are reference files, not tutorials — models already know these languages. The value is project-specific conventions: "use <code>make check</code> before committing," "std-lib-first," "secrets in <code>~/.config</code>." For frameworks with many variants (JS/TS/PHP), users provide their own style file with their team's conventions rather than adopting a generic one.</li>
   <li><strong>Scripts</strong> — status dashboard (HTML), prerequisite checks, version checking, release note generation, SLICE_LOG freshness checks.</li>
@@ -313,49 +343,17 @@ gitgraph
 <p>Other agents — Claude Code, Codex, Gemini CLI, Copilot, Cursor — have their own built-in conventions (CLAUDE.md, project rules, system prompts). These agents may partially follow the harness while defaulting to their own workflows, particularly at transition points between commands. We have not tested harness-eng with these agents and cannot claim compatibility. An agent with its own harness has a competing context; an agent without one adopts yours cleanly.</p>
 <p>The harness is a protocol, not a plugin. It works because the files are the instructions. Any agent that can read files will follow it — the question is whether it follows your files or its own defaults when the two conflict.</p>
 
-<!-- ══ ACID TEST ═════════════════════════════════════════════════ -->
-<h1>The Acid Test</h1>
-<p>The claims above are strong. The human is in control. The agent is a collaborator then a junior programmer. Accountability is practical, not theoretical. These are testable assertions. If they fail, the harness is just another process wrapper with better marketing.</p>
-
-<h2>Claim 1: The human reviews the design before build begins</h2>
-<p><strong>Test:</strong> Can the agent start building a feature without an approved design document?</p>
-<p><strong>Expected:</strong> No. The <code>/h:build</code> command checks for an approved <code>design.md</code> (grep for <code>Ref: APPROVED</code>). If no approved design exists, the build stops and instructs the user to run <code>/h:approve</code> first. The agent cannot proceed.</p>
-<p><strong>What to try:</strong> Run <code>/h:build</code> without running <code>/h:design</code> and <code>/h:approve</code> first. The agent should refuse.</p>
-
-<h2>Claim 2: The agent stops after three failed attempts</h2>
-<p><strong>Test:</strong> Does the agent escalate when stuck, or does it loop forever?</p>
-<p><strong>Expected:</strong> After three failed fix attempts on the same task, the agent writes a <code>BLOCKED</code> section, stops, and escalates to the human. No infinite retry loops.</p>
-<p><strong>What to try:</strong> Give the agent a task with an intentionally impossible constraint. Count the attempts. After three, it should stop.</p>
-
-<h2>Claim 3: Every commit traces to a spec</h2>
-<p><strong>Test:</strong> Run <code>git log --oneline</code> after a build. Does every commit follow <code>type(ID): description</code>?</p>
-<p><strong>Expected:</strong> <code>feat(F001): task 1.1</code>, <code>test(F001): acceptance tests</code>, <code>fix(BUG-001): auth fix</code>. Every ID maps to a spec in the harness. Six months later, the log tells the story.</p>
-<p><strong>What to try:</strong> Run <code>git log --oneline -20</code> after completing a feature. Check for commits without IDs.</p>
-
-<h2>Claim 4: The agent does not add features during build</h2>
-<p><strong>Test:</strong> Does the agent stay within the approved design, or does it add "helpful" extras?</p>
-<p><strong>Expected:</strong> The <code>/h:build</code> instructions explicitly say "Never improvise or add features." The agent executes tasks in order from <code>tasks.md</code>. Anything outside the task list is a violation.</p>
-<p><strong>What to try:</strong> Build a simple feature. Check the diff. Are there changes beyond what the tasks specified?</p>
-
-<h2>Claim 5: The approval gate is a real gate, not a suggestion</h2>
-<p><strong>Test:</strong> Can the agent auto-approve its own design?</p>
-<p><strong>Expected:</strong> No. The <code>/h:approve</code> command writes <code>Ref: APPROVED</code> only when the human explicitly says "approved." The agent cannot approve its own work.</p>
-<p><strong>What to try:</strong> Ask the agent to approve the design without you reviewing it. It should refuse and present the design for your review.</p>
-
-<h2>Claim 6: The harness survives a real project</h2>
-<p><strong>Test:</strong> Use the harness on an actual project — not a demo, not a toy. Add three features. Introduce one bug. Fix the bug through the bug workflow. Release all three.</p>
-<p><strong>Expected:</strong> Three features with full spec→design→tasks→build→verify→release trails. One bug with regression test→fix→verify trail. SLICE_LOG updated. Git log traceable. Dashboard accurate.</p>
-<p><strong>What to try:</strong> Pick a real project you need to work on. Use the harness for the next three features. Report what broke.</p>
-
-<div class="callout callout-insight"><strong>The Standard:</strong> If the agent can build without approved design, add features during build, loop forever on failures, or approve its own work — the harness has failed. The human is not in control. The ceremony is overhead without accountability. Test these claims. If they hold, the harness earns its place. If they don't, it is just another process that looks good on paper.</div>
-
 <!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
+<h1>Open for Validation</h1>
+<p>This repository is shared openly for external validation. We have tested it with a handful of agents and projects. Positive feedback from early users is encouraging, but limited. The real test is broader use — by teams with different contexts, different agents, different problems.</p>
+<p>If you try it, let us know what breaks. The harness improves through honest challenge — which is, appropriately, what the <a href="https://krishavanoor.github.io/ai-manifesto/" target="_blank">AI Manifesto</a> asks of its readers.</p>
+
 <h1>Companion Resources</h1>
 <ul>
   <li><a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng on GitHub</a> — the reference implementation (MIT licence)</li>
   <li><a href="https://avons.github.io/" target="_blank">The Agentic Engineering Journey</a> — the five levels and three frameworks</li>
   <li><a href="../synthesis/" target="_blank">From Domain to Factory</a> — the four-layer sequence</li>
-  <li><a href="https://krishavanoor.github.io/" target="_blank">The AI Manifesto</a> — the user manual for thinking clearly with AI</li>
+  <li><a href="https://krishavanoor.github.io/ai-manifesto/" target="_blank">The AI Manifesto</a> — the user manual for thinking clearly with AI</li>
 </ul>
 
 </div>
