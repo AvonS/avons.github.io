@@ -9,6 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harness Engineering in Practice — Avon Software Labs</title>
 <script src="../../assets/components.js?v=1.1" defer></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+</script>
 
 <meta name="description" content="A concrete reference implementation — how to actually use a harness for greenfield and brownfield projects">
 <meta name="keywords" content="harness engineering, agentic development, AI coding, spec-driven development, human-in-the-loop, DDD, BMAD, greenfield, brownfield">
@@ -50,7 +54,7 @@
 <h1>Enough Theory</h1>
 <p>Seven guides. DDD, Event Storming, Flowcharts, Domain Context Engineering, BMAD, Attractor, the Synthesis. We have spent six months building the theoretical foundation for agentic engineering — the four layers, the dependency sequence, the discipline that ties them together.</p>
 <p>This is where the theory stops and the practice begins.</p>
-<p>The <a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng</a> repository is a concrete reference implementation of Layer 3 — the structured execution harness that turns domain knowledge into shipped features with human oversight. It is not a framework you install. It is a file-based convention you clone, adapt, and use. Any agent. Any project. From big picture to shipped feature.</p>
+<p>The <a href="https://github.com/AvonS/harness-eng" target="_blank">harness-eng</a> repository is a concrete reference implementation of Layer 3 — the structured execution harness that turns domain knowledge into shipped features with human oversight. It is not a framework you install. It is a file-based convention you clone, adapt, and use. Tested with open agents like MiMo Code and OpenCode. From big picture to shipped feature.</p>
 <p>This article explains the rationale behind the approach, walks through the mechanics, and shows two worked examples: a greenfield project from scratch, and a brownfield project reverse-engineering an existing codebase. If the previous guides answered "why," this one answers "how."</p>
 
 <!-- ══ THE RATIONALE ═════════════════════════════════════════════ -->
@@ -61,6 +65,16 @@
 <p>Every human gate — design review, task approval, verification sign-off — is a structured moment where the human steps outside the spiral and makes a decision. The ceremony is not overhead. It is the external accountability that prevents the Dilbert swing.</p>
 <div class="callout callout-insight"><strong>The Principle:</strong> The agent is a fast, tireless collaborator who needs a human hand on the wheel — not because it is incompetent, but because it cannot see its own blind spots. The human stays responsible for quality. The harness makes that responsibility practical.</div>
 
+<!-- ══ DESIGN PHILOSOPHY ════════════════════════════════════════ -->
+<h1>Design Philosophy — Who Is in the Driving Seat</h1>
+<p>The design philosophy behind the harness is simple: the human is in control. Not as a figurehead. Not as a rubber stamp. As the person making decisions.</p>
+<p>During <strong>define</strong> and <strong>design</strong>, the agent is a collaborator. It asks clarifying questions, identifies gaps, suggests story breakdowns, challenges assumptions. It is thinking alongside you — not generating for you. The active phase folder accumulates detailed context: specs, designs, research, interfaces. You can see everything the agent has considered.</p>
+<p>Then comes the <strong>approve gate</strong>. The agent stops. The work is in front of you. The design document, the interfaces, the file layout, the verification criteria. You review it. You make changes. You approve or send it back. This is not a formality — it is the single most important moment in the feature lifecycle. The design you approve is the contract the agent builds against.</p>
+<p>After approval, the agent shifts. During <strong>build</strong> and <strong>verify</strong>, it is a junior programmer. It follows the tasks in order. It writes tests first. It commits after each task. It does not improvise. It does not add features. It executes the approved design with discipline. If something goes wrong after three attempts, it stops and escalates.</p>
+<p>This shift is deliberate. A collaborator during design produces better design. A disciplined executor during build produces reliable code. The same agent playing both roles — but at different times, with different instructions — gives you the best of both without the risk of either bleeding into the other.</p>
+<p>The human's responsibility is therefore clear. You own the <em>what</em> and the <em>why</em>. The agent owns the <em>how</em> — within the boundaries you approved. If the output is wrong, the first question is not "did the agent fail?" but "did I review the design carefully enough?" The harness makes accountability practical, not theoretical.</p>
+<p>This is what separates harness engineering from vibe coding. In vibe coding, the human is not in control. The agent generates, the human accepts or rejects the output after the fact. The decisions happened upstream, in the prompt, invisible and unaudited. In the harness, every decision is captured in a document. Every document is reviewed. Every review is recorded. The human is in the driving seat — not because the harness constrains the agent, but because the harness makes the human's role explicit and unavoidable.</p>
+
 <!-- ══ HOW IT WORKS ═════════════════════════════════════════════ -->
 <h1>How It Works — The Mechanics</h1>
 <p>A harness has five components. Together they form a state machine that controls the agent's how loop:</p>
@@ -70,6 +84,42 @@
 <p><strong>The quality gates</strong> — checkpoints where the agent stops and waits. Hard stops. The work is presented to a human. The human approves or sends it back. No approval, no next step.</p>
 <p><strong>The narrative log</strong> — append-only record of what was built, why, and what was learned. The "why" layer that helps future sessions understand how the project emerged.</p>
 <p>The architecture is deliberately simple: the workflow is the tool, the folder structure is the state machine, any agent that can read and write files will follow it. No runtime. No server. No API keys.</p>
+
+<div class="mermaid">
+graph TD
+    INIT["/h:init<br/>Constitution · BRD · Architecture"]
+    DEFINE["/h:define<br/>Features from BRD"]
+    DESIGN["/h:design<br/>Architecture · Interfaces"]
+    APPROVE{{"/h:approve<br/>Human Gate ✋"}}
+    TASKS["/h:tasks<br/>Granular Tasks"]
+    BUILD["/h:build<br/>TDD · One Commit per Task"]
+    VERIFY["/h:verify<br/>Tests · Acceptance Criteria"]
+    RELEASE["/h:release<br/>PR · Merge · Archive"]
+    NEXT{"More features<br/>in this phase?"}
+    DONE["Phase Complete ✅"]
+    PHASE_LOOP["Next Phase"]
+
+    INIT --> DEFINE
+    DEFINE --> DESIGN
+    DESIGN --> APPROVE
+    APPROVE -->|"Approved"| TASKS
+    APPROVE -->|"Changes requested"| DESIGN
+    TASKS --> BUILD
+    BUILD --> VERIFY
+    VERIFY -->|"All passing"| RELEASE
+    VERIFY -->|"Fix needed"| BUILD
+    RELEASE --> NEXT
+    NEXT -->|"Yes"| DEFINE
+    NEXT -->|"No"| DONE
+    DONE --> PHASE_LOOP
+    PHASE_LOOP --> DEFINE
+
+    style APPROVE fill:#ffd700,stroke:#b8860b,color:#000
+    style DONE fill:#90ee90,stroke:#228b22
+    style INIT fill:#87ceeb,stroke:#4682b4
+</div>
+
+<p>Each box is a command. Each arrow is a state transition. The human gate at <code>/h:approve</code> is the only mandatory stop — the gold box. Everything else is the agent working, the human reviewing at natural pause points.</p>
 
 <!-- ══ GREENFIELD EXAMPLE ════════════════════════════════════════ -->
 <h1>Worked Example — Greenfield Project</h1>
@@ -135,6 +185,46 @@
 
 <div class="callout callout-insight"><strong>The Brownfield Advantage:</strong> The harness does not replace your existing code. It wraps it in a process that prevents new features from breaking old behaviour. Every change goes through the same gates. Every change is verified against the existing test suite. Every change is documented in the build narrative. The agent extends the codebase without erasing its history.</div>
 
+<!-- ══ CR AND BUG WORKFLOW ═══════════════════════════════════════ -->
+<h1>After the First Release — CR and Bug Workflows</h1>
+<p>The main feature loop handles new features. But once software ships, most work is not new features — it is change requests and bug fixes. The harness has separate, lighter workflows for these.</p>
+<p>A request comes in. The agent triages it: is this a bug (something broken per spec), a CR (modification to existing behaviour), a new feature (scope addition), or deferred (not for this phase)? Bugs and CRs get a shortened path — no full design cycle, but still require approval before building.</p>
+
+<div class="mermaid">
+graph TD
+    REQUEST["Incoming Request"]
+    TRIAGE{{"/h:triage<br/>Classify Request"}}
+    BUG["Bug / CR Path"]
+    FEATURE["Feature Path"]
+    DEFERRED["Log to BACKLOG"]
+    SIMPLIFIED["Simplified Spec"]
+    BUG_APPROVE{{"Human Approval ✋"}}
+    BUG_TASKS["Tasks: Regression → Fix → Verify"]
+    BUG_BUILD["TDD Build"]
+    BUG_VERIFY["Full Test Suite"]
+    BUG_RELEASE["PR · Merge · Archive"]
+
+    REQUEST --> TRIAGE
+    TRIAGE -->|"Bug or CR"| BUG
+    TRIAGE -->|"New feature"| FEATURE
+    TRIAGE -->|"Not this phase"| DEFERRED
+    BUG --> SIMPLIFIED
+    SIMPLIFIED --> BUG_APPROVE
+    BUG_APPROVE -->|"Approved"| BUG_TASKS
+    BUG_APPROVE -->|"Rejected"| TRIAGE
+    BUG_TASKS --> BUG_BUILD
+    BUG_BUILD --> BUG_VERIFY
+    BUG_VERIFY -->|"Passing"| BUG_RELEASE
+    BUG_VERIFY -->|"Failing"| BUG_BUILD
+
+    style BUG_APPROVE fill:#ffd700,stroke:#b8860b,color:#000
+    style FEATURE fill:#87ceeb,stroke:#4682b4
+    style DEFERRED fill:#ddd,stroke:#999
+    style REQUEST fill:#f0e6ff,stroke:#9370db
+</div>
+
+<p>The shortened path skips full design but keeps the approval gate. The regression test comes first — prove the bug exists, then fix it. The full test suite runs before verification. The discipline is lighter but the accountability is the same.</p>
+
 <!-- ══ THE THREE LAYERS OF CONTEXT ══════════════════════════════ -->
 <h1>Context Recovery — How the Agent Resumes</h1>
 <p>Agents have no memory across sessions. The harness solves this with three layers:</p>
@@ -142,6 +232,53 @@
 <p><strong>The compact snapshot</strong> — one file per feature with relevant rules, interfaces, acceptance criteria, current task, files modified. One file instead of six.</p>
 <p><strong>The task list</strong> — checklist of what is done and what is next.</p>
 <p>Together, the agent resumes in under thirty seconds without re-reading the constitution, architecture, or full design documents.</p>
+
+<!-- ══ GIT FLOW ══════════════════════════════════════════════════ -->
+<h1>Git Flow — Branches and Commits</h1>
+<p>The harness manages git branches automatically. Every feature, bug fix, and change request gets its own branch. Commits follow a convention that ties every change back to the spec.</p>
+
+<div class="mermaid">
+gitgraph
+    commit id: "init"
+    branch phase-1
+    checkout phase-1
+    commit id: "phase plan"
+
+    branch feature/F001-session-mgr
+    checkout feature/F001-session-mgr
+    commit id: "spec(F001)"
+    commit id: "design(F001)"
+    commit id: "feat(F001): task 1.1"
+    commit id: "feat(F001): task 1.2"
+    commit id: "test(F001): acceptance"
+    commit id: "verify(F001)"
+
+    checkout phase-1
+    merge feature/F001-session-mgr id: "PR merged"
+    commit id: "chore: archive F001"
+
+    branch feature/F002-streaming
+    checkout feature/F002-streaming
+    commit id: "spec(F002)"
+    commit id: "feat(F002): SSE streaming"
+    commit id: "verify(F002)"
+
+    checkout phase-1
+    merge feature/F002-streaming id: "PR merged"
+    commit id: "chore: archive F002"
+
+    branch bugfix/BUG-001-auth
+    checkout bugfix/BUG-001-auth
+    commit id: "fix(BUG-001): regression test"
+    commit id: "fix(BUG-001): auth fix"
+
+    checkout phase-1
+    merge bugfix/BUG-001-auth id: "PR merged"
+</div>
+
+<p>Commit convention: <code>type(ID): description</code>. Every commit traces back to a spec, a design, or a task. Six months later, <code>git log --oneline</code> tells the story of what was built and why.</p>
+
+<div class="callout callout-insight"><strong>The Convention:</strong> <code>spec(F001)</code>, <code>design(F001)</code>, <code>feat(F001): task 1.1</code>, <code>test(F001)</code>, <code>verify(F001)</code>, <code>fix(BUG-001): description</code>. The ID in the commit maps to the ID in the spec. Traceability from requirement to code, enforced by convention.</div>
 
 <!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
 <h1>Where This Fits</h1>
@@ -155,6 +292,62 @@
 <p><strong>A context hub for enterprise applications.</strong> Andrew Ng's <a href="https://github.com/andrewyng/context-hub" target="_blank">context-hub</a> helps agents with latest API documentation. The same approach applies to ERP systems and enterprise applications — SAP, Oracle, Salesforce. During large projects, the implementation team builds a context repository: vanilla application behaviour plus organisation-specific extensions and customisations. The harness constitution reads this repository. The agent starts with accurate domain knowledge, not generic training data.</p>
 <p><strong>Vector search and code intelligence.</strong> MCP-based tools like Sourcegraph and Tree-sitter can help coding agents find what they need quickly — reducing token burn and increasing accuracy. The harness does not replace these tools. It complements them. The harness controls the workflow. The tools improve the agent's ability to execute within that workflow.</p>
 <p>Neither is a harness problem. Both enrich the harness. The workflow stays the same. The agent gets better at following it.</p>
+
+<!-- ══ WHAT YOU GET ══════════════════════════════════════════════ -->
+<h1>What You Get</h1>
+<p>harness-eng ships as files you copy into your project — no runtime, no server, no API keys. Clone the repo and you have:</p>
+<ul>
+  <li><strong>11 workflow commands</strong> — init, define, design, approve, tasks, build, verify, release (the 8-step feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), and status (project dashboard). Each is a Markdown file the agent reads and follows.</li>
+  <li><strong>Smart templates</strong> — constitution, BRD, architecture, feature specs with Given/When/Then stories, phase plans, build narrative. The agent fills them from your existing docs or from conversation.</li>
+  <li><strong>Language skills</strong> — Go, Python, Node/TypeScript, SQL, Git. These are reference files, not tutorials — models already know these languages. The value is project-specific conventions: "use <code>make check</code> before committing," "std-lib-first," "secrets in <code>~/.config</code>." For frameworks with many variants (JS/TS/PHP), users provide their own style file with their team's conventions rather than adopting a generic one.</li>
+  <li><strong>Scripts</strong> — status dashboard (HTML), prerequisite checks, version checking, release note generation, SLICE_LOG freshness checks.</li>
+  <li><strong>Pre-commit hook</strong> — secret scanning, env file detection, markdown validation, commit message convention enforcement.</li>
+</ul>
+
+<h2>Agent Compatibility</h2>
+<p>The harness works with any agent that can read and write files. We have tested it with:</p>
+<ul>
+  <li><strong>MiMo Code</strong> — full support. Open agent with no competing harness conventions. Follows file-based instructions natively.</li>
+  <li><strong>OpenCode</strong> — full support. Same characteristics as MiMo Code.</li>
+</ul>
+<p>Other agents — Claude Code, Codex, Gemini CLI, Copilot, Cursor — have their own built-in conventions (CLAUDE.md, project rules, system prompts). These agents may partially follow the harness while defaulting to their own workflows, particularly at transition points between commands. We have not tested harness-eng with these agents and cannot claim compatibility. An agent with its own harness has a competing context; an agent without one adopts yours cleanly.</p>
+<p>The harness is a protocol, not a plugin. It works because the files are the instructions. Any agent that can read files will follow it — the question is whether it follows your files or its own defaults when the two conflict.</p>
+
+<!-- ══ ACID TEST ═════════════════════════════════════════════════ -->
+<h1>The Acid Test</h1>
+<p>The claims above are strong. The human is in control. The agent is a collaborator then a junior programmer. Accountability is practical, not theoretical. These are testable assertions. If they fail, the harness is just another process wrapper with better marketing.</p>
+
+<h2>Claim 1: The human reviews the design before build begins</h2>
+<p><strong>Test:</strong> Can the agent start building a feature without an approved design document?</p>
+<p><strong>Expected:</strong> No. The <code>/h:build</code> command checks for an approved <code>design.md</code> (grep for <code>Ref: APPROVED</code>). If no approved design exists, the build stops and instructs the user to run <code>/h:approve</code> first. The agent cannot proceed.</p>
+<p><strong>What to try:</strong> Run <code>/h:build</code> without running <code>/h:design</code> and <code>/h:approve</code> first. The agent should refuse.</p>
+
+<h2>Claim 2: The agent stops after three failed attempts</h2>
+<p><strong>Test:</strong> Does the agent escalate when stuck, or does it loop forever?</p>
+<p><strong>Expected:</strong> After three failed fix attempts on the same task, the agent writes a <code>BLOCKED</code> section, stops, and escalates to the human. No infinite retry loops.</p>
+<p><strong>What to try:</strong> Give the agent a task with an intentionally impossible constraint. Count the attempts. After three, it should stop.</p>
+
+<h2>Claim 3: Every commit traces to a spec</h2>
+<p><strong>Test:</strong> Run <code>git log --oneline</code> after a build. Does every commit follow <code>type(ID): description</code>?</p>
+<p><strong>Expected:</strong> <code>feat(F001): task 1.1</code>, <code>test(F001): acceptance tests</code>, <code>fix(BUG-001): auth fix</code>. Every ID maps to a spec in the harness. Six months later, the log tells the story.</p>
+<p><strong>What to try:</strong> Run <code>git log --oneline -20</code> after completing a feature. Check for commits without IDs.</p>
+
+<h2>Claim 4: The agent does not add features during build</h2>
+<p><strong>Test:</strong> Does the agent stay within the approved design, or does it add "helpful" extras?</p>
+<p><strong>Expected:</strong> The <code>/h:build</code> instructions explicitly say "Never improvise or add features." The agent executes tasks in order from <code>tasks.md</code>. Anything outside the task list is a violation.</p>
+<p><strong>What to try:</strong> Build a simple feature. Check the diff. Are there changes beyond what the tasks specified?</p>
+
+<h2>Claim 5: The approval gate is a real gate, not a suggestion</h2>
+<p><strong>Test:</strong> Can the agent auto-approve its own design?</p>
+<p><strong>Expected:</strong> No. The <code>/h:approve</code> command writes <code>Ref: APPROVED</code> only when the human explicitly says "approved." The agent cannot approve its own work.</p>
+<p><strong>What to try:</strong> Ask the agent to approve the design without you reviewing it. It should refuse and present the design for your review.</p>
+
+<h2>Claim 6: The harness survives a real project</h2>
+<p><strong>Test:</strong> Use the harness on an actual project — not a demo, not a toy. Add three features. Introduce one bug. Fix the bug through the bug workflow. Release all three.</p>
+<p><strong>Expected:</strong> Three features with full spec→design→tasks→build→verify→release trails. One bug with regression test→fix→verify trail. SLICE_LOG updated. Git log traceable. Dashboard accurate.</p>
+<p><strong>What to try:</strong> Pick a real project you need to work on. Use the harness for the next three features. Report what broke.</p>
+
+<div class="callout callout-insight"><strong>The Standard:</strong> If the agent can build without approved design, add features during build, loop forever on failures, or approve its own work — the harness has failed. The human is not in control. The ceremony is overhead without accountability. Test these claims. If they hold, the harness earns its place. If they don't, it is just another process that looks good on paper.</div>
 
 <!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
 <h1>Companion Resources</h1>
