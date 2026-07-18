@@ -193,11 +193,11 @@ graph TD
 <p>Say <code>"define the features from the BRD"</code>. The agent reads your BRD, counts requirements, and creates feature specs with Given/When/Then stories. For large BRDs (5+ requirements), it automatically organizes into phases — Phase 1: Foundation, Phase 2: MVP, Phase 3: Enhancements.</p>
 <p>You review the features. Approve the phase plan.</p>
 
-<h2>Step 4: Design and Approve</h2>
-<p>Say <code>"design this feature"</code>. The agent creates a design document — architecture, interfaces, file layout, constitution compliance check. Stops. You review — the design looks right, but the agent missed the idempotency requirement. You add it. Say <code>"approved"</code>.</p>
+<h2>Step 4: Define — Review Once, Approve Once</h2>
+<p>Say <code>"define this feature"</code>. For M/L projects, the agent produces a single unified <code>spec.yaml</code> — requirements, architecture decisions, file layout, and the task list, all in one document. The agent stops. You review the spec — design looks right, but the agent missed the idempotency requirement. You add it. Say <code>"approved"</code>. Design and tasks were produced internally during define; you never need to type separate commands for them.</p>
 
 <h2>Step 5: Build</h2>
-<p>Say <code>"break this into tasks"</code>. The agent writes granular tasks with dependencies. Say <code>"build it"</code>. The agent works through each task: code, commit, report. For deterministic invariants — accounting logic, no-lookahead boundaries — it writes focused tests. After three failed attempts on a task, it stops and escalates rather than thrashing.</p>
+<p>Say <code>"build it"</code>. The agent works through each task in the approved <code>spec.yaml</code>: code, commit, report. For deterministic invariants — accounting logic, no-lookahead boundaries — it writes focused tests. After three failed attempts on a task, it stops and escalates rather than thrashing.</p>
 
 <h2>Step 6: Verify and Release</h2>
 <p>Say <code>"verify the feature"</code>. The agent runs the evidence contract (tests, integration checks, scenario fixtures), fills the verification report, and marks it <code>Release Ref: PENDING</code>. Say <code>"release it"</code>. The agent presents the verification report and any deferred items, waits for your approval, marks the report <code>Release Ref: APPROVED</code>, merges, archives the feature folder, bumps the version, appends to the build narrative, and regenerates the handover snapshot. Pick the next feature. Repeat.</p>
@@ -301,7 +301,6 @@ gitGraph
     branch feature/F001-session-mgr
     checkout feature/F001-session-mgr
     commit id: "spec(F001)"
-    commit id: "design(F001)"
     commit id: "feat(F001): task 1.1"
     commit id: "feat(F001): task 1.2"
     commit id: "test(F001): acceptance"
@@ -338,7 +337,7 @@ gitGraph
 <!-- ══ LIMITATIONS ═════════════════════════════════════════════════ -->
 <h1>Limitations — What This Does Not Guarantee</h1>
 <p>No harness guarantees that a model will behave as expected. The agent may skip steps, forget to update logs, or deviate from the approved design. The harness makes the right path clear, but it cannot force the agent to follow it.</p>
-<p>The human must steer. The health command catches drift. The status command shows where you are. But the human is still responsible for watching, correcting, and deciding. The harness is a guide rail, not an autopilot.</p>
+<p>The human must steer. The status command shows where you are and what the agent should do next. But the human is still responsible for watching, correcting, and deciding. The harness is a guide rail, not an autopilot.</p>
 <p>This is a reference implementation — not a production-tested tool. It works for the cases we have tested. It may need adaptation for your context. Use it as a starting point, not a finished product.</p>
 
 <!-- ══ WHERE IT FITS ═════════════════════════════════════════════ -->
