@@ -134,6 +134,47 @@ graph TD
 
 <p>Gold boxes are human gates — the agent stops and waits for you. Purple boxes are internally spawned agent reviews — you never type these; the Manager triggers them automatically. This is the M/L-level diagram. In S-level projects, the purple nodes and the design/tasks steps are skipped entirely, and the pipeline collapses to <code>define → build → verify</code>.</p>
 
+<!-- ══ WORKFLOW LEVELS ════════════════════════════════════════ -->
+<h1>Workflow Levels — S, M, and L</h1>
+<p>Every slice in <code>spec.yaml</code> declares a <code>workflow_level</code>. This single field controls which gates fire, what evidence is required, and how much ceremony the agent applies. If absent, the harness defaults to M/L — full gates, fail-safe.</p>
+
+<table>
+  <thead><tr><th>Level</th><th>Intended for</th><th>Pipeline</th><th>Gates that apply</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>S — Small</strong></td>
+      <td>Low-risk, self-contained changes. Internal scripts, config tweaks, documentation, prototypes.</td>
+      <td><code>define → build → verify → release</code></td>
+      <td>Human release gate only. No review-pre-verify. No tasks.md / design approval required.</td>
+    </tr>
+    <tr>
+      <td><strong>M — Medium</strong></td>
+      <td>Feature development with moderate risk. Standard product work.</td>
+      <td><code>define → build → review-pre-verify (auto) → verify → release</code></td>
+      <td>Agent review gate (Sr Tech Lead, fresh context) + Human release gate. Full evidence contract.</td>
+    </tr>
+    <tr>
+      <td><strong>L — Large</strong></td>
+      <td>High-risk, high-complexity work. Architectural changes, security boundaries, data migrations.</td>
+      <td>Same as M</td>
+      <td>Same gates as M, but with extended evidence requirements and broader regression coverage.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>What Concretely Changes per Level</h2>
+<p>The level isn't a label — it changes what the harness actually enforces at each step:</p>
+<ul>
+  <li><strong>define</strong> — For S, produces a lightweight <code>spec.yaml</code> with requirements only. For M/L, the agent also produces architecture decisions and a full task list internally before writing <code>spec.yaml</code>.</li>
+  <li><strong>build</strong> — For S, the agent implements directly from <code>spec.yaml</code> requirements without reading a separate tasks list. For M/L, it follows the approved task list one commit at a time and requires <code>worktree.yaml</code> to record ownership.</li>
+  <li><strong>review-pre-verify</strong> — For S, this step is <strong>skipped entirely</strong>. The Manager does not spawn the Sr Tech Lead subagent. For M/L, it is mandatory and blocking — a BLOCKER verdict routes back to build.</li>
+  <li><strong>verify</strong> — For S, skips the review-pre-verify approval check and incomplete-task check. Sensors still run. For M/L, all tasks must be complete and the agent review must be approved before verify can proceed.</li>
+  <li><strong>Default when absent</strong> — If <code>workflow_level</code> is missing from <code>spec.yaml</code>, the harness assumes M/L. This is deliberate: the safe default is full gates, not permissive gates.</li>
+</ul>
+
+<div class="callout callout-insight"><strong>Picking the right level:</strong> When in doubt, start with M. The cost of an agent review is low. The cost of shipping a broken interface is high. Use S only when you can genuinely characterise the change as self-contained with no downstream impact. L is for anything that touches a persistent schema, a public API, a security boundary, or a cross-team integration.</div>
+
+
 <!-- ══ COMMAND TYPES ══════════════════════════════════════ -->
 <h1>Command Types — Human vs Internal</h1>
 <p>The harness has five user-facing commands. That is the entire surface a developer touches during day-to-day work. Everything else is either Manager-orchestrated or M/L-only internal.</p>
