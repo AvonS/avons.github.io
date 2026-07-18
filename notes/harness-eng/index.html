@@ -96,6 +96,7 @@ graph TD
     DEFINE["/h:define<br/>Features from BRD"]
     DESIGN["/h:design<br/>Architecture · Interfaces"]
     APPROVE{{"[Human Gate]<br/>/h:approve"}}
+    RPB["[auto-spawned]<br/>review-pre-build<br/>Sr Architect"]
     TASKS["/h:tasks<br/>Granular Tasks"]
     BUILD["/h:build<br/>One Commit per Task"]
     RPV["[auto-spawned]<br/>review-pre-verify<br/>Sr Tech Lead"]
@@ -108,8 +109,10 @@ graph TD
     INIT --> DEFINE
     DEFINE --> DESIGN
     DESIGN --> APPROVE
-    APPROVE -->|"Approved"| TASKS
+    APPROVE -->|"Approved"| RPB
     APPROVE -->|"Changes requested"| DESIGN
+    RPB -->|"APPROVED"| TASKS
+    RPB -->|"BLOCKER"| DESIGN
     TASKS --> BUILD
     BUILD --> RPV
     RPV -->|"APPROVED"| VERIFY
@@ -126,11 +129,12 @@ graph TD
     style RELEASE fill:#ffd700,stroke:#b8860b,color:#000
     style DONE fill:#90ee90,stroke:#228b22
     style INIT fill:#87ceeb,stroke:#4682b4
+    style RPB fill:#f0e6ff,stroke:#9370db
     style RPV fill:#f0e6ff,stroke:#9370db
 </div>
 </div>
 
-<p>Gold boxes are human gates — the agent stops and waits for you. The purple box is an internally spawned agent review — you never type it; the Manager triggers it automatically after build completes. This is the M/L-level diagram. In S-level projects, the purple node and the design/tasks steps are skipped entirely, and the pipeline collapses to <code>define → build → verify</code>.</p>
+<p>Gold boxes are human gates — the agent stops and waits for you. Purple boxes are internally spawned agent reviews — you never type these; the Manager triggers them automatically. This is the M/L-level diagram. In S-level projects, the purple nodes and the design/tasks steps are skipped entirely, and the pipeline collapses to <code>define → build → verify</code>.</p>
 
 <!-- ══ COMMAND TYPES ══════════════════════════════════════ -->
 <h1>Command Types — Human vs Internal</h1>
@@ -158,11 +162,17 @@ graph TD
   </tbody>
 </table>
 
-<h2>Internally Triggered (Manager auto-spawns this)</h2>
-<p>This command is never typed by the human. The Manager spawns it as an isolated subagent after <code>/h:build</code> completes in M/L projects. It reads only what it needs, produces a structured report, and hands control back.</p>
+<h2>Internally Triggered (Manager auto-spawns these)</h2>
+<p>These two commands are never typed by the human. The Manager spawns them as isolated subagents at specific points in the M/L lifecycle. They read only what they need, produce a structured report, and hand control back.</p>
 <table>
   <thead><tr><th>Command</th><th>Persona</th><th>When triggered</th><th>Outcome</th></tr></thead>
   <tbody>
+    <tr>
+      <td><code>review-pre-build</code></td>
+      <td>Sr Architect</td>
+      <td>After <code>/h:approve</code>, before <code>/h:tasks</code></td>
+      <td>APPROVED → proceed to tasks. BLOCKER → route back to design.</td>
+    </tr>
     <tr>
       <td><code>review-pre-verify</code></td>
       <td>Sr Tech Lead</td>
@@ -364,7 +374,7 @@ gitGraph
 <h1>What You Get</h1>
 <p>harness-eng ships as files you copy into your project — no runtime, no server, no API keys. Clone the repo and you have:</p>
 <ul>
-  <li><strong>15 workflow commands</strong> — init, define, design, approve, tasks, build, review-pre-verify, verify, release (the core feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), change (unified bug/CR workflow), upgrade-harness (upgrade to latest version), status (read-only project snapshot), and migrate-harness (project reclassification and migration). Each is a Markdown file the agent reads and follows.</li>
+  <li><strong>16 workflow commands</strong> — init, define, design, approve, tasks, build, review-pre-build, review-pre-verify, verify, release (the core feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), change (unified bug/CR workflow), upgrade-harness (upgrade to latest version), status (read-only project snapshot), and migrate-harness (project reclassification and migration). Each is a Markdown file the agent reads and follows.</li>
   <li><strong>Workflow levels</strong> — S (small: define → build → verify, no design or review gates), M (medium: full gates, proportionate evidence), L (large: full gates, extended evidence). The level is set per-feature in the spec and controls which gates the agent must stop at. Absent level defaults to M/L — full gates, fail-safe.</li>
   <li><strong>Smart templates</strong> — constitution, BRD, architecture, feature specs with Given/When/Then stories, phase plans, build narrative, deferred item ledger. The agent fills them from your existing docs or from conversation.</li>
   <li><strong>Language skills</strong> — Go, Python, Node/TypeScript, SQL, Git. These are reference files, not tutorials — models already know these languages. The value is project-specific conventions: "use <code>make check</code> before committing," "std-lib-first," "secrets in <code>~/.config</code>." For frameworks with many variants (JS/TS/PHP), users provide their own style file with their team's conventions rather than adopting a generic one.</li>
