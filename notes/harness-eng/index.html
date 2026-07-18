@@ -102,28 +102,18 @@
 <div class="mermaid-wrap" style="overflow-x: auto;">
 <div class="mermaid">
 graph TD
-    INIT["/h:init<br/>Constitution · BRD · Architecture"]
-    DEFINE["/h:define<br/>Features from BRD"]
-    DESIGN["/h:design<br/>Architecture · Interfaces"]
-    APPROVE{{"[Human Gate]<br/>/h:approve"}}
-    RPB["[auto-spawned]<br/>review-pre-build<br/>Sr Architect"]
-    TASKS["/h:tasks<br/>Granular Tasks"]
+    INIT["/h:init<br/>project.yaml · plan.yaml · constitution"]
+    DEFINE["/h:define<br/>spec.yaml · design + tasks internal for M/L"]
     BUILD["/h:build<br/>One Commit per Task"]
     RPV["[auto-spawned]<br/>review-pre-verify<br/>Sr Tech Lead"]
-    VERIFY["/h:verify<br/>Tests · Acceptance Criteria"]
+    VERIFY["/h:verify<br/>Evidence Contract · verify/slice.yaml"]
     RELEASE["[Human Gate]<br/>/h:release<br/>Merge · Archive"]
     NEXT{"More features<br/>in this phase?"}
     DONE["Phase Complete"]
     PHASE_LOOP["Next Phase"]
 
     INIT --> DEFINE
-    DEFINE --> DESIGN
-    DESIGN --> APPROVE
-    APPROVE -->|"Approved"| RPB
-    APPROVE -->|"Changes requested"| DESIGN
-    RPB -->|"APPROVED"| TASKS
-    RPB -->|"BLOCKER"| DESIGN
-    TASKS --> BUILD
+    DEFINE --> BUILD
     BUILD --> RPV
     RPV -->|"APPROVED"| VERIFY
     RPV -->|"BLOCKER"| BUILD
