@@ -95,15 +95,15 @@ graph TD
     INIT["/h:init<br/>Constitution · BRD · Architecture"]
     DEFINE["/h:define<br/>Features from BRD"]
     DESIGN["/h:design<br/>Architecture · Interfaces"]
-    APPROVE{{"\u270b /h:approve<br/>Human Gate"}}
-    RPB["\u25ba review-pre-build<br/>Sr Architect · auto-spawned"]
+    APPROVE{{"[Human Gate]<br/>/h:approve"}}
+    RPB["[auto-spawned]<br/>review-pre-build<br/>Sr Architect"]
     TASKS["/h:tasks<br/>Granular Tasks"]
     BUILD["/h:build<br/>One Commit per Task"]
-    RPV["\u25ba review-pre-verify<br/>Sr Tech Lead · auto-spawned"]
+    RPV["[auto-spawned]<br/>review-pre-verify<br/>Sr Tech Lead"]
     VERIFY["/h:verify<br/>Tests · Acceptance Criteria"]
-    RELEASE["\u270b /h:release<br/>Merge · Archive · Refresh Handover"]
+    RELEASE["[Human Gate]<br/>/h:release<br/>Merge · Archive"]
     NEXT{"More features<br/>in this phase?"}
-    DONE["Phase Complete \u2705"]
+    DONE["Phase Complete"]
     PHASE_LOOP["Next Phase"]
 
     INIT --> DEFINE
