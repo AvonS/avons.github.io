@@ -95,22 +95,28 @@ graph TD
     INIT["/h:init<br/>Constitution · BRD · Architecture"]
     DEFINE["/h:define<br/>Features from BRD"]
     DESIGN["/h:design<br/>Architecture · Interfaces"]
-    APPROVE{{"/h:approve<br/>Human Gate ✋"}}
+    APPROVE{{"\u270b /h:approve<br/>Human Gate"}}
+    RPB["\u25ba review-pre-build<br/>Sr Architect · auto-spawned"]
     TASKS["/h:tasks<br/>Granular Tasks"]
     BUILD["/h:build<br/>One Commit per Task"]
+    RPV["\u25ba review-pre-verify<br/>Sr Tech Lead · auto-spawned"]
     VERIFY["/h:verify<br/>Tests · Acceptance Criteria"]
-    RELEASE["/h:release<br/>Merge · Archive · Refresh Handover"]
+    RELEASE["\u270b /h:release<br/>Merge · Archive · Refresh Handover"]
     NEXT{"More features<br/>in this phase?"}
-    DONE["Phase Complete ✅"]
+    DONE["Phase Complete \u2705"]
     PHASE_LOOP["Next Phase"]
 
     INIT --> DEFINE
     DEFINE --> DESIGN
     DESIGN --> APPROVE
-    APPROVE -->|"Approved"| TASKS
+    APPROVE -->|"Approved"| RPB
     APPROVE -->|"Changes requested"| DESIGN
+    RPB -->|"APPROVED"| TASKS
+    RPB -->|"BLOCKER"| DESIGN
     TASKS --> BUILD
-    BUILD --> VERIFY
+    BUILD --> RPV
+    RPV -->|"APPROVED"| VERIFY
+    RPV -->|"BLOCKER"| BUILD
     VERIFY -->|"All passing"| RELEASE
     VERIFY -->|"Fix needed"| BUILD
     RELEASE --> NEXT
@@ -120,12 +126,62 @@ graph TD
     PHASE_LOOP --> DEFINE
 
     style APPROVE fill:#ffd700,stroke:#b8860b,color:#000
+    style RELEASE fill:#ffd700,stroke:#b8860b,color:#000
     style DONE fill:#90ee90,stroke:#228b22
     style INIT fill:#87ceeb,stroke:#4682b4
+    style RPB fill:#f0e6ff,stroke:#9370db
+    style RPV fill:#f0e6ff,stroke:#9370db
 </div>
 </div>
 
-<p>Each box is a command. Each arrow is a state transition. The human gate at <code>/h:approve</code> is the only mandatory stop — the gold box. Everything else is the agent working, the human reviewing at natural pause points.</p>
+<p>Gold boxes are human gates — the agent stops and waits for you. Purple boxes are internally spawned agent reviews — you never type these; the Manager triggers them automatically. This is the M/L-level diagram. In S-level projects, the purple nodes and the design/tasks steps are skipped entirely, and the pipeline collapses to <code>define → build → verify</code>.</p>
+
+<!-- ══ COMMAND TYPES ══════════════════════════════════════ -->
+<h1>Command Types — Human vs Internal</h1>
+<p>Not every command in the harness is something you type. The 16 commands split into two groups:</p>
+
+<h2>Human-Invoked (you say these)</h2>
+<p>These are the commands a developer types or speaks naturally during a session. The Manager receives them, decides which subagent to spawn, and routes control.</p>
+<table>
+  <thead><tr><th>Command</th><th>What it does</th><th>Gate?</th></tr></thead>
+  <tbody>
+    <tr><td><code>/h:init</code></td><td>Scan docs, derive constitution/BRD/architecture</td><td>—</td></tr>
+    <tr><td><code>/h:define</code></td><td>Create feature spec from BRD</td><td>—</td></tr>
+    <tr><td><code>/h:design</code></td><td>Design architecture, interfaces, file layout</td><td>M/L only</td></tr>
+    <tr><td><code>/h:approve</code></td><td>Human approval of design</td><td>✋ Human</td></tr>
+    <tr><td><code>/h:tasks</code></td><td>Break design into granular tasks</td><td>M/L only</td></tr>
+    <tr><td><code>/h:build</code></td><td>Implement against Evidence Contract</td><td>—</td></tr>
+    <tr><td><code>/h:verify</code></td><td>Run tests, fill verification report</td><td>—</td></tr>
+    <tr><td><code>/h:release</code></td><td>Disclose deferred items, approve, merge, archive</td><td>✋ Human</td></tr>
+    <tr><td><code>/h:triage</code></td><td>Classify incoming requests</td><td>—</td></tr>
+    <tr><td><code>/h:bug</code></td><td>Shortened bug/CR workflow</td><td>—</td></tr>
+    <tr><td><code>/h:change</code></td><td>Unified change request workflow</td><td>—</td></tr>
+    <tr><td><code>/h:upgrade-harness</code></td><td>Fetch and apply latest canonical harness</td><td>—</td></tr>
+    <tr><td><code>/h:status</code></td><td>Read-only project snapshot</td><td>—</td></tr>
+    <tr><td><code>/h:migrate-harness</code></td><td>Reclassify project workflow level with consent</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h2>Internally Triggered (Manager auto-spawns these)</h2>
+<p>These two commands are never typed by the human. The Manager spawns them as isolated subagents at specific points in the M/L lifecycle. They read only what they need, produce a structured report, and hand control back.</p>
+<table>
+  <thead><tr><th>Command</th><th>Persona</th><th>When triggered</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>review-pre-build</code></td>
+      <td>Sr Architect</td>
+      <td>After <code>/h:approve</code>, before <code>/h:tasks</code></td>
+      <td>APPROVED → proceed to tasks. BLOCKER → route back to design.</td>
+    </tr>
+    <tr>
+      <td><code>review-pre-verify</code></td>
+      <td>Sr Tech Lead</td>
+      <td>After <code>/h:build</code> completes, before <code>/h:verify</code></td>
+      <td>APPROVED → proceed to verify. BLOCKER → route back to build.</td>
+    </tr>
+  </tbody>
+</table>
+<div class="callout callout-insight"><strong>Why separate subagents?</strong> The Sr Tech Lead review runs in a fresh context with no memory of the build session. This is intentional. An agent that just wrote the code will rationalise its own decisions. A fresh-eyes subagent reads only the approved design and the produced code, with no emotional investment in the implementation choices. That separation is what makes the review meaningful rather than performative.</div>
 
 <!-- ══ GREENFIELD EXAMPLE ════════════════════════════════════════ -->
 <h1>Worked Example — Greenfield Project</h1>
@@ -335,6 +391,14 @@ gitGraph
 </ul>
 <p>Other agents — Claude Code, Codex, Copilot, Cursor — have their own built-in conventions (CLAUDE.md, project rules, system prompts). These agents may partially follow the harness while defaulting to their own workflows, particularly at transition points between commands. We have not tested harness-eng with these agents and cannot claim compatibility. An agent with its own harness has a competing context; an agent without one adopts yours cleanly.</p>
 <p>The harness is a protocol, not a plugin. It works because the files are the instructions. Any agent that can read files will follow it — the question is whether it follows your files or its own defaults when the two conflict.</p>
+
+<h2>How Agents Launch Subagents</h2>
+<p>The review gates and persona-switching described above only work if the agent can actually launch an isolated sub-conversation. Different agents implement this differently, but the contract is the same: the Manager sends a bounded context packet to a fresh agent instance and waits for the result.</p>
+<p><strong>Bounded context packet</strong> — each subagent receives only what it needs: objective, authorised read/write paths, prohibited changes, evidence expectations, and stop conditions. History defaults to <code>none</code>. The full project history, constitution, and session context are not sent by default. This is what keeps the Sr Tech Lead genuinely fresh-eyes.</p>
+<p><strong>Antigravity</strong> uses an explicit <code>invoke_subagent</code> tool call. The Manager selects a persona (e.g. <code>sr-tech-lead</code>), passes the context packet as a structured prompt, and the subagent runs in a separate conversation thread with its own isolated context window. When it completes, the result is returned to the Manager thread. The persona is defined in <code>.harness-eng/agents/sr-tech-lead/agent.md</code> — a file the harness ships, not a capability the agent provides.</p>
+<p><strong>OpenCode</strong> spawns a new <code>opencode</code> session with a targeted prompt containing the context packet. The bounded prompt is the isolation mechanism — the subagent starts from the prompt, not from the parent session history.</p>
+<p>In both cases, the isolation is what matters. An agent that continues the same session for build <em>and</em> review is not implementing the harness correctly — it is simulating a review with full context, which defeats the purpose of the gate entirely.</p>
+<div class="callout callout-insight"><strong>What to check:</strong> When evaluating whether your agent supports the harness correctly, ask one question: can it launch a new conversation with a bounded prompt and no access to the current session history? If yes, the review gates will work as designed. If no, the reviews will be informed by build context and the fresh-eyes property is lost.</div>
 
 <!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
 <h1>Open for Validation</h1>
