@@ -41,9 +41,9 @@
   <h1 class="doc-main-title">Harness Engineering in Practice</h1>
   <p class="doc-subtitle">A concrete reference implementation — greenfield and brownfield</p>
   <div class="doc-meta">
-    <span>v1.0</span>
+    <span>v1.1</span>
     <span>·</span>
-    <span>June 2026</span>
+    <span>July 2026</span>
     <span>·</span>
     <a href="https://avons.github.io" target="_blank">avons.github.io</a>
   </div>
@@ -97,9 +97,9 @@ graph TD
     DESIGN["/h:design<br/>Architecture · Interfaces"]
     APPROVE{{"/h:approve<br/>Human Gate ✋"}}
     TASKS["/h:tasks<br/>Granular Tasks"]
-    BUILD["/h:build<br/>TDD · One Commit per Task"]
+    BUILD["/h:build<br/>One Commit per Task"]
     VERIFY["/h:verify<br/>Tests · Acceptance Criteria"]
-    RELEASE["/h:release<br/>PR · Merge · Archive"]
+    RELEASE["/h:release<br/>Merge · Archive · Refresh Handover"]
     NEXT{"More features<br/>in this phase?"}
     DONE["Phase Complete ✅"]
     PHASE_LOOP["Next Phase"]
@@ -150,11 +150,10 @@ graph TD
 <p>Say <code>"design this feature"</code>. The agent creates a design document — architecture, interfaces, file layout, constitution compliance check. Stops. You review — the design looks right, but the agent missed the idempotency requirement. You add it. Say <code>"approved"</code>.</p>
 
 <h2>Step 5: Build</h2>
-<p>Say <code>"break this into tasks"</code>. The agent writes granular tasks with dependencies. Say <code>"build it"</code>. The agent works through each task: test first, code, commit, report. After three failed test attempts, it stops and escalates.</p>
+<p>Say <code>"break this into tasks"</code>. The agent writes granular tasks with dependencies. Say <code>"build it"</code>. The agent works through each task: code, commit, report. For deterministic invariants — accounting logic, no-lookahead boundaries — it writes focused tests. After three failed attempts on a task, it stops and escalates rather than thrashing.</p>
 
 <h2>Step 6: Verify and Release</h2>
-<p>Say <code>"verify the feature"</code>. The agent runs the full test suite, fills the verification report. Say <code>"release it"</code>. The agent creates a PR, merges, updates the dashboard, appends to the build narrative.</p>
-<p>Pick the next feature. Repeat.</p>
+<p>Say <code>"verify the feature"</code>. The agent runs the evidence contract (tests, integration checks, scenario fixtures), fills the verification report, and marks it <code>Release Ref: PENDING</code>. Say <code>"release it"</code>. The agent presents the verification report and any deferred items, waits for your approval, marks the report <code>Release Ref: APPROVED</code>, merges, archives the feature folder, bumps the version, appends to the build narrative, and regenerates the handover snapshot. Pick the next feature. Repeat.</p>
 
 <div class="callout callout-insight"><strong>The Result:</strong> After Phase 1, you have a working transaction engine with tests, verified acceptance criteria, a build narrative explaining every decision, and a live dashboard showing project status. The agent built the code. You validated every step. Neither worked alone.</div>
 
@@ -229,37 +228,24 @@ graph TD
 <p>Together, the agent resumes in under thirty seconds without re-reading the constitution, architecture, or full design documents.</p>
 
 <!-- ══ PROJECT VISIBILITY ══════════════════════════════════════ -->
-<h1>Project Visibility — Status and Health</h1>
-<p>In multi-phase projects, visibility is critical. You need to know where you are, what's done, what's next, and whether the agent is following the rules. Two commands provide this:</p>
+<h1>Project Visibility — Status and Handover</h1>
+<p>In multi-phase projects, visibility is critical. You need to know where you are, what's done, what's next, and whether the agent is on track. The status command provides this without touching the working tree.</p>
 
 <h2>Status — Where Am I?</h2>
-<p>Say <code>"show status"</code>. The agent runs the status script and shows:</p>
+<p>Say <code>"show status"</code>. The agent reads the derived <code>handover.yaml</code> snapshot and shows:</p>
 <ul>
   <li><strong>Project description</strong> — one-liner from the BRD, so you remember what you're building</li>
   <li><strong>Key goals</strong> — top success metrics from the BRD</li>
-  <li><strong>Version</strong> — current harness version and whether an update is available</li>
+  <li><strong>Version</strong> — current harness version</li>
+  <li><strong>Workflow level</strong> — S, M, or L (controls which gates apply)</li>
   <li><strong>SLICE_LOG freshness</strong> — when was the last meaningful commit logged</li>
   <li><strong>Active features</strong> — how many features are in progress across all phases</li>
-  <li><strong>Phase progress</strong> — which phases are complete, which are in progress, which haven't started</li>
+  <li><strong>Deferred items</strong> — non-blocker findings tracked for future resolution</li>
   <li><strong>Next step</strong> — what the agent should do next</li>
 </ul>
-<p>In a six-phase project, this is your daily standup. One command, full picture. No scrolling through folders, no guessing what the agent did last session.</p>
+<p>In a six-phase project, this is your daily standup. One command, full picture. The status command is read-only — it never modifies your working tree, so it is safe to run at any point during a session.</p>
 
-<h2>Health — Is the Agent Following the Rules?</h2>
-<p>Say <code>"check health"</code>. The agent runs compliance checks and reports:</p>
-<ul>
-  <li><strong>CRITICAL:</strong> Did the agent read the constitution before acting?</li>
-  <li><strong>CRITICAL:</strong> Is the design approved before build started?</li>
-  <li><strong>CRITICAL:</strong> Is the SLICE_LOG updated after meaningful commits?</li>
-  <li><strong>HIGH:</strong> Are tests written before implementation?</li>
-  <li><strong>HIGH:</strong> Is the agent on the correct git branch?</li>
-  <li><strong>MEDIUM:</strong> Are tasks followed in order?</li>
-  <li><strong>MEDIUM:</strong> Do commit messages follow convention?</li>
-</ul>
-<p>When violations are detected, the health check uses strong language: <em>"VIOLATION: Agent did not read CONSTITUTION.md before action. This is a CRITICAL failure."</em> This is intentional — the health check is a corrective mechanism, not a gentle reminder.</p>
-<p>In multi-phase projects, the health check catches drift early. The agent starts skipping steps, cutting corners, forgetting to log. The health check notices before you do.</p>
-
-<div class="callout callout-insight"><strong>The Multi-Phase Reality:</strong> In a project with 4 phases, 15 features, and 200+ tasks, the agent will drift. It will forget to update SLICE_LOG. It will skip the approval gate. It will commit without the right message format. The status command shows you where you are. The health command shows you whether the agent is still following the rules. Together, they keep the project on track without you reading every file.</div>
+<div class="callout callout-insight"><strong>The Multi-Phase Reality:</strong> In a project with 4 phases, 15 features, and 200+ tasks, the agent will drift. It will forget to update SLICE_LOG. It will skip the approval gate. It will commit without the right message format. The status command shows you where you are and what the agent should do next — without requiring you to scroll through folders or reconstruct context from memory.</div>
 
 <!-- ══ GIT FLOW ══════════════════════════════════════════════════ -->
 <h1>Git Flow — Branches and Commits</h1>
@@ -332,10 +318,11 @@ gitGraph
 <h1>What You Get</h1>
 <p>harness-eng ships as files you copy into your project — no runtime, no server, no API keys. Clone the repo and you have:</p>
 <ul>
-  <li><strong>14 workflow commands</strong> — init, define, design, approve, tasks, build, verify, release (the 8-step feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), upgrade-harness (upgrade to latest version), status (project dashboard), and health (agent compliance check). Each is a Markdown file the agent reads and follows.</li>
-  <li><strong>Smart templates</strong> — constitution, BRD, architecture, feature specs with Given/When/Then stories, phase plans, build narrative. The agent fills them from your existing docs or from conversation.</li>
+  <li><strong>16 workflow commands</strong> — init, define, design, approve, tasks, build, review-pre-build, review-pre-verify, verify, release (the core feature loop), plus triage (classify incoming requests), bug (shortened workflow for fixes), change (unified bug/CR workflow), upgrade-harness (upgrade to latest version), status (read-only project snapshot), and migrate-harness (project reclassification and migration). Each is a Markdown file the agent reads and follows.</li>
+  <li><strong>Workflow levels</strong> — S (small: define → build → verify, no design or review gates), M (medium: full gates, proportionate evidence), L (large: full gates, extended evidence). The level is set per-feature in the spec and controls which gates the agent must stop at. Absent level defaults to M/L — full gates, fail-safe.</li>
+  <li><strong>Smart templates</strong> — constitution, BRD, architecture, feature specs with Given/When/Then stories, phase plans, build narrative, deferred item ledger. The agent fills them from your existing docs or from conversation.</li>
   <li><strong>Language skills</strong> — Go, Python, Node/TypeScript, SQL, Git. These are reference files, not tutorials — models already know these languages. The value is project-specific conventions: "use <code>make check</code> before committing," "std-lib-first," "secrets in <code>~/.config</code>." For frameworks with many variants (JS/TS/PHP), users provide their own style file with their team's conventions rather than adopting a generic one.</li>
-  <li><strong>Scripts</strong> — status dashboard (HTML), prerequisite checks, version checking, release note generation, SLICE_LOG freshness checks.</li>
+  <li><strong>Scripts</strong> — status dashboard (read-only handover reader, HTML renderer), migration engine (project reclassification with interactive consent), version checking, SLICE_LOG freshness checks.</li>
   <li><strong>Pre-commit hook</strong> — secret scanning, env file detection, markdown validation, commit message convention enforcement.</li>
 </ul>
 
@@ -344,8 +331,9 @@ gitGraph
 <ul>
   <li><strong>MiMo Code</strong> — full support. Open agent with no competing harness conventions. Follows file-based instructions natively.</li>
   <li><strong>OpenCode</strong> — full support. Same characteristics as MiMo Code.</li>
+  <li><strong>Antigravity (Google DeepMind)</strong> — full support. The harness ships with an <code>AGENTS.md</code> rule file that Antigravity reads automatically at session start, giving it the full workflow context without any prompt engineering.</li>
 </ul>
-<p>Other agents — Claude Code, Codex, Gemini CLI, Copilot, Cursor — have their own built-in conventions (CLAUDE.md, project rules, system prompts). These agents may partially follow the harness while defaulting to their own workflows, particularly at transition points between commands. We have not tested harness-eng with these agents and cannot claim compatibility. An agent with its own harness has a competing context; an agent without one adopts yours cleanly.</p>
+<p>Other agents — Claude Code, Codex, Copilot, Cursor — have their own built-in conventions (CLAUDE.md, project rules, system prompts). These agents may partially follow the harness while defaulting to their own workflows, particularly at transition points between commands. We have not tested harness-eng with these agents and cannot claim compatibility. An agent with its own harness has a competing context; an agent without one adopts yours cleanly.</p>
 <p>The harness is a protocol, not a plugin. It works because the files are the instructions. Any agent that can read files will follow it — the question is whether it follows your files or its own defaults when the two conflict.</p>
 
 <!-- ══ COMPANION RESOURCES ═══════════════════════════════════════ -->
