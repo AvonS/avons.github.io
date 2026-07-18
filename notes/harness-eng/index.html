@@ -226,45 +226,37 @@ graph TD
 
 <!-- ══ CR AND BUG WORKFLOW ═══════════════════════════════════════ -->
 <h1>After the First Release — CR and Bug Workflows</h1>
-<p>The main feature loop handles new features. But once software ships, most work is not new features — it is change requests and bug fixes. The harness has separate, lighter workflows for these.</p>
-<p>A request comes in. The agent triages it: is this a bug (something broken per spec), a CR (modification to existing behaviour), a new feature (scope addition), or deferred (not for this phase)? Bugs and CRs get a shortened path — no full design cycle, but still require approval before building.</p>
+<p>The main feature loop handles new features. But once software ships, most work is not new features — it is change requests and bug fixes. The harness has a separate, extremely lightweight workflow for these.</p>
+<p>Bugs and CRs are handled by a single user-facing command: <code>/h:change</code>. This command skips the full design, task planning, and pre-build approval gates, allowing the agent to implement the smallest complete code delta directly. It only promotes to a full define/design loop if the change affects a locked technology choice, a public interface, a persistent database schema/migration, or a security/architecture boundary.</p>
 
 <div class="mermaid-wrap" style="overflow-x: auto;">
 <div class="mermaid">
 graph TD
     REQUEST["Incoming Request"]
-    TRIAGE{{"/h:triage<br/>Classify Request"}}
-    BUG["Bug / CR Path"]
-    FEATURE["Feature Path"]
-    DEFERRED["Log to BACKLOG"]
-    SIMPLIFIED["Simplified Spec"]
-    BUG_APPROVE{{"Human Approval ✋"}}
-    BUG_TASKS["Tasks: Regression → Fix → Verify"]
-    BUG_BUILD["TDD Build"]
-    BUG_VERIFY["Full Test Suite"]
-    BUG_RELEASE["PR · Merge · Archive"]
+    CHANGE["/h:change<br/>Unified Change Workflow"]
+    PROMOTION{"Promote to define?"}
+    DEFINE["/h:define<br/>Full Feature Loop"]
+    RECORD["Create CHG-NNN.yaml<br/>Characterize Baseline"]
+    IMPLEMENT["Implement Smallest Delta"]
+    VERIFY["Verify Affected Flow Only"]
+    RELEASE["[Human Gate]<br/>/h:release<br/>Review & Archive"]
 
-    REQUEST --> TRIAGE
-    TRIAGE -->|"Bug or CR"| BUG
-    TRIAGE -->|"New feature"| FEATURE
-    TRIAGE -->|"Not this phase"| DEFERRED
-    BUG --> SIMPLIFIED
-    SIMPLIFIED --> BUG_APPROVE
-    BUG_APPROVE -->|"Approved"| BUG_TASKS
-    BUG_APPROVE -->|"Rejected"| TRIAGE
-    BUG_TASKS --> BUG_BUILD
-    BUG_BUILD --> BUG_VERIFY
-    BUG_VERIFY -->|"Passing"| BUG_RELEASE
-    BUG_VERIFY -->|"Failing"| BUG_BUILD
+    REQUEST --> CHANGE
+    CHANGE --> PROMOTION
+    PROMOTION -->|"Yes"| DEFINE
+    PROMOTION -->|"No"| RECORD
+    RECORD --> IMPLEMENT
+    IMPLEMENT --> VERIFY
+    VERIFY -->|"Passing"| RELEASE
+    VERIFY -->|"Failing"| IMPLEMENT
 
-    style BUG_APPROVE fill:#ffd700,stroke:#b8860b,color:#000
-    style FEATURE fill:#87ceeb,stroke:#4682b4
-    style DEFERRED fill:#ddd,stroke:#999
+    style RELEASE fill:#ffd700,stroke:#b8860b,color:#000
+    style DEFINE fill:#87ceeb,stroke:#4682b4
     style REQUEST fill:#f0e6ff,stroke:#9370db
 </div>
 </div>
 
-<p>The shortened path skips full design but keeps the approval gate. The regression test comes first — prove the bug exists, then fix it. The full test suite runs before verification. The discipline is lighter but the accountability is the same.</p>
+<p>The change workflow is optimized for speed and token economy. The agent creates a single <code>CHG-NNN.yaml</code> change record, characterizes the baseline revision and dirty worktree state, implements the fix or adjustment, and verifies only the directly affected flow. The human reviews and approves the change at the final release gate, avoiding pre-build ceremony for routine bug fixes and minor CRs.</p>
 
 <!-- ══ THE THREE LAYERS OF CONTEXT ══════════════════════════════ -->
 <h1>Context Recovery — How the Agent Resumes</h1>
@@ -329,19 +321,19 @@ gitGraph
     merge feature/F002-streaming
     commit id: "chore: archive F002"
 
-    branch bugfix/BUG-001-auth
-    checkout bugfix/BUG-001-auth
-    commit id: "fix(BUG-001): regression test"
-    commit id: "fix(BUG-001): auth fix"
+    branch change/CHG-001-auth
+    checkout change/CHG-001-auth
+    commit id: "change(CHG-001): regression test"
+    commit id: "change(CHG-001): auth fix"
 
     checkout phase-1
-    merge bugfix/BUG-001-auth
+    merge change/CHG-001-auth
 </div>
 </div>
 
-<p>Commit convention: <code>type(ID): description</code>. Every commit traces back to a spec, a design, or a task. Six months later, <code>git log --oneline</code> tells the story of what was built and why.</p>
+<p>Commit convention: <code>type(ID): description</code>. Every commit traces back to a spec or a change record. Six months later, <code>git log --oneline</code> tells the story of what was built and why.</p>
 
-<div class="callout callout-insight"><strong>The Convention:</strong> <code>spec(F001)</code>, <code>design(F001)</code>, <code>feat(F001): task 1.1</code>, <code>test(F001)</code>, <code>verify(F001)</code>, <code>fix(BUG-001): description</code>. The ID in the commit maps to the ID in the spec. Traceability from requirement to code, enforced by convention.</div>
+<div class="callout callout-insight"><strong>The Convention:</strong> <code>spec(F001)</code>, <code>feat(F001): task 1.1</code>, <code>verify(F001)</code>, <code>change(CHG-001): description</code>. The ID in the commit maps to the ID in the spec or the change record. Traceability from requirement to code, enforced by convention.</div>
 
 <!-- ══ LIMITATIONS ═════════════════════════════════════════════════ -->
 <h1>Limitations — What This Does Not Guarantee</h1>
